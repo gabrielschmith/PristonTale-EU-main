@@ -1,0 +1,563 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="GameServer|Win32">
+      <Configuration>GameServer</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Login|Win32">
+      <Configuration>Login</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{214CDD3F-E659-4705-846D-AE69422CEAB3}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>server</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Login|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Login|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>../../Shared/;$(IncludePath)</IncludePath>
+    <SourcePath>
+    </SourcePath>
+    <LibraryWPath>$(WindowsSDK_MetadataPath);</LibraryWPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>../Shared/;$(IncludePath)</IncludePath>
+    <SourcePath>
+    </SourcePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)Shared/;$(IncludePath)</IncludePath>
+    <SourcePath />
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)..\bin\Server\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>../../Shared/;$(IncludePath)</IncludePath>
+    <SourcePath />
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)data\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_SERVER;SERVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>export.def</ModuleDefinitionFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\Login\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\Login\Data\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\Login\Data\Maps\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\GameServer\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\GameServer\Data\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\GameServer\Data\Maps\"
+
+xcopy "$(OutDir)*.dll" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)*.exp" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)*.iobj" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)*.lib" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)*.pdb" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)..\data\AutoRestart.bat" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)..\data\Server.exe" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)..\data\loginserver.dist.ini" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)..\data\Data\Maps\*.*" "..\..\..\pristontaleeu-src-server\Login\Data\Maps" /d /y
+
+xcopy "$(OutDir)*.dll" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)*.exp" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)*.iobj" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)*.lib" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)*.pdb" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)..\data\AutoRestart.bat" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)..\data\Server.exe" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)..\data\gameserver.dist.ini" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)..\data\Data\Maps\*.*" "..\..\..\pristontaleeu-src-server\GameServer\Data\Maps" /d /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_SERVER;WIN32;NDEBUG;_WINDOWS;_USRDLL;SERVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4995;4290;4091</DisableSpecificWarnings>
+      <CallingConvention>Cdecl</CallingConvention>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>Sync</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>export.def</ModuleDefinitionFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\Login\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\Login\Data\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\Login\Data\Maps\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\GameServer\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\GameServer\Data\"
+cmd /x /c  mkdir "$(TargetDir)..\..\..\pristontaleeu-src-server\GameServer\Data\Maps\"
+
+xcopy "$(OutDir)*.dll" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)*.exp" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)*.iobj" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)*.lib" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)*.pdb" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)..\data\AutoRestart.bat" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)..\data\Server.exe" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)..\data\loginserver.dist.ini" "..\..\..\pristontaleeu-src-server\Login" /d /y
+xcopy "$(OutDir)..\data\Data\Maps\*.*" "..\..\..\pristontaleeu-src-server\Login\Data\Maps" /d /y
+
+xcopy "$(OutDir)*.dll" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)*.exp" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)*.iobj" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)*.lib" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)*.pdb" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)..\data\AutoRestart.bat" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)..\data\Server.exe" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)..\data\gameserver.dist.ini" "..\..\..\pristontaleeu-src-server\GameServer" /d /y
+xcopy "$(OutDir)..\data\Data\Maps\*.*" "..\..\..\pristontaleeu-src-server\GameServer\Data\Maps" /d /y
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SERVER;WIN32;NDEBUG;_WINDOWS;_USRDLL;SERVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4995;4290;4091</DisableSpecificWarnings>
+      <CallingConvention>Cdecl</CallingConvention>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>export.def</ModuleDefinitionFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SERVER;WIN32;NDEBUG;_WINDOWS;_USRDLL;SERVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4995;4290;4091</DisableSpecificWarnings>
+      <CallingConvention>Cdecl</CallingConvention>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>Sync</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>export.def</ModuleDefinitionFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>cmd /x /c  mkdir "$(SolutionDir)login-server\"
+cmd /x /c  mkdir "$(SolutionDir)login-server\Data\"
+cmd /x /c  mkdir "$(SolutionDir)login-server\Data\Maps\"
+xcopy "$(OutDir)*.exp" "$(SolutionDir)login-server" /d /y
+xcopy "$(OutDir)*.iobj" "$(SolutionDir)login-server" /d /y
+xcopy "$(OutDir)*.lib" "$(SolutionDir)login-server" /d /y
+xcopy "$(OutDir)*.pdb" "$(SolutionDir)login-server" /d /y
+xcopy "$(OutDir)..\data\loginserver.dist.ini" "$(SolutionDir)login-server" /d /y
+xcopy "$(OutDir)..\data\Data\Maps\*.*" "$(SolutionDir)login-server\Data\Maps" /d /y
+xcopy "$(OutDir)..\data\Server.exe" "$(SolutionDir)login-server" /d /y
+xcopy "$(OutDir)*.dll" "$(SolutionDir)login-server" /d /y
+
+cmd /x /c  mkdir "$(SolutionDir)game-server\"
+cmd /x /c  mkdir "$(SolutionDir)game-server\Data\"
+cmd /x /c  mkdir "$(SolutionDir)game-server\Maps\"
+xcopy "$(OutDir)*.exp" "$(SolutionDir)game-server" /d /y
+xcopy "$(OutDir)*.iobj" "$(SolutionDir)game-server" /d /y
+xcopy "$(OutDir)*.lib" "$(SolutionDir)game-server" /d /y
+xcopy "$(OutDir)*.pdb" "$(SolutionDir)game-server" /d /y
+xcopy "$(OutDir)..\data\AutoRestart.bat" "$(SolutionDir)game-server" /d /y
+xcopy "$(OutDir)..\data\gameserver.dist.ini" "$(SolutionDir)game-server" /d /y
+xcopy "$(OutDir)..\data\Data\Maps\*.*" "$(SolutionDir)game-server\Data\Maps" /d /y
+xcopy "$(OutDir)..\data\Server.exe" "$(SolutionDir)game-server" /d /y
+xcopy "$(OutDir)*.dll" "$(SolutionDir)game-server" /d /y
+
+set ERRORLEVEL=0</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\shared\CApplication.h" />
+    <ClInclude Include="..\..\shared\CConfig.h" />
+    <ClInclude Include="..\..\shared\CConfigFile.h" />
+    <ClInclude Include="..\..\shared\CConfigFileReader.h" />
+    <ClInclude Include="..\..\shared\CConfigFileWriter.h" />
+    <ClInclude Include="..\..\shared\character.h" />
+    <ClInclude Include="..\..\shared\CMutex.h" />
+    <ClInclude Include="..\..\shared\Coin.h" />
+    <ClInclude Include="..\..\shared\CoinShop.h" />
+    <ClInclude Include="..\..\shared\CoinShopItem.h" />
+    <ClInclude Include="..\..\shared\CoinShopTab.h" />
+    <ClInclude Include="..\..\shared\common.h" />
+    <ClInclude Include="..\..\shared\CProcess.h" />
+    <ClInclude Include="..\..\shared\CReader.h" />
+    <ClInclude Include="..\..\shared\CReaderFile.h" />
+    <ClInclude Include="..\..\shared\CStable.h" />
+    <ClInclude Include="..\..\shared\CSystem.h" />
+    <ClInclude Include="..\..\shared\CWindow.h" />
+    <ClInclude Include="..\..\shared\CWorld.h" />
+    <ClInclude Include="..\..\shared\debug.h" />
+    <ClInclude Include="..\..\shared\def.h" />
+    <ClInclude Include="..\..\shared\dice.h" />
+    <ClInclude Include="..\..\shared\item.h" />
+    <ClInclude Include="..\..\shared\map.h" />
+    <ClInclude Include="..\..\shared\packets.h" />
+    <ClInclude Include="..\..\shared\point.h" />
+    <ClInclude Include="..\..\shared\premiumstruct.h" />
+    <ClInclude Include="..\..\shared\quest.h" />
+    <ClInclude Include="..\..\shared\roll.h" />
+    <ClInclude Include="..\..\shared\socket.h" />
+    <ClInclude Include="..\..\shared\sound.h" />
+    <ClInclude Include="..\..\shared\strings.h" />
+    <ClInclude Include="..\..\shared\unit.h" />
+    <ClInclude Include="..\..\shared\user.h" />
+    <ClInclude Include="accountserver.h" />
+    <ClInclude Include="AgeHandler.h" />
+    <ClInclude Include="Archer.h" />
+    <ClInclude Include="Assassin.h" />
+    <ClInclude Include="Atalanta.h" />
+    <ClInclude Include="bellatraserver.h" />
+    <ClInclude Include="BlessCastleHandler.h" />
+    <ClInclude Include="blesscastleserver.h" />
+    <ClInclude Include="BotServerHandler.h" />
+    <ClInclude Include="BotShopServerHandler.h" />
+    <ClInclude Include="CBotServerAIHandler.h" />
+    <ClInclude Include="characterserver.h" />
+    <ClInclude Include="chatserver.h" />
+    <ClInclude Include="cheatserver.h" />
+    <ClInclude Include="ChristmasHandler.h" />
+    <ClInclude Include="CManufactureHandler.h" />
+    <ClInclude Include="CoinShopHandler.h" />
+    <ClInclude Include="CPartyHandler.h" />
+    <ClInclude Include="CPetSystemHandler.h" />
+    <ClInclude Include="CRollDiceHandler.h" />
+    <ClInclude Include="CServer.h" />
+    <ClInclude Include="CServerConfig.h" />
+    <ClInclude Include="CServerHandler.h" />
+    <ClInclude Include="CServerManager.h" />
+    <ClInclude Include="CServerWindow.h" />
+    <ClInclude Include="CServerWorld.h" />
+    <ClInclude Include="CWarehouseHandler.h" />
+    <ClInclude Include="DamageHandler.h" />
+    <ClInclude Include="EasterHandler.h" />
+    <ClInclude Include="EventGirlHandler.h" />
+    <ClInclude Include="eventserver.h" />
+    <ClInclude Include="Fighter.h" />
+    <ClInclude Include="FuryArenaHandler.h" />
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="HalloweenHandler.h" />
+    <ClInclude Include="HNSSkill.h" />
+    <ClInclude Include="DLL.h" />
+    <ClInclude Include="ini.h" />
+    <ClInclude Include="itemserver.h" />
+    <ClInclude Include="Knight.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="logserver.h" />
+    <ClInclude Include="lootserver.h" />
+    <ClInclude Include="Magician.h" />
+    <ClInclude Include="mapserver.h" />
+    <ClInclude Include="Mechanician.h" />
+    <ClInclude Include="MixHandler.h" />
+    <ClInclude Include="netserver.h" />
+    <ClInclude Include="packetserver.h" />
+    <ClInclude Include="Pikeman.h" />
+    <ClInclude Include="Priestess.h" />
+    <ClInclude Include="pvpserver.h" />
+    <ClInclude Include="QuestArenaHandler.h" />
+    <ClInclude Include="questserver.h" />
+    <ClInclude Include="RankingListHandler.h" />
+    <ClInclude Include="server.h" />
+    <ClInclude Include="servercommand.h" />
+    <ClInclude Include="servercore.h" />
+    <ClInclude Include="Shaman.h" />
+    <ClInclude Include="socketserver.h" />
+    <ClInclude Include="SocketSystemHandler.h" />
+    <ClInclude Include="SQLConnection.h" />
+    <ClInclude Include="SQLSkill.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="structaccount.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestMapHandler.h" />
+    <ClInclude Include="TradeHandler.h" />
+    <ClInclude Include="unitdataserver.h" />
+    <ClInclude Include="unitinfo.h" />
+    <ClInclude Include="unitserver.h" />
+    <ClInclude Include="userdataserver.h" />
+    <ClInclude Include="userserver.h" />
+    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="WinDump.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\shared\CApplication.cpp" />
+    <ClCompile Include="..\..\shared\CConfig.cpp" />
+    <ClCompile Include="..\..\shared\CConfigFile.cpp" />
+    <ClCompile Include="..\..\shared\CConfigFileReader.cpp" />
+    <ClCompile Include="..\..\shared\CConfigFileWriter.cpp" />
+    <ClCompile Include="..\..\shared\CCore.cpp" />
+    <ClCompile Include="..\..\shared\character.cpp" />
+    <ClCompile Include="..\..\shared\CMutex.cpp" />
+    <ClCompile Include="..\..\shared\Coin.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\CoinShop.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\CoinShopItem.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\CoinShopTab.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\common.cpp" />
+    <ClCompile Include="..\..\shared\CProcess.cpp" />
+    <ClCompile Include="..\..\shared\CReader.cpp" />
+    <ClCompile Include="..\..\shared\CReaderFile.cpp" />
+    <ClCompile Include="..\..\shared\CSystem.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\CWindow.cpp" />
+    <ClCompile Include="..\..\shared\CWorld.cpp" />
+    <ClCompile Include="..\..\shared\debug.cpp" />
+    <ClCompile Include="..\..\shared\def.cpp" />
+    <ClCompile Include="..\..\shared\dice.cpp" />
+    <ClCompile Include="..\..\shared\item.cpp" />
+    <ClCompile Include="..\..\shared\map.cpp" />
+    <ClCompile Include="..\..\shared\party.cpp" />
+    <ClCompile Include="..\..\shared\point.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\quest.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\socket.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\sound.cpp" />
+    <ClCompile Include="..\..\shared\strings.cpp" />
+    <ClCompile Include="..\..\shared\unit.cpp" />
+    <ClCompile Include="..\..\shared\user.cpp" />
+    <ClCompile Include="accountserver.cpp" />
+    <ClCompile Include="AgeHandler.cpp" />
+    <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="Assassin.cpp" />
+    <ClCompile Include="Atalanta.cpp" />
+    <ClCompile Include="bellatraserver.cpp" />
+    <ClCompile Include="BlessCastleHandler.cpp" />
+    <ClCompile Include="blesscastleserver.cpp" />
+    <ClCompile Include="BotServerHandler.cpp" />
+    <ClCompile Include="BotShopServerHandler.cpp" />
+    <ClCompile Include="CBotServerAIHandler.cpp" />
+    <ClCompile Include="characterserver.cpp" />
+    <ClCompile Include="chatserver.cpp" />
+    <ClCompile Include="cheatserver.cpp" />
+    <ClCompile Include="ChristmasHandler.cpp" />
+    <ClCompile Include="CManufactureHandler.cpp" />
+    <ClCompile Include="CoinShopHandler.cpp" />
+    <ClCompile Include="CPartyHandler.cpp" />
+    <ClCompile Include="CPetSystemHandler.cpp" />
+    <ClCompile Include="CRollDiceHandler.cpp" />
+    <ClCompile Include="CServer.cpp" />
+    <ClCompile Include="CServerConfig.cpp" />
+    <ClCompile Include="CServerHandler.cpp" />
+    <ClCompile Include="CServerManager.cpp" />
+    <ClCompile Include="CServerWindow.cpp" />
+    <ClCompile Include="CServerWorld.cpp" />
+    <ClCompile Include="CWarehouseHandler.cpp" />
+    <ClCompile Include="DamageHandler.cpp" />
+    <ClCompile Include="DLL.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="EasterHandler.cpp" />
+    <ClCompile Include="EventGirlHandler.cpp" />
+    <ClCompile Include="eventserver.cpp" />
+    <ClCompile Include="Fighter.cpp" />
+    <ClCompile Include="FuryArenaHandler.cpp" />
+    <ClCompile Include="globals.cpp" />
+    <ClCompile Include="HalloweenHandler.cpp" />
+    <ClCompile Include="HNSSkill.cpp" />
+    <ClCompile Include="itemserver.cpp" />
+    <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="logserver.cpp" />
+    <ClCompile Include="lootserver.cpp" />
+    <ClCompile Include="Magician.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="mapserver.cpp" />
+    <ClCompile Include="Mechanician.cpp" />
+    <ClCompile Include="MixHandler.cpp" />
+    <ClCompile Include="netserver.cpp" />
+    <ClCompile Include="packetserver.cpp" />
+    <ClCompile Include="Pikeman.cpp" />
+    <ClCompile Include="Priestess.cpp" />
+    <ClCompile Include="pvpserver.cpp" />
+    <ClCompile Include="QuestArenaHandler.cpp" />
+    <ClCompile Include="questserver.cpp" />
+    <ClCompile Include="RankingListHandler.cpp" />
+    <ClCompile Include="server.cpp" />
+    <ClCompile Include="servercommand.cpp" />
+    <ClCompile Include="servercore.cpp" />
+    <ClCompile Include="Shaman.cpp" />
+    <ClCompile Include="socketserver.cpp" />
+    <ClCompile Include="SocketSystemHandler.cpp" />
+    <ClCompile Include="SQLConnection.cpp" />
+    <ClCompile Include="SQLSkill.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameServer|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TestMapHandler.cpp" />
+    <ClCompile Include="TradeHandler.cpp" />
+    <ClCompile Include="unitdataserver.cpp" />
+    <ClCompile Include="unitinfo.cpp" />
+    <ClCompile Include="unitserver.cpp" />
+    <ClCompile Include="userdataserver.cpp" />
+    <ClCompile Include="userserver.cpp" />
+    <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="WinDump.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="export.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

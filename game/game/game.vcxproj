@@ -1,0 +1,790 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2E19552E-AC28-4BA4-B39D-2DE3D4DB4977}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>game</RootNamespace>
+    <VcpkgTriplet>x86-windows-static</VcpkgTriplet>
+    <VcpkgEnabled>true</VcpkgEnabled>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>../../shared/;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)LIB\x86;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)Shared;$(SolutionDir)..\deps\dks\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\deps\dks\Lib\x86;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(SourcePath)</SourcePath>
+    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <OutDir>$(SolutionDir)..\bin\Game\</OutDir>
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_GAME;WIN32;_DEBUG;_ANIM;_WINDOWS;_USRDLL;GAME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <DisableSpecificWarnings>4995;4065;4409;4290;4005;4091;4996</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <StringPooling>false</StringPooling>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>export.def</ModuleDefinitionFile>
+      <EnableUAC>false</EnableUAC>
+      <UACUIAccess>false</UACUIAccess>
+      <OptimizeReferences>false</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalOptions>/OPT:NOLBR %(AdditionalOptions)</AdditionalOptions>
+      <LargeAddressAware>false</LargeAddressAware>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(OutDir)$(TargetName)$(TargetExt)" "C:\Pristontale EU\" /d /y</Command>
+    </PostBuildEvent>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>2.0</ShaderModel>
+      <DisableOptimizations>false</DisableOptimizations>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_GAME;WIN32;NDEBUG;_WINDOWS;_USRDLL;GAME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <DisableSpecificWarnings>4995;4065;4409;4290;4005;4091;4996</DisableSpecificWarnings>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <EnablePREfast>false</EnablePREfast>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <StringPooling>
+      </StringPooling>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>export.def</ModuleDefinitionFile>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <EnableUAC>false</EnableUAC>
+      <UACUIAccess>true</UACUIAccess>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <LargeAddressAware>
+      </LargeAddressAware>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalDependencies>discord-rpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\shared\CApplication.h" />
+    <ClInclude Include="..\..\shared\character.h" />
+    <ClInclude Include="..\..\shared\chat.h" />
+    <ClInclude Include="..\..\shared\Coin.h" />
+    <ClInclude Include="..\..\shared\CoinShop.h" />
+    <ClInclude Include="..\..\shared\CoinShopItem.h" />
+    <ClInclude Include="..\..\shared\CoinShopTab.h" />
+    <ClInclude Include="..\..\shared\common.h" />
+    <ClInclude Include="..\..\shared\CProcess.h" />
+    <ClInclude Include="..\..\shared\CReader.h" />
+    <ClInclude Include="..\..\shared\CReaderFile.h" />
+    <ClInclude Include="..\..\shared\CStable.h" />
+    <ClInclude Include="..\..\shared\CSystem.h" />
+    <ClInclude Include="..\..\shared\CTimer.h" />
+    <ClInclude Include="..\..\shared\CWindow.h" />
+    <ClInclude Include="..\..\shared\debug.h" />
+    <ClInclude Include="..\..\shared\def.h" />
+    <ClInclude Include="..\..\shared\dice.h" />
+    <ClInclude Include="..\..\shared\Event.h" />
+    <ClInclude Include="..\..\shared\EventHandler.h" />
+    <ClInclude Include="..\..\shared\EXEMatrix.h" />
+    <ClInclude Include="..\..\shared\item.h" />
+    <ClInclude Include="..\..\shared\CMutex.h" />
+    <ClInclude Include="..\..\shared\map.h" />
+    <ClInclude Include="..\..\shared\Node.h" />
+    <ClInclude Include="..\..\shared\packets.h" />
+    <ClInclude Include="..\..\shared\point.h" />
+    <ClInclude Include="..\..\shared\premiumstruct.h" />
+    <ClInclude Include="..\..\shared\quest.h" />
+    <ClInclude Include="..\..\shared\skill.h" />
+    <ClInclude Include="..\..\shared\sky.h" />
+    <ClInclude Include="..\..\shared\socket.h" />
+    <ClInclude Include="..\..\shared\sound.h" />
+    <ClInclude Include="..\..\shared\strings.h" />
+    <ClInclude Include="..\..\shared\Timer.h" />
+    <ClInclude Include="..\..\shared\unit.h" />
+    <ClInclude Include="..\..\shared\user.h" />
+    <ClInclude Include="..\..\shared\X3DEasings.h" />
+    <ClInclude Include="AbyssQuestWindow.h" />
+    <ClInclude Include="AccountHandler.h" />
+    <ClInclude Include="AnimationHandler.h" />
+    <ClInclude Include="AntiCheat.h" />
+    <ClInclude Include="AYObfuscate.h" />
+    <ClInclude Include="BellatraGame.h" />
+    <ClInclude Include="BellatraReward.h" />
+    <ClInclude Include="BlessCastleHandler.h" />
+    <ClInclude Include="CAgingWindow.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CAntiDebuggerHandler.h" />
+    <ClInclude Include="CArcherSkillHandler.h" />
+    <ClInclude Include="CAssassinSkillHandler.h" />
+    <ClInclude Include="CAtalantaSkillHandler.h" />
+    <ClInclude Include="CCharacterScreen.h" />
+    <ClInclude Include="CChasingHuntHandler.h" />
+    <ClInclude Include="CCreedHandler.h" />
+    <ClInclude Include="CDailyQuestWindow.h" />
+    <ClInclude Include="CDamageInfo.h" />
+    <ClInclude Include="CFighterSkillHandler.h" />
+    <ClInclude Include="CGame.h" />
+    <ClInclude Include="CGameAudio.h" />
+    <ClInclude Include="CGameEngine.h" />
+    <ClInclude Include="CGameGraphic.h" />
+    <ClInclude Include="CGameTimer.h" />
+    <ClInclude Include="CGameWindow.h" />
+    <ClInclude Include="CGameWorld.h" />
+    <ClInclude Include="CHalloweenHandler.h" />
+    <ClInclude Include="CharacterGame.h" />
+    <ClInclude Include="CChatBox.h" />
+    <ClInclude Include="ChatGame.h" />
+    <ClInclude Include="ChristmasHandler.h" />
+    <ClInclude Include="CImpulsionHandler.h" />
+    <ClInclude Include="CInventory.h" />
+    <ClInclude Include="CKnightSkillHandler.h" />
+    <ClInclude Include="CLoginHandler.h" />
+    <ClInclude Include="CLuaParticleOld.h" />
+    <ClInclude Include="CMagicianSkillHandler.h" />
+    <ClInclude Include="CMechanicianSkillHandler.h" />
+    <ClInclude Include="CMiraculousLight.h" />
+    <ClInclude Include="CoinHandler.h" />
+    <ClInclude Include="CoinShopWindow.h" />
+    <ClInclude Include="CompareItemHandler.h" />
+    <ClInclude Include="Connection.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="CPartyHandler.h" />
+    <ClInclude Include="CPartyWindow.h" />
+    <ClInclude Include="CPikemanSkillHandler.h" />
+    <ClInclude Include="CQuestMapHandler.h" />
+    <ClInclude Include="CShamanSkillHandler.h" />
+    <ClInclude Include="StableHandler.h" />
+    <ClInclude Include="CStableWindow.h" />
+    <ClInclude Include="CVirtualLifeHandler.h" />
+    <ClInclude Include="CVirtualRegenHandler.h" />
+    <ClInclude Include="CWizardTrance.h" />
+    <ClInclude Include="CParticle.h" />
+    <ClInclude Include="CParticleDebug.h" />
+    <ClInclude Include="CParticleEmitter.h" />
+    <ClInclude Include="CParticleEngine.h" />
+    <ClInclude Include="CParticleEvent.h" />
+    <ClInclude Include="CParticleFactory.h" />
+    <ClInclude Include="CParticleModifier.h" />
+    <ClInclude Include="CParticleModifierGroup.h" />
+    <ClInclude Include="CParticleObject.h" />
+    <ClInclude Include="CParticleScript.h" />
+    <ClInclude Include="CParticleSystem.h" />
+    <ClInclude Include="CQuestGame.h" />
+    <ClInclude Include="CRedRayHandler.h" />
+    <ClInclude Include="CRingsOfSpearsHandler.h" />
+    <ClInclude Include="CrystalTowerHandler.h" />
+    <ClInclude Include="CSesmicImpactHandler.h" />
+    <ClInclude Include="CSettingsWindow.h" />
+    <ClInclude Include="CShadowBlinkHandler.h" />
+    <ClInclude Include="CSkillEffectHandler.h" />
+    <ClInclude Include="CUserInterface.h" />
+    <ClInclude Include="CWarehouseWindow.h" />
+    <ClInclude Include="CWMIReader.h" />
+    <ClInclude Include="CWorldScreen.h" />
+    <ClInclude Include="DailyQuest.h" />
+    <ClInclude Include="DamageHandler.h" />
+    <ClInclude Include="DiscordAPI.h" />
+    <ClInclude Include="DX.h" />
+    <ClInclude Include="DXCamera.h" />
+    <ClInclude Include="DXDepthStencilBuffer.h" />
+    <ClInclude Include="DXEffect.h" />
+    <ClInclude Include="DXEffectFactory.h" />
+    <ClInclude Include="DXGeometryInstance.h" />
+    <ClInclude Include="DXGlow.h" />
+    <ClInclude Include="DXGraphicEngine.h" />
+    <ClInclude Include="DXFont.h" />
+    <ClInclude Include="DXGraphicsDevice.h" />
+    <ClInclude Include="DXImageSceneRenderer.h" />
+    <ClInclude Include="DXIndexBuffer.h" />
+    <ClInclude Include="DXLogger.h" />
+    <ClInclude Include="DXPostProcess.h" />
+    <ClInclude Include="DXRenderer.h" />
+    <ClInclude Include="DXRenderTarget.h" />
+    <ClInclude Include="DXSelectGlow.h" />
+    <ClInclude Include="DXSprite.h" />
+    <ClInclude Include="DXSpriteFactory.h" />
+    <ClInclude Include="DXTexture.h" />
+    <ClInclude Include="DXTextureEngine.h" />
+    <ClInclude Include="DXTextureFactory.h" />
+    <ClInclude Include="DXVertexBuffer.h" />
+    <ClInclude Include="DXVertexDeclaration.h" />
+    <ClInclude Include="DXVertexElements.h" />
+    <ClInclude Include="DXVideoRenderer.h" />
+    <ClInclude Include="DXViewport.h" />
+    <ClInclude Include="EasterEventHandler.h" />
+    <ClInclude Include="EffectGame.h" />
+    <ClInclude Include="EventGirlHandler.h" />
+    <ClInclude Include="EXE.h" />
+    <ClInclude Include="EXEFace.h" />
+    <ClInclude Include="EXEFrame.h" />
+    <ClInclude Include="EXEMesh.h" />
+    <ClInclude Include="EXEModel.h" />
+    <ClInclude Include="EXEPoint.h" />
+    <ClInclude Include="EXERender.h" />
+    <ClInclude Include="EXETexture.h" />
+    <ClInclude Include="EXEUglyRefactor.h" />
+    <ClInclude Include="EXEVertex.h" />
+    <ClInclude Include="EXEVertexCache.h" />
+    <ClInclude Include="Export.h" />
+    <ClInclude Include="ExportFile.h" />
+    <ClInclude Include="ExportINXFile.h" />
+    <ClInclude Include="ExportSMDFile.h" />
+    <ClInclude Include="CFierceWindHandler.h" />
+    <ClInclude Include="ForceOrbHandler.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="gamebellatra.h" />
+    <ClInclude Include="gamecharacterstatus.h" />
+    <ClInclude Include="GameCore.h" />
+    <ClInclude Include="GameDump.h" />
+    <ClInclude Include="gameeffectfollow.h" />
+    <ClInclude Include="gameinterface.h" />
+    <ClInclude Include="gameinventory.h" />
+    <ClInclude Include="gamemessagebox.h" />
+    <ClInclude Include="GameProtect.h" />
+    <ClInclude Include="CGameScreen.h" />
+    <ClInclude Include="gameskill.h" />
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="GrandFury.h" />
+    <ClInclude Include="GrandFuryWindow.h" />
+    <ClInclude Include="GuideGame.h" />
+    <ClInclude Include="HalloweenModel.h" />
+    <ClInclude Include="DLL.h" />
+    <ClInclude Include="CHolyConvictionHandler.h" />
+    <ClInclude Include="HUDController.h" />
+    <ClInclude Include="CIceElementalHandler.h" />
+    <ClInclude Include="Import.h" />
+    <ClInclude Include="ImportFile.h" />
+    <ClInclude Include="ImportINXFile.h" />
+    <ClInclude Include="ImportSMDFile.h" />
+    <ClInclude Include="InputBox.h" />
+    <ClInclude Include="ItemCreator.h" />
+    <ClInclude Include="ItemHandler.h" />
+    <ClInclude Include="itemhandlerstruct.h" />
+    <ClInclude Include="ItemTimerHandler.h" />
+    <ClInclude Include="ItemWindowHandler.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="LaunchGame.h" />
+    <ClInclude Include="CLethalSightHandler.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="LoginModel.h" />
+    <ClInclude Include="CLoginScreen.h" />
+    <ClInclude Include="ManageWindow.h" />
+    <ClInclude Include="ManufactureHandler.h" />
+    <ClInclude Include="MapGame.h" />
+    <ClInclude Include="md5.h" />
+    <ClInclude Include="MDamageInfo.h" />
+    <ClInclude Include="MessageBox.h" />
+    <ClInclude Include="CMiniMapHandler.h" />
+    <ClInclude Include="MixGuildHandler.h" />
+    <ClInclude Include="MixGuildWindow.h" />
+    <ClInclude Include="MixHandler.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Musics.h" />
+    <ClInclude Include="NeverSinkHandler.h" />
+    <ClInclude Include="ObjectOwner.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="PerfectItemViewHandler.h" />
+    <ClInclude Include="CPriestessSkillHandler.h" />
+    <ClInclude Include="qedit.h" />
+    <ClInclude Include="QuestBookHandler.h" />
+    <ClInclude Include="QuestGame.h" />
+    <ClInclude Include="QuestWindow.h" />
+    <ClInclude Include="RankListHandler.h" />
+    <ClInclude Include="RankListWindow.h" />
+    <ClInclude Include="RawINXAnimation.h" />
+    <ClInclude Include="RawINXFile.h" />
+    <ClInclude Include="RawINXLODGroup.h" />
+    <ClInclude Include="RawSMDFace.h" />
+    <ClInclude Include="RawSMDFrame.h" />
+    <ClInclude Include="RawSMDHeader.h" />
+    <ClInclude Include="RawSMDKeyPosition.h" />
+    <ClInclude Include="RawSMDKeyRotation.h" />
+    <ClInclude Include="RawSMDKeyScale.h" />
+    <ClInclude Include="RawSMDLight.h" />
+    <ClInclude Include="RawSMDMaterial.h" />
+    <ClInclude Include="RawSMDMaterialHeader.h" />
+    <ClInclude Include="RawSMDMatrix.h" />
+    <ClInclude Include="RawSMDObject.h" />
+    <ClInclude Include="RawSMDObjectInfo.h" />
+    <ClInclude Include="RawSMDQuaternion.h" />
+    <ClInclude Include="RawSMDTerrain.h" />
+    <ClInclude Include="RawSMDTextureLink.h" />
+    <ClInclude Include="RawSMDVector3.h" />
+    <ClInclude Include="RawSMDVertex.h" />
+    <ClInclude Include="RawSMDVertexPhysique.h" />
+    <ClInclude Include="RecvPacket.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="RessurectionHandler.h" />
+    <ClInclude Include="CRuptureHandler.h" />
+    <ClInclude Include="Screen.h" />
+    <ClInclude Include="SettingsHandler.h" />
+    <ClInclude Include="SettingsModel.h" />
+    <ClInclude Include="SettingsView.h" />
+    <ClInclude Include="ShamanHandler.h" />
+    <ClInclude Include="SkillDataHandler.h" />
+    <ClInclude Include="SkillManager.h" />
+    <ClInclude Include="SkillTimerInfo.h" />
+    <ClInclude Include="SMD.h" />
+    <ClInclude Include="SocketGame.h" />
+    <ClInclude Include="CSound.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="CStoneSkinHandler.h" />
+    <ClInclude Include="CSummonTigerHandler.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestEditor.h" />
+    <ClInclude Include="TestMapHandler.h" />
+    <ClInclude Include="TestScreen.h" />
+    <ClInclude Include="TextWindow.h" />
+    <ClInclude Include="TimerSkill.h" />
+    <ClInclude Include="TitleBox.h" />
+    <ClInclude Include="ToolTip.h" />
+    <ClInclude Include="TradeHandler.h" />
+    <ClInclude Include="UI.h" />
+    <ClInclude Include="UIAnimation.h" />
+    <ClInclude Include="UIBitmapFont.h" />
+    <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIChargeBar.h" />
+    <ClInclude Include="UICheckBox.h" />
+    <ClInclude Include="UIColor.h" />
+    <ClInclude Include="UIComboBox.h" />
+    <ClInclude Include="UIControllerGeneral.h" />
+    <ClInclude Include="UICounter.h" />
+    <ClInclude Include="UIDropdownMenu.h" />
+    <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIEvent.h" />
+    <ClInclude Include="UIGroup.h" />
+    <ClInclude Include="UIImage.h" />
+    <ClInclude Include="UIImageBox.h" />
+    <ClInclude Include="UIImageRender.h" />
+    <ClInclude Include="UIImageLoader.h" />
+    <ClInclude Include="UIItemBox.h" />
+    <ClInclude Include="UIItemInfoBox.h" />
+    <ClInclude Include="UIMessageBallon.h" />
+    <ClInclude Include="UISkillInfoBox.h" />
+    <ClInclude Include="UIText.h" />
+    <ClInclude Include="UIList.h" />
+    <ClInclude Include="UIScroll.h" />
+    <ClInclude Include="UIInputField.h" />
+    <ClInclude Include="UITextWindow.h" />
+    <ClInclude Include="UITooltip.h" />
+    <ClInclude Include="UIUnitMesh.h" />
+    <ClInclude Include="UIWindow.h" />
+    <ClInclude Include="UnitGame.h" />
+    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="View.h" />
+    <ClInclude Include="CWarehouse.h" />
+    <ClInclude Include="WindowTest.h" />
+    <ClInclude Include="WinDump.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\shared\CApplication.cpp" />
+    <ClCompile Include="..\..\shared\character.cpp">
+      <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</WholeProgramOptimization>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\chat.cpp" />
+    <ClCompile Include="..\..\shared\CLua.cpp" />
+    <ClCompile Include="..\..\shared\Coin.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\CoinShop.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\CoinShopItem.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\CoinShopTab.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\common.cpp" />
+    <ClCompile Include="..\..\shared\CProcess.cpp" />
+    <ClCompile Include="..\..\shared\CReader.cpp" />
+    <ClCompile Include="..\..\shared\CReaderFile.cpp" />
+    <ClCompile Include="..\..\shared\CSystem.cpp" />
+    <ClCompile Include="..\..\shared\CTimer.cpp" />
+    <ClCompile Include="..\..\shared\CWindow.cpp" />
+    <ClCompile Include="..\..\shared\CWorld.cpp" />
+    <ClCompile Include="..\..\shared\debug.cpp" />
+    <ClCompile Include="..\..\shared\def.cpp" />
+    <ClCompile Include="..\..\shared\dice.cpp" />
+    <ClCompile Include="..\..\shared\Event.cpp" />
+    <ClCompile Include="..\..\shared\EventHandler.cpp" />
+    <ClCompile Include="..\..\shared\EXEMatrix.cpp" />
+    <ClCompile Include="..\..\shared\item.cpp" />
+    <ClCompile Include="..\..\shared\CMutex.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\map.cpp" />
+    <ClCompile Include="..\..\shared\Node.cpp" />
+    <ClCompile Include="..\..\shared\party.cpp" />
+    <ClCompile Include="..\..\shared\point.cpp" />
+    <ClCompile Include="..\..\shared\quest.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\skill.cpp" />
+    <ClCompile Include="..\..\shared\sky.cpp" />
+    <ClCompile Include="..\..\shared\socket.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\sound.cpp" />
+    <ClCompile Include="..\..\shared\strings.cpp" />
+    <ClCompile Include="..\..\shared\Timer.cpp" />
+    <ClCompile Include="..\..\shared\unit.cpp" />
+    <ClCompile Include="..\..\shared\X3DEasings.cpp" />
+    <ClCompile Include="AbyssQuestWindow.cpp" />
+    <ClCompile Include="AccountHandler.cpp" />
+    <ClCompile Include="AnimationHandler.cpp" />
+    <ClCompile Include="AntiCheat.cpp" />
+    <ClCompile Include="BellatraGame.cpp" />
+    <ClCompile Include="BellatraReward.cpp" />
+    <ClCompile Include="BlessCastleHandler.cpp" />
+    <ClCompile Include="CAgingWindow.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CArcherSkillHandler.cpp" />
+    <ClCompile Include="CAssassinSkillHandler.cpp" />
+    <ClCompile Include="CAtalantaSkillHandler.cpp" />
+    <ClCompile Include="CAntiDebuggerHandler.cpp" />
+    <ClCompile Include="CCharacterScreen.cpp" />
+    <ClCompile Include="CChasingHuntHandler.cpp" />
+    <ClCompile Include="CCreedHandler.cpp" />
+    <ClCompile Include="CDailyQuestWindow.cpp" />
+    <ClCompile Include="CDamageInfo.cpp" />
+    <ClCompile Include="CFighterSkillHandler.cpp" />
+    <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CGameAudio.cpp" />
+    <ClCompile Include="CGameEngine.cpp" />
+    <ClCompile Include="CGameGraphic.cpp" />
+    <ClCompile Include="CGameTimer.cpp" />
+    <ClCompile Include="CGameWindow.cpp" />
+    <ClCompile Include="CGameWorld.cpp" />
+    <ClCompile Include="CHalloweenHandler.cpp" />
+    <ClCompile Include="CharacterGame.cpp" />
+    <ClCompile Include="CChatBox.cpp" />
+    <ClCompile Include="ChatGame.cpp" />
+    <ClCompile Include="ChristmasHandler.cpp" />
+    <ClCompile Include="CImpulsionHandler.cpp" />
+    <ClCompile Include="CInventory.cpp" />
+    <ClCompile Include="CKnightSkillHandler.cpp" />
+    <ClCompile Include="CLoginHandler.cpp" />
+    <ClCompile Include="CLuaParticleOld.cpp" />
+    <ClCompile Include="CMagicianSkillHandler.cpp" />
+    <ClCompile Include="CMechanicanSkillHandler.cpp" />
+    <ClCompile Include="CMiraculousLight.cpp" />
+    <ClCompile Include="CoinHandler.cpp" />
+    <ClCompile Include="CoinShopWindow.cpp" />
+    <ClCompile Include="CompareItemHandler.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="CPartyHandler.cpp" />
+    <ClCompile Include="CPartyWindow.cpp" />
+    <ClCompile Include="CPikemanSkillHandler.cpp" />
+    <ClCompile Include="CQuestMapHandler.cpp" />
+    <ClCompile Include="CShamanSkillHandler.cpp" />
+    <ClCompile Include="StableHandler.cpp" />
+    <ClCompile Include="CStableWindow.cpp" />
+    <ClCompile Include="CVirtualLifeHandler.cpp" />
+    <ClCompile Include="CVirtualRegenHandler.cpp" />
+    <ClCompile Include="CWizardTrance.cpp" />
+    <ClCompile Include="CParticle.cpp" />
+    <ClCompile Include="CParticleDebug.cpp" />
+    <ClCompile Include="CParticleEmitter.cpp" />
+    <ClCompile Include="CParticleEngine.cpp" />
+    <ClCompile Include="CParticleEvent.cpp" />
+    <ClCompile Include="CParticleFactory.cpp" />
+    <ClCompile Include="CParticleModifier.cpp" />
+    <ClCompile Include="CParticleModifierGroup.cpp" />
+    <ClCompile Include="CParticleObject.cpp" />
+    <ClCompile Include="CParticleScript.cpp" />
+    <ClCompile Include="CParticleSystem.cpp" />
+    <ClCompile Include="CQuestGame.cpp" />
+    <ClCompile Include="CRedRayHandler.cpp" />
+    <ClCompile Include="CRingsOfSpearsHandler.cpp" />
+    <ClCompile Include="CrystalTowerHandler.cpp" />
+    <ClCompile Include="CSesmicImpactHandler.cpp" />
+    <ClCompile Include="CSettingsWindow.cpp" />
+    <ClCompile Include="CShadowBlinkHandler.cpp" />
+    <ClCompile Include="CSkillEffectHandler.cpp" />
+    <ClCompile Include="CUserInterface.cpp" />
+    <ClCompile Include="CWarehouseWindow.cpp" />
+    <ClCompile Include="CWMIReader.cpp" />
+    <ClCompile Include="CWorldScreen.cpp" />
+    <ClCompile Include="DailyQuest.cpp" />
+    <ClCompile Include="DamageHandler.cpp" />
+    <ClCompile Include="DiscordAPI.cpp" />
+    <ClCompile Include="DLL.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="DXCamera.cpp" />
+    <ClCompile Include="DXDepthStencilBuffer.cpp" />
+    <ClCompile Include="DXEffect.cpp" />
+    <ClCompile Include="DXEffectFactory.cpp" />
+    <ClCompile Include="DXGeometryInstance.cpp" />
+    <ClCompile Include="DXGlow.cpp" />
+    <ClCompile Include="DXGraphicEngine.cpp" />
+    <ClCompile Include="DXFont.cpp" />
+    <ClCompile Include="DXGraphicsDevice.cpp" />
+    <ClCompile Include="DXImageSceneRenderer.cpp" />
+    <ClCompile Include="DXIndexBuffer.cpp" />
+    <ClCompile Include="DXLogger.cpp" />
+    <ClCompile Include="DXPostProcess.cpp" />
+    <ClCompile Include="DXRenderer.cpp" />
+    <ClCompile Include="DXRenderTarget.cpp" />
+    <ClCompile Include="DXSelectGlow.cpp" />
+    <ClCompile Include="DXSprite.cpp" />
+    <ClCompile Include="DXSpriteFactory.cpp" />
+    <ClCompile Include="DXTexture.cpp" />
+    <ClCompile Include="DXTextureEngine.cpp" />
+    <ClCompile Include="DXTextureFactory.cpp" />
+    <ClCompile Include="DXVertexBuffer.cpp" />
+    <ClCompile Include="DXVertexDeclaration.cpp" />
+    <ClCompile Include="DXVertexElements.cpp" />
+    <ClCompile Include="DXVideoRenderer.cpp" />
+    <ClCompile Include="DXViewport.cpp" />
+    <ClCompile Include="EasterEventHandler.cpp" />
+    <ClCompile Include="EffectGame.cpp" />
+    <ClCompile Include="EventGirlHandler.cpp" />
+    <ClCompile Include="EXE.cpp" />
+    <ClCompile Include="EXEFace.cpp" />
+    <ClCompile Include="EXEFrame.cpp" />
+    <ClCompile Include="EXEMesh.cpp" />
+    <ClCompile Include="EXEModel.cpp" />
+    <ClCompile Include="EXEPoint.cpp" />
+    <ClCompile Include="EXERender.cpp" />
+    <ClCompile Include="EXETexture.cpp" />
+    <ClCompile Include="EXEUglyRefactor.cpp" />
+    <ClCompile Include="EXEVertex.cpp" />
+    <ClCompile Include="EXEVertexCache.cpp" />
+    <ClCompile Include="ExportFile.cpp" />
+    <ClCompile Include="ExportINXFile.cpp" />
+    <ClCompile Include="ExportSMDFile.cpp" />
+    <ClCompile Include="CFierceWindHandler.cpp" />
+    <ClCompile Include="ForceOrbHandler.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="gamebellatra.cpp" />
+    <ClCompile Include="gamecharacterstatus.cpp" />
+    <ClCompile Include="GameCore.cpp" />
+    <ClCompile Include="GameDump.cpp" />
+    <ClCompile Include="gameeffectfollow.cpp" />
+    <ClCompile Include="gameinterface.cpp" />
+    <ClCompile Include="gameinventory.cpp" />
+    <ClCompile Include="gamemessagebox.cpp" />
+    <ClCompile Include="GameProtect.cpp" />
+    <ClCompile Include="CGameScreen.cpp" />
+    <ClCompile Include="gameskill.cpp" />
+    <ClCompile Include="GrandFury.cpp" />
+    <ClCompile Include="GrandFuryWindow.cpp" />
+    <ClCompile Include="GuideGame.cpp" />
+    <ClCompile Include="HalloweenModel.cpp" />
+    <ClCompile Include="CHolyConvictionHandler.cpp" />
+    <ClCompile Include="HUDController.cpp" />
+    <ClCompile Include="CIceElementalHandler.cpp" />
+    <ClCompile Include="ImportFile.cpp" />
+    <ClCompile Include="ImportINXFile.cpp" />
+    <ClCompile Include="ImportSMDFile.cpp" />
+    <ClCompile Include="InputBox.cpp" />
+    <ClCompile Include="ItemCreator.cpp" />
+    <ClCompile Include="ItemHandler.cpp" />
+    <ClCompile Include="ItemTimerHandler.cpp" />
+    <ClCompile Include="ItemWindowHandler.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="LaunchGame.cpp" />
+    <ClCompile Include="CLethalSightHandler.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="LoginModel.cpp" />
+    <ClCompile Include="CLoginScreen.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ManageWindow.cpp" />
+    <ClCompile Include="ManufactureHandler.cpp" />
+    <ClCompile Include="MapGame.cpp" />
+    <ClCompile Include="md5.cpp" />
+    <ClCompile Include="MDamageInfo.cpp" />
+    <ClCompile Include="MessageBox.cpp" />
+    <ClCompile Include="CMiniMapHandler.cpp" />
+    <ClCompile Include="MixGuildHandler.cpp" />
+    <ClCompile Include="MixGuildWindow.cpp" />
+    <ClCompile Include="MixHandler.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="NeverSinkHandler.cpp" />
+    <ClCompile Include="ObjectOwner.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="PerfectItemViewHandler.cpp" />
+    <ClCompile Include="CPriestessSkillHandler.cpp" />
+    <ClCompile Include="QuestBookHandler.cpp" />
+    <ClCompile Include="QuestGame.cpp" />
+    <ClCompile Include="QuestWindow.cpp" />
+    <ClCompile Include="RankListHandler.cpp" />
+    <ClCompile Include="RankListWindow.cpp" />
+    <ClCompile Include="RecvPacket.cpp" />
+    <ClCompile Include="RessurectionHandler.cpp" />
+    <ClCompile Include="CRuptureHandler.cpp" />
+    <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="SettingsHandler.cpp" />
+    <ClCompile Include="SettingsModel.cpp" />
+    <ClCompile Include="SettingsView.cpp" />
+    <ClCompile Include="ShamanHandler.cpp" />
+    <ClCompile Include="SkillDataHandler.cpp" />
+    <ClCompile Include="SkillManager.cpp" />
+    <ClCompile Include="SkillTimerInfo.cpp" />
+    <ClCompile Include="SocketGame.cpp" />
+    <ClCompile Include="CSound.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="CStoneSkinHandler.cpp" />
+    <ClCompile Include="CSummonTigerHandler.cpp" />
+    <ClCompile Include="TestEditor.cpp" />
+    <ClCompile Include="TestMapHandler.cpp" />
+    <ClCompile Include="TestScreen.cpp" />
+    <ClCompile Include="TextWindow.cpp" />
+    <ClCompile Include="TimerSkill.cpp" />
+    <ClCompile Include="TitleBox.cpp" />
+    <ClCompile Include="ToolTip.cpp" />
+    <ClCompile Include="TradeHandler.cpp" />
+    <ClCompile Include="UIAnimation.cpp" />
+    <ClCompile Include="UIBitmapFont.cpp" />
+    <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIChargeBar.cpp" />
+    <ClCompile Include="UICheckBox.cpp" />
+    <ClCompile Include="UIComboBox.cpp" />
+    <ClCompile Include="UIControllerGeneral.cpp" />
+    <ClCompile Include="UICounter.cpp" />
+    <ClCompile Include="UIDropdownMenu.cpp" />
+    <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="UIEvent.cpp" />
+    <ClCompile Include="UIGroup.cpp" />
+    <ClCompile Include="UIImage.cpp" />
+    <ClCompile Include="UIImageBox.cpp" />
+    <ClCompile Include="UIImageRender.cpp" />
+    <ClCompile Include="UIImageLoader.cpp" />
+    <ClCompile Include="UIItemBox.cpp" />
+    <ClCompile Include="UIItemInfoBox.cpp" />
+    <ClCompile Include="UIMessageBallon.cpp" />
+    <ClCompile Include="UISkillInfoBox.cpp" />
+    <ClCompile Include="UIText.cpp" />
+    <ClCompile Include="UIList.cpp" />
+    <ClCompile Include="UIScroll.cpp" />
+    <ClCompile Include="UIInputField.cpp" />
+    <ClCompile Include="UITextWindow.cpp" />
+    <ClCompile Include="UITooltip.cpp" />
+    <ClCompile Include="UIUnitMesh.cpp" />
+    <ClCompile Include="UIWindow.cpp" />
+    <ClCompile Include="UnitGame.cpp" />
+    <ClCompile Include="View.cpp" />
+    <ClCompile Include="CWarehouse.cpp" />
+    <ClCompile Include="WindowTest.cpp" />
+    <ClCompile Include="WinDump.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+    <None Include="export.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
