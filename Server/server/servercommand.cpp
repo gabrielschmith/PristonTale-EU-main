@@ -7,23 +7,23 @@
 
 #define COMMAND StrCmpPT
 
-typedef UINT( __cdecl *t_GetItemBySpeckPerf )( UserData * pcUserData, UserData * pcUserDataRecv, char * ItemCodeOrName );
-t_GetItemBySpeckPerf GetItemBySpeckPerf = ( t_GetItemBySpeckPerf )0x08B70388;
+typedef UINT(__cdecl* t_GetItemBySpeckPerf)(UserData* pcUserData, UserData* pcUserDataRecv, char* ItemCodeOrName);
+t_GetItemBySpeckPerf GetItemBySpeckPerf = (t_GetItemBySpeckPerf)0x08B70388;
 
-typedef BOOL( __cdecl *tfnGetParamOld )(char * pszBuffRecv, char * pszBuffer);
+typedef BOOL(__cdecl* tfnGetParamOld)(char* pszBuffRecv, char* pszBuffer);
 tfnGetParamOld fnGetParamOld = (tfnGetParamOld)0x00552320;
 
-typedef UserData*(__cdecl *tfnGetUsedataLoginName)(char * pszName);
+typedef UserData* (__cdecl* tfnGetUsedataLoginName)(char* pszName);
 tfnGetUsedataLoginName fnGetUsedataLoginName = (tfnGetUsedataLoginName)0x00552400;
 
 extern int iUpdateMaxPacket;
 extern int iUpdateMaxUnitMask;
 extern int iUpdateFrameCounter;
 
-int StrCmpPT( const char *Comando1, const char *Comando2 )
+int StrCmpPT(const char* Comando1, const char* Comando2)
 {
 	int Resultado = 0;
-	__asm{
+	__asm {
 		pushad
 		push ecx
 		push Comando2
@@ -38,7 +38,7 @@ int StrCmpPT( const char *Comando1, const char *Comando2 )
 	return Resultado;
 }
 
-void WriteSQLSkillInfo( char * pszColumnName, char * pszSkillTier, int iClass )
+void WriteSQLSkillInfo(char* pszColumnName, char* pszSkillTier, int iClass)
 {
 	int iCount = 0;
 
@@ -48,30 +48,30 @@ void WriteSQLSkillInfo( char * pszColumnName, char * pszSkillTier, int iClass )
 		char szValues[10][32];
 	};
 
-	SQLSkillDataInfo * ps = new SQLSkillDataInfo[10];
+	SQLSkillDataInfo* ps = new SQLSkillDataInfo[10];
 
-	SQLConnection * pcDB = SQLCONNECTION( DATABASEID_SkillDB );
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_SkillDB);
 
-	if ( pcDB->Open() )
+	if (pcDB->Open())
 	{
-		if ( pcDB->Prepare( FormatString( "SELECT * FROM %s", pszColumnName ) ) )
+		if (pcDB->Prepare(FormatString("SELECT * FROM %s", pszColumnName)))
 		{
-			if ( pcDB->Execute() )
+			if (pcDB->Execute())
 			{
-				if ( pcDB->GetColumnCount( iCount ) )
+				if (pcDB->GetColumnCount(iCount))
 				{
-					for ( int i = 0; i < iCount; i++ )
+					for (int i = 0; i < iCount; i++)
 					{
-						pcDB->GetColumnName( i + 1, ps[i].szColumnName, _countof( ps[i].szColumnName ) );
+						pcDB->GetColumnName(i + 1, ps[i].szColumnName, _countof(ps[i].szColumnName));
 					}
 				}
 
 				int j = 0;
-				while ( pcDB->Fetch() )
+				while (pcDB->Fetch())
 				{
-					for ( int i = 0; i < iCount; i++ )
+					for (int i = 0; i < iCount; i++)
 					{
-						pcDB->GetData( i + 1, PARAMTYPE_String, ps[i].szValues[j], _countof( ps[i].szValues[j] ) );
+						pcDB->GetData(i + 1, PARAMTYPE_String, ps[i].szValues[j], _countof(ps[i].szValues[j]));
 					}
 
 					j++;
@@ -82,31 +82,31 @@ void WriteSQLSkillInfo( char * pszColumnName, char * pszSkillTier, int iClass )
 		pcDB->Close();
 	}
 
-	char * pszClass = "Fighter";
+	char* pszClass = "Fighter";
 
-	if ( iClass == CHARACTERCLASS_Mechanician )
+	if (iClass == CHARACTERCLASS_Mechanician)
 		pszClass = "Mech";
-	if ( iClass == CHARACTERCLASS_Archer )
+	if (iClass == CHARACTERCLASS_Archer)
 		pszClass = "Archer";
-	if ( iClass == CHARACTERCLASS_Pikeman )
+	if (iClass == CHARACTERCLASS_Pikeman)
 		pszClass = "Pike";
-	if ( iClass == CHARACTERCLASS_Atalanta )
+	if (iClass == CHARACTERCLASS_Atalanta)
 		pszClass = "Ata";
-	if ( iClass == CHARACTERCLASS_Knight )
+	if (iClass == CHARACTERCLASS_Knight)
 		pszClass = "Knight";
-	if ( iClass == CHARACTERCLASS_Magician )
+	if (iClass == CHARACTERCLASS_Magician)
 		pszClass = "Mage";
-	if ( iClass == CHARACTERCLASS_Priestess )
+	if (iClass == CHARACTERCLASS_Priestess)
 		pszClass = "Prs";
-	if ( iClass == CHARACTERCLASS_Assassin )
+	if (iClass == CHARACTERCLASS_Assassin)
 		pszClass = "Asn";
-	if ( iClass == CHARACTERCLASS_Shaman )
+	if (iClass == CHARACTERCLASS_Shaman)
 		pszClass = "Sha";
 
-	LOGERROR( "[%s] BEGIN", pszColumnName );
-	for ( int i = 0; i < iCount; i++ )
+	LOGERROR("[%s] BEGIN", pszColumnName);
+	for (int i = 0; i < iCount; i++)
 	{
-		LOGERROR( "const int ia%s%s%s[10] = { %s, %s, %s, %s, %s, %s, %s, %s, %s, %s };",
+		LOGERROR("const int ia%s%s%s[10] = { %s, %s, %s, %s, %s, %s, %s, %s, %s, %s };",
 			pszClass,
 			pszSkillTier,
 			ps[i].szColumnName,
@@ -119,22 +119,22 @@ void WriteSQLSkillInfo( char * pszColumnName, char * pszSkillTier, int iClass )
 			ps[i].szValues[6],
 			ps[i].szValues[7],
 			ps[i].szValues[8],
-			ps[i].szValues[9] );
+			ps[i].szValues[9]);
 	}
 
-	DEBUG( "[%s] END", pszColumnName );
-	DEBUG( "" );
+	DEBUG("[%s] END", pszColumnName);
+	DEBUG("");
 
-	SAFE_DELETE_ARRAY ( ps );
+	SAFE_DELETE_ARRAY(ps);
 }
 
-BOOL WriteMonsterStatus( UnitData * pcUnitData, const char * pszTableName, const char * pszNameAttribute, char * pszValueAttribute)
+BOOL WriteMonsterStatus(UnitData* pcUnitData, const char* pszTableName, const char* pszNameAttribute, char* pszValueAttribute)
 {
 	char szQuery[512] = { 0 };
 
 	BOOL bRet = FALSE;
 
-	int iMonsterID = CHARACTERSERVER->SQLGetMonsterID( pcUnitData->GetName() );
+	int iMonsterID = CHARACTERSERVER->SQLGetMonsterID(pcUnitData->GetName());
 
 	float fValue = 0.0f;
 	int iValue = 0;
@@ -143,45 +143,45 @@ BOOL WriteMonsterStatus( UnitData * pcUnitData, const char * pszTableName, const
 	EDatabaseDataType iParamType = PARAMTYPE_Null;
 
 	//Get Parameter Type
-	SQLConnection * pcDB = SQLCONNECTION( DATABASEID_GameDB_Monsters, 5 );
-	if ( pcDB->Open() )
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_GameDB_Monsters, 5);
+	if (pcDB->Open())
 	{
-		iParamType = pcDB->GetColumnType( pszTableName, pszNameAttribute );
+		iParamType = pcDB->GetColumnType(pszTableName, pszNameAttribute);
 
 		pcDB->Close();
 	}
 
 
-	if ( iParamType == PARAMTYPE_Integer )
-		iValue = atoi( pszValueAttribute );
-	else if ( iParamType == PARAMTYPE_Float )
-		fValue = (float)atof( pszValueAttribute );
-	else if ( iParamType == PARAMTYPE_Int64 )
-		iValue64 = _atoi64( pszValueAttribute );
+	if (iParamType == PARAMTYPE_Integer)
+		iValue = atoi(pszValueAttribute);
+	else if (iParamType == PARAMTYPE_Float)
+		fValue = (float)atof(pszValueAttribute);
+	else if (iParamType == PARAMTYPE_Int64)
+		iValue64 = _atoi64(pszValueAttribute);
 	else
 		iParamType = PARAMTYPE_String;
 
-	STRINGFORMAT( szQuery, "UPDATE %s SET %s=? WHERE ID=%d", pszTableName, pszNameAttribute, iMonsterID );
+	STRINGFORMAT(szQuery, "UPDATE %s SET %s=? WHERE ID=%d", pszTableName, pszNameAttribute, iMonsterID);
 
-	if ( iMonsterID != -1 )
+	if (iMonsterID != -1)
 	{
-		pcDB = SQLCONNECTION( DATABASEID_GameDB_Monsters, 6 );
+		pcDB = SQLCONNECTION(DATABASEID_GameDB_Monsters, 6);
 
-		if ( pcDB->Open() )
+		if (pcDB->Open())
 		{
-			if ( pcDB->Prepare( szQuery ) )
+			if (pcDB->Prepare(szQuery))
 			{
 
-				if ( iParamType == PARAMTYPE_Integer )
-					pcDB->BindParameterInput( 1, iParamType, &iValue );
-				else if ( iParamType == PARAMTYPE_Float )
-					pcDB->BindParameterInput( 1, iParamType, &fValue );
-				else if ( iParamType == PARAMTYPE_Int64 )
-					pcDB->BindParameterInput( 1, iParamType, &iValue64 );
+				if (iParamType == PARAMTYPE_Integer)
+					pcDB->BindParameterInput(1, iParamType, &iValue);
+				else if (iParamType == PARAMTYPE_Float)
+					pcDB->BindParameterInput(1, iParamType, &fValue);
+				else if (iParamType == PARAMTYPE_Int64)
+					pcDB->BindParameterInput(1, iParamType, &iValue64);
 				else
-					pcDB->BindParameterInput( 1, PARAMTYPE_String, pszValueAttribute, STRLEN( pszValueAttribute ) );
+					pcDB->BindParameterInput(1, PARAMTYPE_String, pszValueAttribute, STRLEN(pszValueAttribute));
 
-				if ( pcDB->ExecuteUpdate() )
+				if (pcDB->ExecuteUpdate())
 					bRet = TRUE;
 			}
 			pcDB->Close();
@@ -203,120 +203,120 @@ ServerCommand::~ServerCommand()
 /// <summary>
 /// Check for any command to be executed every ten seconds
 /// </summary>
-void ServerCommand::SQLReadAndExecuteGMCommand ()
+void ServerCommand::SQLReadAndExecuteGMCommand()
 {
-	if ( LOGIN_SERVER )
+	if (LOGIN_SERVER)
 		return;
 
-	SQLConnection * pcDB = SQLCONNECTION ( DATABASEID_ServerDB, 18 );
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_ServerDB, 18);
 
-	if ( pcDB->Open () )
+	if (pcDB->Open())
 	{
 		std::vector<int> excutedDBIds;
 		std::vector<int> excutionResult;
 
-		if ( pcDB->Prepare ( "SELECT [ID], [Command], [UnixTimeToExecute] FROM GMCommand WHERE IsActive = 1" ) )
+		if (pcDB->Prepare("SELECT [ID], [Command], [UnixTimeToExecute] FROM GMCommand WHERE IsActive = 1"))
 		{
 			char szCommand[100];
 			int iDBId;
 			DWORD unixTimeToExecute;
-			DWORD unixTimeNow = GetUnixTime ();
+			DWORD unixTimeNow = GetUnixTime();
 
-			if ( pcDB->Execute () )
+			if (pcDB->Execute())
 			{
-				while ( pcDB->Fetch () )
+				while (pcDB->Fetch())
 				{
 					szCommand[0] = { 0 };
 
-					pcDB->GetData ( 1, EDatabaseDataType::PARAMTYPE_Integer, &iDBId );
-					pcDB->GetData ( 2, EDatabaseDataType::PARAMTYPE_String, szCommand, 100 );
-					pcDB->GetData ( 3, EDatabaseDataType::PARAMTYPE_Integer, &unixTimeToExecute );
+					pcDB->GetData(1, EDatabaseDataType::PARAMTYPE_Integer, &iDBId);
+					pcDB->GetData(2, EDatabaseDataType::PARAMTYPE_String, szCommand, 100);
+					pcDB->GetData(3, EDatabaseDataType::PARAMTYPE_Integer, &unixTimeToExecute);
 
-					if ( unixTimeToExecute >= unixTimeNow )
+					if (unixTimeToExecute >= unixTimeNow)
 					{
-						excutedDBIds.push_back ( iDBId );
+						excutedDBIds.push_back(iDBId);
 
-						if ( OnGameMasterAdminCommand ( NULL, szCommand ) ||
-							OnGameMasterLevel3Command ( NULL, szCommand ) ||
-							OnGameMasterLevel2Command ( NULL, szCommand ) ||
-							OnGameMasterLevel1Command ( NULL, szCommand ) )
+						if (OnGameMasterAdminCommand(NULL, szCommand) ||
+							OnGameMasterLevel3Command(NULL, szCommand) ||
+							OnGameMasterLevel2Command(NULL, szCommand) ||
+							OnGameMasterLevel1Command(NULL, szCommand))
 						{
-							LOGGER->LogStatus ( "GMCommand command successful! '%s'", szCommand );
-							excutionResult.push_back ( 1 );
+							LOGGER->LogStatus("GMCommand command successful! '%s'", szCommand);
+							excutionResult.push_back(1);
 						}
 						else
 						{
-							LOGERROR ( "GMCommand command failed! '%s'", szCommand );
-							excutionResult.push_back ( 0 );
+							LOGERROR("GMCommand command failed! '%s'", szCommand);
+							excutionResult.push_back(0);
 						}
 					}
 				}
 
-				for ( UINT i = 0; i < excutedDBIds.size (); i++ )
+				for (UINT i = 0; i < excutedDBIds.size(); i++)
 				{
-					pcDB->Clear ();
-					if ( pcDB->Prepare ( "UPDATE GMCommand SET IsActive=0, Result=? WHERE ID=?" ) )
+					pcDB->Clear();
+					if (pcDB->Prepare("UPDATE GMCommand SET IsActive=0, Result=? WHERE ID=?"))
 					{
-						pcDB->BindParameterInput ( 1, EDatabaseDataType::PARAMTYPE_Integer, &excutionResult[i] );
-						pcDB->BindParameterInput ( 2, EDatabaseDataType::PARAMTYPE_Integer, &excutedDBIds[i] );
+						pcDB->BindParameterInput(1, EDatabaseDataType::PARAMTYPE_Integer, &excutionResult[i]);
+						pcDB->BindParameterInput(2, EDatabaseDataType::PARAMTYPE_Integer, &excutedDBIds[i]);
 
-						pcDB->ExecuteUpdate ();
+						pcDB->ExecuteUpdate();
 					}
 				}
 			}
 		}
 
-		pcDB->Close ();
+		pcDB->Close();
 	}
 }
 
 void ServerCommand::SQLRead()
 {
-	if ( GAME_SERVER )
+	if (GAME_SERVER)
 		return;
 
 	int iProcessed[MAX_COMMANDSPERTIME];
-	for ( int i = 0; i < MAX_COMMANDSPERTIME; i++ )
+	for (int i = 0; i < MAX_COMMANDSPERTIME; i++)
 		iProcessed[i] = -1;
 
-	SQLConnection * pcDB = SQLCONNECTION( DATABASEID_ServerDB, 19 );
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_ServerDB, 19);
 
 	int iType;
 
-	if ( pcDB->Open() )
+	if (pcDB->Open())
 	{
-		if ( pcDB->Prepare( "SELECT ID, CommandTypeID, Parameter1, Parameter2, Parameter3 FROM Command WHERE DateProcessed IS NULL" ) )
+		if (pcDB->Prepare("SELECT ID, CommandTypeID, Parameter1, Parameter2, Parameter3 FROM Command WHERE DateProcessed IS NULL"))
 		{
 			pcDB->Execute();
 
-			for ( int i = 0; i < MAX_COMMANDSPERTIME; i++ )
+			for (int i = 0; i < MAX_COMMANDSPERTIME; i++)
 			{
-				if ( !pcDB->Fetch() )
+				if (!pcDB->Fetch())
 					break;
 
 				SQLServerCommand s;
-				pcDB->GetData( 1, PARAMTYPE_Integer, &iProcessed[i] );
-				pcDB->GetData( 2, PARAMTYPE_Integer, &iType );
-				pcDB->GetData( 3, PARAMTYPE_String, s.szParameter1, _countof( s.szParameter1 ) );
-				pcDB->GetData( 4, PARAMTYPE_String, s.szParameter2, _countof( s.szParameter2 ) );
-				pcDB->GetData( 5, PARAMTYPE_String, s.szParameter3, _countof( s.szParameter3 ) );
+				pcDB->GetData(1, PARAMTYPE_Integer, &iProcessed[i]);
+				pcDB->GetData(2, PARAMTYPE_Integer, &iType);
+				pcDB->GetData(3, PARAMTYPE_String, s.szParameter1, _countof(s.szParameter1));
+				pcDB->GetData(4, PARAMTYPE_String, s.szParameter2, _countof(s.szParameter2));
+				pcDB->GetData(5, PARAMTYPE_String, s.szParameter3, _countof(s.szParameter3));
 
-				s.iType = static_cast<ESQLServerCommand>( iType );
+				s.iType = static_cast<ESQLServerCommand>(iType);
 
-				if ( !SERVERCOMMAND->Process( &s ) )
+				if (!SERVERCOMMAND->Process(&s))
 					iProcessed[i] = -1;
 			}
 		}
 
-		for ( int i = 0; i < MAX_COMMANDSPERTIME; i++ )
+		for (int i = 0; i < MAX_COMMANDSPERTIME; i++)
 		{
-			if ( iProcessed[i] != -1 )
+			if (iProcessed[i] != -1)
 			{
 				pcDB->Clear();
 
-				if ( pcDB->Prepare( "UPDATE Command SET DateProcessed=GETDATE() WHERE ID=?" ) )
+				if (pcDB->Prepare("UPDATE Command SET DateProcessed=GETDATE() WHERE ID=?"))
 				{
-					pcDB->BindParameterInput( 1, PARAMTYPE_Integer, &iProcessed[i] );
+					pcDB->BindParameterInput(1, PARAMTYPE_Integer, &iProcessed[i]);
 
 					pcDB->ExecuteUpdate();
 				}
@@ -327,25 +327,25 @@ void ServerCommand::SQLRead()
 	}
 }
 
-BOOL ServerCommand::SQLReadFromCharacter( const char * pszCharacterName, ESQLServerCommand iCommand, SQLServerCommand & s )
+BOOL ServerCommand::SQLReadFromCharacter(const char* pszCharacterName, ESQLServerCommand iCommand, SQLServerCommand& s)
 {
 	BOOL bRet = FALSE;
 
-	SQLConnection * pcDB = SQLCONNECTION( DATABASEID_ServerDB, 20 );
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_ServerDB, 20);
 
 	int iType = -1;
 
-	if ( pcDB->Open() != FALSE )
+	if (pcDB->Open() != FALSE)
 	{
-		if ( pcDB->Prepare( "SELECT CommandTypeID, Parameter1, Parameter2, Parameter3 FROM Command WHERE (Parameter3=?) AND (DateProcessed IS NULL)" ) )
+		if (pcDB->Prepare("SELECT CommandTypeID, Parameter1, Parameter2, Parameter3 FROM Command WHERE (Parameter3=?) AND (DateProcessed IS NULL)"))
 		{
-			pcDB->BindParameterInput( 1, PARAMTYPE_String, (char*)pszCharacterName, STRLEN( pszCharacterName ) );
-			if ( pcDB->Execute() && pcDB->Fetch() )
+			pcDB->BindParameterInput(1, PARAMTYPE_String, (char*)pszCharacterName, STRLEN(pszCharacterName));
+			if (pcDB->Execute() && pcDB->Fetch())
 			{
-				pcDB->GetData( 1, PARAMTYPE_Integer, &iType );
-				pcDB->GetData( 2, PARAMTYPE_String, s.szParameter1, _countof( s.szParameter1 ) );
-				pcDB->GetData( 3, PARAMTYPE_String, s.szParameter2, _countof( s.szParameter2 ) );
-				pcDB->GetData( 4, PARAMTYPE_String, s.szParameter3, _countof( s.szParameter3 ) );
+				pcDB->GetData(1, PARAMTYPE_Integer, &iType);
+				pcDB->GetData(2, PARAMTYPE_String, s.szParameter1, _countof(s.szParameter1));
+				pcDB->GetData(3, PARAMTYPE_String, s.szParameter2, _countof(s.szParameter2));
+				pcDB->GetData(4, PARAMTYPE_String, s.szParameter3, _countof(s.szParameter3));
 
 				s.iType = (ESQLServerCommand)iType;
 
@@ -358,89 +358,89 @@ BOOL ServerCommand::SQLReadFromCharacter( const char * pszCharacterName, ESQLSer
 	return bRet;
 }
 
-bool ServerCommand::Process( SQLServerCommand * ps )
+bool ServerCommand::Process(SQLServerCommand* ps)
 {
 	bool bRet = false;
 
-	switch ( ps->iType )
+	switch (ps->iType)
 	{
-		case SQLSERVERCOMMAND_ChangeCharacterName:
-		if ( (ps->szParameter1[0] != 0) && (ps->szParameter2[0] != 0) )
+	case SQLSERVERCOMMAND_ChangeCharacterName:
+		if ((ps->szParameter1[0] != 0) && (ps->szParameter2[0] != 0))
 		{
-			int iResult = CHARACTERSERVER->ChangeCharacterName( ps->szParameter1, ps->szParameter2 );
+			int iResult = CHARACTERSERVER->ChangeCharacterName(ps->szParameter1, ps->szParameter2);
 
-			if ( iResult >= 0 )
+			if (iResult >= 0)
 				bRet = true;
 		}
 		else
 			bRet = true;
 		break;
 
-		case SQLSERVERCOMMAND_ChangeCharacterLevel:
-		if ( (ps->szParameter1[0] != 0) && (ps->szParameter2[0] != 0) )
+	case SQLSERVERCOMMAND_ChangeCharacterLevel:
+		if ((ps->szParameter1[0] != 0) && (ps->szParameter2[0] != 0))
 		{
-			char * pszCharacterName = ps->szParameter1;
-			int iCharacterLevel = atoi( ps->szParameter2 );
+			char* pszCharacterName = ps->szParameter1;
+			int iCharacterLevel = atoi(ps->szParameter2);
 
-			int iResult = CHARACTERSERVER->ChangeCharacterLevel( pszCharacterName, iCharacterLevel );
+			int iResult = CHARACTERSERVER->ChangeCharacterLevel(pszCharacterName, iCharacterLevel);
 
-			if ( iResult >= 0 )
+			if (iResult >= 0)
 				bRet = true;
 		}
 		else
 			bRet = true;
 		break;
 
-		case SQLSERVERCOMMAND_ChangeCharacterClass:
-		if ( (ps->szParameter1[0] != 0) && (ps->szParameter2[0] != 0) )
+	case SQLSERVERCOMMAND_ChangeCharacterClass:
+		if ((ps->szParameter1[0] != 0) && (ps->szParameter2[0] != 0))
 		{
-			char * pszCharacterName = ps->szParameter1;
-			int iCharacterClass = atoi( ps->szParameter2 );
+			char* pszCharacterName = ps->szParameter1;
+			int iCharacterClass = atoi(ps->szParameter2);
 
-			int iResult = CHARACTERSERVER->ChangeCharacterClass( pszCharacterName, iCharacterClass );
+			int iResult = CHARACTERSERVER->ChangeCharacterClass(pszCharacterName, iCharacterClass);
 
-			if ( iResult >= 0 )
+			if (iResult >= 0)
 				bRet = true;
 		}
 		else
 			bRet = true;
 		break;
 
-		default:
+	default:
 		break;
 	}
 
 	return bRet;
 }
 
-void ServerCommand::SetVersion( int iVersion )
+void ServerCommand::SetVersion(int iVersion)
 {
-	SERVER_VERSION		= iVersion;
-	SERVER_VERSION_MIN	= SERVER_VERSION;
-	SERVER_VERSION_MAX	= SERVER_VERSION;
+	SERVER_VERSION = iVersion;
+	SERVER_VERSION_MIN = SERVER_VERSION;
+	SERVER_VERSION_MAX = SERVER_VERSION;
 
 	char szVersion[32] = { 0 };
 	char szDir[MAX_PATH] = { 0 };
 	char szBuf[256] = { 0 };
-	GetCurrentDirectoryA( MAX_PATH, szDir );
-	STRINGFORMAT( szBuf, "%s\\%s", szDir, "server.ini" );
-	STRINGFORMAT( szVersion, "%d", iVersion );
-	WritePrivateProfileStringA( "Server", "Version", szVersion, szBuf );
+	GetCurrentDirectoryA(MAX_PATH, szDir);
+	STRINGFORMAT(szBuf, "%s\\%s", szDir, "server.ini");
+	STRINGFORMAT(szVersion, "%d", iVersion);
+	WritePrivateProfileStringA("Server", "Version", szVersion, szBuf);
 }
 
 /**
 iSpawnCount = max number of Moriphs to spawn globally. If not defined, read in value from .ini
 iSpawnDelayMin = spawn delay in minutes after kill. If not defined, read in value from .ini
 */
-void ServerCommand::SetMoriphEvent( BOOL bEnable, int iSpawnCount, int iSpawnDelayMin )
+void ServerCommand::SetMoriphEvent(BOOL bEnable, int iSpawnCount, int iSpawnDelayMin)
 {
-	INI::CReader cReader( "server.ini" );
+	INI::CReader cReader("server.ini");
 
-	cReader.WriteOnOff( "Event", "WantedMoriph", bEnable );
+	cReader.WriteOnOff("Event", "WantedMoriph", bEnable);
 
 	if (bEnable)
 	{
-		EVENT_WANTEDMORIPH_EVENT				= TRUE;
+		EVENT_WANTEDMORIPH_EVENT = TRUE;
 
 		if (iSpawnCount > 0)
 		{
@@ -464,9 +464,9 @@ void ServerCommand::SetMoriphEvent( BOOL bEnable, int iSpawnCount, int iSpawnDel
 	}
 	else
 	{
-		EVENT_WANTEDMORIPH_EVENT				= FALSE;
-		EVENT_HUNT_MAX_SPAWN			= 0;
-		EVENT_HUNT_SPAWN_DELAY_MIN		= 0;
+		EVENT_WANTEDMORIPH_EVENT = FALSE;
+		EVENT_HUNT_MAX_SPAWN = 0;
+		EVENT_HUNT_SPAWN_DELAY_MIN = 0;
 	}
 }
 
@@ -512,64 +512,64 @@ void ServerCommand::SetWolfEvent(BOOL bEnable, int iSpawnCount, int iSpawnDelayM
 	}
 }
 
-void ServerCommand::SetHalloweenEvent( BOOL b )
+void ServerCommand::SetHalloweenEvent(BOOL b)
 {
-	INI::CReader cReader( "server.ini" );
-	cReader.WriteOnOff( "Event", "Halloween", b );
-	INFO ( "EventHalloween = %d", b );
+	INI::CReader cReader("server.ini");
+	cReader.WriteOnOff("Event", "Halloween", b);
+	INFO("EventHalloween = %d", b);
 	EVENT_HALLOWEEN = b;
 	EVENT_BEE = FALSE;
 	EVENT_STARWARS = FALSE;
 
-	if ( GAME_SERVER )
+	if (GAME_SERVER)
 	{
-		NETSERVER->SyncEventStatusToLoginServer( PacketsHeader::PKTHDR_NetHallowenEvent, EVENT_HALLOWEEN );
+		NETSERVER->SyncEventStatusToLoginServer(PacketsHeader::PKTHDR_NetHallowenEvent, EVENT_HALLOWEEN);
 	}
 }
 
-void ServerCommand::SetMimicEvent ( BOOL b )
+void ServerCommand::SetMimicEvent(BOOL b)
 {
-	INI::CReader cReader ( "server.ini" );
-	cReader.WriteOnOff ( "Event", "Mimic", b );
+	INI::CReader cReader("server.ini");
+	cReader.WriteOnOff("Event", "Mimic", b);
 
 	EVENT_MIMIC = b;
-	INFO ( "EventMimic = %d", b );
+	INFO("EventMimic = %d", b);
 
-	if ( GAME_SERVER )
+	if (GAME_SERVER)
 	{
-		NETSERVER->SyncEventStatusToLoginServer( PacketsHeader::PKTHDR_NetMimicEvent, EVENT_MIMIC );
+		NETSERVER->SyncEventStatusToLoginServer(PacketsHeader::PKTHDR_NetMimicEvent, EVENT_MIMIC);
 	}
 }
 
-void ServerCommand::SetChristmasEvent ( BOOL b )
+void ServerCommand::SetChristmasEvent(BOOL b)
 {
-	INI::CReader cReader ( "server.ini" );
-	cReader.WriteOnOff ( "Event", "Christmas", b );
+	INI::CReader cReader("server.ini");
+	cReader.WriteOnOff("Event", "Christmas", b);
 
 	EVENT_CHRISTMAS = b;
 	EVENT_BEE = FALSE;
 	EVENT_STARWARS = FALSE;
 	EVENT_HALLOWEEN = FALSE;
 
-	INFO ( "EventChristmas = %d", b );
+	INFO("EventChristmas = %d", b);
 
-	if ( GAME_SERVER )
+	if (GAME_SERVER)
 	{
-		NETSERVER->SyncEventStatusToLoginServer( PacketsHeader::PKTHDR_NetChristmasEvent, EVENT_CHRISTMAS );
+		NETSERVER->SyncEventStatusToLoginServer(PacketsHeader::PKTHDR_NetChristmasEvent, EVENT_CHRISTMAS);
 	}
 }
 
-void ServerCommand::SetEventGirlFree ( BOOL b )
+void ServerCommand::SetEventGirlFree(BOOL b)
 {
-	INI::CReader cReader ( "server.ini" );
-	cReader.WriteOnOff ( "Event", "EventGirlFree", b );
+	INI::CReader cReader("server.ini");
+	cReader.WriteOnOff("Event", "EventGirlFree", b);
 
-	INFO ( "EventGirlFree = %d", b );
+	INFO("EventGirlFree = %d", b);
 	EVENT_FREEEVENTGIRL = b;
 
-	if ( GAME_SERVER )
+	if (GAME_SERVER)
 	{
-		NETSERVER->SyncEventStatusToLoginServer( PacketsHeader::PKTHDR_NetFreeEventGirl, EVENT_FREEEVENTGIRL );
+		NETSERVER->SyncEventStatusToLoginServer(PacketsHeader::PKTHDR_NetFreeEventGirl, EVENT_FREEEVENTGIRL);
 	}
 }
 
@@ -583,11 +583,11 @@ void ServerCommand::SetEasterEvent(BOOL b)
 	EVENT_CHRISTMAS = FALSE;
 	EVENT_BEE = FALSE;
 	EVENT_HALLOWEEN = FALSE;
-	INFO( "EasterEvent = %d", b );
+	INFO("EasterEvent = %d", b);
 
-	if ( GAME_SERVER )
+	if (GAME_SERVER)
 	{
-		NETSERVER->SyncEventStatusToLoginServer( PacketsHeader::PKTHDR_NetEasterEvent, EVENT_EASTER );
+		NETSERVER->SyncEventStatusToLoginServer(PacketsHeader::PKTHDR_NetEasterEvent, EVENT_EASTER);
 	}
 }
 
@@ -603,11 +603,11 @@ void ServerCommand::SetStarWarsEvent(BOOL b)
 	EVENT_CHRISTMAS = FALSE;
 	EVENT_BEE = FALSE;
 	EVENT_HALLOWEEN = FALSE;
-	INFO ( "StarWarsEvent = %d", b );
+	INFO("StarWarsEvent = %d", b);
 
-	if ( GAME_SERVER )
+	if (GAME_SERVER)
 	{
-		NETSERVER->SyncEventStatusToLoginServer( PacketsHeader::PKTHDR_NetStarWarsEvent, EVENT_STARWARS );
+		NETSERVER->SyncEventStatusToLoginServer(PacketsHeader::PKTHDR_NetStarWarsEvent, EVENT_STARWARS);
 	}
 }
 
@@ -622,11 +622,11 @@ void ServerCommand::SetBeeEvent(BOOL b)
 	EVENT_EASTER = FALSE;
 	EVENT_CHRISTMAS = FALSE;
 	EVENT_HALLOWEEN = FALSE;
-	INFO ( "BeeEvent = %d", b );
+	INFO("BeeEvent = %d", b);
 
-	if ( GAME_SERVER )
+	if (GAME_SERVER)
 	{
-		NETSERVER->SyncEventStatusToLoginServer( PacketsHeader::PKTHDR_NetBeeEvent, EVENT_BEE );
+		NETSERVER->SyncEventStatusToLoginServer(PacketsHeader::PKTHDR_NetBeeEvent, EVENT_BEE);
 	}
 }
 
@@ -712,57 +712,57 @@ void ServerCommand::SetValentineDayEvent(BOOL b)
 	}
 }
 
-void ServerCommand::SetAgingEvent( BOOL bFree, BOOL bNoBreak, BOOL bHalfPrice )
+void ServerCommand::SetAgingEvent(BOOL bFree, BOOL bNoBreak, BOOL bHalfPrice)
 {
-	INI::CReader cReader( "server.ini" );
+	INI::CReader cReader("server.ini");
 
-	cReader.WriteOnOff( "Event", "AgingFree", bFree );
-	cReader.WriteOnOff( "Event", "AgingNoBreak", bNoBreak );
-	cReader.WriteOnOff( "Event", "AgingHalfPrice", bHalfPrice );
+	cReader.WriteOnOff("Event", "AgingFree", bFree);
+	cReader.WriteOnOff("Event", "AgingNoBreak", bNoBreak);
+	cReader.WriteOnOff("Event", "AgingHalfPrice", bHalfPrice);
 
 	EVENT_AGINGFREE = bFree;
 	EVENT_AGING_NOBREAK = bNoBreak;
 	EVENT_AGING_HALFPRICE = bHalfPrice;
 }
 
-void ServerCommand::OnActivateGameMaster( User * pcUser )
+void ServerCommand::OnActivateGameMaster(User* pcUser)
 {
-	UserData * pcUserData = pcUser->pcUserData;
+	UserData* pcUserData = pcUser->pcUserData;
 
 	int iGameMasterType = 0;
 	int iGameMasterLevel = 0;
 
-	char szUserID[ 32 ] = { 0 };
+	char szUserID[32] = { 0 };
 
-	SQLConnection * pcDB = SQLCONNECTION( DATABASEID_UserDB_LocalServer_CharInfo );
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_UserDB_LocalServer_CharInfo);
 
 
-	char * pszCharName = CHARACTERSERVER->GetCharacterName( pcUser );
+	char* pszCharName = CHARACTERSERVER->GetCharacterName(pcUser);
 
-	if ( pcDB->Open() )
+	if (pcDB->Open())
 	{
-		if ( pcDB->Prepare( "SELECT AccountName FROM CharacterInfo WHERE Name=?" ) )
+		if (pcDB->Prepare("SELECT AccountName FROM CharacterInfo WHERE Name=?"))
 		{
-			pcDB->BindParameterInput( 1, PARAMTYPE_String, pszCharName, 32 );
-			if ( pcDB->Execute() && pcDB->Fetch() )
+			pcDB->BindParameterInput(1, PARAMTYPE_String, pszCharName, 32);
+			if (pcDB->Execute() && pcDB->Fetch())
 			{
-				pcDB->GetData( 1, PARAMTYPE_String, szUserID, 32 );
+				pcDB->GetData(1, PARAMTYPE_String, szUserID, 32);
 			}
 		}
 		pcDB->Close();
 	}
 
-	pcDB = SQLCONNECTION ( DATABASEID_UserDB_PrimaryServer );
+	pcDB = SQLCONNECTION(DATABASEID_UserDB_PrimaryServer);
 
-	if ( pcDB->Open() )
+	if (pcDB->Open())
 	{
-		if ( pcDB->Prepare( "SELECT GameMasterType, GameMasterLevel FROM UserInfo WHERE AccountName=?" ) )
+		if (pcDB->Prepare("SELECT GameMasterType, GameMasterLevel FROM UserInfo WHERE AccountName=?"))
 		{
-			pcDB->BindParameterInput( 1, PARAMTYPE_String, szUserID );
-			if ( pcDB->Execute() && pcDB->Fetch() )
+			pcDB->BindParameterInput(1, PARAMTYPE_String, szUserID);
+			if (pcDB->Execute() && pcDB->Fetch())
 			{
-				pcDB->GetData( 1, PARAMTYPE_Integer, &iGameMasterType );
-				pcDB->GetData( 2, PARAMTYPE_Integer, &iGameMasterLevel );
+				pcDB->GetData(1, PARAMTYPE_Integer, &iGameMasterType);
+				pcDB->GetData(2, PARAMTYPE_Integer, &iGameMasterLevel);
 			}
 		}
 		pcDB->Close();
@@ -771,7 +771,7 @@ void ServerCommand::OnActivateGameMaster( User * pcUser )
 	if (iGameMasterType && (iGameMasterLevel >= GAMELEVEL_One))
 	{
 		pcUser->pcUserData->iGameLevel = (EGameLevel)iGameMasterLevel;
-		CHATSERVER->SendChatEx( pcUser, EChatColor::CHATCOLOR_White, "> GM level %d activated!", iGameMasterLevel );
+		CHATSERVER->SendChatEx(pcUser, EChatColor::CHATCOLOR_White, "> GM level %d activated!", iGameMasterLevel);
 	}
 	else
 	{
@@ -779,12 +779,12 @@ void ServerCommand::OnActivateGameMaster( User * pcUser )
 		iGameMasterLevel = EGameLevel::GAMELEVEL_None;
 	}
 
-	NETSERVER->SyncGameMaster( pcUserData );
+	NETSERVER->SyncGameMaster(pcUserData);
 }
 
-BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuff )
+BOOL ServerCommand::OnGameMasterAdminCommand(User* pcUser, const char* pszBuff)
 {
-	UserData * pcUserData = pcUser->pcUserData;
+	UserData* pcUserData = pcUser->pcUserData;
 
 	int iLen = 0;
 
@@ -797,226 +797,226 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 
 	//Usage: /!unmute_and_reset <char name>
 	//WARNING - This also clears out all existing strikes that the account has
-	if ( iLen = COMMAND( "/!unmute_and_reset", pszBuff ) )
+	if (iLen = COMMAND("/!unmute_and_reset", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			ACCOUNTSERVER->UnmuteAccountByCharacterName( pcUser, szCommandParam1, TRUE );
+			ACCOUNTSERVER->UnmuteAccountByCharacterName(pcUser, szCommandParam1, TRUE);
 			return TRUE;
 		}
 		else
 		{
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Usage: /!unmute_and_reset <char name>" );
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Usage: /!unmute_and_reset <char name>");
 		}
 
 		return TRUE;
 	}
 
-	else if ( COMMAND( "/rarity_update", pszBuff ) || COMMAND( "/Rarity_Update", pszBuff ) )
+	else if (COMMAND("/rarity_update", pszBuff) || COMMAND("/rarity_update", pszBuff))
 	{
 		ITEMSERVER->UpdateItemRarity();
-		CHATSERVER->SendChatAllGM( "GM > Pulled rarity values from DB" );
+		CHATSERVER->SendChatAllGM("GM > Pulled rarity values from DB");
 	}
 
-	else if (COMMAND("/specmod_update", pszBuff) || COMMAND("/SpecMod_Update", pszBuff))
+	else if (COMMAND("/specmod_update", pszBuff) || COMMAND("/specmod_update", pszBuff))
 	{
 		ITEMSERVER->GetItemSpecMod();
 		CHATSERVER->SendChatAllGM("GM > Pulled spec mod values from DB");
 	}
 
-	else if (COMMAND("/baseline_update", pszBuff) || COMMAND("/Baseline_Update", pszBuff))
+	else if (COMMAND("/baseline_update", pszBuff) || COMMAND("/baseline_update", pszBuff))
 	{
 		ITEMSERVER->GetBaselineMod();
 		CHATSERVER->SendChatAllGM("GM > Pulled baseline values from DB");
 	}
 
 
-	else if ( COMMAND( "/rarity_mod_update", pszBuff ) || COMMAND( "/Rarity_Mod_Update", pszBuff ) )
+	else if (COMMAND("/rarity_mod_update", pszBuff) || COMMAND("/rarity_mod_update", pszBuff))
 	{
 		ITEMSERVER->UpdateItemRarityMods();
-		CHATSERVER->SendChatAllGM( "GM > Pulled rarity mods from DB" );
+		CHATSERVER->SendChatAllGM("GM > Pulled rarity mods from DB");
 	}
-	else if ( COMMAND( "/rarity_get", pszBuff ) || COMMAND( "/Rarity_Get", pszBuff ) )
+	else if (COMMAND("/rarity_get", pszBuff) || COMMAND("/rarity_get", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) &&
-			GetParameterString( pszBuff, 2, szCommandParam2 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) &&
+			GetParameterString(pszBuff, 2, szCommandParam2))
 		{
-			int RarityGroup = atoi( szCommandParam1 );
-			int Rarity = atoi( szCommandParam2 );
+			int RarityGroup = atoi(szCommandParam1);
+			int Rarity = atoi(szCommandParam2);
 
-			int ReturnChance = ITEMSERVER->GetRarityChance( RarityGroup, Rarity );
+			int ReturnChance = ITEMSERVER->GetRarityChance(RarityGroup, Rarity);
 
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_White, "> Chance: %d in 10000 ", ReturnChance );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_White, "> Chance: %d in 10000 ", ReturnChance);
 		}
 	}
 
-	else if ( COMMAND( "/rarity_set", pszBuff ) || COMMAND( "/Rarity_Set", pszBuff ) )
+	else if (COMMAND("/rarity_set", pszBuff) || COMMAND("/rarity_set", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) &&
-			GetParameterString( pszBuff, 2, szCommandParam2 ) &&
-			GetParameterString( pszBuff, 3, szCommandParam3 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) &&
+			GetParameterString(pszBuff, 2, szCommandParam2) &&
+			GetParameterString(pszBuff, 3, szCommandParam3))
 		{
-			int RarityGroup = atoi( szCommandParam1 );
-			int Rarity = atoi( szCommandParam2 );
-			int Chance = atoi( szCommandParam3 );
+			int RarityGroup = atoi(szCommandParam1);
+			int Rarity = atoi(szCommandParam2);
+			int Chance = atoi(szCommandParam3);
 
-			ITEMSERVER->SetRarityDB( RarityGroup, Rarity, Chance );
+			ITEMSERVER->SetRarityDB(RarityGroup, Rarity, Chance);
 
-			CHATSERVER->SendChatAllGM( "GM> Updated Rarity Chance in DB" );
+			CHATSERVER->SendChatAllGM("GM> Updated Rarity Chance in DB");
 
 			ITEMSERVER->UpdateItemRarity();
 		}
 	}
 
 #ifdef ITEMFIXES
-	else if ( COMMAND( "/affix_update", pszBuff ) || COMMAND( "/Affix_Update", pszBuff ) )
+	else if (COMMAND("/affix_update", pszBuff) || COMMAND("/affix_update", pszBuff))
 	{
-		ITEMSERVER->UpdateItemFixes( SQLCONNECTION( DATABASEID_GameDB ) );
-		CHATSERVER->SendChat( pcUser, CHATCOLOR_White, "> Pulled affixes values from DB" );
+		ITEMSERVER->UpdateItemFixes(SQLCONNECTION(DATABASEID_GameDB));
+		CHATSERVER->SendChat(pcUser, CHATCOLOR_White, "> Pulled affixes values from DB");
 	}
 #endif
 
-	else if ( iLen = COMMAND( "/quest_npc_reload", pszBuff ) )
+	else if (iLen = COMMAND("/quest_npc_reload", pszBuff))
 	{
 		QUESTSERVER->LoadNPCQuests();
 
 		//also reload login server quest data
-		if ( GAME_SERVER )
+		if (GAME_SERVER)
 		{
-			CHATSERVER->SendChatAllGM( "GM> NPC Quests reloaded" );
-			NETSERVER->SendGMCommandToLoginServer( pcUser, pszBuff );
+			CHATSERVER->SendChatAllGM("GM> NPC Quests reloaded");
+			NETSERVER->SendGMCommandToLoginServer(pcUser, pszBuff);
 		}
 	}
-	else if ( iLen = COMMAND( "/force_night_mode", pszBuff ) ) //dev experiemental only
+	else if (iLen = COMMAND("/force_night_mode", pszBuff)) //dev experiemental only
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			MAPSERVER->ForceNightMode( atoi( szCommandParam1 ) >= 1 );
+			MAPSERVER->ForceNightMode(atoi(szCommandParam1) >= 1);
 		}
 	}
-	else if ( iLen = COMMAND( "/force_day_mode", pszBuff ) ) //dev  experiemental only
+	else if (iLen = COMMAND("/force_day_mode", pszBuff)) //dev  experiemental only
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			MAPSERVER->ForceDayMode( atoi( szCommandParam1 ) >= 1 );
+			MAPSERVER->ForceDayMode(atoi(szCommandParam1) >= 1);
 		}
 	}
-	else if ( iLen = COMMAND( "/testmap_hp", pszBuff ) )
+	else if (iLen = COMMAND("/testmap_hp", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			TESTMAPHANDLER->SetMonsterHP( atoi( szCommandParam1 ) );
+			TESTMAPHANDLER->SetMonsterHP(atoi(szCommandParam1));
 			TESTMAPHANDLER->Reset();
-			TESTMAPHANDLER->SpawnTestMonstersDps( pcUser );
+			TESTMAPHANDLER->SpawnTestMonstersDps(pcUser);
 		}
 	}
-	else if ( iLen = COMMAND( "/testmap_mon", pszBuff ) )
+	else if (iLen = COMMAND("/testmap_mon", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			CharacterData * psCharacterData = UNITSERVER->GetCharacterDataByName( szCommandParam1 );
-			UnitInfo * psUnitInfo = psCharacterData != NULL ? psCharacterData->psUnitInfo : NULL;
+			CharacterData* psCharacterData = UNITSERVER->GetCharacterDataByName(szCommandParam1);
+			UnitInfo* psUnitInfo = psCharacterData != NULL ? psCharacterData->psUnitInfo : NULL;
 
-			if ( psCharacterData && psUnitInfo )
+			if (psCharacterData && psUnitInfo)
 			{
-				TESTMAPHANDLER->SetTestMonsterName( szCommandParam1 );
+				TESTMAPHANDLER->SetTestMonsterName(szCommandParam1);
 				TESTMAPHANDLER->Reset();
 				//TESTMAPHANDLER->SpawnTestMonstersAoE( pcUser );
-				CHATSERVER->SendChatAllGM( "TestMap> Mon set to: '%s'", szCommandParam1 );
+				CHATSERVER->SendChatAllGM("TestMap> Mon set to: '%s'", szCommandParam1);
 			}
 			else
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "TestMap> Monster does not exist: '%s'", szCommandParam1 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "TestMap> Monster does not exist: '%s'", szCommandParam1);
 			}
 		}
 		else
 		{
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "TestMap> Current monster: '%s'", TESTMAPHANDLER->GetTestMonsterName().c_str() );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "TestMap> Current monster: '%s'", TESTMAPHANDLER->GetTestMonsterName().c_str());
 		}
 
 		return TRUE;
 	}
-	else if ( COMMAND( "/testmap_dps", pszBuff ) )
+	else if (COMMAND("/testmap_dps", pszBuff))
 	{
 		TESTMAPHANDLER->ClearUnitsFromMap();
-		TESTMAPHANDLER->SpawnTestMonstersDps( pcUser );
-		CHATSERVER->SendChatAllGM( "TestMap> DPS Mode Active" );
+		TESTMAPHANDLER->SpawnTestMonstersDps(pcUser);
+		CHATSERVER->SendChatAllGM("TestMap> DPS Mode Active");
 
 		return TRUE;
 	}
-	else if ( iLen = COMMAND( "/testmap_reset", pszBuff ) )
+	else if (iLen = COMMAND("/testmap_reset", pszBuff))
 	{
 		TESTMAPHANDLER->Reset();
 	}
 
-	if ( iLen = COMMAND( "/skills_update_everyone", pszBuff ) )
+	if (iLen = COMMAND("/skills_update_everyone", pszBuff))
 	{
-		if ( GAME_SERVER )
+		if (GAME_SERVER)
 		{
 			CheckAndReSyncSkillsInfoForEveryone();
 			CheckAndReSyncSkillsDataforEveryone();
-			CHATSERVER->SendChatAllGM( "GM> Skills updated For everyone!" );
+			CHATSERVER->SendChatAllGM("GM> Skills updated For everyone!");
 		}
 
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/giveitem", pszBuff ) )
+	if (iLen = COMMAND("/giveitem", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) &&
-			GetParameterString( pszBuff, 2, szCommandParam2 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) &&
+			GetParameterString(pszBuff, 2, szCommandParam2))
 		{
 			Item sItem;
-			auto psDef = ITEMSERVER->FindItemDefByCode( szCommandParam2 );
+			auto psDef = ITEMSERVER->FindItemDefByCode(szCommandParam2);
 
-			if ( psDef )
+			if (psDef)
 			{
-				int iAccountId = USERSERVER->SQLGetAccountID( szCommandParam1 );
+				int iAccountId = USERSERVER->SQLGetAccountID(szCommandParam1);
 
 				//Account exists?
-				if ( iAccountId != -1 )
+				if (iAccountId != -1)
 				{
-					ITEMSERVER->AddItemOpenBox( szCommandParam1, szCommandParam2, 0, 1 );
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Item Distributor: Added '%s' for '%s'", szCommandParam2, szCommandParam1 );
+					ITEMSERVER->AddItemOpenBox(szCommandParam1, szCommandParam2, 0, 1);
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Item Distributor: Added '%s' for '%s'", szCommandParam2, szCommandParam1);
 
-					UserData * userData = USERDATABYACCOUNTNAME( szCommandParam1 );
+					UserData* userData = USERDATABYACCOUNTNAME(szCommandParam1);
 
 					//user is online ?
-					if ( ( userData != NULL ) )
+					if ((userData != NULL))
 					{
-						auto u = USERDATATOUSER( userData );
-						CHATSERVER->SendChat( u, CHATCOLOR_Global, "GM> You received an item. Go to Item Distributon in town to collect your item." );
+						auto u = USERDATATOUSER(userData);
+						CHATSERVER->SendChat(u, CHATCOLOR_Global, "GM> You received an item. Go to Item Distributon in town to collect your item.");
 					}
 					else
 					{
-						LOGSERVER->OnLogItemEx( pcUser,
+						LOGSERVER->OnLogItemEx(pcUser,
 							ITEMLOGID_ItemGivenToUserByGM,
 							"Item '%s' added to Item Distributor from GM '%s'",
 							szCommandParam2,
-							CHARACTERSERVER->GetCharacterName( pcUser ) );
+							CHARACTERSERVER->GetCharacterName(pcUser));
 					}
 				}
 				else
 				{
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Account does not exist:  '%s'", szCommandParam1 );
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Account does not exist:  '%s'", szCommandParam1);
 				}
 			}
 			else
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Invalid item code:  '%s'", szCommandParam2 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Invalid item code:  '%s'", szCommandParam2);
 			}
 		}
 		else
 		{
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Syntax: /giveitem <account id> <item code>" );
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Syntax: /giveitem <account id> <item code>");
 		}
 
 		return TRUE;
 	}
 
-	else if ( COMMAND( "/getquestitem", pszBuff ) )
+	else if (COMMAND("/getquestitem", pszBuff))
 	{
-		if ( GAME_SERVER )
+		if (GAME_SERVER)
 		{
 			NETSERVER->SendGMCommandToLoginServer(pcUser, pszBuff);
 			return TRUE;
@@ -1024,39 +1024,39 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 
 		//1st parm is fs or as or ms etc
 		//2nd parm is starting age level
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) && GetParameterString( pszBuff, 2, szCommandParam2 ))
+		if (GetParameterString(pszBuff, 1, szCommandParam1) && GetParameterString(pszBuff, 2, szCommandParam2))
 		{
-			int iRankNum = atoi( szCommandParam2 );
-			if ( iRankNum > 5 )
+			int iRankNum = atoi(szCommandParam2);
+			if (iRankNum > 5)
 				iRankNum = 5;
 
-			auto charClass = ClassShortStrToCharacterClass( szCommandParam1 );
-			const std::string itemCode = GetCharacterTier3QuestItem( charClass );
+			auto charClass = ClassShortStrToCharacterClass(szCommandParam1);
+			const std::string itemCode = GetCharacterTier3QuestItem(charClass);
 
 			Item sItem;
-			if ( QUESTSERVER->GetQuestWeapon( pcUser, &sItem, itemCode, iRankNum ) )
+			if (QUESTSERVER->GetQuestWeapon(pcUser, &sItem, itemCode, iRankNum))
 			{
-				ITEMSERVER->SendItemData( pcUser->pcUserData, &sItem, TRUE );
-				ITEMSERVER->AddItemInventory( pcUser->pcUserData, &sItem );
+				ITEMSERVER->SendItemData(pcUser->pcUserData, &sItem, TRUE);
+				ITEMSERVER->AddItemInventory(pcUser->pcUserData, &sItem);
 
-				CHATSERVER->SendChatAllGM( "GM> Get Quest Item: %s", sItem.szItemName );
+				CHATSERVER->SendChatAllGM("GM> Get Quest Item: %s", sItem.szItemName);
 			}
 		}
 	}
 
 	//override the EXE one
-	else if (COMMAND ( "/getitem", pszBuff) ||
-			 COMMAND ( "/getitemold", pszBuff ) )
+	else if (COMMAND("/getitem", pszBuff) ||
+		COMMAND("/getitemold", pszBuff))
 	{
-		if ( GAME_SERVER )
+		if (GAME_SERVER)
 		{
 			NETSERVER->SendGMCommandToLoginServer(pcUser, pszBuff);
 		}
 		else
 		{
-			if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+			if (GetParameterString(pszBuff, 1, szCommandParam1))
 			{
-				BOOL bIsOld = COMMAND( "/getitemold", pszBuff );
+				BOOL bIsOld = COMMAND("/getitemold", pszBuff);
 
 				ECharacterClass charClass = ECharacterClass::CHARACTERCLASS_None; //Default = 0 = random spec, including non-spec
 				int iSpecAtkRating = 0;
@@ -1064,79 +1064,79 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 				int iItemRarity = 0;
 				BOOL bPerfect = FALSE;
 
-				if ( GetParameterString( pszBuff, 2, szCommandParam2 ) )
+				if (GetParameterString(pszBuff, 2, szCommandParam2))
 				{
-					charClass = ClassShortStrToCharacterClass( szCommandParam2 );
+					charClass = ClassShortStrToCharacterClass(szCommandParam2);
 				}
 
-				if ( GetParameterString( pszBuff, 3, szCommandParam3 ) )
+				if (GetParameterString(pszBuff, 3, szCommandParam3))
 				{
-					iSpecAtkRating = atoi( szCommandParam3 );
+					iSpecAtkRating = atoi(szCommandParam3);
 
 					//validate
-					if ( iSpecAtkRating < 1 || iSpecAtkRating > 3 )
+					if (iSpecAtkRating < 1 || iSpecAtkRating > 3)
 						iSpecAtkRating = 0;
 				}
 
-				if ( GetParameterString( pszBuff, 4, szCommandParam4 ) )
+				if (GetParameterString(pszBuff, 4, szCommandParam4))
 				{
-					iItemAge = atoi( szCommandParam4 );
+					iItemAge = atoi(szCommandParam4);
 
 					//validate
-					if ( iItemAge < 1 || iItemAge > 20 )
+					if (iItemAge < 1 || iItemAge > 20)
 						iItemAge = 0;
 				}
 
-				if ( GetParameterString( pszBuff, 5, szCommandParam5 ) )
+				if (GetParameterString(pszBuff, 5, szCommandParam5))
 				{
-					iItemRarity = atoi( szCommandParam5 );
+					iItemRarity = atoi(szCommandParam5);
 
 					//validate
-					if ( iItemRarity < 0 || iItemRarity > 5 )
+					if (iItemRarity < 0 || iItemRarity > 5)
 						iItemRarity = 0;
 				}
 
-				if ( GetParameterString( pszBuff, 6, szCommandParam6 ) )
+				if (GetParameterString(pszBuff, 6, szCommandParam6))
 				{
-					int iValue = atoi( szCommandParam6 );
+					int iValue = atoi(szCommandParam6);
 
-					if ( iValue == 1 )
+					if (iValue == 1)
 						bPerfect = TRUE;
 				}
 
 				Item sItem;
-				auto psDef = bIsOld ? ITEMSERVER->FindOldItemDefByCode( szCommandParam1 ) : ITEMSERVER->FindItemDefByCode( szCommandParam1 );
-				if ( psDef )
+				auto psDef = bIsOld ? ITEMSERVER->FindOldItemDefByCode(szCommandParam1) : ITEMSERVER->FindItemDefByCode(szCommandParam1);
+				if (psDef)
 				{
-					ZeroMemory( &sItem, sizeof( Item ) );
+					ZeroMemory(&sItem, sizeof(Item));
 
-					EItemRarity CurrentRarity = static_cast<EItemRarity>( iItemRarity );
+					EItemRarity CurrentRarity = static_cast<EItemRarity>(iItemRarity);
 
-					if ( bPerfect )
+					if (bPerfect)
 					{
-						*(UINT *)0x8B70264 = 1;
-						*(UINT *)0x8B70268 = charClass;
-						ITEMSERVER->CreateItem( &sItem, psDef, EItemSource::GameMaster, charClass, iSpecAtkRating, iItemAge );
-						*(UINT *)0x8B70264 = 0;
-						*(UINT *)0x8B70268 = 0;
+						*(UINT*)0x8B70264 = 1;
+						*(UINT*)0x8B70268 = charClass;
+						ITEMSERVER->CreateItem(&sItem, psDef, EItemSource::GameMaster, charClass, iSpecAtkRating, iItemAge);
+						*(UINT*)0x8B70264 = 0;
+						*(UINT*)0x8B70268 = 0;
 
-						ITEMSERVER->OnSetItemPerfect( &sItem );
+						ITEMSERVER->OnSetItemPerfect(&sItem);
 
 						sItem.iItemSpecialType = 1;
 					}
 					else
 					{
-						ITEMSERVER->CreateItem( &sItem, psDef, EItemSource::GameMaster, charClass, iSpecAtkRating, iItemAge, CurrentRarity );
+						ITEMSERVER->CreateItem(&sItem, psDef, EItemSource::GameMaster, charClass, iSpecAtkRating, iItemAge, CurrentRarity);
 					}
 
-					ITEMSERVER->ReformItem( &sItem );
-					ITEMSERVER->SendItemData( pcUser->pcUserData, &sItem, TRUE );
-					ITEMSERVER->AddItemInventory( pcUser->pcUserData, &sItem );
-					CHATSERVER->SendChatAllGM( "GM> Get Item: %s", sItem.szItemName );
+					ITEMSERVER->ReformItem(&sItem);
+					ITEMSERVER->SendItemData(pcUser->pcUserData, &sItem, TRUE);
+					ITEMSERVER->AddItemInventory(pcUser->pcUserData, &sItem);
+					CHATSERVER->SendChatAllGM("GM> Get Item: %s", sItem.szItemName);
 				}
 				else
 				{
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Get Item Failed for: '%s'", szCommandParam1 );
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Get Item Failed for: '%s'", szCommandParam1);
 				}
 			}
 		}
@@ -1153,8 +1153,8 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			if (iCount < 1)   iCount = 1;
 			if (iCount > 300) iCount = 300;
 
-			ITEMSERVER->SendPotions( pcUser, ITEMID_ManaGrand, iCount, EItemSource::GameMaster, TRUE );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Grand mana potions x%d received!", iCount );
+			ITEMSERVER->SendPotions(pcUser, ITEMID_ManaGrand, iCount, EItemSource::GameMaster, TRUE);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Grand mana potions x%d received!", iCount);
 			return TRUE;
 		}
 	}
@@ -1168,8 +1168,8 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			if (iCount < 1)   iCount = 1;
 			if (iCount > 300) iCount = 300;
 
-			ITEMSERVER->SendPotions( pcUser, ITEMID_HealthGrand, iCount, EItemSource::GameMaster, TRUE );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Grand health potions x%d received!", iCount );
+			ITEMSERVER->SendPotions(pcUser, ITEMID_HealthGrand, iCount, EItemSource::GameMaster, TRUE);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Grand health potions x%d received!", iCount);
 
 			return TRUE;
 		}
@@ -1184,8 +1184,8 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			if (iCount < 1)   iCount = 1;
 			if (iCount > 300) iCount = 300;
 
-			ITEMSERVER->SendPotions( pcUser, ITEMID_StaminaGrand, iCount, EItemSource::GameMaster, TRUE );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Grand stamina potions x%d received!", iCount );
+			ITEMSERVER->SendPotions(pcUser, ITEMID_StaminaGrand, iCount, EItemSource::GameMaster, TRUE);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Grand stamina potions x%d received!", iCount);
 
 			return TRUE;
 		}
@@ -1200,8 +1200,8 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			if (iCount < 1)   iCount = 1;
 			if (iCount > 300) iCount = 300;
 
-			ITEMSERVER->SendPotions( pcUser, ITEMID_ManaMystic, iCount, EItemSource::GameMaster, TRUE );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Mystic mana potions x%d received!", iCount );
+			ITEMSERVER->SendPotions(pcUser, ITEMID_ManaMystic, iCount, EItemSource::GameMaster, TRUE);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Mystic mana potions x%d received!", iCount);
 			return TRUE;
 		}
 	}
@@ -1215,8 +1215,8 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			if (iCount < 1)   iCount = 1;
 			if (iCount > 300) iCount = 300;
 
-			ITEMSERVER->SendPotions( pcUser, ITEMID_HealthMystic, iCount, EItemSource::GameMaster, TRUE );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Mystic health potions x%d received!", iCount );
+			ITEMSERVER->SendPotions(pcUser, ITEMID_HealthMystic, iCount, EItemSource::GameMaster, TRUE);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Mystic health potions x%d received!", iCount);
 			return TRUE;
 		}
 	}
@@ -1230,12 +1230,12 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			if (iCount < 1)   iCount = 1;
 			if (iCount > 300) iCount = 300;
 
-			ITEMSERVER->SendPotions( pcUser, ITEMID_StaminaMystic, iCount, EItemSource::GameMaster, TRUE );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Mystic stamina potions x%d received!", iCount );
+			ITEMSERVER->SendPotions(pcUser, ITEMID_StaminaMystic, iCount, EItemSource::GameMaster, TRUE);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Mystic stamina potions x%d received!", iCount);
 			return TRUE;
 		}
 	}
-	else if ( (iLen = COMMAND( "/add_map_indicator_script", pszBuff )) ) //see "/add_map_arrow" etc on client side
+	else if ((iLen = COMMAND("/add_map_indicator_script", pszBuff))) //see "/add_map_arrow" etc on client side
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1) &&
 			GetParameterString(pszBuff, 2, szCommandParam2) &&
@@ -1244,29 +1244,29 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			GetParameterString(pszBuff, 5, szCommandParam5) &&
 			GetParameterString(pszBuff, 6, szCommandParam6))
 		{
-			int iMapID		   = atoi(szCommandParam1);
-			auto iType		   = (MapIndicator::Type)atoi(szCommandParam2);
-			int iValue		   = atoi(szCommandParam3);
-			int iCompactPosX   = atoi(szCommandParam4);
-			int iCompactPosZ   = atoi(szCommandParam5);
-			int iAngleY		   = atoi(szCommandParam6);
+			int iMapID = atoi(szCommandParam1);
+			auto iType = (MapIndicator::Type)atoi(szCommandParam2);
+			int iValue = atoi(szCommandParam3);
+			int iCompactPosX = atoi(szCommandParam4);
+			int iCompactPosZ = atoi(szCommandParam5);
+			int iAngleY = atoi(szCommandParam6);
 
-			if ( MAPSERVER->AddMapIndicator( pcUser, iMapID, iType, iValue, iCompactPosX, iCompactPosZ, iAngleY ) )
+			if (MAPSERVER->AddMapIndicator(pcUser, iMapID, iType, iValue, iCompactPosX, iCompactPosZ, iAngleY))
 			{
-				if ( iType == MapIndicator::Type::NextMapArrow )
+				if (iType == MapIndicator::Type::NextMapArrow)
 				{
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Map indicator added at current pos for next map = %s (%d)", pszaMapsName[iValue], iValue );
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Map indicator added at current pos for next map = %s (%d)", pszaMapsName[iValue], iValue);
 				}
 				else
 				{
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Map indicator added at current pos for type %d", iType );
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Map indicator added at current pos for type %d", iType);
 				}
 			}
 		}
 	}
-	else if ( (iLen = COMMAND( "/remove_map_indicator", pszBuff )) || (iLen = COMMAND( "/remove_map_icon", pszBuff )) )
+	else if ((iLen = COMMAND("/remove_map_indicator", pszBuff)) || (iLen = COMMAND("/remove_map_icon", pszBuff)))
 	{
-		if ( MAPSERVER->RemoveMapIndicatorNearMe( pcUser ) )
+		if (MAPSERVER->RemoveMapIndicatorNearMe(pcUser))
 		{
 			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Removed nearby indicator!");
 		}
@@ -1275,7 +1275,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Remove nearby indicator failed! None existed within 20 meters.");
 		}
 	}
-	else if (iLen = COMMAND("/GetGold", pszBuff))
+	else if (iLen = COMMAND("/get_gold", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -1285,102 +1285,102 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/UpdateQuestActiveEvent", pszBuff ) )
+	if (iLen = COMMAND("/update_quest_active_event", pszBuff))
 	{
 		//QUESTSERVER->UpdateQuestActiveMonsterKill();
 		//CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Done!" );
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/viewsocket", pszBuff ) )
+	if (iLen = COMMAND("/viewsocket", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
 			//ServerCore::UpdateCharacterItemsLevel( "C:\\Server\\Login\\Data", szCommandParam1 );
 
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Done!" );
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Done!");
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/SetToggleSocketFull", pszBuff ) )
+	if (iLen = COMMAND("/set_toggle_socket_full", pszBuff))
 	{
 
-		SOCKETSERVER->SetFull( !SOCKETSERVER->IsFull() );
-		CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> [%s]", SOCKETSERVER->IsFull() ? "TRUE" : "FALSE" );
+		SOCKETSERVER->SetFull(!SOCKETSERVER->IsFull());
+		CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> [%s]", SOCKETSERVER->IsFull() ? "TRUE" : "FALSE");
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/!SetToggleSocketFull", pszBuff ) )
+	if (iLen = COMMAND("/!set_toggle_socket_full", pszBuff))
 	{
 
-		SOCKETSERVER->SetFull( !SOCKETSERVER->IsFull() );
-		CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> [%s]", SOCKETSERVER->IsFull() ? "TRUE" : "FALSE" );
+		SOCKETSERVER->SetFull(!SOCKETSERVER->IsFull());
+		CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> [%s]", SOCKETSERVER->IsFull() ? "TRUE" : "FALSE");
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/SetUsersOnlineMax", pszBuff ) )
+	if (iLen = COMMAND("/set_users_online_max", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			MAX_USERS = atoi( szCommandParam1 );
-			if ( MAX_USERS < 1 )
+			MAX_USERS = atoi(szCommandParam1);
+			if (MAX_USERS < 1)
 				MAX_USERS = 1;
 
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> [%d]", MAX_USERS );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> [%d]", MAX_USERS);
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/!viewsocket", pszBuff ) )
+	if (iLen = COMMAND("/!viewsocket", pszBuff))
 	{
 		//ServerCore::UpdateCharacterItemsLevelAll();
-		CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Done!" );
+		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Done!");
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/LeakMonsterTest", pszBuff ) )
+	if (iLen = COMMAND("/leak_monster_test", pszBuff))
 	{
 		// Is User Alive?
-		GetParameterString( pszBuff, 1, szCommandParam1 ); // ID
-		UnitData * pcUnitData = UNITDATABYIDMAP( atoi( szCommandParam1 ), pcUser->pcUserData->iMapID );
-		if ( pcUnitData )
+		GetParameterString(pszBuff, 1, szCommandParam1); // ID
+		UnitData* pcUnitData = UNITDATABYIDMAP(atoi(szCommandParam1), pcUser->pcUserData->iMapID);
+		if (pcUnitData)
 		{
 			pcUnitData->psaDamageUsersData = new AttackDamageData[ATTACK_DAMAGE_MAX];
-			if ( pcUnitData->psaDamageUsersData )
-				ZeroMemory( pcUnitData->psaDamageUsersData, sizeof( AttackDamageData ) * ATTACK_DAMAGE_MAX );
+			if (pcUnitData->psaDamageUsersData)
+				ZeroMemory(pcUnitData->psaDamageUsersData, sizeof(AttackDamageData) * ATTACK_DAMAGE_MAX);
 
 			pcUnitData->dwLastActiveTime = TICKCOUNT + (6 * 60 * 1000);
 			pcUnitData->dwUpdateCharInfoTime = 0;
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND ( "/GetTickCount", pszBuff ) )
+	if (iLen = COMMAND("/get_tick_count", pszBuff))
 	{
-		CHATSERVER->SendChatEx ( pcUser, CHATCOLOR_White, "> Current TICKCOUNT Is %d!", TICKCOUNT );
+		CHATSERVER->SendChatEx(pcUser, CHATCOLOR_White, "> Current TICKCOUNT Is %d!", TICKCOUNT);
 		return TRUE;
 	}
 
 
 
-	if( iLen = COMMAND( "/event_agingfree", pszBuff ) )
+	if (iLen = COMMAND("/event_agingfree", pszBuff))
 	{
-		if( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if( STRINGCOMPAREI( szCommandParam1, "true" ) )
+			if (STRINGCOMPAREI(szCommandParam1, "true"))
 			{
-				SetAgingEvent( TRUE, EVENT_AGING_NOBREAK, EVENT_AGING_HALFPRICE );
-				NETSERVER->SetAgingEvent( TRUE, EVENT_AGING_NOBREAK, EVENT_AGING_HALFPRICE);
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Aging Free Event ON!" );
+				SetAgingEvent(TRUE, EVENT_AGING_NOBREAK, EVENT_AGING_HALFPRICE);
+				NETSERVER->SetAgingEvent(TRUE, EVENT_AGING_NOBREAK, EVENT_AGING_HALFPRICE);
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Aging Free Event ON!");
 			}
-			else if( STRINGCOMPAREI( szCommandParam1, "false" ) )
+			else if (STRINGCOMPAREI(szCommandParam1, "false"))
 			{
-				SetAgingEvent( FALSE, EVENT_AGING_NOBREAK, EVENT_AGING_HALFPRICE);
-				NETSERVER->SetAgingEvent( FALSE, EVENT_AGING_NOBREAK, EVENT_AGING_HALFPRICE);
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Aging Free Event OFF!" );
+				SetAgingEvent(FALSE, EVENT_AGING_NOBREAK, EVENT_AGING_HALFPRICE);
+				NETSERVER->SetAgingEvent(FALSE, EVENT_AGING_NOBREAK, EVENT_AGING_HALFPRICE);
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Aging Free Event OFF!");
 			}
 			else
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Use: /event_agingfree <true|false> [%s]", EVENT_AGINGFREE ? "On" : "Off" );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /event_agingfree <true|false> [%s]", EVENT_AGINGFREE ? "On" : "Off");
 		}
 		else
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Use: /event_agingfree <true|false> [%s]", EVENT_AGINGFREE ? "On" : "Off" );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /event_agingfree <true|false> [%s]", EVENT_AGINGFREE ? "On" : "Off");
 
 		return TRUE;
 	}
@@ -1440,122 +1440,122 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 
 
 	//Event Girl
-	if ( COMMAND ( "/event_girl", pszBuff ) )
+	if (COMMAND("/event_girl", pszBuff))
 	{
-		if ( GetParameterString ( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( STRINGCOMPAREI ( "true", szCommandParam1 ) )
+			if (STRINGCOMPAREI("true", szCommandParam1))
 			{
-				CHATSERVER->SendChat ( pcUser, EChatColor::CHATCOLOR_Error, "> Event Girl Free: ON!" );
-				SetEventGirlFree ( TRUE );
+				CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_Error, "> Event Girl Free: ON!");
+				SetEventGirlFree(TRUE);
 			}
-			else if ( STRINGCOMPAREI ( "false", szCommandParam1 ) )
+			else if (STRINGCOMPAREI("false", szCommandParam1))
 			{
-				CHATSERVER->SendChat ( pcUser, EChatColor::CHATCOLOR_Error, "> Event Girl Free: OFF!" );
-				SetEventGirlFree ( FALSE );
+				CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_Error, "> Event Girl Free: OFF!");
+				SetEventGirlFree(FALSE);
 			}
 			else
-				CHATSERVER->SendChatEx ( pcUser, EChatColor::CHATCOLOR_Error, "> Usage: /event_girl <true|false> [%s]", EVENT_FREEEVENTGIRL == TRUE ? "ON" : "OFF" );
+				CHATSERVER->SendChatEx(pcUser, EChatColor::CHATCOLOR_Error, "> Usage: /event_girl <true|false> [%s]", EVENT_FREEEVENTGIRL == TRUE ? "ON" : "OFF");
 		}
 		else
-			CHATSERVER->SendChatEx ( pcUser, EChatColor::CHATCOLOR_Error, "> Usage: /event_girl <true|false> [%s]", EVENT_FREEEVENTGIRL == TRUE ? "ON" : "OFF" );
+			CHATSERVER->SendChatEx(pcUser, EChatColor::CHATCOLOR_Error, "> Usage: /event_girl <true|false> [%s]", EVENT_FREEEVENTGIRL == TRUE ? "ON" : "OFF");
 
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/event_Halloween", pszBuff ) )
+	if (iLen = COMMAND("/event_halloween", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( STRINGCOMPAREI( szCommandParam1, "true" ) )
+			if (STRINGCOMPAREI(szCommandParam1, "true"))
 			{
-				SetHalloweenEvent( TRUE );
-				HALLOWEENHANDLER->SendEventStatusToAllUsers ();
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Halloween Event ON!" );
+				SetHalloweenEvent(TRUE);
+				HALLOWEENHANDLER->SendEventStatusToAllUsers();
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Halloween Event ON!");
 			}
-			else if ( STRINGCOMPAREI( szCommandParam1, "false" ) )
+			else if (STRINGCOMPAREI(szCommandParam1, "false"))
 			{
-				SetHalloweenEvent( FALSE );
-				HALLOWEENHANDLER->SendEventStatusToAllUsers ();
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Halloween Event OFF!" );
+				SetHalloweenEvent(FALSE);
+				HALLOWEENHANDLER->SendEventStatusToAllUsers();
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Halloween Event OFF!");
 			}
 			else
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Use: /event_Halloween <true|false> [%s]", EVENT_HALLOWEEN ? "On" : "Off" );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /event_Halloween <true|false> [%s]", EVENT_HALLOWEEN ? "On" : "Off");
 		}
 		else
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Use: /event_Halloween <true|false> [%s]", EVENT_HALLOWEEN ? "On" : "Off" );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /event_Halloween <true|false> [%s]", EVENT_HALLOWEEN ? "On" : "Off");
 
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/event_MimicReload", pszBuff ) )
+	if (iLen = COMMAND("/event_mimic_reload", pszBuff))
 	{
-		if ( !EVENTSERVER->SQLLoadMimicSpawnData() )
+		if (!EVENTSERVER->SQLLoadMimicSpawnData())
 		{
-			CHATSERVER->SendChatEx ( pcUser, EChatColor::CHATCOLOR_Error, "Mimic Event has load errors. Please check console" );
+			CHATSERVER->SendChatEx(pcUser, EChatColor::CHATCOLOR_Error, "Mimic Event has load errors. Please check console");
 		}
 
-		CHATSERVER->SendChatAllGM ( "GM> Mimic Event Reloaded" );
+		CHATSERVER->SendChatAllGM("GM> Mimic Event Reloaded");
 
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND ( "/event_Mimic", pszBuff ) )
+	if (iLen = COMMAND("/event_mimic", pszBuff))
 	{
-		if ( GetParameterString ( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( STRINGCOMPAREI ( szCommandParam1, "true" ) )
+			if (STRINGCOMPAREI(szCommandParam1, "true"))
 			{
-				SetMimicEvent ( TRUE );
-				CHATSERVER->SendChatAllGM ( "GM> Mimic Event ON!" );
+				SetMimicEvent(TRUE);
+				CHATSERVER->SendChatAllGM("GM> Mimic Event ON!");
 			}
-			else if ( STRINGCOMPAREI ( szCommandParam1, "false" ) )
+			else if (STRINGCOMPAREI(szCommandParam1, "false"))
 			{
-				SetMimicEvent ( FALSE );
-				CHATSERVER->SendChatAllGM ( "GM> Mimic Event OFF!" );
+				SetMimicEvent(FALSE);
+				CHATSERVER->SendChatAllGM("GM> Mimic Event OFF!");
 			}
 			else
 			{
-				CHATSERVER->SendChatEx ( pcUser, CHATCOLOR_Error, "> Use: /event_Mimic <true|false> [Current: %s]", EVENT_MIMIC ? "On" : "Off" );
-			}
-		}
-		else
-		{
-			CHATSERVER->SendChatEx ( pcUser, CHATCOLOR_Error, "> Use: /event_Mimic <true|false> [Current: %s]", EVENT_MIMIC ? "On" : "Off" );
-		}
-
-		return TRUE;
-	}
-
-
-	if ( iLen = COMMAND ( "/event_Christmas", pszBuff ) )
-	{
-		if ( GetParameterString ( pszBuff, 1, szCommandParam1 ) )
-		{
-			if ( STRINGCOMPAREI ( szCommandParam1, "true" ) )
-			{
-				SetChristmasEvent ( TRUE );
-				CHATSERVER->SendChatAllGM ( "GM> Christmas Event ON!" );
-			}
-			else if ( STRINGCOMPAREI ( szCommandParam1, "false" ) )
-			{
-				SetChristmasEvent ( FALSE );
-				CHATSERVER->SendChatAllGM ( "GM> Christmas Event OFF!" );
-			}
-			else
-			{
-				CHATSERVER->SendChatEx ( pcUser, CHATCOLOR_Error, "> Use: /event_Christmas <true|false> [Current: %s]", EVENT_CHRISTMAS ? "On" : "Off" );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /event_Mimic <true|false> [Current: %s]", EVENT_MIMIC ? "On" : "Off");
 			}
 		}
 		else
 		{
-			CHATSERVER->SendChatEx ( pcUser, CHATCOLOR_Error, "> Use: /event_Christmas <true|false> [Current: %s]", EVENT_CHRISTMAS ? "On" : "Off" );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /event_Mimic <true|false> [Current: %s]", EVENT_MIMIC ? "On" : "Off");
 		}
 
 		return TRUE;
 	}
 
-	if (iLen = COMMAND("/event_Easter", pszBuff))
+
+	if (iLen = COMMAND("/event_christmas", pszBuff))
+	{
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
+		{
+			if (STRINGCOMPAREI(szCommandParam1, "true"))
+			{
+				SetChristmasEvent(TRUE);
+				CHATSERVER->SendChatAllGM("GM> Christmas Event ON!");
+			}
+			else if (STRINGCOMPAREI(szCommandParam1, "false"))
+			{
+				SetChristmasEvent(FALSE);
+				CHATSERVER->SendChatAllGM("GM> Christmas Event OFF!");
+			}
+			else
+			{
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /event_Christmas <true|false> [Current: %s]", EVENT_CHRISTMAS ? "On" : "Off");
+			}
+		}
+		else
+		{
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /event_Christmas <true|false> [Current: %s]", EVENT_CHRISTMAS ? "On" : "Off");
+		}
+
+		return TRUE;
+	}
+
+	if (iLen = COMMAND("/event_easter", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -1583,7 +1583,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 
-	if (iLen = COMMAND("/event_StarWars", pszBuff))
+	if (iLen = COMMAND("/event_star_wars", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -1610,7 +1610,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		return TRUE;
 	}
 
-	if (iLen = COMMAND("/event_Bee", pszBuff))
+	if (iLen = COMMAND("/event_bee", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -1637,7 +1637,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		return TRUE;
 	}
 
-	if (iLen = COMMAND("/event_Valentine", pszBuff))
+	if (iLen = COMMAND("/event_valentine", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -1664,7 +1664,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 	//For testing only!
-	if (iLen = COMMAND("/event_HuntMinSpawnDist", pszBuff))
+	if (iLen = COMMAND("/event_hunt_min_spawn_dist", pszBuff))
 	{
 		if (GAME_SERVER)
 		{
@@ -1677,7 +1677,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-	if ( iLen = COMMAND( "/event_WantedMoriph", pszBuff ) )
+	if (iLen = COMMAND("/event_wanted_moriph", pszBuff))
 	{
 		if (GAME_SERVER)
 		{
@@ -1690,15 +1690,15 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 				}
 
 				//Only if needed. Titles are given out on event's end. See below
-				else if ( STRINGCOMPAREI ( szCommandParam1, "titles" ) )
+				else if (STRINGCOMPAREI(szCommandParam1, "titles"))
 				{
-					if ( EVENTSERVER->GiveWantedMoriphTitles () )
+					if (EVENTSERVER->GiveWantedMoriphTitles())
 					{
-						CHATSERVER->SendChatAllGM ( "GM> Wanted Moriph Kill-based titles given out!" );
+						CHATSERVER->SendChatAllGM("GM> Wanted Moriph Kill-based titles given out!");
 					}
 					else
 					{
-						CHATSERVER->SendChatAllGM ( "GM> Wanted Moriph Titles FAILED (Error)" );
+						CHATSERVER->SendChatAllGM("GM> Wanted Moriph Titles FAILED (Error)");
 					}
 				}
 
@@ -1735,10 +1735,10 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 				}
 				else if (STRINGCOMPAREI(szCommandParam1, "false"))
 				{
-					if ( EVENT_WANTEDMORIPH_EVENT == TRUE )
+					if (EVENT_WANTEDMORIPH_EVENT == TRUE)
 					{
-						CHATSERVER->SendChatAllGM ( "GM> Wanted Moriph Event OFF!" );
-						CHATSERVER->SendChat ( pcUser, CHATCOLOR_Error, "Use '/event_WantedMoriph titles' to give kill based titles" );
+						CHATSERVER->SendChatAllGM("GM> Wanted Moriph Event OFF!");
+						CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "Use '/event_WantedMoriph titles' to give kill based titles");
 					}
 
 					SetMoriphEvent(FALSE);
@@ -1760,7 +1760,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 
 
 
-	if (iLen = COMMAND("/event_WantedWolf", pszBuff))
+	if (iLen = COMMAND("/event_wanted_wolf", pszBuff))
 	{
 		if (GAME_SERVER)
 		{
@@ -1773,15 +1773,15 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 				}
 
 				//Only if needed. Titles are given out on event's end. See below
-				else if ( STRINGCOMPAREI ( szCommandParam1, "titles" ) )
+				else if (STRINGCOMPAREI(szCommandParam1, "titles"))
 				{
-					if ( EVENTSERVER->GiveWantedWolfTitles () )
+					if (EVENTSERVER->GiveWantedWolfTitles())
 					{
-						CHATSERVER->SendChatAllGM ( "GM> Wanted Wolf Kill-based titles given out!" );
+						CHATSERVER->SendChatAllGM("GM> Wanted Wolf Kill-based titles given out!");
 					}
 					else
 					{
-						CHATSERVER->SendChatAllGM ( "GM> Wanted Wolf Titles FAILED (Error)" );
+						CHATSERVER->SendChatAllGM("GM> Wanted Wolf Titles FAILED (Error)");
 					}
 				}
 
@@ -1814,14 +1814,14 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 
 					CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use '/event_WantedWolf true <spawn count> <spawn delay>' to adjust spawn parameters.");
 					CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use '/event_WantedWolf reset' to reset kill stats");
-					CHATSERVER->SendChat ( pcUser, CHATCOLOR_Error, "Use '/event_WantedWolf titles' to give kill based titles" );
+					CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "Use '/event_WantedWolf titles' to give kill based titles");
 				}
 				else if (STRINGCOMPAREI(szCommandParam1, "false"))
 				{
-					if ( EVENT_WANTEDWOLF_EVENT == TRUE )
+					if (EVENT_WANTEDWOLF_EVENT == TRUE)
 					{
-						CHATSERVER->SendChatAllGM ( "GM> Wanted Wolf Event OFF!" );
-						CHATSERVER->SendChat ( pcUser, CHATCOLOR_Error, "Use '/event_WantedWolf titles' to give kill based titles" );
+						CHATSERVER->SendChatAllGM("GM> Wanted Wolf Event OFF!");
+						CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "Use '/event_WantedWolf titles' to give kill based titles");
 					}
 
 					SetWolfEvent(FALSE);
@@ -1841,119 +1841,119 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-	if ( iLen = COMMAND( "/!DanceAll", pszBuff ) )
+	if (iLen = COMMAND("/!dance_all", pszBuff))
 	{
-		for ( int i = 0; i < PLAYERS_MAX; i++ )
+		for (int i = 0; i < PLAYERS_MAX; i++)
 		{
-			if ( USERSDATA[i].pcSocketData && USERSDATA[i].iGameLevel == GAMELEVEL_None )
+			if (USERSDATA[i].pcSocketData && USERSDATA[i].iGameLevel == GAMELEVEL_None)
 			{
-				SENDPACKETBLANK( USERDATATOUSER( &USERSDATA[i] ), PKTHDR_PacketFun );
+				SENDPACKETBLANK(USERDATATOUSER(&USERSDATA[i]), PKTHDR_PacketFun);
 			}
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/BotCreate", pszBuff ) )
+	if (iLen = COMMAND("/bot_create", pszBuff))
 	{
-		if ( pcUserData )
+		if (pcUserData)
 		{
-			if ( GetParameterString ( pszBuff, 1, szCommandParam1 ) )
+			if (GetParameterString(pszBuff, 1, szCommandParam1))
 			{
-				if ( BOTSERVER->CreateBot ( szCommandParam1, pcUserData->sPosition.iX, pcUserData->sPosition.iY, pcUserData->sPosition.iZ ) )
+				if (BOTSERVER->CreateBot(szCommandParam1, pcUserData->sPosition.iX, pcUserData->sPosition.iY, pcUserData->sPosition.iZ))
 				{
-					CHATSERVER->SendChatEx ( pcUser, CHATCOLOR_Error, "> Created Bot %s", szCommandParam1 );
-					CHATSERVER->SendChatEx ( pcUser, CHATCOLOR_Error, "> Coordinates [X: %d Y: %d Z: %d]", pcUserData->sPosition.iX, pcUserData->sPosition.iY, pcUserData->sPosition.iZ );
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Created Bot %s", szCommandParam1);
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Coordinates [X: %d Y: %d Z: %d]", pcUserData->sPosition.iX, pcUserData->sPosition.iY, pcUserData->sPosition.iZ);
 				}
 			}
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/BotDelete", pszBuff ) )
+	if (iLen = COMMAND("/bot_delete", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( BOTSERVER->DeleteBot( szCommandParam1 ) )
+			if (BOTSERVER->DeleteBot(szCommandParam1))
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Deleted Bot %s", szCommandParam1 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Deleted Bot %s", szCommandParam1);
 			}
 			else
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Bot %s is offline!", szCommandParam1 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Bot %s is offline!", szCommandParam1);
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/BotLHand", pszBuff ) )
+	if (iLen = COMMAND("/bot_l_hand", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) && GetParameterString( pszBuff, 2, szCommandParam2 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) && GetParameterString(pszBuff, 2, szCommandParam2))
 		{
-			if ( BOTSERVER->SetItemHand( 1, szCommandParam1, szCommandParam2 ) )
+			if (BOTSERVER->SetItemHand(1, szCommandParam1, szCommandParam2))
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> %s LH Item: %s", szCommandParam1, szCommandParam2 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> %s LH Item: %s", szCommandParam1, szCommandParam2);
 			}
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/BotRHand", pszBuff ) )
+	if (iLen = COMMAND("/bot_r_hand", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) && GetParameterString( pszBuff, 2, szCommandParam2 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) && GetParameterString(pszBuff, 2, szCommandParam2))
 		{
-			if ( BOTSERVER->SetItemHand( 2, szCommandParam1, szCommandParam2 ) )
+			if (BOTSERVER->SetItemHand(2, szCommandParam1, szCommandParam2))
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> %s RH Item: %s", szCommandParam1, szCommandParam2 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> %s RH Item: %s", szCommandParam1, szCommandParam2);
 			}
 		}
 		return TRUE;
 	}
 
-	if ( COMMAND( "/ServerCrash", pszBuff ) || COMMAND( "/!ServerCrash", pszBuff ) )
+	if (COMMAND("/server_crash", pszBuff) || COMMAND("/!server_crash", pszBuff))
 	{
-		CHATSERVER->SendChatEx( pcUser, EChatColor::CHATCOLOR_Error, "> Crashing %s in 1 second...", GAME_SERVER ? "GameServer" : "LoginServer" );
-		Sleep( 1000 );
+		CHATSERVER->SendChatEx(pcUser, EChatColor::CHATCOLOR_Error, "> Crashing %s in 1 second...", GAME_SERVER ? "GameServer" : "LoginServer");
+		Sleep(1000);
 		CRASH;
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/BotBHand", pszBuff ) )
+	if (iLen = COMMAND("/bot_b_hand", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) && GetParameterString( pszBuff, 2, szCommandParam2 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) && GetParameterString(pszBuff, 2, szCommandParam2))
 		{
-			if ( BOTSERVER->SetItemHand( 3, szCommandParam1, szCommandParam2 ) )
+			if (BOTSERVER->SetItemHand(3, szCommandParam1, szCommandParam2))
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> %s BH Item: %s", szCommandParam1, szCommandParam2 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> %s BH Item: %s", szCommandParam1, szCommandParam2);
 			}
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/BotSay", pszBuff ) )
+	if (iLen = COMMAND("/bot_say", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) && GetParameterString( pszBuff, 2, szCommandParam2 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) && GetParameterString(pszBuff, 2, szCommandParam2))
 		{
-			if ( BOTSERVER->SetBotSay( szCommandParam1, szCommandParam2 ) )
+			if (BOTSERVER->SetBotSay(szCommandParam1, szCommandParam2))
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> %s Bot says!", szCommandParam1 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> %s Bot says!", szCommandParam1);
 			}
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/TestItem", pszBuff ) )
+	if (iLen = COMMAND("/test_item", pszBuff))
 	{
 
 	}
 
-	if ( iLen = COMMAND( "/!EditItemTest", pszBuff ) )
+	if (iLen = COMMAND("/!edit_item_test", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			DefinitionItem * ps = ITEMSERVER->FindItemDefByCode( szCommandParam1 );
+			DefinitionItem* ps = ITEMSERVER->FindItemDefByCode(szCommandParam1);
 
-			if ( ps )
+			if (ps)
 			{
 				DefinitionItem sd;
-				CopyMemory( &sd, ps, sizeof( DefinitionItem ) );
+				CopyMemory(&sd, ps, sizeof(DefinitionItem));
 
 				/*				STRINGCOPY( sd.sItem.szItemName, "Deadly Axe" );
 
@@ -1982,33 +1982,33 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 				*/
 				sd.sItem.iSalePrice = 1;
 
-				ITEMSERVER->ValidateItemTime( &sd.sItem );
+				ITEMSERVER->ValidateItemTime(&sd.sItem);
 
 				sd.sItem.iBackupChk = 0;
 				sd.sItem.iBackupKey = 0;
 				sd.sItem.tTime = 0;
 
 				PacketBuyNPCShop s;
-				s.iLength = sizeof( PacketBuyNPCShop );
+				s.iLength = sizeof(PacketBuyNPCShop);
 				s.iHeader = PKTHDR_BuyItemNPCShop;
 				s.iCount = 1;
 
-				ItemData * p = ITEMSERVER->FindItemPointerTable( szCommandParam1 );
-				if ( p )
+				ItemData* p = ITEMSERVER->FindItemPointerTable(szCommandParam1);
+				if (p)
 				{
-					CopyMemory( &s.sItemData, p, sizeof( ItemData ) );
-					CopyMemory( &s.sItemData.sItem, &sd.sItem, sizeof( Item ) );
+					CopyMemory(&s.sItemData, p, sizeof(ItemData));
+					CopyMemory(&s.sItemData.sItem, &sd.sItem, sizeof(Item));
 
 					s.sItemData.bValid = TRUE;
 
-					FILE * fp = NULL;
-					fopen_s( &fp, "Item.dat", "wb" );
-					fwrite( &s, s.iLength, 1, fp );
-					fclose( fp );
+					FILE* fp = NULL;
+					fopen_s(&fp, "Item.dat", "wb");
+					fwrite(&s, s.iLength, 1, fp);
+					fclose(fp);
 
-					CALL_WITH_ARG2( 0x0056A260, (DWORD)pcUserData, (DWORD)&s );
+					CALL_WITH_ARG2(0x0056A260, (DWORD)pcUserData, (DWORD)&s);
 
-					CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Edited!!" );
+					CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Edited!!");
 				}
 			}
 		}
@@ -2017,65 +2017,65 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 
 
 	// BC
-	if ( iLen = COMMAND( "/SetOwnerBC", pszBuff ) )
+	if (iLen = COMMAND("/set_owner_bc", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			int iClanID = atoi( szCommandParam1 );
-			if ( iClanID != 0 )
+			int iClanID = atoi(szCommandParam1);
+			if (iClanID != 0)
 			{
-				BLESSCASTLESERVER->NetSendBlessCastleOwnerClanID( iClanID );
-				CHATSERVER->SendChatAllGM( "GM> New BC Owner: %d" );
+				BLESSCASTLESERVER->NetSendBlessCastleOwnerClanID(iClanID);
+				CHATSERVER->SendChatAllGM("GM> New BC Owner: %d");
 			}
 			else
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Invalid Clan ID" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Invalid Clan ID");
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/ClearOwnerBC", pszBuff ) )
+	if (iLen = COMMAND("/clear_owner_bc", pszBuff))
 	{
-		BLESSCASTLESERVER->NetSendBlessCastleOwnerClanID( 0 );
-		CHATSERVER->SendChatAllGM( "GM> BC Owner cleared ");
+		BLESSCASTLESERVER->NetSendBlessCastleOwnerClanID(0);
+		CHATSERVER->SendChatAllGM("GM> BC Owner cleared ");
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/MonAnim", pszBuff ) )
+	if (iLen = COMMAND("/mon_anim", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) && GetParameterString( pszBuff, 2, szCommandParam2 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) && GetParameterString(pszBuff, 2, szCommandParam2))
 		{
-			UnitData * pcUnitData = UNITSERVER->CreateUnitEnemy( szCommandParam1, pcUserData->sPosition.iX, pcUserData->sPosition.iY, pcUserData->sPosition.iZ );
-			if ( pcUnitData )
+			UnitData* pcUnitData = UNITSERVER->CreateUnitEnemy(szCommandParam1, pcUserData->sPosition.iX, pcUserData->sPosition.iY, pcUserData->sPosition.iZ);
+			if (pcUnitData)
 			{
-				UNITSERVER->SetMotionFromCode( pcUnitData, atoi( szCommandParam2 ) );
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Anim 0x%X Send! ", atoi( szCommandParam2 ) );
+				UNITSERVER->SetMotionFromCode(pcUnitData, atoi(szCommandParam2));
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Anim 0x%X Send! ", atoi(szCommandParam2));
 			}
 			else
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Error: Monster '%s' not exist!", szCommandParam1 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Error: Monster '%s' not exist!", szCommandParam1);
 		}
-		CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Done! " );
+		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Done! ");
 		return TRUE;
 	}
 
 	// Move
-	if ( COMMAND( "/WarpAll", pszBuff ) )
+	if (COMMAND("/warp_all", pszBuff))
 	{
-		for ( int i = 0; i < PLAYERS_MAX; i++ )
+		for (int i = 0; i < PLAYERS_MAX; i++)
 		{
-			if ( USERSDATA[i].pcSocketData && USERSDATA[i].iID )
+			if (USERSDATA[i].pcSocketData && USERSDATA[i].iID)
 			{
 				PacketWarpGateField sPacket;
-				sPacket.iLength = sizeof( PacketWarpGateField );
+				sPacket.iLength = sizeof(PacketWarpGateField);
 				sPacket.iHeader = PKTHDR_WarpGateField;
 				sPacket.iX = (-51993);
 				sPacket.iZ = (-4493732);
 				sPacket.iStage = MAPID_RicartenTown;
-				SENDPACKET( USERDATATOUSER(&USERSDATA[i]), &sPacket );
+				SENDPACKET(USERDATATOUSER(&USERSDATA[i]), &sPacket);
 			}
 		}
-		CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> All Users Warped to Ricarten Town!" );
+		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> All Users Warped to Ricarten Town!");
 		return TRUE;
 	}
 
-	if (COMMAND("/WarpGarden", pszBuff))
+	if (COMMAND("/warp_garden", pszBuff))
 	{
 		for (int i = 0; i < PLAYERS_MAX; i++)
 		{
@@ -2094,7 +2094,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		return TRUE;
 	}
 
-	if (COMMAND("/WarpEvent", pszBuff))
+	if (COMMAND("/warp_event", pszBuff))
 	{
 		for (int i = 0; i < PLAYERS_MAX; i++)
 		{
@@ -2113,70 +2113,70 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		return TRUE;
 	}
 
-	if ( COMMAND( "/QuestArenaT5", pszBuff ) )
+	if (COMMAND("/quest_arena_t5", pszBuff))
 	{
-		QUESTARENAHANDLER->EnterArenaT5Quest( USERDATATOUSER( pcUserData ) );
-		CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> T5 Quest Arena" );
+		QUESTARENAHANDLER->EnterArenaT5Quest(USERDATATOUSER(pcUserData));
+		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> T5 Quest Arena");
 		return TRUE;
 	}
 
-	if ( COMMAND( "/QuestT5Cry", pszBuff ) )
+	if (COMMAND("/quest_t5_cry", pszBuff))
 	{
-		User * pcUser = USERDATATOUSER( pcUserData );
+		User* pcUser = USERDATATOUSER(pcUserData);
 		pcUser->uQuestT5ID = QUESTID_CryMeARiver;
 		pcUser->sQuestT5ProgressValue[0] = 0;
-		CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> T5 Quest Cry me a River!" );
+		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> T5 Quest Cry me a River!");
 		return TRUE;
 	}
 
-	if ( COMMAND( "/QuestT5TestID", pszBuff ) )
+	if (COMMAND("/quest_t5_test_id", pszBuff))
 	{
-		if ( pcUser  )
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> T5 Quest [%d][%d][%d]", pcUser->uQuestT5ID, pcUser->sQuestT5ProgressValue[0], pcUser->sQuestT5ProgressValue[1] );
+		if (pcUser)
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> T5 Quest [%d][%d][%d]", pcUser->uQuestT5ID, pcUser->sQuestT5ProgressValue[0], pcUser->sQuestT5ProgressValue[1]);
 
 		return TRUE;
 	}
-	if ( COMMAND( "/!QuestT5TestID", pszBuff ) )
+	if (COMMAND("/!quest_t5_test_id", pszBuff))
 	{
-		if ( pcUser )
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> T5 Quest [%d][%d][%d]", pcUser->uQuestT5ID, pcUser->sQuestT5ProgressValue[0], pcUser->sQuestT5ProgressValue[1] );
+		if (pcUser)
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> T5 Quest [%d][%d][%d]", pcUser->uQuestT5ID, pcUser->sQuestT5ProgressValue[0], pcUser->sQuestT5ProgressValue[1]);
 
 		return TRUE;
 	}
 
 
-	if ( iLen = COMMAND( "/!tradechat_free", pszBuff ) )
+	if (iLen = COMMAND("/!tradechat_free", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( STRINGCOMPAREI( "true", szCommandParam1 ) )
+			if (STRINGCOMPAREI("true", szCommandParam1))
 			{
 				FREE_TRADECHAT = TRUE;
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Free Trade Chat On!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Free Trade Chat On!");
 			}
-			else if ( STRINGCOMPAREI( "false", szCommandParam1 ) )
+			else if (STRINGCOMPAREI("false", szCommandParam1))
 			{
 				FREE_TRADECHAT = FALSE;
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Free Trade Chat Off!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Free Trade Chat Off!");
 			}
 			else
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Use: /!tradechat_free <true|false>" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use: /!tradechat_free <true|false>");
 		}
 		else
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Use: /!tradechat_free <true|false> [%s]", FREE_TRADECHAT ? "On" : "Off" );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /!tradechat_free <true|false> [%s]", FREE_TRADECHAT ? "On" : "Off");
 
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/!wholoves", pszBuff ) )
+	if (iLen = COMMAND("/!wholoves", pszBuff))
 	{
-		CHATSERVER->SendChatAll( CHATCOLOR_Global, "Server> Who Love me? *_*" );
-		for ( int i = 0; i < PLAYERS_MAX; i++ )
+		CHATSERVER->SendChatAll(CHATCOLOR_Global, "Server> Who Love me? *_*");
+		for (int i = 0; i < PLAYERS_MAX; i++)
 		{
-			User * pcU = USERDATATOUSER( &USERSDATA[i] );
-			if ( USERSDATA[i].pcSocketData && USERSDATA[i].iGameLevel == GAMELEVEL_None && pcU && pcU->bNetServer == FALSE )
+			User* pcU = USERDATATOUSER(&USERSDATA[i]);
+			if (USERSDATA[i].pcSocketData && USERSDATA[i].iGameLevel == GAMELEVEL_None && pcU && pcU->bNetServer == FALSE)
 			{
-				CHATSERVER->SendChatAllEx( CHATCOLOR_Trade, "[%c]%s: P> I love you, %s <3!", GSERVER->GetServerName( USERSDATA[i].bServerIndexID )[0], CHARACTERSERVER->GetCharacterName( &USERSDATA[i] ), GAME_NAME );
+				CHATSERVER->SendChatAllEx(CHATCOLOR_Trade, "[%c]%s: P> I love you, %s <3!", GSERVER->GetServerName(USERSDATA[i].bServerIndexID)[0], CHARACTERSERVER->GetCharacterName(&USERSDATA[i]), GAME_NAME);
 			}
 		}
 		return TRUE;
@@ -2188,80 +2188,80 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> [%s] Net Servers Disconnected!", GAME_SERVER ? "Game Server" : "Login Server" );
 	return TRUE;
 	}*/
-	if ( iLen = COMMAND( "/testmsgbox", pszBuff ) )
+	if (iLen = COMMAND("/testmsgbox", pszBuff))
 	{
-		CHATSERVER->SendTitleBox( pcUserData, "> VSF" );
+		CHATSERVER->SendTitleBox(pcUserData, "> VSF");
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/test_roll_bosskill_item", pszBuff ) )
+	if (iLen = COMMAND("/test_roll_bosskill_item", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
 			EItemRarity eItemRarity = EItemRarity::NONE;
 			EItemSource eItemSource = EItemSource::BossKill;
 
-			if ( GetParameterString( pszBuff, 2, szCommandParam2 ) )
+			if (GetParameterString(pszBuff, 2, szCommandParam2))
 			{
-				auto eRarityOverride = (EItemRarity)atoi( szCommandParam2 );
-				if ( eRarityOverride >= EItemRarity::NONE || eRarityOverride <= EItemRarity::LEGENDARY )
+				auto eRarityOverride = (EItemRarity)atoi(szCommandParam2);
+				if (eRarityOverride >= EItemRarity::NONE || eRarityOverride <= EItemRarity::LEGENDARY)
 					eItemRarity = eRarityOverride;
 			}
 
-			if ( ROLLDICEHANDLER->TestItemDiceRoll( pcUser, szCommandParam1, eItemSource, eItemRarity ) )
+			if (ROLLDICEHANDLER->TestItemDiceRoll(pcUser, szCommandParam1, eItemSource, eItemRarity))
 			{
-				CHATSERVER->SendChat( pcUser, EChatColor::CHATCOLOR_Normal, "Item added to roll window for testing purposes" );
+				CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_Normal, "Item added to roll window for testing purposes");
 			}
 			else
 			{
-				CHATSERVER->SendChatEx( pcUser, EChatColor::CHATCOLOR_Error, "Error - invalid item: %s", szCommandParam1 );
+				CHATSERVER->SendChatEx(pcUser, EChatColor::CHATCOLOR_Error, "Error - invalid item: %s", szCommandParam1);
 			}
 
 		}
 		else
 		{
-			CHATSERVER->SendChat( pcUser, EChatColor::CHATCOLOR_Error, "Expecting 1 parameter" );
+			CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_Error, "Expecting 1 parameter");
 		}
 
 		return TRUE;
 	}
 
 
-	if ( iLen = COMMAND( "/spymember", pszBuff ) )
+	if (iLen = COMMAND("/spymember", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			UserData * pcUserSpyoner = USERSERVER->GetUserdata( szCommandParam1 );
-			User * pcU = USERDATATOUSER( pcUserSpyoner );
-			if ( pcUserSpyoner )
+			UserData* pcUserSpyoner = USERSERVER->GetUserdata(szCommandParam1);
+			User* pcU = USERDATATOUSER(pcUserSpyoner);
+			if (pcUserSpyoner)
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Spying %s ", pcUserSpyoner->sCharacterData.szName );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Spying %s ", pcUserSpyoner->sCharacterData.szName);
 				pcU->pcUserDataSpyoner = pcUserData;
 			}
 			else
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> %s can not found!", szCommandParam1 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> %s can not found!", szCommandParam1);
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/notspymember", pszBuff ) )
+	if (iLen = COMMAND("/notspymember", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			UserData * pcUserSpyoner = USERSERVER->GetUserdata( szCommandParam1 );
-			User * pcU = USERDATATOUSER( pcUserSpyoner );
-			if ( pcUserSpyoner )
+			UserData* pcUserSpyoner = USERSERVER->GetUserdata(szCommandParam1);
+			User* pcU = USERDATATOUSER(pcUserSpyoner);
+			if (pcUserSpyoner)
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Not Spying %s ", pcUserSpyoner->sCharacterData.szName );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Not Spying %s ", pcUserSpyoner->sCharacterData.szName);
 				pcU->pcUserDataSpyoner = NULL;
 			}
 			else
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> %s can not found!", szCommandParam1 );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> %s can not found!", szCommandParam1);
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND("/!giveexp", pszBuff))
+	if (iLen = COMMAND("/!giveexp", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -2269,560 +2269,560 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 
 			INT64 iExp = atoll(szCommandParam1);
 
-			CHARACTERSERVER->SQLGiveEXP (pcUser, iExp);
-			CHARACTERSERVER->GiveEXP( pcUser, iExp);
+			CHARACTERSERVER->SQLGiveEXP(pcUser, iExp);
+			CHARACTERSERVER->GiveEXP(pcUser, iExp);
 		}
 	}
 
-	if ( iLen = COMMAND( "/!levelup", pszBuff ) )
+	if (iLen = COMMAND("/!levelup", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( atoi( szCommandParam1 ) > pcUserData->sCharacterData.iLevel )
+			if (atoi(szCommandParam1) > pcUserData->sCharacterData.iLevel)
 			{
-				INT64 iExp		= CHARACTERSERVER->GetExpFromLevel( atoi( szCommandParam1 ) );
-				INT64 iExpOld	= CHARACTERSERVER->GetExp( pcUserData );
+				INT64 iExp = CHARACTERSERVER->GetExpFromLevel(atoi(szCommandParam1));
+				INT64 iExpOld = CHARACTERSERVER->GetExp(pcUserData);
 
-				CHARACTERSERVER->SQLSetEXP ( USERDATATOUSER ( pcUserData ), iExp );
-				CHARACTERSERVER->GiveEXP( USERDATATOUSER( pcUserData ), iExp - iExpOld );
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Level Exp (%I64d)[%d]", iExp, atoi( szCommandParam1 ) );
+				CHARACTERSERVER->SQLSetEXP(USERDATATOUSER(pcUserData), iExp);
+				CHARACTERSERVER->GiveEXP(USERDATATOUSER(pcUserData), iExp - iExpOld);
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Level Exp (%I64d)[%d]", iExp, atoi(szCommandParam1));
 			}
 			else
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Level must be major than your level!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Level must be major than your level!");
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/shutdowncancel", pszBuff ) )
+	if (iLen = COMMAND("/shutdowncancel", pszBuff))
 	{
-		if ( *(UINT*)0x7AC9F98 )
+		if (*(UINT*)0x7AC9F98)
 		{
 			*(UINT*)0x7AC9D20 = 0;
 			*(UINT*)0x7AC9D28 = 0;
 			*(UINT*)0x7AC9D2C = 0;
-			TerminateThread( (HANDLE)*(UINT*)0x7AC9F98, 0 );
-			CHATSERVER->SendChatAll( CHATCOLOR_Global, "Server Shutdown> Shutdown Cancelled!" );
+			TerminateThread((HANDLE) * (UINT*)0x7AC9F98, 0);
+			CHATSERVER->SendChatAll(CHATCOLOR_Global, "Server Shutdown> Shutdown Cancelled!");
 		}
 	}
-	if ( iLen = COMMAND( "/set_spawn", pszBuff ) )
+	if (iLen = COMMAND("/set_spawn", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			MAPSERVER->SetFlagPoint( pcUserData, szCommandParam1 );
+			MAPSERVER->SetFlagPoint(pcUserData, szCommandParam1);
 		}
 		else
 		{
-			MAPSERVER->SetFlagPoint( pcUserData, Util::CurrentDate().c_str() );
+			MAPSERVER->SetFlagPoint(pcUserData, Util::CurrentDate().c_str());
 		}
 
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/setversion", pszBuff ) )
+	if (iLen = COMMAND("/setversion", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			SetVersion( atoi( szCommandParam1 ) );
-			NETSERVER->SendCommandToLoginServer ( PKTHDR_NetSetVersion, atoi ( szCommandParam1 ) );
+			SetVersion(atoi(szCommandParam1));
+			NETSERVER->SendCommandToLoginServer(PKTHDR_NetSetVersion, atoi(szCommandParam1));
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/GetBossCrystal", pszBuff ) )
+	if (iLen = COMMAND("/get_boss_crystal", pszBuff))
 	{
 		struct CrystalOldData
 		{
-			char * p;
+			char* p;
 			int i;
 			int iRandom;
 		};
 
-		CrystalOldData * pda = (CrystalOldData*)0x8B76510;
+		CrystalOldData* pda = (CrystalOldData*)0x8B76510;
 
 		int i = 0;
-		while ( true )
+		while (true)
 		{
-			CrystalOldData * pd = pda + i;
-			if ( pd->p == NULL || pd->p[0] == 0 )
+			CrystalOldData* pd = pda + i;
+			if (pd->p == NULL || pd->p[0] == 0)
 				break;
 
-			LOGERROR( "{ ITEMID_HopyCrystal, %d, \"%s\" },", pd->iRandom, pd->p );
+			LOGERROR("{ ITEMID_HopyCrystal, %d, \"%s\" },", pd->iRandom, pd->p);
 
 			i++;
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/ReloadCoinShop", pszBuff ) )
+	if (iLen = COMMAND("/reload_coin_shop", pszBuff))
 	{
-		NETSERVER->SendCommandToLoginServer ( PKTHDR_NetReloadCoinShop );
+		NETSERVER->SendCommandToLoginServer(PKTHDR_NetReloadCoinShop);
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitemget", pszBuff ) )
+	if (iLen = COMMAND("/tempitemget", pszBuff))
 	{
 		PacketSimple sPacket;
-		sPacket.iLength = sizeof( PacketSimple );
+		sPacket.iLength = sizeof(PacketSimple);
 		sPacket.iHeader = PKTHDR_GetItemData;
 		sPacket.iUnk = 0;
-		SENDPACKET( USERDATATOUSER(pcUserData), &sPacket );
+		SENDPACKET(USERDATATOUSER(pcUserData), &sPacket);
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitemset", pszBuff ) )
+	if (iLen = COMMAND("/tempitemset", pszBuff))
 	{
-		ITEMSERVER->ReformItem( &pcUser->sTempItem.sItem );
-		ITEMSERVER->SendItemData( pcUserData, &pcUser->sTempItem.sItem.sItem );
-		ZeroMemory( &pcUser->sTempItem, sizeof( PacketItemData ) );
-		CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Item Sent!" );
+		ITEMSERVER->ReformItem(&pcUser->sTempItem.sItem);
+		ITEMSERVER->SendItemData(pcUserData, &pcUser->sTempItem.sItem.sItem);
+		ZeroMemory(&pcUser->sTempItem, sizeof(PacketItemData));
+		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Item Sent!");
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_dmg", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_dmg", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			GetParameterString( pszBuff, 2, szCommandParam2 );
-			pcUser->sTempItem.sItem.sItem.sDamage.sMin = atoi( szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sDamage.sMax = atoi( szCommandParam2 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Damage ( %d-%d )", pcUser->sTempItem.sItem.sItem.sDamage.sMin, pcUser->sTempItem.sItem.sItem.sDamage.sMax );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			GetParameterString(pszBuff, 2, szCommandParam2);
+			pcUser->sTempItem.sItem.sItem.sDamage.sMin = atoi(szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sDamage.sMax = atoi(szCommandParam2);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Damage ( %d-%d )", pcUser->sTempItem.sItem.sItem.sDamage.sMin, pcUser->sTempItem.sItem.sItem.sDamage.sMax);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_age", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_age", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+			if (GetParameterString(pszBuff, 1, szCommandParam1))
 			{
-				int iAge = atoi( szCommandParam1 );
-				for ( int i = 0; i < iAge; i++ )
+				int iAge = atoi(szCommandParam1);
+				for (int i = 0; i < iAge; i++)
 				{
-					ITEMSERVER->SetAgingItem( &pcUser->sTempItem.sItem );
+					ITEMSERVER->SetAgingItem(&pcUser->sTempItem.sItem);
 				}
-				ITEMSERVER->SaveItemDataToDatabase( &pcUser->sTempItem.sItem.sItem );
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Age ( %d )", pcUser->sTempItem.sItem.sItem.sAgeLevel+1 );
+				ITEMSERVER->SaveItemDataToDatabase(&pcUser->sTempItem.sItem.sItem);
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Age ( %d )", pcUser->sTempItem.sItem.sItem.sAgeLevel + 1);
 			}
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_name", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_name", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			STRINGCOPY( pcUser->sTempItem.sItem.sItem.szItemName, szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Name ( %s )", pcUser->sTempItem.sItem.sItem.szItemName );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			STRINGCOPY(pcUser->sTempItem.sItem.sItem.szItemName, szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Name ( %s )", pcUser->sTempItem.sItem.sItem.szItemName);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_atkspeed", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_atkspeed", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iAttackSpeed = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Attack Speed ( %d )", pcUser->sTempItem.sItem.sItem.iAttackSpeed );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iAttackSpeed = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Attack Speed ( %d )", pcUser->sTempItem.sItem.sItem.iAttackSpeed);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_socket", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_socket", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			GetParameterString( pszBuff, 2, szCommandParam2 );
-			GetParameterString( pszBuff, 3, szCommandParam3 );
-			GetParameterString( pszBuff, 4, szCommandParam4 );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			GetParameterString(pszBuff, 2, szCommandParam2);
+			GetParameterString(pszBuff, 3, szCommandParam3);
+			GetParameterString(pszBuff, 4, szCommandParam4);
 
-			pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eSocketType = (ESocketType)atoi( szCommandParam2 );
-			pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eGemType = (EGemType)atoi( szCommandParam3 );
-			pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eGemItem = (EGemItem)atoi( szCommandParam4 );
+			pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eSocketType = (ESocketType)atoi(szCommandParam2);
+			pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eGemType = (EGemType)atoi(szCommandParam3);
+			pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eGemItem = (EGemItem)atoi(szCommandParam4);
 
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Socket Data [%d]( %d %d %d )", atoi(szCommandParam1), pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eSocketType, pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eGemType, pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eGemItem );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Socket Data [%d]( %d %d %d )", atoi(szCommandParam1), pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eSocketType, pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eGemType, pcUser->sTempItem.sItem.sItem.sSocketData[atoi(szCommandParam1)].eGemItem);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_crit", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_crit", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iCritical = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Critical ( %d )", pcUser->sTempItem.sItem.sItem.iCritical );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iCritical = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Critical ( %d )", pcUser->sTempItem.sItem.sItem.iCritical);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_mixflag", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_mixflag", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.eMixTypeName = (EMixTypeName)atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Mix Flag ( %d )", pcUser->sTempItem.sItem.sItem.eMixTypeName );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.eMixTypeName = (EMixTypeName)atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Mix Flag ( %d )", pcUser->sTempItem.sItem.sItem.eMixTypeName);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_atkrtg", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_atkrtg", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iAttackRating = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Attack Rating ( %d )", pcUser->sTempItem.sItem.sItem.iAttackRating );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iAttackRating = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Attack Rating ( %d )", pcUser->sTempItem.sItem.sItem.iAttackRating);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_def", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_def", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iDefenseRating = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Defense ( %d )", pcUser->sTempItem.sItem.sItem.iDefenseRating );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iDefenseRating = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Defense ( %d )", pcUser->sTempItem.sItem.sItem.iDefenseRating);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_block", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_block", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.fBlockRating = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Block ( %.01f )", pcUser->sTempItem.sItem.sItem.fBlockRating );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.fBlockRating = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Block ( %.01f )", pcUser->sTempItem.sItem.sItem.fBlockRating);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_abs", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_abs", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.fAbsorbRating = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Absorption ( %.01f )", pcUser->sTempItem.sItem.sItem.fAbsorbRating );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.fAbsorbRating = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Absorption ( %.01f )", pcUser->sTempItem.sItem.sItem.fAbsorbRating);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_changespec", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_changespec", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.eSpecialization = CharacterClassToClassFlag( (ECharacterClass)atoi( szCommandParam1 ) );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Spec ( %s )", GetCharacterClassStringByFlag( (EClassFlag)pcUser->sTempItem.sItem.sItem.eSpecialization ) );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.eSpecialization = CharacterClassToClassFlag((ECharacterClass)atoi(szCommandParam1));
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Spec ( %s )", GetCharacterClassStringByFlag((EClassFlag)pcUser->sTempItem.sItem.sItem.eSpecialization));
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_strength", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_strength", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iStrength = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Strength ( %d )", pcUser->sTempItem.sItem.sItem.iStrength );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iStrength = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Strength ( %d )", pcUser->sTempItem.sItem.sItem.iStrength);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_level", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_level", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iLevel = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Level ( %d )", pcUser->sTempItem.sItem.sItem.iLevel );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iLevel = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Level ( %d )", pcUser->sTempItem.sItem.sItem.iLevel);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_spirit", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_spirit", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iSpirit = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Spirit ( %d )", pcUser->sTempItem.sItem.sItem.iSpirit );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iSpirit = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Spirit ( %d )", pcUser->sTempItem.sItem.sItem.iSpirit);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_talent", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_talent", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iTalent = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Talent ( %d )", pcUser->sTempItem.sItem.sItem.iTalent );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iTalent = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Talent ( %d )", pcUser->sTempItem.sItem.sItem.iTalent);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_agility", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_agility", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iAgility = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Agility ( %d )", pcUser->sTempItem.sItem.sItem.iAgility );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iAgility = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Agility ( %d )", pcUser->sTempItem.sItem.sItem.iAgility);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_health", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_health", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.iHealth = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Health ( %d )", pcUser->sTempItem.sItem.sItem.iHealth );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.iHealth = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Health ( %d )", pcUser->sTempItem.sItem.sItem.iHealth);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specdef", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specdef", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecDefenseRating = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Defense Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecDefenseRating );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecDefenseRating = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Defense Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecDefenseRating);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specblock", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specblock", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecBlockRating = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Block Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecBlockRating );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecBlockRating = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Block Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecBlockRating);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specabs", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specabs", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecAbsorbRating = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Absorb Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecAbsorbRating );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecAbsorbRating = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Absorb Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecAbsorbRating);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_spechpregen", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_spechpregen", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecHPRegen = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New HP Regen Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecHPRegen );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecHPRegen = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New HP Regen Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecHPRegen);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specmovspeed", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specmovspeed", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecMovementSpeed = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Movement Speed Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecMovementSpeed );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecMovementSpeed = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Movement Speed Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecMovementSpeed);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specmpregen", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specmpregen", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecMPRegen = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New MP Regen Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecMPRegen );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecMPRegen = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New MP Regen Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecMPRegen);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specspregen", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specspregen", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecSPRegen = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New SP Regen Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecSPRegen );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.fSpecSPRegen = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New SP Regen Spec ( %.01f )", pcUser->sTempItem.sItem.sItem.sSpecData.fSpecSPRegen);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_speccritical", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_speccritical", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecCritical = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Critical Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecCritical );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecCritical = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Critical Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecCritical);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specdivatkpow", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specdivatkpow", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackPowerDiv = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Attack Power Div Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackPowerDiv );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackPowerDiv = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Attack Power Div Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackPowerDiv);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specdivatkpowmin", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specdivatkpowmin", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackPowerDivMin = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Attack Power Div Min Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackPowerDivMin );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackPowerDivMin = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Attack Power Div Min Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackPowerDivMin);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specdivatkrtg", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specdivatkrtg", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackRatingDiv = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Attack Rating Div Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackRatingDiv );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackRatingDiv = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Attack Rating Div Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackRatingDiv);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specatkspeed", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specatkspeed", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackSpeed = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Attack Speed Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackSpeed );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackSpeed = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Attack Speed Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackSpeed);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specatkspeed", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specatkspeed", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackSpeed = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Attack Speed Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackSpeed );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackSpeed = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Attack Speed Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackSpeed);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specatkrange", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specatkrange", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackRange = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Attack Range Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackRange );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackRange = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Attack Range Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAttackRange);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specaddhpdiv", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specaddhpdiv", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAddHPDiv = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Add HP Div Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAddHPDiv );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAddHPDiv = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Add HP Div Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAddHPDiv);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_specaddmpdiv", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_specaddmpdiv", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAddMPDiv = atoi( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Add MP Div Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAddMPDiv );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAddMPDiv = atoi(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Add MP Div Spec ( %d )", pcUser->sTempItem.sItem.sItem.sSpecData.iSpecAddMPDiv);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_addhp", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_addhp", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.fAddHP = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Add HP ( %.01f )", pcUser->sTempItem.sItem.sItem.fAddHP );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.fAddHP = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Add HP ( %.01f )", pcUser->sTempItem.sItem.sItem.fAddHP);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_addmp", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_addmp", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.fAddMP = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Add MP ( %.01f )", pcUser->sTempItem.sItem.sItem.fAddMP );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.fAddMP = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Add MP ( %.01f )", pcUser->sTempItem.sItem.sItem.fAddMP);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_addsp", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_addsp", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.fAddSP = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Add SP ( %.01f )", pcUser->sTempItem.sItem.sItem.fAddSP );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.fAddSP = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Add SP ( %.01f )", pcUser->sTempItem.sItem.sItem.fAddSP);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_hpregen", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_hpregen", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.fHPRegen = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New HP Regen ( %.01f )", pcUser->sTempItem.sItem.sItem.fHPRegen );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.fHPRegen = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New HP Regen ( %.01f )", pcUser->sTempItem.sItem.sItem.fHPRegen);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_mpregen", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_mpregen", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.fMPRegen = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New MP Regen ( %.01f )", pcUser->sTempItem.sItem.sItem.fMPRegen );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.fMPRegen = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New MP Regen ( %.01f )", pcUser->sTempItem.sItem.sItem.fMPRegen);
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/tempitem_spregen", pszBuff ) )
+	if (iLen = COMMAND("/tempitem_spregen", pszBuff))
 	{
-		if ( pcUser->sTempItem.iHeader )
+		if (pcUser->sTempItem.iHeader)
 		{
-			GetParameterString( pszBuff, 1, szCommandParam1 );
-			pcUser->sTempItem.sItem.sItem.fSPRegen = (float)atof( szCommandParam1 );
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New SP Regen ( %.01f )", pcUser->sTempItem.sItem.sItem.fSPRegen );
+			GetParameterString(pszBuff, 1, szCommandParam1);
+			pcUser->sTempItem.sItem.sItem.fSPRegen = (float)atof(szCommandParam1);
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New SP Regen ( %.01f )", pcUser->sTempItem.sItem.sItem.fSPRegen);
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/getitemspec", pszBuff ) )
+	if (iLen = COMMAND("/getitemspec", pszBuff))
 	{
-		GetParameterString( pszBuff, 1, szCommandParam1 );
-		GetParameterString( pszBuff, 2, szCommandParam2 );
-		GetParameterString( pszBuff, 3, szCommandParam3 );
+		GetParameterString(pszBuff, 1, szCommandParam1);
+		GetParameterString(pszBuff, 2, szCommandParam2);
+		GetParameterString(pszBuff, 3, szCommandParam3);
 
 		// Create Item
 		{
-			ItemData * psItemData = ITEMSERVER->FindItemPointerTable( szCommandParam1 );
-			if ( psItemData )
+			ItemData* psItemData = ITEMSERVER->FindItemPointerTable(szCommandParam1);
+			if (psItemData)
 			{
-				DefinitionItem * psDefItem = ITEMSERVER->FindItemDefByCode( psItemData->sBaseItemID.ToItemID() );
-				if ( psDefItem )
+				DefinitionItem* psDefItem = ITEMSERVER->FindItemDefByCode(psItemData->sBaseItemID.ToItemID());
+				if (psDefItem)
 				{
 					ItemData sItemData;
-					ITEMSERVER->CreateItem( &sItemData.sItem, psDefItem, EItemSource::GameMaster, atoi( szCommandParam2 ) );
-					if ( atoi( szCommandParam3 ) > 0 )
+					ITEMSERVER->CreateItem(&sItemData.sItem, psDefItem, EItemSource::GameMaster, atoi(szCommandParam2));
+					if (atoi(szCommandParam3) > 0)
 					{
-						if ( sItemData.sItem.sSpecData.iSpecAttackRatingDiv )
-							sItemData.sItem.sSpecData.iSpecAttackRatingDiv = atoi( szCommandParam3 );
+						if (sItemData.sItem.sSpecData.iSpecAttackRatingDiv)
+							sItemData.sItem.sSpecData.iSpecAttackRatingDiv = atoi(szCommandParam3);
 
-						ITEMSERVER->ReformItem( &sItemData );
+						ITEMSERVER->ReformItem(&sItemData);
 					}
-					ITEMSERVER->SendItemData( pcUserData, &sItemData.sItem );
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> '%s' Created at Spec %d LVATK_R/%d", szCommandParam1, atoi( szCommandParam2 ), sItemData.sItem.sSpecData.iSpecAttackRatingDiv );
+					ITEMSERVER->SendItemData(pcUserData, &sItemData.sItem);
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> '%s' Created at Spec %d LVATK_R/%d", szCommandParam1, atoi(szCommandParam2), sItemData.sItem.sSpecData.iSpecAttackRatingDiv);
 				}
 			}
 		}
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND ( "/test_command_polling", pszBuff ) )
+	if (iLen = COMMAND("/test_command_polling", pszBuff))
 	{
-		if ( GetParameterString ( pszBuff, 1, szCommandParam1 ) ||
-			GetParameterString ( pszBuff, 2, szCommandParam2 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) ||
+			GetParameterString(pszBuff, 2, szCommandParam2))
 		{
 
 			/*PacketTransCommand smTransCommand;
@@ -2838,220 +2838,220 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 
-	if ( iLen = COMMAND ( "/test_user_ranking", pszBuff ) )
+	if (iLen = COMMAND("/test_user_ranking", pszBuff))
 	{
-		if ( GetParameterString ( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			CHARACTERSERVER->CheckSyncUserRanking ( pcUser, atoi ( szCommandParam1 ) );
+			CHARACTERSERVER->CheckSyncUserRanking(pcUser, atoi(szCommandParam1));
 		}
 	}
 
-	if ( iLen = COMMAND( "/ItemSemiPerf", pszBuff ) )
+	if (iLen = COMMAND("/item_semi_perf", pszBuff))
 	{
-		GetParameterString( pszBuff, 1, szCommandParam1 );
-		GetParameterString( pszBuff, 2, szCommandParam2 );
-		GetParameterString( pszBuff, 3, szCommandParam3 );
+		GetParameterString(pszBuff, 1, szCommandParam1);
+		GetParameterString(pszBuff, 2, szCommandParam2);
+		GetParameterString(pszBuff, 3, szCommandParam3);
 
 		// Create Item
 		{
-			ItemData * psItemData = ITEMSERVER->FindItemPointerTable( szCommandParam1 );
-			if ( psItemData )
+			ItemData* psItemData = ITEMSERVER->FindItemPointerTable(szCommandParam1);
+			if (psItemData)
 			{
-				DefinitionItem * psDefItem = ITEMSERVER->FindItemDefByCode( psItemData->sBaseItemID.ToItemID() );
-				if ( psDefItem )
+				DefinitionItem* psDefItem = ITEMSERVER->FindItemDefByCode(psItemData->sBaseItemID.ToItemID());
+				if (psDefItem)
 				{
-					*( UINT* )0x8B70264 = 1;
-					*( UINT* )0x8B70268 = atoi( szCommandParam2 );
+					*(UINT*)0x8B70264 = 1;
+					*(UINT*)0x8B70268 = atoi(szCommandParam2);
 					ItemData sItemData;
-					ITEMSERVER->CreateItem( &sItemData.sItem, psDefItem, EItemSource::GameMaster, atoi( szCommandParam2 ) );
-					*( UINT* )0x8B70264 = 0;
-					*( UINT* )0x8B70268 = 0;
-					if ( atoi( szCommandParam3 ) > 0 )
+					ITEMSERVER->CreateItem(&sItemData.sItem, psDefItem, EItemSource::GameMaster, atoi(szCommandParam2));
+					*(UINT*)0x8B70264 = 0;
+					*(UINT*)0x8B70268 = 0;
+					if (atoi(szCommandParam3) > 0)
 					{
-						short sParam = atoi( szCommandParam3 );
-						if ( sItemData.sItem.sDamage.sMin )
+						short sParam = atoi(szCommandParam3);
+						if (sItemData.sItem.sDamage.sMin)
 						{
 							sItemData.sItem.sDamage.sMin -= sParam;
 							sItemData.sItem.sDamage.sMax -= sParam;
 						}
-						if ( sItemData.sItem.iDefenseRating )
+						if (sItemData.sItem.iDefenseRating)
 						{
-							sItemData.sItem.iDefenseRating -= (int)(sParam*2);
+							sItemData.sItem.iDefenseRating -= (int)(sParam * 2);
 						}
-						if ( sItemData.sItem.iAttackRating )
+						if (sItemData.sItem.iAttackRating)
 						{
-							sItemData.sItem.iAttackRating -= (int)(sParam*2)-1;
+							sItemData.sItem.iAttackRating -= (int)(sParam * 2) - 1;
 						}
-						ITEMSERVER->ReformItem( &sItemData );
+						ITEMSERVER->ReformItem(&sItemData);
 					}
-					ITEMSERVER->SendItemData( pcUserData, &sItemData.sItem );
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> '%s' Created at Spec %d (-%d -%d)", szCommandParam1, atoi( szCommandParam2 ), sItemData.sItem.sDamage.sMin, sItemData.sItem.sDamage.sMax );
+					ITEMSERVER->SendItemData(pcUserData, &sItemData.sItem);
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> '%s' Created at Spec %d (-%d -%d)", szCommandParam1, atoi(szCommandParam2), sItemData.sItem.sDamage.sMin, sItemData.sItem.sDamage.sMax);
 				}
 			}
 		}
 		return TRUE;
 	}
-	if ( iLen = COMMAND( "/getitemperf", pszBuff ) )
+	if (iLen = COMMAND("/getitemperf", pszBuff))
 	{
-		GetParameterString( pszBuff, 1, szCommandParam1 );
-		GetParameterString( pszBuff, 2, szCommandParam2 );
+		GetParameterString(pszBuff, 1, szCommandParam1);
+		GetParameterString(pszBuff, 2, szCommandParam2);
 
 		// Create Item
 		{
-			ItemData * psItemData = ITEMSERVER->FindItemPointerTable( szCommandParam1 );
-			if ( psItemData )
+			ItemData* psItemData = ITEMSERVER->FindItemPointerTable(szCommandParam1);
+			if (psItemData)
 			{
-				DefinitionItem * psDefItem = ITEMSERVER->FindItemDefByCode( psItemData->sBaseItemID.ToItemID() );
-				if ( psDefItem )
+				DefinitionItem* psDefItem = ITEMSERVER->FindItemDefByCode(psItemData->sBaseItemID.ToItemID());
+				if (psDefItem)
 				{
 					Item sItem;
-					ITEMSERVER->CreatePerfectItem( &sItem, psDefItem, EItemSource::GameMaster, atoi( szCommandParam2 ) );
-					ITEMSERVER->SendItemData( pcUserData, &sItem );
+					ITEMSERVER->CreatePerfectItem(&sItem, psDefItem, EItemSource::GameMaster, atoi(szCommandParam2));
+					ITEMSERVER->SendItemData(pcUserData, &sItem);
 				}
 			}
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> '%s' Created Perfect at Speck %d", szCommandParam1, atoi( szCommandParam2 ) );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> '%s' Created Perfect at Speck %d", szCommandParam1, atoi(szCommandParam2));
 		}
 		return TRUE;
 	}
 
-	if ( COMMAND( "/extradrop", pszBuff ) )
+	if (COMMAND("/extradrop", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			int iDrop = atoi( szCommandParam1 );
-			CHATSERVER->SendChatAllGM( "GM> Extra drop: %d -> %d", EVENT_EXTRADROPS, iDrop );
+			int iDrop = atoi(szCommandParam1);
+			CHATSERVER->SendChatAllGM("GM> Extra drop: %d -> %d", EVENT_EXTRADROPS, iDrop);
 			EVENT_EXTRADROPS = iDrop;
 		}
 		else
 		{
-			CHATSERVER->SendChatEx ( pcUser, CHATCOLOR_Error, "> Current extra drop count: %d", EVENT_EXTRADROPS );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Current extra drop count: %d", EVENT_EXTRADROPS);
 		}
 
 		return TRUE;
 	}
 
-	if ( COMMAND( "/event_reducemondmg", pszBuff ) )
+	if (COMMAND("/event_reducemondmg", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( STRINGCOMPAREI( "true", szCommandParam1 ) )
+			if (STRINGCOMPAREI("true", szCommandParam1))
 			{
-				EVENT_REDUCE_DAMAGEMON		= TRUE;
+				EVENT_REDUCE_DAMAGEMON = TRUE;
 				EVENT_REDUCE_DAMAGEMON_LIVE = TRUE;
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Reduce Damage Monster Event is ON!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Reduce Damage Monster Event is ON!");
 			}
-			else if ( STRINGCOMPAREI( "false", szCommandParam1 ) )
+			else if (STRINGCOMPAREI("false", szCommandParam1))
 			{
-				EVENT_REDUCE_DAMAGEMON		= FALSE;
+				EVENT_REDUCE_DAMAGEMON = FALSE;
 				EVENT_REDUCE_DAMAGEMON_LIVE = FALSE;
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Reduce Damage Monster Event is OFF!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Reduce Damage Monster Event is OFF!");
 			}
 			else
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Use: /event_reducemondmg <true|false>" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use: /event_reducemondmg <true|false>");
 		}
 		else
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Use: /event_reducemondmg <true|false> [%s]", EVENT_REDUCE_DAMAGEMON ? "ON" : "OFF" );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Use: /event_reducemondmg <true|false> [%s]", EVENT_REDUCE_DAMAGEMON ? "ON" : "OFF");
 
 		return TRUE;
 	}
-	if ( COMMAND( "/serverfps", pszBuff ) )
+	if (COMMAND("/serverfps", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			int iFps = atoi( szCommandParam1 );
-			if ( iFps > 1000 )
+			int iFps = atoi(szCommandParam1);
+			if (iFps > 1000)
 				iFps = 1000;
-			else if ( iFps < 15 )
+			else if (iFps < 15)
 				iFps = 15;
 
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> FPS Server: %d -> %d", *(int*)0x006E46F4, iFps );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> FPS Server: %d -> %d", *(int*)0x006E46F4, iFps);
 			*(int*)(0x006E46F4) = iFps;
 			*(DWORD*)(0x07AC9F74) = 0;
 		}
 		else
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> FPS Server: %d", *(int*)(0x006E46F4) );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> FPS Server: %d", *(int*)(0x006E46F4));
 
 		return TRUE;
 	}
 
-	if ( COMMAND( "/SQLSkill", pszBuff ) )
+	if (COMMAND("/sql_skill", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) && GetParameterString( pszBuff, 2, szCommandParam2 ), GetParameterString( pszBuff, 3, szCommandParam3 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) && GetParameterString(pszBuff, 2, szCommandParam2), GetParameterString(pszBuff, 3, szCommandParam3))
 		{
-			WriteSQLSkillInfo( szCommandParam1, szCommandParam2, atoi( szCommandParam3 ) );
+			WriteSQLSkillInfo(szCommandParam1, szCommandParam2, atoi(szCommandParam3));
 		}
 
 		return TRUE;
 	}
-	if ( COMMAND( "/SQLCALCMON", pszBuff ) )
+	if (COMMAND("/sql_calc_mon", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) && GetParameterString( pszBuff, 2, szCommandParam2 ) && GetParameterString( pszBuff, 3, szCommandParam3 )
-			&& GetParameterString( pszBuff, 4, szCommandParam4 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) && GetParameterString(pszBuff, 2, szCommandParam2) && GetParameterString(pszBuff, 3, szCommandParam3)
+			&& GetParameterString(pszBuff, 4, szCommandParam4))
 		{
 			int iCount = 0;
 
-			int iTotal = ((atoi( szCommandParam1 ) * 24) * atoi( szCommandParam4 )) * atoi( szCommandParam2 );
+			int iTotal = ((atoi(szCommandParam1) * 24) * atoi(szCommandParam4)) * atoi(szCommandParam2);
 
-			for ( int i = 0; i < iTotal; i++ )
+			for (int i = 0; i < iTotal; i++)
 			{
 				int iPercentMax = 105019060;
 
-				int iChanceDrop = iPercentMax - atoi( szCommandParam3 );
+				int iChanceDrop = iPercentMax - atoi(szCommandParam3);
 
-				int v = CALL( 0x00402050 ) % iPercentMax;
+				int v = CALL(0x00402050) % iPercentMax;
 
-				if ( v < iChanceDrop )
+				if (v < iChanceDrop)
 					iCount++;
 			}
 
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> [%d]", iTotal - iCount );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> [%d]", iTotal - iCount);
 		}
 
 		return TRUE;
 	}
 
-	if ( COMMAND( "/expevent", pszBuff ) )
+	if (COMMAND("/expevent", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			int iExp = atoi( szCommandParam1 );
-			if ( iExp > 1000 )
+			int iExp = atoi(szCommandParam1);
+			if (iExp > 1000)
 				iExp = 1000;
-			else if ( iExp < 0 )
+			else if (iExp < 0)
 				iExp = 0;
 
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> EXP Event: %d%% -> %d%%", *(int*)0x0084601C, iExp );
-			*(int*)(0x0084601C)		= iExp;
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> EXP Event: %d%% -> %d%%", *(int*)0x0084601C, iExp);
+			*(int*)(0x0084601C) = iExp;
 
-			NETSERVER->SendCommandToLoginServer ( PKTHDR_NetEXPEvent, iExp );
+			NETSERVER->SendCommandToLoginServer(PKTHDR_NetEXPEvent, iExp);
 		}
 		else
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> EXP Event: %d%%", *(int*)(0x0084601C) );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> EXP Event: %d%%", *(int*)(0x0084601C));
 
 		return TRUE;
 	}
-	if ( COMMAND( "/PVPMap", pszBuff ) )
+	if (COMMAND("/pvp_map", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			int iMap = atoi( szCommandParam1 );
+			int iMap = atoi(szCommandParam1);
 
-			if ( iMap != -1 )
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> PVP Map: %d", iMap );
+			if (iMap != -1)
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> PVP Map: %d", iMap);
 			else
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> PVP Map is disabled!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> PVP Map is disabled!");
 			*(int*)(0x0084831C) = iMap;
 		}
 		else
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> EXP Event: %d%%", *(int*)(0x0084601C) );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> EXP Event: %d%%", *(int*)(0x0084601C));
 
 		return TRUE;
 	}
 
 
 	if ((iLen = COMMAND("/pvp ", pszBuff)) ||
-		(iLen = COMMAND("/PVP ", pszBuff)) ||
-		(iLen = COMMAND("/PvP ", pszBuff)))
+		(iLen = COMMAND("/pvp ", pszBuff)) ||
+		(iLen = COMMAND("/pvp ", pszBuff)))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -3059,7 +3059,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			{
 				if (GetParameterString(pszBuff, 2, szCommandParam2))
 				{
-					float value = static_cast<float>( atof( szCommandParam2 ) );
+					float value = static_cast<float>(atof(szCommandParam2));
 					float oldValue = DAMAGEHANDLER->GetNewPVPLevelBasedDamageScale();
 
 					DAMAGEHANDLER->SetNewPVPLevelBasedDamageScale(value);
@@ -3077,7 +3077,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			{
 				if (GetParameterString(pszBuff, 2, szCommandParam2))
 				{
-					float value = static_cast<float>( atof( szCommandParam2 ) );
+					float value = static_cast<float>(atof(szCommandParam2));
 					float oldValue = DAMAGEHANDLER->GetNewPVPLevelBasedAbsScale();
 
 					DAMAGEHANDLER->SetNewPVPLevelBasedAbsScale(value);
@@ -3096,7 +3096,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 				if (GetParameterString(pszBuff, 2, szCommandParam2))
 				{
 					float oldValue = DAMAGEHANDLER->GetNewPVPGlobalDamageReduction();
-					float value = static_cast<float>( atof( szCommandParam2 ) );
+					float value = static_cast<float>(atof(szCommandParam2));
 
 					DAMAGEHANDLER->SetNewPVPGlobalDamageReduction(value);
 					CHATSERVER->SendChatAllGM("GM> Global Damage reduction: %.2f -> %.2f", oldValue, value);
@@ -3112,7 +3112,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 				if (GetParameterString(pszBuff, 2, szCommandParam2))
 				{
 					float oldValue = DAMAGEHANDLER->GetNewPVPGlobalAbsReduction();
-					float value = static_cast<float>( atof( szCommandParam2 ) );
+					float value = static_cast<float>(atof(szCommandParam2));
 
 					DAMAGEHANDLER->SetNewPVPGlobalAbsReduction(value);
 					CHATSERVER->SendChatAllGM("GM> Global Abs reduction: %.2f -> %.2f", oldValue, value);
@@ -3133,87 +3133,87 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 
-	if ( COMMAND( "/EventBC", pszBuff ) )
+	if (COMMAND("/event_bc", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			int i = atoi( szCommandParam1 );
+			int i = atoi(szCommandParam1);
 
-			if ( i != -1 )
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Siege War Mode: %d", i );
+			if (i != -1)
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Siege War Mode: %d", i);
 
-			BLESSCASTLESERVER->SetSiegeWarMode( (ESiegeWarMode)i );
+			BLESSCASTLESERVER->SetSiegeWarMode((ESiegeWarMode)i);
 		}
 		else
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> EXP Event: %d%%", *(int*)(0x0084601C) );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> EXP Event: %d%%", *(int*)(0x0084601C));
 
 		return TRUE;
 	}
-	if ( MAPSDATA[MAPID_BlessCastle].iState )
+	if (MAPSDATA[MAPID_BlessCastle].iState)
 	{
-		if ( COMMAND( "/StartSiegeWar", pszBuff ) )
+		if (COMMAND("/start_siege_war", pszBuff))
 		{
 			BLESSCASTLESERVER->Start();
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Started!" );
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Started!");
 
 			return TRUE;
 		}
-		if ( COMMAND( "/EndSiegeWar", pszBuff ) )
+		if (COMMAND("/end_siege_war", pszBuff))
 		{
 			BLESSCASTLESERVER->ResetUserScore();
-			BLESSCASTLESERVER->End( FALSE );
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Ended!" );
+			BLESSCASTLESERVER->End(FALSE);
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Ended!");
 
 			return TRUE;
 		}
-		if ( COMMAND( "/EndWinSiegeWar", pszBuff ) )
+		if (COMMAND("/end_win_siege_war", pszBuff))
 		{
 			BLESSCASTLESERVER->psBlessCastleStatusData->dwBattleOverTime = TICKCOUNT;
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Ended!" );
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Ended!");
 
 			return TRUE;
 		}
-		if ( COMMAND( "/EasySiegeWar", pszBuff ) )
+		if (COMMAND("/easy_siege_war", pszBuff))
 		{
 			BLESSCASTLESERVER->EasySiegeWar();
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Easy Siege War!" );
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Easy Siege War!");
 
 			return TRUE;
 		}
 	}
 
-	if ( COMMAND( "/ClearTickRO", pszBuff ) )
+	if (COMMAND("/clear_tick_ro", pszBuff))
 	{
-		NETSERVER->SendCommandToLoginServer ( PKTHDR_NetClearTickRO );
+		NETSERVER->SendCommandToLoginServer(PKTHDR_NetClearTickRO);
 		return TRUE;
 	}
 
-	if ( COMMAND( "/ClearTickChristmas", pszBuff ) )
+	if (COMMAND("/clear_tick_christmas", pszBuff))
 	{
-		NETSERVER->SendCommandToLoginServer ( PKTHDR_NetClearTickChristmas );
+		NETSERVER->SendCommandToLoginServer(PKTHDR_NetClearTickChristmas);
 		return TRUE;
 	}
 
 
-	if ( COMMAND( "/recoveritem", pszBuff ) )
+	if (COMMAND("/recoveritem", pszBuff))
 	{
-		if ( GAME_SERVER )
+		if (GAME_SERVER)
 		{
 			NETSERVER->SendGMCommandToLoginServer(pcUser, pszBuff);
 		}
 		else
 		{
-			if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+			if (GetParameterString(pszBuff, 1, szCommandParam1))
 			{
-				int itemCreateLogDBId = atoi( szCommandParam1 );
-				ITEMSERVER->RecoverItemFromItemCreateLog( pcUser, itemCreateLogDBId );
+				int itemCreateLogDBId = atoi(szCommandParam1);
+				ITEMSERVER->RecoverItemFromItemCreateLog(pcUser, itemCreateLogDBId);
 			}
 		}
 
 		return TRUE;
 	}
 
-	if (iLen = COMMAND("/ReloadMonsterDropTable", pszBuff))
+	if (iLen = COMMAND("/reload_monster_drop_table", pszBuff))
 	{
 		LOOTSERVER->SQLUpdateDropTableFromDatabase();
 		CHATSERVER->SendChatAllGM("GM> Monster Drop Table Reloaded");
@@ -3221,38 +3221,38 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND ( "/ReloadItemDef", pszBuff ) )
+	if (iLen = COMMAND("/reload_item_def", pszBuff))
 	{
 		//doesn't work atm
-		ITEMSERVER->CreateItemMemoryTable ();
+		ITEMSERVER->CreateItemMemoryTable();
 
 		return TRUE;
 	}
 
 
 
-	if (iLen = COMMAND("/TestMonsterDropTable", pszBuff))
+	if (iLen = COMMAND("/test_monster_drop_table", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			LOOTSERVER->GenerateDropStats( szCommandParam1, "ServerCommand");
-			CHATSERVER->SendChatEx ( pcUser, CHATCOLOR_Error, "GM> Drop Table Tested for ID: %s", szCommandParam1 );
+			LOOTSERVER->GenerateDropStats(szCommandParam1, "ServerCommand");
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "GM> Drop Table Tested for ID: %s", szCommandParam1);
 		}
 	}
 
 
-	if ( COMMAND( "/setbosstime", pszBuff ) )
+	if (COMMAND("/setbosstime", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			BOSS_TIME = atoi( szCommandParam1 );
+			BOSS_TIME = atoi(szCommandParam1);
 			*(UINT*)0x07AC9F60 = 0;
 			*(DWORD*)(0x7AC9F64) = 0;
 
 			MAPSERVER->UpdateUsersBossTime();
 			GSERVER->SqlUpdateOrInsertMetadata("boss.time.second", BOSS_TIME);
 
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> New Boss Time [xx:%02d]", BOSS_TIME );
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Boss Time [xx:%02d]", BOSS_TIME);
 		}
 
 		return TRUE;
@@ -3261,7 +3261,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	if (COMMAND("/spawnbosses", pszBuff))
 	{
 		BOSS_TIME = GetServerTime()->wMinute - 1;
-		if ( BOSS_TIME < 0 )
+		if (BOSS_TIME < 0)
 			BOSS_TIME = 0;
 
 		MAPSERVER->UpdateUsersBossTime();
@@ -3277,7 +3277,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			}
 		}
 
-		CHATSERVER->SendChatAllGM( "GM> BOSS_TIME updated to now" );
+		CHATSERVER->SendChatAllGM("GM> BOSS_TIME updated to now");
 		return TRUE;
 	}
 
@@ -3485,25 +3485,25 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		return TRUE;
 	}
 
-	if ( iLen = COMMAND( "/sod_enable", pszBuff ) )
+	if (iLen = COMMAND("/sod_enable", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( STRINGCOMPAREI( "true", szCommandParam1 ) )
+			if (STRINGCOMPAREI("true", szCommandParam1))
 			{
 				EVENT_BELLATRA = 2;
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Bellatra Event is enabled!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Bellatra Event is enabled!");
 			}
-			else if ( STRINGCOMPAREI( "false", szCommandParam1 ) )
+			else if (STRINGCOMPAREI("false", szCommandParam1))
 			{
 				EVENT_BELLATRA = 0;
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Bellatra Event is disabled!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Bellatra Event is disabled!");
 			}
 			else
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Use: /sod_enable <true|false>" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use: /sod_enable <true|false>");
 		}
 		else
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Use: /sod_enable <true|false>" );
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use: /sod_enable <true|false>");
 
 
 
@@ -3511,69 +3511,69 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 	//boss crystal
-	if ( iLen = COMMAND( "/event_crystal", pszBuff ) )
+	if (iLen = COMMAND("/event_crystal", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( STRINGCOMPAREI( "true", szCommandParam1 ) )
+			if (STRINGCOMPAREI("true", szCommandParam1))
 			{
 				(*(int*)0x00845FF8) = 2;
 				(*(int*)0x07AC9D50) = 1;
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Crystal Event is enabled!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Crystal Event is enabled!");
 			}
-			else if ( STRINGCOMPAREI( "false", szCommandParam1 ) )
+			else if (STRINGCOMPAREI("false", szCommandParam1))
 			{
 				(*(int*)0x00845FF8) = 0;
 				(*(int*)0x07AC9D50) = 0;
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Crystal Event is disabled!" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Crystal Event is disabled!");
 			}
 			else
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Use: /event_crystal <true|false>" );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use: /event_crystal <true|false>");
 		}
 		else
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Use: /event_crystal <true|false>" );
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use: /event_crystal <true|false>");
 
 
 		return TRUE;
 	}
 
-	if ((iLen = COMMAND("/sql_HP",					pszBuff)) || //Health points
-		(iLen = COMMAND("/sql_Size",				pszBuff)) || //Monster Size
-		(iLen = COMMAND("/sql_Type",				pszBuff)) || //Monster type
-		(iLen = COMMAND("/sql_EXP",					pszBuff)) || //Experience
-		(iLen = COMMAND("/sql_Absorb",				pszBuff)) || //Absorb rating
-		(iLen = COMMAND("/sql_Block",				pszBuff)) || //Block rating
-		(iLen = COMMAND("/sql_StunChance",			pszBuff)) || //Stun chance (doesn't work?)
-		(iLen = COMMAND("/sql_Defense",				pszBuff)) || //Defense
-		(iLen = COMMAND("/sql_Potion",				pszBuff)) || //Potion
-		(iLen = COMMAND("/sql_Organic",				pszBuff)) || //Organic resistence
-		(iLen = COMMAND("/sql_Lightning",			pszBuff)) || //Lightning resistence
-		(iLen = COMMAND("/sql_Ice",					pszBuff)) || //Ice resistence
-		(iLen = COMMAND("/sql_Fire",				pszBuff)) || //Fire resistance
-		(iLen = COMMAND("/sql_Poison",				pszBuff)) || //Poison resistence
-		(iLen = COMMAND("/sql_Magic",				pszBuff)) || //Magic resistence
-		(iLen = COMMAND("/sql_NumDrops",			pszBuff)) || //Number of drops
-		(iLen = COMMAND("/sql_PublicDrop",			pszBuff)) || //Drop is public?
-		(iLen = COMMAND("/sql_SpawnMin",			pszBuff)) || //Spawn min
-		(iLen = COMMAND("/sql_SpawnMax",			pszBuff)) || //Spawn max
-		(iLen = COMMAND("/sql_MoveSpeed",			pszBuff)) || //Move speed (doesn't work?)
-		(iLen = COMMAND("/sql_ViewSight",			pszBuff)) || //View sight
-		(iLen = COMMAND("/sql_AttackMinMax",		pszBuff)) || //Attack min max
-		(iLen = COMMAND("/sql_AttackSpeed",			pszBuff)) || //Attack speed (doesn't work?)
-		(iLen = COMMAND("/sql_AttackRange",			pszBuff)) || //Attack range
-		(iLen = COMMAND("/sql_AttackRating",		pszBuff)) || //Attack rating
-		(iLen = COMMAND("/sql_PerfectAttackRate",	pszBuff)) || //Perfect attack rating (doesn't work?)
-		(iLen = COMMAND("/sql_SkillMinMax",			pszBuff)) || //Skill min max
-		(iLen = COMMAND("/sql_SkillType",			pszBuff)) || //Skill type
-		(iLen = COMMAND("/sql_SkillChance",			pszBuff)) || //Skill chance
-		(iLen = COMMAND("/sql_SkillHitRange",		pszBuff)) || //iSkillPierceRange // SkillDistance (uses a rect box to determine hit area?)
-		(iLen = COMMAND("/sql_SkillHitBoxLeft",		pszBuff)) || //Skill hit box rect (left)
-		(iLen = COMMAND("/sql_SkillHitBoxRight",	pszBuff)) || //Skill hit box rect (right)
-		(iLen = COMMAND("/sql_SkillHitBoxTop",		pszBuff)) || //Skill hit box rect (top)
-		(iLen = COMMAND("/sql_SkillHitBoxBottom",	pszBuff)) || //Skill hit box rect (bottom)
-		(iLen = COMMAND("/sql_Glow",				pszBuff)) || //Glow Boss Flag
-		(iLen = COMMAND("/sql_SkillArea",			pszBuff)) || //iSkillArea // SkillRange
-		(iLen = COMMAND("/sql_Level",				pszBuff)))	 //Monster Level
+	if ((iLen = COMMAND("/sql_hp", pszBuff)) || //Health points
+		(iLen = COMMAND("/sql_size", pszBuff)) || //Monster Size
+		(iLen = COMMAND("/sql_type", pszBuff)) || //Monster type
+		(iLen = COMMAND("/sql_exp", pszBuff)) || //Experience
+		(iLen = COMMAND("/sql_absorb", pszBuff)) || //Absorb rating
+		(iLen = COMMAND("/sql_block", pszBuff)) || //Block rating
+		(iLen = COMMAND("/sql_stun_chance", pszBuff)) || //Stun chance (doesn't work?)
+		(iLen = COMMAND("/sql_defense", pszBuff)) || //Defense
+		(iLen = COMMAND("/sql_potion", pszBuff)) || //Potion
+		(iLen = COMMAND("/sql_organic", pszBuff)) || //Organic resistence
+		(iLen = COMMAND("/sql_lightning", pszBuff)) || //Lightning resistence
+		(iLen = COMMAND("/sql_ice", pszBuff)) || //Ice resistence
+		(iLen = COMMAND("/sql_fire", pszBuff)) || //Fire resistance
+		(iLen = COMMAND("/sql_poison", pszBuff)) || //Poison resistence
+		(iLen = COMMAND("/sql_magic", pszBuff)) || //Magic resistence
+		(iLen = COMMAND("/sql_num_drops", pszBuff)) || //Number of drops
+		(iLen = COMMAND("/sql_public_drop", pszBuff)) || //Drop is public?
+		(iLen = COMMAND("/sql_spawn_min", pszBuff)) || //Spawn min
+		(iLen = COMMAND("/sql_spawn_max", pszBuff)) || //Spawn max
+		(iLen = COMMAND("/sql_move_speed", pszBuff)) || //Move speed (doesn't work?)
+		(iLen = COMMAND("/sql_view_sight", pszBuff)) || //View sight
+		(iLen = COMMAND("/sql_attack_min_max", pszBuff)) || //Attack min max
+		(iLen = COMMAND("/sql_attack_speed", pszBuff)) || //Attack speed (doesn't work?)
+		(iLen = COMMAND("/sql_attack_range", pszBuff)) || //Attack range
+		(iLen = COMMAND("/sql_attack_rating", pszBuff)) || //Attack rating
+		(iLen = COMMAND("/sql_perfect_attack_rate", pszBuff)) || //Perfect attack rating (doesn't work?)
+		(iLen = COMMAND("/sql_skill_min_max", pszBuff)) || //Skill min max
+		(iLen = COMMAND("/sql_skill_type", pszBuff)) || //Skill type
+		(iLen = COMMAND("/sql_skill_chance", pszBuff)) || //Skill chance
+		(iLen = COMMAND("/sql_skill_hit_range", pszBuff)) || //iSkillPierceRange // SkillDistance (uses a rect box to determine hit area?)
+		(iLen = COMMAND("/sql_skill_hit_box_left", pszBuff)) || //Skill hit box rect (left)
+		(iLen = COMMAND("/sql_skill_hit_box_right", pszBuff)) || //Skill hit box rect (right)
+		(iLen = COMMAND("/sql_skill_hit_box_top", pszBuff)) || //Skill hit box rect (top)
+		(iLen = COMMAND("/sql_skill_hit_box_bottom", pszBuff)) || //Skill hit box rect (bottom)
+		(iLen = COMMAND("/sql_glow", pszBuff)) || //Glow Boss Flag
+		(iLen = COMMAND("/sql_skill_area", pszBuff)) || //iSkillArea // SkillRange
+		(iLen = COMMAND("/sql_level", pszBuff)))	 //Monster Level
 	{
 		char szCommand[256] = { 0 };
 
@@ -3589,7 +3589,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			if (pcUnitData)
 			{
 				CharacterData* psCharacterData = UNITSERVER->GetCharacterDataByName(pcUnitData->GetName());
-				UnitInfo* psUnitInfo		   = psCharacterData != NULL ? psCharacterData->psUnitInfo : NULL;
+				UnitInfo* psUnitInfo = psCharacterData != NULL ? psCharacterData->psUnitInfo : NULL;
 
 				if (psCharacterData && psUnitInfo)
 				{
@@ -3605,57 +3605,61 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 					std::string columnName2 = "";
 					std::string tableName = "MonsterList";
 
-					if (     STRINGCOMPAREI("/sql_HP",					szCommand)) { columnName1="HealthPoint";		existingValue1 = UNITSERVER->GetMonsterHealthPointDefinition(psCharacterData->iUniqueMonsterID);	}
-					else if (STRINGCOMPAREI("/sql_Size",				szCommand)) { columnName1="Size";				fExistingValue1 = psCharacterData->sSize / 256.0f;							}
-					else if (STRINGCOMPAREI("/sql_Type",				szCommand)) { columnName1="PropertyMon";		szExistingValue = UNITINFODATA->GetMonsterTypeStr(psCharacterData->iMonsterType); }
-					else if (STRINGCOMPAREI("/sql_EXP",					szCommand)) { columnName1="EXP";				lExistingValue3 = UNITSERVER->GetExp(pcUnitData);											}
-					else if (STRINGCOMPAREI("/sql_Absorb",				szCommand)) { columnName1="Absorb";				existingValue1 = psCharacterData->iAbsorbRating;							}
-					else if (STRINGCOMPAREI("/sql_Block",				szCommand)) { columnName1="Block";				existingValue1 = psCharacterData->iBlockRating;								}
-					else if (STRINGCOMPAREI("/sql_StunChance",			szCommand)) { columnName1="Stunchance";			existingValue1 = psUnitInfo->iFlinchChance;										}
-					else if (STRINGCOMPAREI("/sql_Defense",				szCommand)) { columnName1="Defense";			existingValue1 = psCharacterData->iDefenseRating;							}
-					else if (STRINGCOMPAREI("/sql_PotionPercent",		szCommand)) { columnName1="PotionPercent";		existingValue1 = psUnitInfo->iPerPotions;									}
-					else if (STRINGCOMPAREI("/sql_Potion",				szCommand)) { columnName1="Potions";			existingValue1 = psUnitInfo->iMaxPotions;									}
-					else if (STRINGCOMPAREI("/sql_Organic",				szCommand)) { columnName1="Organic";			existingValue1 = psCharacterData->sElementalDef[EElementID::Organic];		}
-					else if (STRINGCOMPAREI("/sql_Lightning",			szCommand)) { columnName1="Lightning";			existingValue1 = psCharacterData->sElementalDef[EElementID::Lightning];		}
-					else if (STRINGCOMPAREI("/sql_Ice",					szCommand)) { columnName1="Ice";				existingValue1 = psCharacterData->sElementalDef[EElementID::Ice];			}
-					else if (STRINGCOMPAREI("/sql_Fire",				szCommand)) { columnName1="Fire";				existingValue1 = psCharacterData->sElementalDef[EElementID::Fire];			}
-					else if (STRINGCOMPAREI("/sql_Poison",				szCommand)) { columnName1="Poison";				existingValue1 = psCharacterData->sElementalDef[EElementID::Poison];		}
-					else if (STRINGCOMPAREI("/sql_Magic",				szCommand)) { columnName1="Magic";				existingValue1 = psCharacterData->sElementalDef[EElementID::Wind];			}
-					else if (STRINGCOMPAREI("/sql_SpawnMin",			szCommand)) { columnName1="SpawnMin";			existingValue1 = psUnitInfo->iGroupLimitMin;								}
-					else if (STRINGCOMPAREI("/sql_SpawnMax",			szCommand)) { columnName1="SpawnMax";			existingValue1 = psUnitInfo->iGroupLimitMax;								}
-					else if (STRINGCOMPAREI("/sql_MoveSpeed",			szCommand)) { columnName1="MoveSpeed";			existingValue1 = ((psCharacterData->iMovementSpeed - 256) / 16) + 9;	    }
-					else if (STRINGCOMPAREI("/sql_ViewSight",			szCommand)) { columnName1="ViewSight";			existingValue1 = psUnitInfo->iSight;										}
-					else if (STRINGCOMPAREI("/sql_NumDrops",			szCommand)) { columnName1="DropQuantity";		existingValue1 = psUnitInfo->iNumDrops;				                        }
-					else if (STRINGCOMPAREI("/sql_PublicDrop",			szCommand)) { columnName1="DropIsPublic";		existingValue1 = psUnitInfo->bPublicDrop;				                    }
-					else if (STRINGCOMPAREI("/sql_Glow",				szCommand)) { columnName1="Glow";				existingValue1 = (int)psCharacterData->sMonsterClass;						}
-					else if (STRINGCOMPAREI("/sql_Level",				szCommand)) { columnName1="Level";				existingValue1 = psCharacterData->iLevel;									}
+					if (STRINGCOMPAREI("/sql_HP", szCommand)) { columnName1 = "HealthPoint";		existingValue1 = UNITSERVER->GetMonsterHealthPointDefinition(psCharacterData->iUniqueMonsterID); }
+					else if (STRINGCOMPAREI("/sql_Size", szCommand)) { columnName1 = "Size";				fExistingValue1 = psCharacterData->sSize / 256.0f; }
+					else if (STRINGCOMPAREI("/sql_Type", szCommand)) { columnName1 = "PropertyMon";		szExistingValue = UNITINFODATA->GetMonsterTypeStr(psCharacterData->iMonsterType); }
+					else if (STRINGCOMPAREI("/sql_EXP", szCommand)) { columnName1 = "EXP";				lExistingValue3 = UNITSERVER->GetExp(pcUnitData); }
+					else if (STRINGCOMPAREI("/sql_Absorb", szCommand)) { columnName1 = "Absorb";				existingValue1 = psCharacterData->iAbsorbRating; }
+					else if (STRINGCOMPAREI("/sql_Block", szCommand)) { columnName1 = "Block";				existingValue1 = psCharacterData->iBlockRating; }
+					else if (STRINGCOMPAREI("/sql_StunChance", szCommand)) { columnName1 = "Stunchance";			existingValue1 = psUnitInfo->iFlinchChance; }
+					else if (STRINGCOMPAREI("/sql_Defense", szCommand)) { columnName1 = "Defense";			existingValue1 = psCharacterData->iDefenseRating; }
+					else if (STRINGCOMPAREI("/sql_PotionPercent", szCommand)) { columnName1 = "PotionPercent";		existingValue1 = psUnitInfo->iPerPotions; }
+					else if (STRINGCOMPAREI("/sql_Potion", szCommand)) { columnName1 = "Potions";			existingValue1 = psUnitInfo->iMaxPotions; }
+					else if (STRINGCOMPAREI("/sql_Organic", szCommand)) { columnName1 = "Organic";			existingValue1 = psCharacterData->sElementalDef[EElementID::Organic]; }
+					else if (STRINGCOMPAREI("/sql_Lightning", szCommand)) { columnName1 = "Lightning";			existingValue1 = psCharacterData->sElementalDef[EElementID::Lightning]; }
+					else if (STRINGCOMPAREI("/sql_Ice", szCommand)) { columnName1 = "Ice";				existingValue1 = psCharacterData->sElementalDef[EElementID::Ice]; }
+					else if (STRINGCOMPAREI("/sql_Fire", szCommand)) { columnName1 = "Fire";				existingValue1 = psCharacterData->sElementalDef[EElementID::Fire]; }
+					else if (STRINGCOMPAREI("/sql_Poison", szCommand)) { columnName1 = "Poison";				existingValue1 = psCharacterData->sElementalDef[EElementID::Poison]; }
+					else if (STRINGCOMPAREI("/sql_Magic", szCommand)) { columnName1 = "Magic";				existingValue1 = psCharacterData->sElementalDef[EElementID::Wind]; }
+					else if (STRINGCOMPAREI("/sql_SpawnMin", szCommand)) { columnName1 = "SpawnMin";			existingValue1 = psUnitInfo->iGroupLimitMin; }
+					else if (STRINGCOMPAREI("/sql_SpawnMax", szCommand)) { columnName1 = "SpawnMax";			existingValue1 = psUnitInfo->iGroupLimitMax; }
+					else if (STRINGCOMPAREI("/sql_MoveSpeed", szCommand)) { columnName1 = "MoveSpeed";			existingValue1 = ((psCharacterData->iMovementSpeed - 256) / 16) + 9; }
+					else if (STRINGCOMPAREI("/sql_ViewSight", szCommand)) { columnName1 = "ViewSight";			existingValue1 = psUnitInfo->iSight; }
+					else if (STRINGCOMPAREI("/sql_NumDrops", szCommand)) { columnName1 = "DropQuantity";		existingValue1 = psUnitInfo->iNumDrops; }
+					else if (STRINGCOMPAREI("/sql_PublicDrop", szCommand)) { columnName1 = "DropIsPublic";		existingValue1 = psUnitInfo->bPublicDrop; }
+					else if (STRINGCOMPAREI("/sql_Glow", szCommand)) { columnName1 = "Glow";				existingValue1 = (int)psCharacterData->sMonsterClass; }
+					else if (STRINGCOMPAREI("/sql_Level", szCommand)) { columnName1 = "Level";				existingValue1 = psCharacterData->iLevel; }
 
 					//Basic attack related
-					else if (STRINGCOMPAREI("/sql_AttackMinMax",		szCommand)) { columnName1="ATKPowMin";			existingValue1 = psCharacterData->iMinDamage;
-					                                                                  columnName2="ATKPowMax";			existingValue2 = psCharacterData->iMaxDamage;								}
-					else if (STRINGCOMPAREI("/sql_AttackSpeed",			szCommand)) { columnName1="AttackSpeed";		existingValue1 = psCharacterData->iAttackSpeed >> 8;						}
-					else if (STRINGCOMPAREI("/sql_AttackRange",			szCommand)) { columnName1="AttackRange";		existingValue1 = psCharacterData->iAttackRange >> 8;						}
-					else if (STRINGCOMPAREI("/sql_AttackRating",		szCommand)) { columnName1="AttackRating";		existingValue1 = psCharacterData->iAttackRating;							}
-					else if (STRINGCOMPAREI("/sql_PerfectAttackRate",	szCommand)) { columnName1="PerfectAttackRate";	existingValue1 = psUnitInfo->iLureDistance;									}
+					else if (STRINGCOMPAREI("/sql_AttackMinMax", szCommand)) {
+						columnName1 = "ATKPowMin";			existingValue1 = psCharacterData->iMinDamage;
+						columnName2 = "ATKPowMax";			existingValue2 = psCharacterData->iMaxDamage;
+					}
+					else if (STRINGCOMPAREI("/sql_AttackSpeed", szCommand)) { columnName1 = "AttackSpeed";		existingValue1 = psCharacterData->iAttackSpeed >> 8; }
+					else if (STRINGCOMPAREI("/sql_AttackRange", szCommand)) { columnName1 = "AttackRange";		existingValue1 = psCharacterData->iAttackRange >> 8; }
+					else if (STRINGCOMPAREI("/sql_AttackRating", szCommand)) { columnName1 = "AttackRating";		existingValue1 = psCharacterData->iAttackRating; }
+					else if (STRINGCOMPAREI("/sql_PerfectAttackRate", szCommand)) { columnName1 = "PerfectAttackRate";	existingValue1 = psUnitInfo->iLureDistance; }
 
 					//Skill related
-					else if (STRINGCOMPAREI("/sql_SkillType",			szCommand)) { columnName1="SpecialSkillType";	existingValue1 = psUnitInfo->iSkillType;									}
-					else if (STRINGCOMPAREI("/sql_SkillChance",			szCommand)) { columnName1="SpecialHitRate";		existingValue1 = psUnitInfo->iSkillChance;									}
-					else if (STRINGCOMPAREI("/sql_SkillHitRange",		szCommand)) { columnName1="SpecialSkillHit";	existingValue1 = psUnitInfo->iSkillPierceRange;								}
-					else if (STRINGCOMPAREI("/sql_SkillArea",			szCommand)) { columnName1="SpecialHitScope";	existingValue1 = psUnitInfo->iSkillArea;									}
-					else if (STRINGCOMPAREI("/sql_SkillHitBoxLeft",		szCommand)) { columnName1="";					existingValue1 = psUnitInfo->iSkillBoxLeft;									}
-					else if (STRINGCOMPAREI("/sql_SkillHitBoxRight",	szCommand)) { columnName1="";					existingValue1 = psUnitInfo->iSkillBoxRight;								}
-					else if (STRINGCOMPAREI("/sql_SkillHitBoxTop",		szCommand)) { columnName1="";					existingValue1 = psUnitInfo->iSkillBoxTop;									}
-					else if (STRINGCOMPAREI("/sql_SkillHitBoxBottom",	szCommand)) { columnName1="";					existingValue1 = psUnitInfo->iSkillBoxBottom;								}
-					else if (STRINGCOMPAREI("/sql_SkillMinMax",			szCommand)) { columnName1="SpecialHitPowerMin";	existingValue1 = psUnitInfo->sSkillPower.sMin;
-					                                                                  columnName2="SpecialHitPowerMax";	existingValue2 = psUnitInfo->sSkillPower.sMax;								}
+					else if (STRINGCOMPAREI("/sql_SkillType", szCommand)) { columnName1 = "SpecialSkillType";	existingValue1 = psUnitInfo->iSkillType; }
+					else if (STRINGCOMPAREI("/sql_SkillChance", szCommand)) { columnName1 = "SpecialHitRate";		existingValue1 = psUnitInfo->iSkillChance; }
+					else if (STRINGCOMPAREI("/sql_SkillHitRange", szCommand)) { columnName1 = "SpecialSkillHit";	existingValue1 = psUnitInfo->iSkillPierceRange; }
+					else if (STRINGCOMPAREI("/sql_SkillArea", szCommand)) { columnName1 = "SpecialHitScope";	existingValue1 = psUnitInfo->iSkillArea; }
+					else if (STRINGCOMPAREI("/sql_SkillHitBoxLeft", szCommand)) { columnName1 = "";					existingValue1 = psUnitInfo->iSkillBoxLeft; }
+					else if (STRINGCOMPAREI("/sql_SkillHitBoxRight", szCommand)) { columnName1 = "";					existingValue1 = psUnitInfo->iSkillBoxRight; }
+					else if (STRINGCOMPAREI("/sql_SkillHitBoxTop", szCommand)) { columnName1 = "";					existingValue1 = psUnitInfo->iSkillBoxTop; }
+					else if (STRINGCOMPAREI("/sql_SkillHitBoxBottom", szCommand)) { columnName1 = "";					existingValue1 = psUnitInfo->iSkillBoxBottom; }
+					else if (STRINGCOMPAREI("/sql_SkillMinMax", szCommand)) {
+						columnName1 = "SpecialHitPowerMin";	existingValue1 = psUnitInfo->sSkillPower.sMin;
+						columnName2 = "SpecialHitPowerMax";	existingValue2 = psUnitInfo->sSkillPower.sMax;
+					}
 
 
 					//has value #1
 					if (GetParameterString(pszBuff, 2, szCommandParam2))
 					{
 						int newValue1 = atoi(szCommandParam2);
-						float fNewValue1 = static_cast<float>( atof( szCommandParam2 ) );
+						float fNewValue1 = static_cast<float>(atof(szCommandParam2));
 						std::string szNewValue = szCommandParam2;
 						UINT64 lNewValue1 = atoll(szCommandParam2);
 						int newValue2 = -1;
@@ -3666,52 +3670,58 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 							newValue2 = atoi(szCommandParam3);
 						}
 
-						if (     STRINGCOMPAREI("/sql_HP",					szCommand)) { UNITSERVER->AddOrUpdateMonsterHealthPointDefinition( psCharacterData->iUniqueMonsterID, newValue1); }
-						else if (STRINGCOMPAREI("/sql_Absorb",				szCommand)) { psCharacterData->iAbsorbRating					   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_Type",				szCommand)) { psCharacterData->iMonsterType					       = UNITINFODATA->GetMonsterType(szNewValue.c_str()); }
-						else if (STRINGCOMPAREI("/sql_Size",				szCommand)) { psCharacterData->sSize							   = static_cast<WORD>((fNewValue1 > 0 ? (fNewValue1 * 256.0f) : 256.0f)); }
-						else if (STRINGCOMPAREI("/sql_EXP",					szCommand)) { UNITSERVER->SetExp(pcUnitData, lNewValue1);			}
-						else if (STRINGCOMPAREI("/sql_Block",				szCommand)) { psCharacterData->iBlockRating						   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_StunChance",			szCommand)) { psUnitInfo->iFlinchChance							   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_Defense",				szCommand)) { psCharacterData->iDefenseRating					   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_PotionPercent",		szCommand)) { psUnitInfo->iPerPotions							   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_Potion",				szCommand)) { psUnitInfo->iMaxPotions							   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_Organic",				szCommand)) { psCharacterData->sElementalDef[EElementID::Organic]  = newValue1; }
-						else if (STRINGCOMPAREI("/sql_Lightning",			szCommand)) { psCharacterData->sElementalDef[EElementID::Lightning] = newValue1; }
-						else if (STRINGCOMPAREI("/sql_Ice",					szCommand)) { psCharacterData->sElementalDef[EElementID::Ice]	   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_Fire",				szCommand)) { psCharacterData->sElementalDef[EElementID::Fire]	   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_Poison",				szCommand)) { psCharacterData->sElementalDef[EElementID::Poison]   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_Magic",				szCommand)) { psCharacterData->sElementalDef[EElementID::Wind]	   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SpawnMin",			szCommand)) { psUnitInfo->iGroupLimitMin						   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SpawnMax",			szCommand)) { psUnitInfo->iGroupLimitMax						   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_MoveSpeed",			szCommand)) { psCharacterData->iMovementSpeed					   = (((newValue1 - 9) * 16) + 256); }
-						else if (STRINGCOMPAREI("/sql_ViewSight",			szCommand)) { psCharacterData->iSight							   = newValue1 * newValue1;
-						                                                                  psUnitInfo->iSight								   = newValue1; }
+						if (STRINGCOMPAREI("/sql_HP", szCommand)) { UNITSERVER->AddOrUpdateMonsterHealthPointDefinition(psCharacterData->iUniqueMonsterID, newValue1); }
+						else if (STRINGCOMPAREI("/sql_Absorb", szCommand)) { psCharacterData->iAbsorbRating = newValue1; }
+						else if (STRINGCOMPAREI("/sql_Type", szCommand)) { psCharacterData->iMonsterType = UNITINFODATA->GetMonsterType(szNewValue.c_str()); }
+						else if (STRINGCOMPAREI("/sql_Size", szCommand)) { psCharacterData->sSize = static_cast<WORD>((fNewValue1 > 0 ? (fNewValue1 * 256.0f) : 256.0f)); }
+						else if (STRINGCOMPAREI("/sql_EXP", szCommand)) { UNITSERVER->SetExp(pcUnitData, lNewValue1); }
+						else if (STRINGCOMPAREI("/sql_Block", szCommand)) { psCharacterData->iBlockRating = newValue1; }
+						else if (STRINGCOMPAREI("/sql_StunChance", szCommand)) { psUnitInfo->iFlinchChance = newValue1; }
+						else if (STRINGCOMPAREI("/sql_Defense", szCommand)) { psCharacterData->iDefenseRating = newValue1; }
+						else if (STRINGCOMPAREI("/sql_PotionPercent", szCommand)) { psUnitInfo->iPerPotions = newValue1; }
+						else if (STRINGCOMPAREI("/sql_Potion", szCommand)) { psUnitInfo->iMaxPotions = newValue1; }
+						else if (STRINGCOMPAREI("/sql_Organic", szCommand)) { psCharacterData->sElementalDef[EElementID::Organic] = newValue1; }
+						else if (STRINGCOMPAREI("/sql_Lightning", szCommand)) { psCharacterData->sElementalDef[EElementID::Lightning] = newValue1; }
+						else if (STRINGCOMPAREI("/sql_Ice", szCommand)) { psCharacterData->sElementalDef[EElementID::Ice] = newValue1; }
+						else if (STRINGCOMPAREI("/sql_Fire", szCommand)) { psCharacterData->sElementalDef[EElementID::Fire] = newValue1; }
+						else if (STRINGCOMPAREI("/sql_Poison", szCommand)) { psCharacterData->sElementalDef[EElementID::Poison] = newValue1; }
+						else if (STRINGCOMPAREI("/sql_Magic", szCommand)) { psCharacterData->sElementalDef[EElementID::Wind] = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SpawnMin", szCommand)) { psUnitInfo->iGroupLimitMin = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SpawnMax", szCommand)) { psUnitInfo->iGroupLimitMax = newValue1; }
+						else if (STRINGCOMPAREI("/sql_MoveSpeed", szCommand)) { psCharacterData->iMovementSpeed = (((newValue1 - 9) * 16) + 256); }
+						else if (STRINGCOMPAREI("/sql_ViewSight", szCommand)) {
+							psCharacterData->iSight = newValue1 * newValue1;
+							psUnitInfo->iSight = newValue1;
+						}
 
-						else if (STRINGCOMPAREI("/sql_Glow",				szCommand)) { psCharacterData->sMonsterClass					   = (EMonsterClass)newValue1; }
-						else if (STRINGCOMPAREI("/sql_Level",				szCommand)) { psCharacterData->iLevel							   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_NumDrops",			szCommand)) { psUnitInfo->iNumDrops								   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_PublicDrop",			szCommand)) { psUnitInfo->bPublicDrop							   = newValue1 == 1 ? 1 : 0; }
+						else if (STRINGCOMPAREI("/sql_Glow", szCommand)) { psCharacterData->sMonsterClass = (EMonsterClass)newValue1; }
+						else if (STRINGCOMPAREI("/sql_Level", szCommand)) { psCharacterData->iLevel = newValue1; }
+						else if (STRINGCOMPAREI("/sql_NumDrops", szCommand)) { psUnitInfo->iNumDrops = newValue1; }
+						else if (STRINGCOMPAREI("/sql_PublicDrop", szCommand)) { psUnitInfo->bPublicDrop = newValue1 == 1 ? 1 : 0; }
 
 						//Basic attack related
-						else if (STRINGCOMPAREI("/sql_AttackMinMax",		szCommand)) { psCharacterData->iMinDamage	                       = newValue1;
-																						  psCharacterData->iMaxDamage						   = newValue2; }
-						else if (STRINGCOMPAREI("/sql_AttackSpeed",			szCommand)) { psCharacterData->iAttackSpeed						   = newValue1 << 8; }
-						else if (STRINGCOMPAREI("/sql_AttackRange",			szCommand)) { psCharacterData->iAttackRange						   = newValue1 << 8; }
-						else if (STRINGCOMPAREI("/sql_AttackRating",		szCommand)) { psCharacterData->iAttackRating				       = newValue1; }
-						else if (STRINGCOMPAREI("/sql_PerfectAttackRate",	szCommand)) { psUnitInfo->iLureDistance							   = newValue1; }
+						else if (STRINGCOMPAREI("/sql_AttackMinMax", szCommand)) {
+							psCharacterData->iMinDamage = newValue1;
+							psCharacterData->iMaxDamage = newValue2;
+						}
+						else if (STRINGCOMPAREI("/sql_AttackSpeed", szCommand)) { psCharacterData->iAttackSpeed = newValue1 << 8; }
+						else if (STRINGCOMPAREI("/sql_AttackRange", szCommand)) { psCharacterData->iAttackRange = newValue1 << 8; }
+						else if (STRINGCOMPAREI("/sql_AttackRating", szCommand)) { psCharacterData->iAttackRating = newValue1; }
+						else if (STRINGCOMPAREI("/sql_PerfectAttackRate", szCommand)) { psUnitInfo->iLureDistance = newValue1; }
 
 						//Skill related
-						else if (STRINGCOMPAREI("/sql_SkillType",			szCommand)) { psUnitInfo->iSkillType							   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SkillChance",			szCommand)) { psUnitInfo->iSkillChance							   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SkillHitRange",		szCommand)) { psUnitInfo->iSkillPierceRange						   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SkillArea",			szCommand)) { psUnitInfo->iSkillArea							   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SkillHitBoxLeft",		szCommand)) { psUnitInfo->iSkillBoxLeft							   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SkillHitBoxRight",	szCommand)) { psUnitInfo->iSkillBoxRight						   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SkillHitBoxTop",		szCommand)) { psUnitInfo->iSkillBoxTop							   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SkillHitBoxBottom",	szCommand)) { psUnitInfo->iSkillBoxBottom						   = newValue1; }
-						else if (STRINGCOMPAREI("/sql_SkillMinMax",			szCommand)) { psUnitInfo->sSkillPower.sMin						   = newValue1;
-						                                                                  psUnitInfo->sSkillPower.sMax						   = newValue2; }
+						else if (STRINGCOMPAREI("/sql_SkillType", szCommand)) { psUnitInfo->iSkillType = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SkillChance", szCommand)) { psUnitInfo->iSkillChance = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SkillHitRange", szCommand)) { psUnitInfo->iSkillPierceRange = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SkillArea", szCommand)) { psUnitInfo->iSkillArea = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SkillHitBoxLeft", szCommand)) { psUnitInfo->iSkillBoxLeft = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SkillHitBoxRight", szCommand)) { psUnitInfo->iSkillBoxRight = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SkillHitBoxTop", szCommand)) { psUnitInfo->iSkillBoxTop = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SkillHitBoxBottom", szCommand)) { psUnitInfo->iSkillBoxBottom = newValue1; }
+						else if (STRINGCOMPAREI("/sql_SkillMinMax", szCommand)) {
+							psUnitInfo->sSkillPower.sMin = newValue1;
+							psUnitInfo->sSkillPower.sMax = newValue2;
+						}
 
 						if (columnName1.size() > 0)
 							WriteMonsterStatus(pcUnitData, tableName.c_str(), columnName1.c_str(), szCommandParam2);
@@ -3725,8 +3735,8 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 						int respawnPosZ = pcUnitData->sPosition.iZ;
 
 						// Kill the Unit
-						pcUnitData->SetCurrentHealth( 0 );
-						pcUnitData->Animate( ANIMATIONTYPE_Die );
+						pcUnitData->SetCurrentHealth(0);
+						pcUnitData->Animate(ANIMATIONTYPE_Die);
 
 
 						//Respawn monster by id
@@ -3772,19 +3782,19 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 						}
 						else if (lExistingValue3 != -1)
 						{
-							CHATSERVER->SendChatAllGM( "GM> '%s' %s: %s -> %s (new)",
+							CHATSERVER->SendChatAllGM("GM> '%s' %s: %s -> %s (new)",
 								pcUnitData->GetName(),
 								commandId.c_str(),
-								std::string( FormatNumber( lExistingValue3 ) ).c_str(),
-								std::string( FormatNumber( lNewValue1 ) ).c_str() );
+								std::string(FormatNumber(lExistingValue3)).c_str(),
+								std::string(FormatNumber(lNewValue1)).c_str());
 						}
 						else if (!szExistingValue.empty())
 						{
-							CHATSERVER->SendChatAllGM( "GM> '%s' %s: %s -> %s (new)",
+							CHATSERVER->SendChatAllGM("GM> '%s' %s: %s -> %s (new)",
 								pcUnitData->GetName(),
 								commandId.c_str(),
 								szExistingValue.c_str(),
-								szNewValue.c_str() );
+								szNewValue.c_str());
 						}
 						else
 						{
@@ -3841,40 +3851,40 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-	if ( iLen = COMMAND( "/remove_npc", pszBuff ) )
+	if (iLen = COMMAND("/remove_npc", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) ) //npc id (via mouse id)
+		if (GetParameterString(pszBuff, 1, szCommandParam1)) //npc id (via mouse id)
 		{
 			int currentStageId = pcUserData->iMapID;
-			int npcID = atoi( szCommandParam1 );
+			int npcID = atoi(szCommandParam1);
 			int iX, iZ;
 			BOOL bFound = FALSE;
 
-			Map * psMap = MAPSDATA + currentStageId;
+			Map* psMap = MAPSDATA + currentStageId;
 
-			if ( psMap == NULL )
+			if (psMap == NULL)
 				return TRUE;
 
-			for ( int i = 0; i < MAX_NPCINMAP; i++ )
+			for (int i = 0; i < MAX_NPCINMAP; i++)
 			{
 				PacketUnitInfo* psNPC = psMap->saNPC + i;
 
-				if ( psNPC->iHeader == 0 )
+				if (psNPC->iHeader == 0)
 					continue;
 
-				if ( psNPC->iID == npcID )
+				if (psNPC->iID == npcID)
 				{
 					iX = psNPC->sPosition.iX >> 8;
 					iZ = psNPC->sPosition.iZ >> 8;
 
-					ZeroMemory( psNPC, sizeof( PacketUnitInfo ) );
+					ZeroMemory(psNPC, sizeof(PacketUnitInfo));
 
 					bFound = TRUE;
 					break;
 				}
 			}
 
-			if ( bFound == FALSE )
+			if (bFound == FALSE)
 			{
 				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> NPC remove error for NPC ID: %d. Not a NPC?", npcID);
 				return TRUE;
@@ -3883,31 +3893,31 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			{
 				MAPSERVER->RemoveNPC(psMap, npcID);
 
-				SQLConnection * pcDB = SQLCONNECTION( DATABASEID_GameDB_Npc, 4 );
+				SQLConnection* pcDB = SQLCONNECTION(DATABASEID_GameDB_Npc, 4);
 
-				if ( pcDB->Open() )
+				if (pcDB->Open())
 				{
-					if ( pcDB->Prepare( "DELETE FROM MapNPC WHERE Stage=? AND X=? AND Z=?" ) )
+					if (pcDB->Prepare("DELETE FROM MapNPC WHERE Stage=? AND X=? AND Z=?"))
 					{
-						pcDB->BindParameterInput( 1, PARAMTYPE_Integer, &currentStageId );
-						pcDB->BindParameterInput( 2, PARAMTYPE_Integer, &iX );
-						pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &iZ );
+						pcDB->BindParameterInput(1, PARAMTYPE_Integer, &currentStageId);
+						pcDB->BindParameterInput(2, PARAMTYPE_Integer, &iX);
+						pcDB->BindParameterInput(3, PARAMTYPE_Integer, &iZ);
 
-						if ( !pcDB->Execute() )
+						if (!pcDB->Execute())
 						{
-							WARN( "Remove NPC failed. Stage: %d, X: %d, Z: %d", currentStageId, iX, iZ );
+							WARN("Remove NPC failed. Stage: %d, X: %d, Z: %d", currentStageId, iX, iZ);
 						}
 					}
 
 					pcDB->Close();
 				}
 
-				CHATSERVER->SendChatAllGM("GM> NPC removed from Stage ID(%d) AT X(%d) Z(%d)", currentStageId, iX, iZ );
+				CHATSERVER->SendChatAllGM("GM> NPC removed from Stage ID(%d) AT X(%d) Z(%d)", currentStageId, iX, iZ);
 			}
 		}
 		else
 		{
-			CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Expecting an id for first param" );
+			CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Expecting an id for first param");
 		}
 
 		return TRUE;
@@ -4090,7 +4100,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-	if (iLen = COMMAND("/test_MovetoMe", pszBuff))
+	if (iLen = COMMAND("/test_move_to_me", pszBuff))
 	{
 		// Is User Alive?
 		if (pcUserData)
@@ -4148,9 +4158,9 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			if (pcUnitData)
 			{
 				// Kill Unit
-				pcUnitData->SetCurrentHealth( 0 );
+				pcUnitData->SetCurrentHealth(0);
 
-				if (pcUnitData->Animate( ANIMATIONTYPE_Die ))
+				if (pcUnitData->Animate(ANIMATIONTYPE_Die))
 					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> '%s' Killed!", pcUnitData->sCharacterData.szName);
 			}
 		}
@@ -4181,7 +4191,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 				int iOldEnemyHP = pcUnitData->GetCurrentHealth();
 
 				// Change HP Unit
-				pcUnitData->SetCurrentHealth( sEnemyHP );
+				pcUnitData->SetCurrentHealth(sEnemyHP);
 
 				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> '%s' HP ( %d -> %d )!", pcUnitData->sCharacterData.szName, iOldEnemyHP, sEnemyHP);
 			}
@@ -4291,7 +4301,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		return TRUE;
 	}
 
-	if (iLen = COMMAND("/!ResetPVPRank", pszBuff))
+	if (iLen = COMMAND("/!reset_pvp_rank", pszBuff))
 	{
 		PVPSERVER->ResetTick();
 		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> PvP Rank resetted!");
@@ -4387,12 +4397,12 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 			pcUnitData->dwUpdateCharInfoTime = 0;
 		}
 	}
-	if (iLen = COMMAND("/Summon_pet", pszBuff))
+	if (iLen = COMMAND("/summon_pet", pszBuff))
 	{
 		PETSYSTEMHANDLER->CreatePet(pcUserData, 1);
 	}
 	// Create a pet with warehouse function
-	if (iLen = COMMAND("/TestCrash", pszBuff))
+	if (iLen = COMMAND("/test_crash", pszBuff))
 	{
 		GetParameterString(pszBuff, 1, szCommandParam1);
 
@@ -4438,12 +4448,12 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-	if ( COMMAND("/disable_errors_relay", pszBuff) )
+	if (COMMAND("/disable_errors_relay", pszBuff))
 	{
-		if ( pcUserData )
+		if (pcUserData)
 		{
 			User* pcUser = USERDATATOUSER(pcUserData);
-			if ( pcUser )
+			if (pcUser)
 			{
 				pcUser->bDisableWarnAndErrorRelaysToClient = pcUser->bDisableWarnAndErrorRelaysToClient ? FALSE : TRUE;
 				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Errors relay [%s]", pcUser->bDisableWarnAndErrorRelaysToClient ? "ON" : "OFF");
@@ -4478,7 +4488,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 
-	if (iLen = COMMAND("/Meteor", pszBuff))
+	if (iLen = COMMAND("/meteor", pszBuff))
 	{
 		// Is User Alive?
 		if (pcUserData)
@@ -4517,7 +4527,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 	//Enable Fury Event
-	if (iLen = COMMAND("/FuryArena_EnableEvent", pszBuff))
+	if (iLen = COMMAND("/fury_arena_enable_event", pszBuff))
 	{
 		INFO("FuryArena_EnableEvent");
 
@@ -4541,14 +4551,14 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 	//Clear tracking data used to track how many times player have received rewards from Fury Arena
-	if (iLen = COMMAND("/FuryArena_ClearRewardTracker", pszBuff))
+	if (iLen = COMMAND("/fury_arena_clear_reward_tracker", pszBuff))
 	{
 		FURYARENAHANDLER->SQLClearFuryArenaRewardTracker();
 		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Reward Tracker is cleared!");
 	}
 
 	//Force start Fury in test mode, but with low HP (1 hit kills)
-	if (iLen = COMMAND("/FuryArena_ForceStartTestMode", pszBuff))
+	if (iLen = COMMAND("/fury_arena_force_start_test_mode", pszBuff))
 	{
 		if (FURYARENAHANDLER->IsStarted() == FALSE)
 		{
@@ -4578,7 +4588,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 	//Force start Fury, but with normal HP etc
-	else if (iLen = COMMAND("/FuryArena_ForceStart", pszBuff))
+	else if (iLen = COMMAND("/fury_arena_force_start", pszBuff))
 	{
 		if (FURYARENAHANDLER->IsStarted() == FALSE)
 		{
@@ -4607,7 +4617,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-	else if (iLen = COMMAND("/FuryArena_End", pszBuff))
+	else if (iLen = COMMAND("/fury_arena_end", pszBuff))
 	{
 		if (FURYARENAHANDLER->IsStarted())
 		{
@@ -4733,7 +4743,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 
-	if (iLen = COMMAND("/SetPacketUnit", pszBuff))
+	if (iLen = COMMAND("/set_packet_unit", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -4742,7 +4752,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-	if (iLen = COMMAND("/SetMaskUnit", pszBuff))
+	if (iLen = COMMAND("/set_mask_unit", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -4751,7 +4761,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-	if (iLen = COMMAND("/SetFrameCounterUnit", pszBuff))
+	if (iLen = COMMAND("/set_frame_counter_unit", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -4760,9 +4770,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-
-
-	if (iLen = COMMAND("/!HWCombination", pszBuff))
+	if (iLen = COMMAND("/!hw_combination", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
@@ -4780,7 +4788,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 	}
 
 
-	if (COMMAND("/StartMaintenance", pszBuff))
+	if (COMMAND("/start_maintenance", pszBuff))
 	{
 		GetParameterString(pszBuff, 1, szCommandParam1);
 
@@ -4804,7 +4812,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		}
 	}
 
-	if (COMMAND("/StopMaintenance", pszBuff))
+	if (COMMAND("/stop_maintenance", pszBuff))
 	{
 		GSERVER->StopMaintenanceCountdown();
 
@@ -4814,35 +4822,35 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 		CHATSERVER->SendChatAllGM("GM> Maintenance Countdown stopped!");
 	}
 
-	if ( iLen = COMMAND( "/KillUnitsMap", pszBuff ) )
+	if (iLen = COMMAND("/kill_units_map", pszBuff))
 	{
-		if ( pcUserData )
+		if (pcUserData)
 		{
 			// Is User Alive?
-			if ( pcUserData )
+			if (pcUserData)
 			{
-				Map * pcMap = MAPSDATA + pcUserData->iMapID;
+				Map* pcMap = MAPSDATA + pcUserData->iMapID;
 
-				if ( pcMap )
+				if (pcMap)
 				{
 					int iCount = 0;
 
-					for ( int i = 0; i < MAX_ALIVEMONSTERS; i++ )
+					for (int i = 0; i < MAX_ALIVEMONSTERS; i++)
 					{
-						UnitData * pcUnitData = pcMap->pcaUnitData[i];
+						UnitData* pcUnitData = pcMap->pcaUnitData[i];
 
 						// Is Unit Alive?
-						if ( pcUnitData && pcUnitData->GetCurrentHealth() > 0 )
+						if (pcUnitData && pcUnitData->GetCurrentHealth() > 0)
 						{
 							// Kill Unit
-							pcUnitData->SetCurrentHealth( 0 );
+							pcUnitData->SetCurrentHealth(0);
 
-							if ( pcUnitData->Animate( ANIMATIONTYPE_Die ) )
+							if (pcUnitData->Animate(ANIMATIONTYPE_Die))
 								iCount++;
 						}
 					}
 
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Units Killed[%d] MapID[%d]", iCount, pcUserData->iMapID );
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Units Killed[%d] MapID[%d]", iCount, pcUserData->iMapID);
 				}
 			}
 		}
@@ -4855,7 +4863,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand( User * pcUser, const char * pszBuf
 
 BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 {
-	UserData * pcUserData = pcUser->pcUserData;
+	UserData* pcUserData = pcUser->pcUserData;
 
 	int iLen = 0;
 
@@ -4865,17 +4873,17 @@ BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 	char szCommandParam4[256] = { 0 };
 	char szCommandParam5[256] = { 0 };
 
-	if ( iLen = COMMAND( "/event_treasurehunting", pszBuff ) )
+	if (iLen = COMMAND("/event_treasurehunting", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if ( STRINGCOMPAREI( szCommandParam1, "true" ) || STRINGCOMPAREI( szCommandParam1, "on" ) )
+			if (STRINGCOMPAREI(szCommandParam1, "true") || STRINGCOMPAREI(szCommandParam1, "on"))
 			{
 				pcUser->bTeasureHuntingMode = TRUE;
 				CHATSERVER->SendChat(pcUser, CHATCOLOR_White, "> Treasure Hunting Mode on!");
-				CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Any items that you drop will appear as a 'gift' and will last for 48 hours on ground, and can only be found via mouse cursor." );
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Any items that you drop will appear as a 'gift' and will last for 48 hours on ground, and can only be found via mouse cursor.");
 			}
-			else if ( STRINGCOMPAREI( szCommandParam1, "false" ) || STRINGCOMPAREI( szCommandParam1, "off" ) )
+			else if (STRINGCOMPAREI(szCommandParam1, "false") || STRINGCOMPAREI(szCommandParam1, "off"))
 			{
 				pcUser->bTeasureHuntingMode = FALSE;
 				CHATSERVER->SendChat(pcUser, CHATCOLOR_White, "> Treasure Hunting Mode off!");
@@ -4893,13 +4901,13 @@ BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 		return TRUE;
 	}
 
-	if (iLen = COMMAND( "/mute", pszBuff ))
+	if (iLen = COMMAND("/mute", pszBuff))
 	{
 		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use /!mute command");  //it's so that the command is received on login server not game server
 		return TRUE;
 	}
 
-	if (iLen = COMMAND( "/unmute", pszBuff ))
+	if (iLen = COMMAND("/unmute", pszBuff))
 	{
 		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Use /!unmute command"); //it's so that the command is received on login server not game server
 		return TRUE;
@@ -4916,7 +4924,7 @@ BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 		if (GetParameterString(pszBuff, 1, szCommandParam1) &&
 			GetParameterString(pszBuff, 2, szCommandParam2))
 		{
-			if (GetParameterString( pszBuff, 3, szCommandParam3 ))
+			if (GetParameterString(pszBuff, 3, szCommandParam3))
 			{
 				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> /!mute failed! Expecting two parameters. Tip - surround the multi-worded \"<reason>\" with double quotes", szCommandParam1);
 				return TRUE;
@@ -4954,7 +4962,7 @@ BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 			{
 				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Account '%s' is already muted!", szAccountName.c_str()); //shouldn't happen.. but let's check anyway
 
-				USERSERVER->SyncUserMuteStatus( pcMuteUser );
+				USERSERVER->SyncUserMuteStatus(pcMuteUser);
 
 				return TRUE;
 			}
@@ -4968,18 +4976,18 @@ BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 
 			switch (iNewMuteCount)
 			{
-				case 1:   iMuteDurationHrs = 1;		 break;
-				case 2:   iMuteDurationHrs = 3;		 break;
-				case 3:   iMuteDurationHrs = 6;		 break;
-				case 4:   iMuteDurationHrs = 12;	 break;
-				case 5:   iMuteDurationHrs = 24;	 break;
-				case 6:   iMuteDurationHrs = 24 * 7; break; //1 week
-				case 7:   iMuteDurationHrs = 730;    break; //1 month
-				case 8:   iMuteDurationHrs = 8760;   break; //1 year
-				default:  iMuteDurationHrs = 87600;  break; //10 year
+			case 1:   iMuteDurationHrs = 1;		 break;
+			case 2:   iMuteDurationHrs = 3;		 break;
+			case 3:   iMuteDurationHrs = 6;		 break;
+			case 4:   iMuteDurationHrs = 12;	 break;
+			case 5:   iMuteDurationHrs = 24;	 break;
+			case 6:   iMuteDurationHrs = 24 * 7; break; //1 week
+			case 7:   iMuteDurationHrs = 730;    break; //1 month
+			case 8:   iMuteDurationHrs = 8760;   break; //1 year
+			default:  iMuteDurationHrs = 87600;  break; //10 year
 			}
 
-			INFO( "Player '%s' muted (Account: '%s'). New Mute count: %d. Mute duration: %d hrs", szCommandParam1, szAccountName.c_str(), iNewMuteCount, iMuteDurationHrs );
+			INFO("Player '%s' muted (Account: '%s'). New Mute count: %d. Mute duration: %d hrs", szCommandParam1, szAccountName.c_str(), iNewMuteCount, iMuteDurationHrs);
 
 
 			std::string reason = szCommandParam2;
@@ -4990,11 +4998,11 @@ BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 			if (pcDB->Open())
 			{
 				// Update UserInfo with mute status and mute counter
-				if (pcDB->Prepare( "UPDATE UserInfo SET IsMuted=1, MuteCount=?, UnmuteDate=DATEADD(hour, ?, GETDATE()) WHERE ID=?" ))
+				if (pcDB->Prepare("UPDATE UserInfo SET IsMuted=1, MuteCount=?, UnmuteDate=DATEADD(hour, ?, GETDATE()) WHERE ID=?"))
 				{
-					pcDB->BindParameterInput( 1, PARAMTYPE_Integer, &iNewMuteCount );
-					pcDB->BindParameterInput( 2, PARAMTYPE_Integer, &iMuteDurationHrs );
-					pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &psSqlUser.iID );
+					pcDB->BindParameterInput(1, PARAMTYPE_Integer, &iNewMuteCount);
+					pcDB->BindParameterInput(2, PARAMTYPE_Integer, &iMuteDurationHrs);
+					pcDB->BindParameterInput(3, PARAMTYPE_Integer, &psSqlUser.iID);
 
 					pcDB->ExecuteUpdate();
 				}
@@ -5034,24 +5042,24 @@ BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 				pcMuteUser->bMuted = TRUE;
 				pcMuteUser->dwUnMuteExpiryTime = dwSystemTime + (iMuteDurationHrs * 60 * 60);
 
-				USERSERVER->SyncUserMuteStatus( pcMuteUser );
+				USERSERVER->SyncUserMuteStatus(pcMuteUser);
 
 				if (iMuteDurationHrs > 8760)
 				{
 					// On success send message to chat
-					CHATSERVER->SendChatEx( pcMuteUser, CHATCOLOR_Error, "> You have been permaently muted by a GM (strike # %d). Reason: %s", iMuteDurationHrs, iNewMuteCount, reasonTrim.c_str() );
-					CHATSERVER->SendTitleBox( pcUser->pcUserData, "You are permanently muted!" );
+					CHATSERVER->SendChatEx(pcMuteUser, CHATCOLOR_Error, "> You have been permaently muted by a GM (strike # %d). Reason: %s", iMuteDurationHrs, iNewMuteCount, reasonTrim.c_str());
+					CHATSERVER->SendTitleBox(pcUser->pcUserData, "You are permanently muted!");
 				}
 				else
 				{
 					// On success send message to chat
-					CHATSERVER->SendChatEx( pcMuteUser, CHATCOLOR_Error, "> You have been muted by a GM for %d hours (strike # %d). Reason: %s", iMuteDurationHrs, iNewMuteCount, reasonTrim.c_str() );
-					CHATSERVER->SendTitleBox( pcUser->pcUserData, "You are muted!" );
+					CHATSERVER->SendChatEx(pcMuteUser, CHATCOLOR_Error, "> You have been muted by a GM for %d hours (strike # %d). Reason: %s", iMuteDurationHrs, iNewMuteCount, reasonTrim.c_str());
+					CHATSERVER->SendTitleBox(pcUser->pcUserData, "You are muted!");
 				}
 			}
 
 
-			CHATSERVER->SendChatAllGM( "GM> Player %s was muted for %d hours! (Strike # %d). Reason: \"%s\"", szCommandParam1, iMuteDurationHrs, iNewMuteCount, reasonTrim.c_str());
+			CHATSERVER->SendChatAllGM("GM> Player %s was muted for %d hours! (Strike # %d). Reason: \"%s\"", szCommandParam1, iMuteDurationHrs, iNewMuteCount, reasonTrim.c_str());
 		}
 
 		else
@@ -5066,14 +5074,14 @@ BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 	// Syntax: /!unmute <char name>
 	// note - /! is so that this command is received at login server
 	// note - calling this to unmute a player removes a strike
-	else if ( iLen = COMMAND("/!unmute", pszBuff))
+	else if (iLen = COMMAND("/!unmute", pszBuff))
 	{
 		if (GAME_SERVER)
 			return TRUE;
 
-		if (GetParameterString( pszBuff, 1, szCommandParam1 ))
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			ACCOUNTSERVER->UnmuteAccountByCharacterName( pcUser, szCommandParam1, FALSE );
+			ACCOUNTSERVER->UnmuteAccountByCharacterName(pcUser, szCommandParam1, FALSE);
 			return TRUE;
 		}
 		else
@@ -5088,10 +5096,10 @@ BOOL ServerCommand::OnGameMasterLevel1Command(User* pcUser, const char* pszBuff)
 	return FALSE;
 }
 
-BOOL ServerCommand::OnGameMasterLevel2Command( User * pcUser, const char * pszBuff )
+BOOL ServerCommand::OnGameMasterLevel2Command(User* pcUser, const char* pszBuff)
 {
 
-	UserData * pcUserData = pcUser->pcUserData;
+	UserData* pcUserData = pcUser->pcUserData;
 
 	int iLen = 0;
 
@@ -5101,44 +5109,44 @@ BOOL ServerCommand::OnGameMasterLevel2Command( User * pcUser, const char * pszBu
 	char szCommandParam4[256] = { 0 };
 	char szCommandParam5[256] = { 0 };
 
-	if ( pszBuff[0] == '/' && pszBuff[1] == '!' )
+	if (pszBuff[0] == '/' && pszBuff[1] == '!')
 	{
-		if ( pszBuff[2] == '>' )
+		if (pszBuff[2] == '>')
 		{
-			if ( pszBuff[3] == '>' )
+			if (pszBuff[3] == '>')
 			{
-				CHATSERVER->SendChatAllEx( CHATCOLOR_Global, "%s", (char*)&pszBuff[4] );
+				CHATSERVER->SendChatAllEx(CHATCOLOR_Global, "%s", (char*)&pszBuff[4]);
 			}
 			else
 			{
-				char * p = CHARACTERSERVER->GetCharacterName( pcUser );
+				char* p = CHARACTERSERVER->GetCharacterName(pcUser);
 
-				if ( p[0] != 0 )
-					CHATSERVER->SendChatAllEx( CHATCOLOR_Global, "GM> %s", (char*)&pszBuff[3] );
+				if (p[0] != 0)
+					CHATSERVER->SendChatAllEx(CHATCOLOR_Global, "GM> %s", (char*)&pszBuff[3]);
 			}
 		}
-		else if ( pszBuff[2] == '+' )
+		else if (pszBuff[2] == '+')
 		{
-			char * p = CHARACTERSERVER->GetCharacterName( pcUser );
+			char* p = CHARACTERSERVER->GetCharacterName(pcUser);
 
-			if ( p[0] != 0 )
-				CHATSERVER->SendChatAllEx( CHATCOLOR_Global, "%s> %s", p, (char*)&pszBuff[3] );
+			if (p[0] != 0)
+				CHATSERVER->SendChatAllEx(CHATCOLOR_Global, "%s> %s", p, (char*)&pszBuff[3]);
 		}
 	}
 
 
 
-	if ( COMMAND("/exprate", pszBuff) )
+	if (COMMAND("/exprate", pszBuff))
 	{
-		if ( GetParameterString ( pszBuff, 1, szCommandParam1 ) && GetParameterString(pszBuff, 2, szCommandParam2) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1) && GetParameterString(pszBuff, 2, szCommandParam2))
 		{
-			TESTMAPHANDLER->GetExperienceRatePerFlag ( pcUser, szCommandParam1, szCommandParam2 );
+			TESTMAPHANDLER->GetExperienceRatePerFlag(pcUser, szCommandParam1, szCommandParam2);
 		}
 	}
 
-	if (COMMAND("/BONUSALL", pszBuff))
+	if (COMMAND("/bonus_all", pszBuff))
 	{
-		for (int i=0; i < PLAYERS_MAX; i++)
+		for (int i = 0; i < PLAYERS_MAX; i++)
 		{
 			if (USERSDATA[i].pcSocketData && USERSDATA[i].iMapID >= 0 && USERSDATA[i].iMapID < NUM_MAPS)
 			{
@@ -5162,10 +5170,10 @@ BOOL ServerCommand::OnGameMasterLevel2Command( User * pcUser, const char * pszBu
 
 	if (COMMAND("/fieldlist1", pszBuff))
 	{
-		for ( int i = 0; i <= 30; i++ )
+		for (int i = 0; i <= 30; i++)
 		{
-			Map * pcMap = MAPSDATA + i;
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Field %d: %s (Lv. %d)", i, pszaMapsName[i], pcMap->pcBaseMap->iLevel );
+			Map* pcMap = MAPSDATA + i;
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Field %d: %s (Lv. %d)", i, pszaMapsName[i], pcMap->pcBaseMap->iLevel);
 		}
 
 		return TRUE;
@@ -5173,10 +5181,10 @@ BOOL ServerCommand::OnGameMasterLevel2Command( User * pcUser, const char * pszBu
 
 	if (COMMAND("/fieldlist2", pszBuff))
 	{
-		for ( int i = 31; i < NUM_MAPS; i++ )
+		for (int i = 31; i < NUM_MAPS; i++)
 		{
-			Map * pcMap = MAPSDATA + i;
-			CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Field %d: %s (Lv. %d)", i, pszaMapsName[i], pcMap->pcBaseMap->iLevel );
+			Map* pcMap = MAPSDATA + i;
+			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Field %d: %s (Lv. %d)", i, pszaMapsName[i], pcMap->pcBaseMap->iLevel);
 		}
 
 		return TRUE;
@@ -5385,10 +5393,10 @@ BOOL ServerCommand::OnGameMasterLevel2Command( User * pcUser, const char * pszBu
 	}
 
 	// Get user count in each map
-	if ( COMMAND( "/mapusers", pszBuff ) )
+	if (COMMAND("/mapusers", pszBuff))
 	{
 		// Is User Alive?
-		if ( pcUser )
+		if (pcUser)
 		{
 			std::map<int, int> data;
 
@@ -5396,14 +5404,14 @@ BOOL ServerCommand::OnGameMasterLevel2Command( User * pcUser, const char * pszBu
 
 			for (int i = 0; i < NUM_MAPS; i++)
 			{
-				data.insert({i, 0});
+				data.insert({ i, 0 });
 			}
 
 			// Search player
-			for ( int i = 0; i < PLAYERS_MAX; i++ )
+			for (int i = 0; i < PLAYERS_MAX; i++)
 			{
 				// Found?
-				if ( USERSDATA[i].pcSocketData && USERSDATA[i].iMapID >= 0 && USERSDATA[i].iMapID < NUM_MAPS )
+				if (USERSDATA[i].pcSocketData && USERSDATA[i].iMapID >= 0 && USERSDATA[i].iMapID < NUM_MAPS)
 				{
 					data[USERSDATA[i].iMapID]++;
 				}
@@ -5424,23 +5432,23 @@ BOOL ServerCommand::OnGameMasterLevel2Command( User * pcUser, const char * pszBu
 	}
 
 	// Send list of user names in map
-	if ( COMMAND( "/mapchars", pszBuff ) )
+	if (COMMAND("/mapchars", pszBuff))
 	{
 		// Is User Alive?
-		if ( pcUser )
+		if (pcUser)
 		{
 			EMapID eThisMapId = pcUser->GetMapID();
 
 			int counter = 0;
 
 			// Search player
-			for ( int i = 0; i < PLAYERS_MAX; i++ )
+			for (int i = 0; i < PLAYERS_MAX; i++)
 			{
 				// Found?
-				if ( USERSDATA[i].pcSocketData && USERSDATA[i].iMapID == eThisMapId )
+				if (USERSDATA[i].pcSocketData && USERSDATA[i].iMapID == eThisMapId)
 				{
 					counter++;
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> Map char #%d: '%s'", counter, CHARACTERSERVER->GetCharacterName( &USERSDATA[i] ) );
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Map char #%d: '%s'", counter, CHARACTERSERVER->GetCharacterName(&USERSDATA[i]));
 				}
 			}
 		}
@@ -5450,25 +5458,25 @@ BOOL ServerCommand::OnGameMasterLevel2Command( User * pcUser, const char * pszBu
 
 
 	// Kick Character
-	if ( COMMAND( "/kickch", pszBuff ) || COMMAND( "/!kickch", pszBuff ) )
+	if (COMMAND("/kickch", pszBuff) || COMMAND("/!kickch", pszBuff))
 	{
-		if ( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			UserData * pcUserKilled = USERSERVER->GetUserdata( szCommandParam1 );
-			if ( pcUserKilled )
+			UserData* pcUserKilled = USERSERVER->GetUserdata(szCommandParam1);
+			if (pcUserKilled)
 			{
-				CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "> %s Kicked!", GAME_SERVER ? pcUserKilled->sCharacterData.szName : pcUserKilled->szCharacterName );
-				ACCOUNTSERVER->OnDisconnectUser( pcUserKilled );
-				SENDPACKETBLANK( USERDATATOUSER( pcUserKilled ), PKTHDR_Disconnect, TRUE );
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> %s Kicked!", GAME_SERVER ? pcUserKilled->sCharacterData.szName : pcUserKilled->szCharacterName);
+				ACCOUNTSERVER->OnDisconnectUser(pcUserKilled);
+				SENDPACKETBLANK(USERDATATOUSER(pcUserKilled), PKTHDR_Disconnect, TRUE);
 				pcUserKilled->dwDisconnectTime = TICKCOUNT + 1500;
-				NETSERVER->DisconnectUser( pcUserKilled );
+				NETSERVER->DisconnectUser(pcUserKilled);
 			}
 			else
 			{
-				if ( GAME_SERVER )
-					CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Try use /!kickch" );
+				if (GAME_SERVER)
+					CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Try use /!kickch");
 				else
-					CHATSERVER->SendChat( pcUser, CHATCOLOR_Error, "> Try use /kickch" );
+					CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Try use /kickch");
 			}
 		}
 		else
@@ -5516,7 +5524,7 @@ BOOL ServerCommand::OnGameMasterLevel2Command( User * pcUser, const char * pszBu
 BOOL ServerCommand::OnGameMasterLevel3Command(User* pcUser, const char* pszBuff)
 {
 
-	UserData * pcUserData = pcUser->pcUserData;
+	UserData* pcUserData = pcUser->pcUserData;
 
 	int iLen = 0;
 
@@ -5555,16 +5563,16 @@ BOOL ServerCommand::OnGameMasterLevel3Command(User* pcUser, const char* pszBuff)
 		return TRUE;
 	}
 
-	if ( COMMAND( "/hide", pszBuff ) )
+	if (COMMAND("/hide", pszBuff))
 	{
 		pcUserData->bHideMode = TRUE;
-		CHATSERVER->SendChat( pcUser, EChatColor::CHATCOLOR_White, "> Hidden!" );
+		CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_White, "> Hidden!");
 	}
 
-	if ( COMMAND( "/show", pszBuff ) )
+	if (COMMAND("/show", pszBuff))
 	{
 		pcUserData->bHideMode = FALSE;
-		CHATSERVER->SendChat( pcUser, EChatColor::CHATCOLOR_White, "> Shown!" );
+		CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_White, "> Shown!");
 	}
 
 	// Ban Character
@@ -5606,7 +5614,7 @@ BOOL ServerCommand::OnGameMasterLevel3Command(User* pcUser, const char* pszBuff)
 }
 
 
-BOOL ServerCommand::OnPlayerCommand( User * pcUser, const char * pszBuff )
+BOOL ServerCommand::OnPlayerCommand(User* pcUser, const char* pszBuff)
 {
 	int iLen = 0, iLen2 = 0;
 
@@ -5616,112 +5624,112 @@ BOOL ServerCommand::OnPlayerCommand( User * pcUser, const char * pszBuff )
 	char szCommandParam4[256] = { 0 };
 	char szCommandParam5[256] = { 0 };
 
-	if( GAME_SERVER )
+	if (GAME_SERVER)
 	{
 		//Emote Commands
-		if( pszBuff[0] == 'e' && isdigit(pszBuff[1]) && lstrlenA(pszBuff) < 4 )
+		if (pszBuff[0] == 'e' && isdigit(pszBuff[1]) && lstrlenA(pszBuff) < 4)
 		{
-			CHATSERVER->SendUserBoxChatRange( pcUser->pcUserData->sPosition.iX, pcUser->pcUserData->sPosition.iZ, 0x4B000, pcUser->GetID(), pszBuff );
+			CHATSERVER->SendUserBoxChatRange(pcUser->pcUserData->sPosition.iX, pcUser->pcUserData->sPosition.iZ, 0x4B000, pcUser->GetID(), pszBuff);
 			return TRUE;
 		}
 
 		//Party Chat
-		if( pszBuff[0] == '@' )
+		if (pszBuff[0] == '@')
 		{
-			if( pcUser )
+			if (pcUser)
 			{
-				if( (pcUser->bParty && pcUser->psParty) && pcUser->psParty->pcLeader )
+				if ((pcUser->bParty && pcUser->psParty) && pcUser->psParty->pcLeader)
 				{
-					if ( pcUser->bMuted )
+					if (pcUser->bMuted)
 					{
-						INFO( "Player '%s' is muted", CHARACTERSERVER->GetCharacterName( pcUser->pcUserData ) );
+						INFO("Player '%s' is muted", CHARACTERSERVER->GetCharacterName(pcUser->pcUserData));
 
-						CHATSERVER->SendChat ( pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired." );
-						CHATSERVER->SendTitleBox( pcUser->pcUserData, "You are muted!" );
+						CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired.");
+						CHATSERVER->SendTitleBox(pcUser->pcUserData, "You are muted!");
 						return TRUE;
 					}
 
-					std::string str( pszBuff );
-					str.erase( 0, 1 );
+					std::string str(pszBuff);
+					str.erase(0, 1);
 
-					PARTYHANDLER->SendChatParty( pcUser, FormatString("%s: %s", pcUser->pcUserData->sCharacterData.szName, str.c_str()), CHATCOLOR_Party );
+					PARTYHANDLER->SendChatParty(pcUser, FormatString("%s: %s", pcUser->pcUserData->sCharacterData.szName, str.c_str()), CHATCOLOR_Party);
 					CHATSERVER->RecordPartyChatToDatabase(pcUser->pcUserData, str.c_str());
 				}
 			}
 			return TRUE;
 		}
-		else if( pszBuff[0] == '#' )
+		else if (pszBuff[0] == '#')
 		{
-			if( pcUser )
+			if (pcUser)
 			{
-				if( (pcUser->bParty && pcUser->psParty) && pcUser->psParty->pcLeader && pcUser->psParty->iRaidCount > 0 )
+				if ((pcUser->bParty && pcUser->psParty) && pcUser->psParty->pcLeader && pcUser->psParty->iRaidCount > 0)
 				{
-					if ( pcUser->bMuted )
+					if (pcUser->bMuted)
 					{
-						INFO( "Player '%s' is muted", CHARACTERSERVER->GetCharacterName( pcUser->pcUserData ) );
+						INFO("Player '%s' is muted", CHARACTERSERVER->GetCharacterName(pcUser->pcUserData));
 
-						CHATSERVER->SendChat ( pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired." );
-						CHATSERVER->SendTitleBox( pcUser->pcUserData, "You are muted!" );
+						CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired.");
+						CHATSERVER->SendTitleBox(pcUser->pcUserData, "You are muted!");
 						return TRUE;
 					}
 
-					std::string str( pszBuff );
-					str.erase( 0, 1 );
+					std::string str(pszBuff);
+					str.erase(0, 1);
 
-					PARTYHANDLER->SendChatRaid( pcUser, FormatString( "%s: %s", pcUser->pcUserData->sCharacterData.szName, str.c_str() ), CHATCOLOR_Raid );
+					PARTYHANDLER->SendChatRaid(pcUser, FormatString("%s: %s", pcUser->pcUserData->sCharacterData.szName, str.c_str()), CHATCOLOR_Raid);
 				}
 			}
 			return TRUE;
 		}
 
-		if( COMMAND( "/request_party", pszBuff ) || COMMAND( "/party", pszBuff ) || COMMAND( "//party", pszBuff ) || COMMAND( "//PARTY", pszBuff ) )
+		if (COMMAND("/request_party", pszBuff) || COMMAND("/party", pszBuff) || COMMAND("//party", pszBuff) || COMMAND("//party", pszBuff))
 		{
-			if( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+			if (GetParameterString(pszBuff, 1, szCommandParam1))
 			{
-				UserData * pcUserDataParty = USERSERVER->GetUserdata( szCommandParam1 );
+				UserData* pcUserDataParty = USERSERVER->GetUserdata(szCommandParam1);
 
-				if( pcUserDataParty )
-					PARTYHANDLER->HandlePacket( pcUser, &PacketRequestParty( pcUserDataParty->iID ) );
+				if (pcUserDataParty)
+					PARTYHANDLER->HandlePacket(pcUser, &PacketRequestParty(pcUserDataParty->iID));
 			}
 		}
-		if( COMMAND( "/request_raid", pszBuff ) || COMMAND( "/raid", pszBuff ) || COMMAND( "//raid", pszBuff ) || COMMAND( "//RAID", pszBuff ) )
+		if (COMMAND("/request_raid", pszBuff) || COMMAND("/raid", pszBuff) || COMMAND("//raid", pszBuff) || COMMAND("//raid", pszBuff))
 		{
-			if( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+			if (GetParameterString(pszBuff, 1, szCommandParam1))
 			{
-				UserData * pcUserDataParty = USERSERVER->GetUserdata( szCommandParam1 );
+				UserData* pcUserDataParty = USERSERVER->GetUserdata(szCommandParam1);
 
-				if( pcUserDataParty )
-					PARTYHANDLER->HandlePacket( pcUser, &PacketRequestRaid( pcUserDataParty->iID) );
+				if (pcUserDataParty)
+					PARTYHANDLER->HandlePacket(pcUser, &PacketRequestRaid(pcUserDataParty->iID));
 			}
 		}
-		else if ( COMMAND("/titles", pszBuff) )
+		else if (COMMAND("/titles", pszBuff))
 		{
-			CHARACTERSERVER->SendFullTitleListIfAny ( pcUser );
+			CHARACTERSERVER->SendFullTitleListIfAny(pcUser);
 		}
-		else if ( COMMAND ( "/title_clear", pszBuff ) )
+		else if (COMMAND("/title_clear", pszBuff))
 		{
-			if ( CHARACTERSERVER->CharacterInCityStage ( pcUser->pcUserData ) )
+			if (CHARACTERSERVER->CharacterInCityStage(pcUser->pcUserData))
 			{
-				CHARACTERSERVER->ClearTitle (pcUser);
+				CHARACTERSERVER->ClearTitle(pcUser);
 			}
 			else
 			{
 				//todo - later on, use a town NPC to set title
-				CHATSERVER->SendChat ( pcUser, EChatColor::CHATCOLOR_Error, "Titles can only be modified in a town!" );
+				CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_Error, "Titles can only be modified in a town!");
 			}
 		}
-		else if ( COMMAND ( "/title_set", pszBuff ) )
+		else if (COMMAND("/title_set", pszBuff))
 		{
-			if ( CHARACTERSERVER->CharacterInCityStage ( pcUser->pcUserData ) )
+			if (CHARACTERSERVER->CharacterInCityStage(pcUser->pcUserData))
 			{
-				if ( GetParameterString ( pszBuff, 1, szCommandParam1 ) )
+				if (GetParameterString(pszBuff, 1, szCommandParam1))
 				{
-					int iTitleID = atoi ( szCommandParam1 );
-					if ( iTitleID >= 1 && iTitleID <= 2000 )
+					int iTitleID = atoi(szCommandParam1);
+					if (iTitleID >= 1 && iTitleID <= 2000)
 					{
-						if ( TIME > pcUser->uTitleSetTimeOut )
+						if (TIME > pcUser->uTitleSetTimeOut)
 						{
-							CHARACTERSERVER->SetTitle ( pcUser, iTitleID );
+							CHARACTERSERVER->SetTitle(pcUser, iTitleID);
 
 #ifdef DEV_MODE
 							pcUser->uTitleSetTimeOut = TIME + 5; //+5s
@@ -5731,66 +5739,66 @@ BOOL ServerCommand::OnPlayerCommand( User * pcUser, const char * pszBuff )
 						}
 						else
 						{
-							CHATSERVER->SendChat ( pcUser, EChatColor::CHATCOLOR_Error, "Please wait 1 minute between changing title" );
+							CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_Error, "Please wait 1 minute between changing title");
 						}
 					}
 					else
 					{
-						CHATSERVER->SendChat ( pcUser, EChatColor::CHATCOLOR_Error, "Title set failed. Invalid id" );
+						CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_Error, "Title set failed. Invalid id");
 					}
 				}
 				else
 				{
-					CHATSERVER->SendChatEx ( pcUser, EChatColor::CHATCOLOR_Error, "Expecting one parameter for /title_set" );
+					CHATSERVER->SendChatEx(pcUser, EChatColor::CHATCOLOR_Error, "Expecting one parameter for /title_set");
 				}
 			}
 			else
 			{
 				//todo - later on, use a town NPC to set title
-				CHATSERVER->SendChatEx ( pcUser, EChatColor::CHATCOLOR_Error, "Titles can only be modified in a town!" );
+				CHATSERVER->SendChatEx(pcUser, EChatColor::CHATCOLOR_Error, "Titles can only be modified in a town!");
 			}
 
 			return TRUE;
 		}
 
-		else if ( COMMAND("/solo", pszBuff) )
+		else if (COMMAND("/solo", pszBuff))
 		{
 			if (pcUser->pcUserData->iMapID == MAPID_Bellatra && pcUser->pcUserData->dwExclusiveNum == 0x100)
 			{
 				BELLATRASERVER->SetRoomSoloMode(pcUser->pcUserData->sBellatraRoomID, TRUE);
 			}
 		}
-		else if( COMMAND( "/leave_party", pszBuff ) )
+		else if (COMMAND("/leave_party", pszBuff))
 		{
-			if ( pcUser->bParty && pcUser->psParty )
+			if (pcUser->bParty && pcUser->psParty)
 			{
-				PARTYHANDLER->LeaveParty( pcUser );
+				PARTYHANDLER->LeaveParty(pcUser);
 			}
 		}
-		else if( COMMAND( "/lot", pszBuff ) || COMMAND( "/lottery", pszBuff ) )
+		else if (COMMAND("/lot", pszBuff) || COMMAND("/lottery", pszBuff))
 		{
-			if( pcUser->bParty && pcUser->psParty )
+			if (pcUser->bParty && pcUser->psParty)
 			{
-				int iRandom = Dice::RandomI( 0, 1000 );
-				PARTYHANDLER->SendChatParty( pcUser, FormatString( "> %s played on lottery and take %d points.", pcUser->pcUserData->sCharacterData.szName, iRandom ), CHATCOLOR_Notice, true );
+				int iRandom = Dice::RandomI(0, 1000);
+				PARTYHANDLER->SendChatParty(pcUser, FormatString("> %s played on lottery and take %d points.", pcUser->pcUserData->sCharacterData.szName, iRandom), CHATCOLOR_Notice, true);
 			}
 		}
-		else if( COMMAND( "/kick_party", pszBuff ) )
+		else if (COMMAND("/kick_party", pszBuff))
 		{
-			if( GetParameterString( pszBuff, 1, szCommandParam1 ) )
+			if (GetParameterString(pszBuff, 1, szCommandParam1))
 			{
-				UserData * pcUserDataParty = USERSERVER->GetUserdata( szCommandParam1 );
+				UserData* pcUserDataParty = USERSERVER->GetUserdata(szCommandParam1);
 
-				if( pcUserDataParty )
+				if (pcUserDataParty)
 				{
-					User * uParty = USERDATATOUSER( pcUserDataParty );
+					User* uParty = USERDATATOUSER(pcUserDataParty);
 
-					if ( pcUser && uParty &&
-						 pcUser->bParty && pcUser->psParty && uParty->bParty && uParty->psParty &&
-						 pcUser->psParty == uParty->psParty &&
-						 pcUser->psParty->pcLeader == pcUser)
+					if (pcUser && uParty &&
+						pcUser->bParty && pcUser->psParty && uParty->bParty && uParty->psParty &&
+						pcUser->psParty == uParty->psParty &&
+						pcUser->psParty->pcLeader == pcUser)
 					{
-						PARTYHANDLER->LeaveParty( USERDATATOUSER( pcUserDataParty ), true );
+						PARTYHANDLER->LeaveParty(USERDATATOUSER(pcUserDataParty), true);
 					}
 				}
 			}
@@ -5798,7 +5806,7 @@ BOOL ServerCommand::OnPlayerCommand( User * pcUser, const char * pszBuff )
 	}
 
 	//on game server
-	if ( iLen = COMMAND( "/CLAN>", pszBuff ) )
+	if (iLen = COMMAND("/clan>", pszBuff))
 	{
 		//JLM - disable for now. seems to cause clan overlaps somehow..!
 		/*if ( pcUser->uNextClanIdCheckTime == 0 ||
@@ -5812,16 +5820,16 @@ BOOL ServerCommand::OnPlayerCommand( User * pcUser, const char * pszBuff )
 		}*/
 
 
-		if ( pcUser->pcUserData->iClanID != 0 )
+		if (pcUser->pcUserData->iClanID != 0)
 		{
 			BOOL bFound = FALSE;
 
-			for ( int i = iLen; i < 100; i++ )
+			for (int i = iLen; i < 100; i++)
 			{
-				if ( pszBuff[i] == 0 )
+				if (pszBuff[i] == 0)
 					break;
 
-				if ( pszBuff[i] != ' ' )
+				if (pszBuff[i] != ' ')
 				{
 					iLen = i;
 					bFound = TRUE;
@@ -5830,24 +5838,24 @@ BOOL ServerCommand::OnPlayerCommand( User * pcUser, const char * pszBuff )
 
 
 			}
-			if ( bFound )
+			if (bFound)
 			{
-				if ( pcUser->bMuted )
+				if (pcUser->bMuted)
 				{
-					INFO( "Player '%s' is muted", CHARACTERSERVER->GetCharacterName( pcUser->pcUserData ) );
+					INFO("Player '%s' is muted", CHARACTERSERVER->GetCharacterName(pcUser->pcUserData));
 
-					CHATSERVER->SendChat ( pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired." );
-					CHATSERVER->SendTitleBox( pcUser->pcUserData, "You are muted!" );
+					CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired.");
+					CHATSERVER->SendTitleBox(pcUser->pcUserData, "You are muted!");
 					return TRUE;
 				}
 
 				EChatColor eColor = CHATCOLOR_Clan;
 
-				if ( CHARACTERSERVER->IsCharacterLeader( pcUser ) )
+				if (CHARACTERSERVER->IsCharacterLeader(pcUser))
 					eColor = CHATCOLOR_ClanLeader;
 
-				CHATSERVER->SendChatAllUsersInClan( pcUser->pcUserData, eColor, "[%c]%s: %s", CHARACTERSERVER->GetServerName( pcUser )[0], CHARACTERSERVER->GetCharacterName( pcUser ), pszBuff + iLen );
-				CHATSERVER->SendChatEx( pcUser, eColor, "[%c]%s: %s", CHARACTERSERVER->GetServerName( pcUser )[0], CHARACTERSERVER->GetCharacterName( pcUser ), pszBuff + iLen );
+				CHATSERVER->SendChatAllUsersInClan(pcUser->pcUserData, eColor, "[%c]%s: %s", CHARACTERSERVER->GetServerName(pcUser)[0], CHARACTERSERVER->GetCharacterName(pcUser), pszBuff + iLen);
+				CHATSERVER->SendChatEx(pcUser, eColor, "[%c]%s: %s", CHARACTERSERVER->GetServerName(pcUser)[0], CHARACTERSERVER->GetCharacterName(pcUser), pszBuff + iLen);
 				CHATSERVER->RecordClanChatToDatabase(pcUser->pcUserData, pszBuff + iLen);
 			}
 
@@ -5855,19 +5863,19 @@ BOOL ServerCommand::OnPlayerCommand( User * pcUser, const char * pszBuff )
 		return TRUE;
 	}
 
-	if( LOGIN_SERVER )
+	if (LOGIN_SERVER)
 	{
-		if( COMMAND("/TRADE>", pszBuff) )
+		if (COMMAND("/trade>", pszBuff))
 		{
-			CHATSERVER->SendChatTrade( pcUser->pcUserData, pszBuff );
+			CHATSERVER->SendChatTrade(pcUser->pcUserData, pszBuff);
 		}
-		else if( pszBuff[0] == '/' && ( pszBuff[1] == ';' || pszBuff[1] == ':' ) )
+		else if (pszBuff[0] == '/' && (pszBuff[1] == ';' || pszBuff[1] == ':'))
 		{
 			std::string raw = trim(std::string(&pszBuff[2]));
 			std::string msg = "";
 
 			size_t index = raw.find(' ');
-			if ( index == std::string::npos )
+			if (index == std::string::npos)
 				index = raw.size();
 			else
 				msg = trim(raw.substr(index + 1, std::string::npos));
@@ -5875,25 +5883,25 @@ BOOL ServerCommand::OnPlayerCommand( User * pcUser, const char * pszBuff )
 			const std::string name = raw.substr(0, index);
 
 			// Bot
-			if( BOTSERVER->IsOnlineBot(name.c_str()) )
+			if (BOTSERVER->IsOnlineBot(name.c_str()))
 			{
-				if ( !msg.empty() )
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Blue, "To> %s: %s", name.c_str(), msg.c_str());
+				if (!msg.empty())
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Blue, "To> %s: %s", name.c_str(), msg.c_str());
 				else
-					CHATSERVER->SendChatEx( pcUser, CHATCOLOR_Error, "%s is online", name.c_str() );
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "%s is online", name.c_str());
 
 				return TRUE;
 			}
 
 			User* lcTargetUser = USERDATATOUSER(USERSERVER->GetUserdata(name.c_str()));
-			if (lcTargetUser && lcTargetUser->IsValidAndInGame() )
+			if (lcTargetUser && lcTargetUser->IsValidAndInGame())
 			{
-				if ( pcUser->bMuted )
+				if (pcUser->bMuted)
 				{
-					INFO( "Player '%s' is muted", CHARACTERSERVER->GetCharacterName( pcUser->pcUserData ) );
+					INFO("Player '%s' is muted", CHARACTERSERVER->GetCharacterName(pcUser->pcUserData));
 
-					CHATSERVER->SendChat ( pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired." );
-					CHATSERVER->SendTitleBox( pcUser->pcUserData, "You are muted!" );
+					CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired.");
+					CHATSERVER->SendTitleBox(pcUser->pcUserData, "You are muted!");
 					return TRUE;
 				}
 
@@ -5912,70 +5920,70 @@ BOOL ServerCommand::OnPlayerCommand( User * pcUser, const char * pszBuff )
 	return FALSE;
 }
 
-BOOL ServerCommand::OnGameMasterCommand( User * pcUser, const char * pszBuff )
+BOOL ServerCommand::OnGameMasterCommand(User* pcUser, const char* pszBuff)
 {
-	if ( pcUser == NULL )
+	if (pcUser == NULL)
 		return FALSE;
 
 	int iLen = 0;
 
 	// Game master activate
-	if ( iLen = COMMAND( "/activategm", pszBuff ) )
+	if (iLen = COMMAND("/activategm", pszBuff))
 	{
-		OnActivateGameMaster( pcUser );
+		OnActivateGameMaster(pcUser);
 		return TRUE;
 	}
 
 	// Game master deactivate
-	else if ( iLen = COMMAND( "/deactivategm", pszBuff ) )
+	else if (iLen = COMMAND("/deactivategm", pszBuff))
 	{
 		// Send server information to user debug
 		PacketSimple sPacket;
-		sPacket.iLength	= sizeof( PacketSimple );
+		sPacket.iLength = sizeof(PacketSimple);
 		sPacket.iHeader = PKTHDR_DisableGM;
-		SENDPACKET( pcUser, &sPacket );
+		SENDPACKET(pcUser, &sPacket);
 
-		CHATSERVER->SendChat( pcUser, EChatColor::CHATCOLOR_White, "> GM mode deactivated!" );
+		CHATSERVER->SendChat(pcUser, EChatColor::CHATCOLOR_White, "> GM mode deactivated!");
 
 		pcUser->pcUserData->iGameLevel = EGameLevel::GAMELEVEL_None;
-		NETSERVER->SyncGameMaster( pcUser->pcUserData );
+		NETSERVER->SyncGameMaster(pcUser->pcUserData);
 
 		return TRUE;
 	}
 
 	// Game Master Commands
-	if ( pcUser->GetGameLevel() > GAMELEVEL_None)
+	if (pcUser->GetGameLevel() > GAMELEVEL_None)
 	{
 		if (pcUser->GetGameLevel() >= GAMELEVEL_One &&
 			OnGameMasterLevel1Command(pcUser, pszBuff))
 		{
-			CHATSERVER->RecordGameMasterCommandToDatabase ( pcUser, pszBuff );
-			INFO ( "GM_1 command: %s", pszBuff );
+			CHATSERVER->RecordGameMasterCommandToDatabase(pcUser, pszBuff);
+			INFO("GM_1 command: %s", pszBuff);
 			return TRUE;
 		}
 
-		if ( pcUser->GetGameLevel() >= GAMELEVEL_Two &&
+		if (pcUser->GetGameLevel() >= GAMELEVEL_Two &&
 			OnGameMasterLevel2Command(pcUser, pszBuff))
 		{
-			CHATSERVER->RecordGameMasterCommandToDatabase ( pcUser, pszBuff );
-			INFO ( "GM_2 command: %s", pszBuff );
+			CHATSERVER->RecordGameMasterCommandToDatabase(pcUser, pszBuff);
+			INFO("GM_2 command: %s", pszBuff);
 			return TRUE;
 		}
 
 		if (pcUser->GetGameLevel() >= GAMELEVEL_Three &&
-			OnGameMasterLevel3Command ( pcUser, pszBuff ) )
+			OnGameMasterLevel3Command(pcUser, pszBuff))
 		{
-			CHATSERVER->RecordGameMasterCommandToDatabase ( pcUser, pszBuff );
-			INFO ( "GM_3 command: %s", pszBuff );
+			CHATSERVER->RecordGameMasterCommandToDatabase(pcUser, pszBuff);
+			INFO("GM_3 command: %s", pszBuff);
 			return TRUE;
 		}
 
 		// Level 4 (Admin)
-		if ( pcUser->GetGameLevel() >= GAMELEVEL_Four &&
+		if (pcUser->GetGameLevel() >= GAMELEVEL_Four &&
 			OnGameMasterAdminCommand(pcUser, pszBuff))
 		{
-			CHATSERVER->RecordGameMasterCommandToDatabase ( pcUser, pszBuff );
-			INFO ( "GM_4 command: %s", pszBuff );
+			CHATSERVER->RecordGameMasterCommandToDatabase(pcUser, pszBuff);
+			INFO("GM_4 command: %s", pszBuff);
 			return TRUE;
 		}
 	}
@@ -6036,34 +6044,34 @@ void ServerCommand::HandleGrantTitleCommand(const std::string& charName, const s
 }
 
 template<typename T, typename... N>
-auto my_make_array(N&&... args)->std::array<T, sizeof...(args)>
+auto my_make_array(N&&... args) -> std::array<T, sizeof...(args)>
 {
 	return { std::forward<N>(args)... };
 }
-BOOL ServerCommand::OnReceiveChat ( User * pcUser, PacketChat * psPacket )
+BOOL ServerCommand::OnReceiveChat(User* pcUser, PacketChat* psPacket)
 {
-	if ( pcUser == NULL || pcUser->IsValidAndInGame() == FALSE )
+	if (pcUser == NULL || pcUser->IsValidAndInGame() == FALSE)
 		return TRUE; //to prevent it from being processed in assembly
 
-	UserData * pcUserData = pcUser->pcUserData;
+	UserData* pcUserData = pcUser->pcUserData;
 
-	if ( OnPlayerCommand ( pcUser, psPacket->szChat ) )
+	if (OnPlayerCommand(pcUser, psPacket->szChat))
 		return TRUE;
 
-	if ( strlen ( psPacket->szChat ) >= 2 && psPacket->szChat[0] == '/' && psPacket->szChat[1] != ':' )
+	if (strlen(psPacket->szChat) >= 2 && psPacket->szChat[0] == '/' && psPacket->szChat[1] != ':')
 	{
-		if ( OnGameMasterCommand ( pcUser, psPacket->szChat ) )
+		if (OnGameMasterCommand(pcUser, psPacket->szChat))
 		{
 			return TRUE;
 		}
 
 		std::string l_Command = psPacket->szChat;
-		std::size_t l_EndPos = l_Command.find_first_of ( ' ' );
+		std::size_t l_EndPos = l_Command.find_first_of(' ');
 
-		if ( l_EndPos == std::string::npos )
-			l_EndPos = l_Command.length ();
+		if (l_EndPos == std::string::npos)
+			l_EndPos = l_Command.length();
 
-		l_Command = l_Command.substr ( 0, l_EndPos );
+		l_Command = l_Command.substr(0, l_EndPos);
 
 		/// HARDCPP : OLD COMMAND FILTERING
 		/// TODO: Rewrite / Reverse these
@@ -6075,59 +6083,59 @@ BOOL ServerCommand::OnReceiveChat ( User * pcUser, PacketChat * psPacket )
 		if (pcUser->pcUserData->iGameLevel <= EGameLevel::GAMELEVEL_One)
 			return TRUE; //prevent processing in assembly
 
-		for ( int l_I = 0; l_I < ( sizeof ( s_AllowedOldCommands ) / sizeof ( s_AllowedOldCommands[0] ) ); ++l_I )
+		for (int l_I = 0; l_I < (sizeof(s_AllowedOldCommands) / sizeof(s_AllowedOldCommands[0])); ++l_I)
 		{
 			//found matching command. return false so it gets processed otherwhere
-			if ( strcmp ( s_AllowedOldCommands[l_I].c_str (), l_Command.c_str () ) == 0 )
+			if (strcmp(s_AllowedOldCommands[l_I].c_str(), l_Command.c_str()) == 0)
 			{
-				CHATSERVER->RecordGameMasterCommandToDatabase ( pcUser, psPacket->szChat );
+				CHATSERVER->RecordGameMasterCommandToDatabase(pcUser, psPacket->szChat);
 				return FALSE; //allow process in assembly
 			}
 		}
 		return TRUE;
 	}
 
-	if ( pcUser->bMuted )
+	if (pcUser->bMuted)
 	{
-		INFO( "Player '%s' is muted", CHARACTERSERVER->GetCharacterName( pcUser->pcUserData ) );
+		INFO("Player '%s' is muted", CHARACTERSERVER->GetCharacterName(pcUser->pcUserData));
 
-		CHATSERVER->SendChat ( pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired." );
-		CHATSERVER->SendTitleBox( pcUser->pcUserData, "You are muted!" );
+		CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> You have been muted by a GM. You may not talk freely until your mute has expired.");
+		CHATSERVER->SendTitleBox(pcUser->pcUserData, "You are muted!");
 	}
 	else
 	{
-		CHATSERVER->RecordPublicChatToDatabase( pcUserData, psPacket->szChat );
-		CHATSERVER->SendChatAllUsersInRangeButMe( pcUserData, DISTANCE_MAX_CHATRANGE, CHATCOLOR_Normal, std::string( psPacket->szChat ) );
+		CHATSERVER->RecordPublicChatToDatabase(pcUserData, psPacket->szChat);
+		CHATSERVER->SendChatAllUsersInRangeButMe(pcUserData, DISTANCE_MAX_CHATRANGE, CHATCOLOR_Normal, std::string(psPacket->szChat));
 	}
 
 	return TRUE;
 }
 
-void ServerCommand::CheckUserOnline( User * pcUser, struct PacketUserOnline * psPacket )
+void ServerCommand::CheckUserOnline(User* pcUser, struct PacketUserOnline* psPacket)
 {
-	UserData * pcUserOn = fnGetUsedataLoginName( psPacket->szName );
-	if ( pcUserOn )
+	UserData* pcUserOn = fnGetUsedataLoginName(psPacket->szName);
+	if (pcUserOn)
 		psPacket->bOnline = TRUE;
 	else
 		psPacket->bOnline = FALSE;
 
-	SENDPACKET( pcUser, psPacket, TRUE );
+	SENDPACKET(pcUser, psPacket, TRUE);
 
-	CHATSERVER->SendDebugChat( pcUser, CHATCOLOR_Error, "> CheckUserOnline( %s ) [%s]", psPacket->szName, psPacket->bOnline ? "TRUE" : "FALSE" );
+	CHATSERVER->SendDebugChat(pcUser, CHATCOLOR_Error, "> CheckUserOnline( %s ) [%s]", psPacket->szName, psPacket->bOnline ? "TRUE" : "FALSE");
 }
 
-void ServerCommand::AddCommand( int iCommandID, char * pszParameter1, char * pszParameter2, char * pszParameter3 )
+void ServerCommand::AddCommand(int iCommandID, char* pszParameter1, char* pszParameter2, char* pszParameter3)
 {
-	SQLConnection * pcDB = SQLCONNECTION( DATABASEID_ServerDB, 22 );
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_ServerDB, 22);
 
-	if ( pcDB->Open() )
+	if (pcDB->Open())
 	{
-		if ( pcDB->Prepare( "INSERT INTO Command([CommandTypeID],[Parameter1],[Parameter2],[Parameter3],[DateProcessed]) VALUES(?,?,?,?,NULL)" ) )
+		if (pcDB->Prepare("INSERT INTO Command([CommandTypeID],[Parameter1],[Parameter2],[Parameter3],[DateProcessed]) VALUES(?,?,?,?,NULL)"))
 		{
-			pcDB->BindParameterInput( 1, PARAMTYPE_Integer, &iCommandID );
-			pcDB->BindParameterInput( 2, PARAMTYPE_String, pszParameter1, STRLEN( pszParameter1 ) );
-			pcDB->BindParameterInput( 3, PARAMTYPE_String, pszParameter2, STRLEN( pszParameter2 ) );
-			pcDB->BindParameterInput( 4, PARAMTYPE_String, pszParameter3, STRLEN( pszParameter3 ) );
+			pcDB->BindParameterInput(1, PARAMTYPE_Integer, &iCommandID);
+			pcDB->BindParameterInput(2, PARAMTYPE_String, pszParameter1, STRLEN(pszParameter1));
+			pcDB->BindParameterInput(3, PARAMTYPE_String, pszParameter2, STRLEN(pszParameter2));
+			pcDB->BindParameterInput(4, PARAMTYPE_String, pszParameter3, STRLEN(pszParameter3));
 
 			pcDB->Execute();
 		}

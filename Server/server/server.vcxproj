@@ -93,7 +93,7 @@
     <IncludePath>$(SolutionDir)Shared/;$(IncludePath)</IncludePath>
     <SourcePath />
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)..\bin\Server\</OutDir>
+    <OutDir>$(SolutionDir)\bin\Server\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Login|Win32'">
     <LinkIncremental>false</LinkIncremental>

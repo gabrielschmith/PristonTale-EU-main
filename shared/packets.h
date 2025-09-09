@@ -77,7 +77,7 @@
 
 
 
-#define SERVER_LEVEL_MAX				120
+#define SERVER_LEVEL_MAX				250
 #define MAX_UNIT_PLAYDATA				75
 #define MAX_QUESTPACKETDATA				15
 

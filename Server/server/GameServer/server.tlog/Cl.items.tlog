@@ -1,105 +1,105 @@
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CApplication.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CApplication.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CConfig.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CConfig.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CConfigFile.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CConfigFile.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CConfigFileReader.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CConfigFileReader.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CConfigFileWriter.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CConfigFileWriter.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CCore.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CCore.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\character.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\character.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CMutex.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CMutex.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\Coin.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Coin.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CoinShop.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CoinShop.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CoinShopItem.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CoinShopItem.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CoinShopTab.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CoinShopTab.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\common.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\common.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CProcess.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CProcess.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CReader.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CReader.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CReaderFile.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CReaderFile.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CSystem.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CSystem.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CWindow.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CWindow.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\CWorld.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CWorld.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\debug.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\debug.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\def.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\def.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\dice.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\dice.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\item.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\item.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\map.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\map.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\party.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\party.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\point.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\point.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\quest.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\quest.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\socket.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\socket.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\sound.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\sound.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\strings.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\strings.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\unit.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\unit.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\shared\user.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\user.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\accountserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\accountserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\AgeHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\AgeHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Archer.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Archer.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Assassin.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Assassin.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Atalanta.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Atalanta.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\bellatraserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\bellatraserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\BlessCastleHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\BlessCastleHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\blesscastleserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\blesscastleserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\BotServerHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\BotServerHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\BotShopServerHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\BotShopServerHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CBotServerAIHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CBotServerAIHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\characterserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\characterserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\chatserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\chatserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\cheatserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\cheatserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\ChristmasHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\ChristmasHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CManufactureHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CManufactureHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CoinShopHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CoinShopHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CPartyHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CPartyHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CPetSystemHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CPetSystemHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CRollDiceHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CRollDiceHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CServer.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CServer.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CServerConfig.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CServerConfig.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CServerHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CServerHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CServerManager.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CServerManager.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CServerWindow.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CServerWindow.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CServerWorld.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CServerWorld.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\CWarehouseHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\CWarehouseHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\DamageHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\DamageHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\DLL.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\DLL.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\EasterHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\EasterHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\EventGirlHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\EventGirlHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\eventserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\eventserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Fighter.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Fighter.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\FuryArenaHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\FuryArenaHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\globals.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\globals.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\HalloweenHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\HalloweenHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\HNSSkill.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\HNSSkill.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\itemserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\itemserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Knight.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Knight.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Logger.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Logger.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\logserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\logserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\lootserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\lootserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Magician.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Magician.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Main.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Main.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\mapserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\mapserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Mechanician.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Mechanician.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\MixHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\MixHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\netserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\netserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\packetserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\packetserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Pikeman.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Pikeman.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Priestess.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Priestess.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\pvpserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\pvpserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\QuestArenaHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\QuestArenaHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\questserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\questserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\RankingListHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\RankingListHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\server.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\server.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\servercommand.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\servercommand.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\servercore.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\servercore.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Shaman.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Shaman.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\socketserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\socketserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\SocketSystemHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\SocketSystemHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\SQLConnection.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\SQLConnection.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\SQLSkill.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\SQLSkill.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\stdafx.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\stdafx.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\TestMapHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\TestMapHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\TradeHandler.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\TradeHandler.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\unitdataserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\unitdataserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\unitinfo.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\unitinfo.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\unitserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\unitserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\userdataserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\userdataserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\userserver.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\userserver.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\Utilities.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\Utilities.obj
-C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\WinDump.cpp;C:\Users\Léo\Downloads\Docks Eu\Source\Server\server\GameServer\WinDump.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CApplication.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CApplication.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CConfig.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CConfig.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CConfigFile.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CConfigFile.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CConfigFileReader.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CConfigFileReader.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CConfigFileWriter.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CConfigFileWriter.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CCore.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CCore.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\character.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\character.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CMutex.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CMutex.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\Coin.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Coin.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CoinShop.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CoinShop.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CoinShopItem.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CoinShopItem.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CoinShopTab.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CoinShopTab.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\common.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\common.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CProcess.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CProcess.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CReader.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CReader.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CReaderFile.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CReaderFile.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CSystem.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CSystem.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CWindow.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CWindow.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\CWorld.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CWorld.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\debug.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\debug.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\def.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\def.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\dice.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\dice.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\item.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\item.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\map.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\map.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\party.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\party.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\point.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\point.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\quest.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\quest.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\socket.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\socket.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\sound.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\sound.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\strings.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\strings.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\unit.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\unit.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\shared\user.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\user.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\accountserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\accountserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\AgeHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\AgeHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Archer.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Archer.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Assassin.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Assassin.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Atalanta.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Atalanta.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\bellatraserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\bellatraserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\BlessCastleHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\BlessCastleHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\blesscastleserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\blesscastleserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\BotServerHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\BotServerHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\BotShopServerHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\BotShopServerHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CBotServerAIHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CBotServerAIHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\characterserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\characterserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\chatserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\chatserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\cheatserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\cheatserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\ChristmasHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\ChristmasHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CManufactureHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CManufactureHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CoinShopHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CoinShopHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CPartyHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CPartyHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CPetSystemHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CPetSystemHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CRollDiceHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CRollDiceHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CServer.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CServer.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CServerConfig.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CServerConfig.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CServerHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CServerHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CServerManager.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CServerManager.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CServerWindow.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CServerWindow.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CServerWorld.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CServerWorld.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\CWarehouseHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\CWarehouseHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\DamageHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\DamageHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\DLL.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\DLL.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\EasterHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\EasterHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\EventGirlHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\EventGirlHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\eventserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\eventserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Fighter.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Fighter.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\FuryArenaHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\FuryArenaHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\globals.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\globals.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\HalloweenHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\HalloweenHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\HNSSkill.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\HNSSkill.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\itemserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\itemserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Knight.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Knight.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Logger.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Logger.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\logserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\logserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\lootserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\lootserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Magician.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Magician.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Main.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Main.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\mapserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\mapserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Mechanician.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Mechanician.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\MixHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\MixHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\netserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\netserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\packetserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\packetserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Pikeman.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Pikeman.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Priestess.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Priestess.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\pvpserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\pvpserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\QuestArenaHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\QuestArenaHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\questserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\questserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\RankingListHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\RankingListHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\server.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\server.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\servercommand.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\servercommand.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\servercore.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\servercore.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Shaman.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Shaman.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\socketserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\socketserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\SocketSystemHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\SocketSystemHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\SQLConnection.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\SQLConnection.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\SQLSkill.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\SQLSkill.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\stdafx.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\stdafx.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\TestMapHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\TestMapHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\TradeHandler.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\TradeHandler.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\unitdataserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\unitdataserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\unitinfo.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\unitinfo.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\unitserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\unitserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\userdataserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\userdataserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\userserver.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\userserver.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\Utilities.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\Utilities.obj
+F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\WinDump.cpp;F:\Sources\github\PristonTale\PristonTale-EU-main\Server\server\GameServer\WinDump.obj

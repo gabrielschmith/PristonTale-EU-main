@@ -51,11 +51,11 @@ public:
 
 	static bool					bNewStats;
 
-	//static int					iMainStatModifier;
-	//static int					iLowestEfficiency;
-	//static int					iMaxEfficiency;
-	//static int					iStatsToMaxEfficiency;
-	//static int					iLevelOverride;
+	static int					iMainStatModifier;
+	static int					iLowestEfficiency;
+	static int					iMaxEfficiency;
+	static int					iStatsToMaxEfficiency;
+	static int					iLevelOverride;
 
 	int							iLegendaryDropParticle;
 	int							iEpicDropParticle;

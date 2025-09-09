@@ -175,13 +175,113 @@ static const uint64_t s_TotalExpPerLevel[] = {
 	45336193000000,
 	50323174000000,
 	55858723000000, //150
+	64237731000000, //151
+	73873291000000, //152
+	84954785000000, //153
+	97692003000000, //154
+	112325803000000, //155
+	129116173000000, //156
+	148363599000000, //157
+	170407139000000, //158
+	195717000000000, //159
+	224804520000000, //160
+	258225178000000, //161
+	296618955000000, //162
+	340811798000000, //163
+	391733568000000, //164
+	450393603000000, //165
+	518052644000000, //166
+	596260541000000, //167
+	686799622000000, //168
+	791679558000000, //169
+	913431492000000, //170
+	1054846316000000, //171
+	1219073264000000, //172
+	1408934254000000, //173
+	1628973392000000, //174
+	1883319401000000, //175
+	2176517311000000, //176
+	2514594928000000, //177
+	2903784268000000, //178
+	3351551909000000, //179
+	3867284695000000, //180
+	4461477800000000, //181
+	5146699520000000, //182
+	5937204448000000, //183
+	6850785316000000, //184
+	7908403164000000, //185
+	9134663639000000, //186
+	10558863485000000, //187
+	12213693008000000, //188
+	14136047009000000, //189
+	16370454060000000, //190
+	18970922329000000, //191
+	22000560679000000, //192
+	25532645181000000, //193
+	29650542458000000, //194
+	34448623827000000, //195
+	40032917401000000, //196
+	46527855211000000, //197
+	54078033093000000, //198
+	62850238517000000, //199
+	73037774655000000, //200
+	84863441454000000, //201
+	98594157731000000, //202
+	114549281891000000, //203
+	133105674375000000, //204
+	154715226037000000, //205
+	179909509523000000, //206
+	209406835873000000, //207
+	244133761754000000, //208
+	285254025987000000, //209
+	334105929885000000, //210
+	392321819668000000, //211
+	461835592619000000, //212
+	544893930630000000, //213
+	643155520023000000, //214
+	759730848026000000, //215
+	898790475549000000, //216
+	1064008047382000000, //217
+	1259289254469000000, //218
+	1489432642419000000, //219
+	1760847539282000000, //220
+	2081374670374000000, //221
+	2461230871730000000, //222
+	2912815502648000000, //223
+	3451037878043000000, //224
+	4092094389710000000, //225
+	4855911661391000000, //226
+	5767198183003000000, //227
+	6854077976214000000, //228
+	8150010171613000000, //229
+	9695511703177000000, //230
+	11540987564990000000, //231
+	13748676652488000000, //232
+	16395019075100000000, //233
+	18446744073709000000, //234
+	18446744073709000000, //235
+	18446744073709000000, //236
+	18446744073709000000, //237
+	18446744073709000000, //238
+	18446744073709000000, //239
+	18446744073709000000, //240
+	18446744073709000000, //241
+	18446744073709000000, //242
+	18446744073709000000, //243
+	18446744073709000000, //244
+	18446744073709000000, //245
+	18446744073709000000, //246
+	18446744073709000000, //247
+	18446744073709000000, //248
+	18446744073709000000, //249
+	18446744073709000000  //250
 };
 
 
 
 enum EMonsterEffectID
 {
-	MONSTEREFFECTID_None				= 0,
+	MONSTEREFFECTID_None = 0,
 
 	MONSTEREFFECTID_CYCLOPS = 0x1000,
 	MONSTEREFFECTID_HOBGOBLIN = 0x1010,
@@ -472,7 +572,7 @@ enum EMonsterEffectID
 
 struct CharacterSoundEffect
 {
-	char					* szCodeName;
+	char* szCodeName;
 	EMonsterEffectID		iMonsterEffectID;
 };
 
@@ -764,7 +864,7 @@ static CharacterSoundEffect	saCharacterSoundEffect[] =
 
 struct SoundEffectData
 {
-	char						* pszFile;
+	char* pszFile;
 	int							iID;
 };
 
@@ -1060,7 +1160,7 @@ struct CharTotalStats
 
 //See sSPECIAL_REVISION
 
-static ItemRequeriments saItemRequeriments[10+1]
+static ItemRequeriments saItemRequeriments[10 + 1]
 {
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 
@@ -1078,7 +1178,7 @@ static ItemRequeriments saItemRequeriments[10+1]
 	{ CLASSFLAG_Shaman,			0, 0,		-30, -25,		25, 30,		-15, -10,	-20, -15,	0, 0 },
 };
 
-static CharStats saCharBaseStats[10+1]
+static CharStats saCharBaseStats[10 + 1]
 {
 	{22, 14, 20, 19, 23}, //No spec
 	{28, 6, 21, 17, 27},
@@ -1094,7 +1194,7 @@ static CharStats saCharBaseStats[10+1]
 };
 
 //Arbitrary distribution of stats for each class for item requirements and stat formulas
-static CharStats saCharStatAlloc[10+1]
+static CharStats saCharStatAlloc[10 + 1]
 {
 	{25,23,28,23,15}, //No spec
 	{40,14,28,18,0},
@@ -1109,20 +1209,20 @@ static CharStats saCharStatAlloc[10+1]
 	{17,38,28,17,0}
 };
 
-static int iaCharTotalStats[120 + 1] = { 0, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 
-70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 150, 155, 160, 165, 170, 
-175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 
-270, 275, 280, 285, 290, 295, 300, 305, 310, 315, 320, 325, 330, 335, 340, 345, 355, 360, 365, 
-370, 375, 380, 385, 390, 395, 400, 410, 417, 424, 431, 438, 445, 452, 459, 466, 473, 480, 490, 
-500, 510, 520, 530, 540, 550, 560, 570, 580, 590, 600, 610, 620, 630, 640, 650, 660, 670, 680, 
+static int iaCharTotalStats[120 + 1] = { 0, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65,
+70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 150, 155, 160, 165, 170,
+175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235, 240, 245, 250, 255, 260, 265,
+270, 275, 280, 285, 290, 295, 300, 305, 310, 315, 320, 325, 330, 335, 340, 345, 355, 360, 365,
+370, 375, 380, 385, 390, 395, 400, 410, 417, 424, 431, 438, 445, 452, 459, 466, 473, 480, 490,
+500, 510, 520, 530, 540, 550, 560, 570, 580, 590, 600, 610, 620, 630, 640, 650, 660, 670, 680,
 690, 700, 710, 720, 730, 740, 750, 760, 770, 780 };
 
 
 
 struct CharacterClassData
 {
-	char				* pszName;
-	char				* pszNameTranslated;
+	char* pszName;
+	char* pszNameTranslated;
 
 	int					iClassBit;
 	int					iClass;
@@ -1139,8 +1239,8 @@ struct CharacterClassData
 }; //Size = 0x2C
 
 struct	JOB_DATA_CODE {
-	char	*szName;			//English name
-	char	*szName2;			//Korean name
+	char* szName;			//English name
+	char* szName2;			//Korean name
 	DWORD	JobBitCode;			//Pro bit code
 	DWORD	JobCode;			//class general code
 	DWORD	Brood;				//the race
@@ -1153,7 +1253,7 @@ struct	JOB_DATA_CODE {
 };
 
 
-static CharacterClassData saCharacterClassData[50+1] //edit chaos
+static CharacterClassData saCharacterClassData[50 + 1] //edit chaos
 {
 	//Tier 1 - Tempskrons
 	{ "Mechanician", "Mechanician", CLASSFLAG_Mechanician, 2, 0, 65, 2, 2, 2, 2, 2, 0 },
@@ -1232,7 +1332,7 @@ struct CharacterBody
 {
 	EItemID				eItemID;
 	ECharacterClass		iClass;
-	char				* pszFileName;
+	char* pszFileName;
 };
 
 static CharacterBody saCharacterBodyLoadDefault[]
@@ -2105,134 +2205,134 @@ static CharacterBody saCharacterBodyList[]
 	{ ITEMID_DarkGaiaArmorFemale, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce010.ini" },
 	{ ITEMID_DarkIriaRobeMale, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme010.ini" },
 
-		//Season 1 Costume
-	{ ITEMID_DarkSeasonArmorMale, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb042.ini" },
-	{ ITEMID_DarkSeasonArmorMale, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca041.ini" },
-	{ ITEMID_DarkSeasonArmorFemale, CHARACTERCLASS_Archer, "char\\tmABCD\\cd042.ini" },
-	{ ITEMID_DarkSeasonArmorMale, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc042.ini" },
-	{ ITEMID_DarkSeasonArmorFemale, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb042.ini" },
-	{ ITEMID_DarkSeasonArmorMale, CHARACTERCLASS_Knight, "char\\tmABCD\\cma042.ini" },
-	{ ITEMID_DarkSeasonRobeMale, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd042.ini" },
-	{ ITEMID_DarkSeasonRobeFemale, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc042.ini" },
-	{ ITEMID_DarkSeasonArmorFemale, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce042.ini" },
-	{ ITEMID_DarkSeasonRobeMale, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme042.ini" },
+	//Season 1 Costume
+{ ITEMID_DarkSeasonArmorMale, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb042.ini" },
+{ ITEMID_DarkSeasonArmorMale, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca041.ini" },
+{ ITEMID_DarkSeasonArmorFemale, CHARACTERCLASS_Archer, "char\\tmABCD\\cd042.ini" },
+{ ITEMID_DarkSeasonArmorMale, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc042.ini" },
+{ ITEMID_DarkSeasonArmorFemale, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb042.ini" },
+{ ITEMID_DarkSeasonArmorMale, CHARACTERCLASS_Knight, "char\\tmABCD\\cma042.ini" },
+{ ITEMID_DarkSeasonRobeMale, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd042.ini" },
+{ ITEMID_DarkSeasonRobeFemale, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc042.ini" },
+{ ITEMID_DarkSeasonArmorFemale, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce042.ini" },
+{ ITEMID_DarkSeasonRobeMale, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme042.ini" },
 
-	{ ITEMID_WeddingSuit, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb013.ini" },
-	{ ITEMID_WeddingSuit, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca013.ini" },
-	{ ITEMID_WeddingDress, CHARACTERCLASS_Archer, "char\\tmABCD\\cd013.ini" },
-	{ ITEMID_WeddingSuit, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc013.ini" },
-	{ ITEMID_WeddingDress, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb013.ini" },
-	{ ITEMID_WeddingSuit, CHARACTERCLASS_Knight, "char\\tmABCD\\cma013.ini" },
-	{ ITEMID_WeddingSuit, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd013.ini" },
-	{ ITEMID_WeddingDress, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc013.ini" },
-	{ ITEMID_WeddingDress, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce013.ini" },
-	{ ITEMID_WeddingSuit, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme013.ini" },
+{ ITEMID_WeddingSuit, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb013.ini" },
+{ ITEMID_WeddingSuit, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca013.ini" },
+{ ITEMID_WeddingDress, CHARACTERCLASS_Archer, "char\\tmABCD\\cd013.ini" },
+{ ITEMID_WeddingSuit, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc013.ini" },
+{ ITEMID_WeddingDress, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb013.ini" },
+{ ITEMID_WeddingSuit, CHARACTERCLASS_Knight, "char\\tmABCD\\cma013.ini" },
+{ ITEMID_WeddingSuit, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd013.ini" },
+{ ITEMID_WeddingDress, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc013.ini" },
+{ ITEMID_WeddingDress, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce013.ini" },
+{ ITEMID_WeddingSuit, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme013.ini" },
 
-	//New WeddingSuit
-	{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb101.ini" },
-	{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca101.ini" },
-	{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc101.ini" },
-	{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Knight, "char\\tmABCD\\cma101.ini" },
-	{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd101.ini" },
-	{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme101.ini" },
-	{ ITEMID_WeddingDress_Black_Gold, CHARACTERCLASS_Archer, "char\\tmABCD\\cd101.ini" },
-	{ ITEMID_WeddingDress_Black_Gold, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb101.ini" },
-	{ ITEMID_WeddingDress_Black_Gold, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc101.ini" },
-	{ ITEMID_WeddingDress_Black_Gold, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce101.ini" },
+//New WeddingSuit
+{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb101.ini" },
+{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca101.ini" },
+{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc101.ini" },
+{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Knight, "char\\tmABCD\\cma101.ini" },
+{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd101.ini" },
+{ ITEMID_WeddingSuit_Black_Gold, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme101.ini" },
+{ ITEMID_WeddingDress_Black_Gold, CHARACTERCLASS_Archer, "char\\tmABCD\\cd101.ini" },
+{ ITEMID_WeddingDress_Black_Gold, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb101.ini" },
+{ ITEMID_WeddingDress_Black_Gold, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc101.ini" },
+{ ITEMID_WeddingDress_Black_Gold, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce101.ini" },
 
-	{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb014.ini" },
-	{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca014.ini" },
-	{ ITEMID_WarriorsHanbokF, CHARACTERCLASS_Archer, "char\\tmABCD\\cd014.ini" },
-	{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc014.ini" },
-	{ ITEMID_WarriorsHanbokF, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb014.ini" },
-	{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Knight, "char\\tmABCD\\cma014.ini" },
-	{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd014.ini" },
-	{ ITEMID_WarriorsHanbokF, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc014.ini" },
-	{ ITEMID_WarriorsHanbokF, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce014.ini" },
-	{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme014.ini" },
+{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb014.ini" },
+{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca014.ini" },
+{ ITEMID_WarriorsHanbokF, CHARACTERCLASS_Archer, "char\\tmABCD\\cd014.ini" },
+{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc014.ini" },
+{ ITEMID_WarriorsHanbokF, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb014.ini" },
+{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Knight, "char\\tmABCD\\cma014.ini" },
+{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd014.ini" },
+{ ITEMID_WarriorsHanbokF, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc014.ini" },
+{ ITEMID_WarriorsHanbokF, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce014.ini" },
+{ ITEMID_WarriorsHanbokM, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme014.ini" },
 
-	{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb015.ini" },
-	{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca015.ini" },
-	{ ITEMID_KimonoCostumeF, CHARACTERCLASS_Archer, "char\\tmABCD\\cd015.ini" },
-	{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc015.ini" },
-	{ ITEMID_KimonoCostumeF, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb015.ini" },
-	{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Knight, "char\\tmABCD\\cma015.ini" },
-	{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd015.ini" },
-	{ ITEMID_KimonoCostumeF, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc015.ini" },
-	{ ITEMID_KimonoCostumeF, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce015.ini" },
-	{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme015.ini" },
+{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb015.ini" },
+{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca015.ini" },
+{ ITEMID_KimonoCostumeF, CHARACTERCLASS_Archer, "char\\tmABCD\\cd015.ini" },
+{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc015.ini" },
+{ ITEMID_KimonoCostumeF, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb015.ini" },
+{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Knight, "char\\tmABCD\\cma015.ini" },
+{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd015.ini" },
+{ ITEMID_KimonoCostumeF, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc015.ini" },
+{ ITEMID_KimonoCostumeF, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce015.ini" },
+{ ITEMID_KimonoCostumeM, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme015.ini" },
 
-	{ ITEMID_ChineseSuitM, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb017.ini" },
-	{ ITEMID_ChineseSuitM, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca017.ini" },
-	{ ITEMID_ChineseSuitF, CHARACTERCLASS_Archer, "char\\tmABCD\\cd017.ini" },
-	{ ITEMID_ChineseSuitM, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc017.ini" },
-	{ ITEMID_ChineseSuitF, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb017.ini" },
-	{ ITEMID_ChineseSuitM, CHARACTERCLASS_Knight, "char\\tmABCD\\cma017.ini" },
-	{ ITEMID_ChineseSuitM, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd017.ini" },
-	{ ITEMID_ChineseSuitF, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc017.ini" },
-	{ ITEMID_ChineseSuitF, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce017.ini" },
-	{ ITEMID_ChineseSuitM, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme017.ini" },
+{ ITEMID_ChineseSuitM, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb017.ini" },
+{ ITEMID_ChineseSuitM, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca017.ini" },
+{ ITEMID_ChineseSuitF, CHARACTERCLASS_Archer, "char\\tmABCD\\cd017.ini" },
+{ ITEMID_ChineseSuitM, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc017.ini" },
+{ ITEMID_ChineseSuitF, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb017.ini" },
+{ ITEMID_ChineseSuitM, CHARACTERCLASS_Knight, "char\\tmABCD\\cma017.ini" },
+{ ITEMID_ChineseSuitM, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd017.ini" },
+{ ITEMID_ChineseSuitF, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc017.ini" },
+{ ITEMID_ChineseSuitF, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce017.ini" },
+{ ITEMID_ChineseSuitM, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme017.ini" },
 
-	//Hopy Costume
-	{ ITEMID_HopyCostume, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb040.ini" },
-	{ ITEMID_HopyCostume, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca040.ini" },
-	{ ITEMID_CuepyCostume, CHARACTERCLASS_Archer, "char\\tmABCD\\cd040.ini" },
-	{ ITEMID_HopyCostume, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc040.ini" },
-	{ ITEMID_CuepyCostume, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb040.ini" },
-	{ ITEMID_HopyCostume, CHARACTERCLASS_Knight, "char\\tmABCD\\cma040.ini" },
-	{ ITEMID_HopyCostume, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd040.ini" },
-	{ ITEMID_CuepyCostume, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc040.ini" },
-	{ ITEMID_CuepyCostume, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce040.ini" },
-	{ ITEMID_HopyCostume, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme040.ini" },
+//Hopy Costume
+{ ITEMID_HopyCostume, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb040.ini" },
+{ ITEMID_HopyCostume, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca040.ini" },
+{ ITEMID_CuepyCostume, CHARACTERCLASS_Archer, "char\\tmABCD\\cd040.ini" },
+{ ITEMID_HopyCostume, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc040.ini" },
+{ ITEMID_CuepyCostume, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb040.ini" },
+{ ITEMID_HopyCostume, CHARACTERCLASS_Knight, "char\\tmABCD\\cma040.ini" },
+{ ITEMID_HopyCostume, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd040.ini" },
+{ ITEMID_CuepyCostume, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc040.ini" },
+{ ITEMID_CuepyCostume, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce040.ini" },
+{ ITEMID_HopyCostume, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme040.ini" },
 
-	//Hopy Costume EASTER
-	{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb040.ini" },
-	{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca040.ini" },
-	{ ITEMID_EasterCuepyCostume, CHARACTERCLASS_Archer, "char\\tmABCD\\cd040.ini" },
-	{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc040.ini" },
-	{ ITEMID_EasterCuepyCostume, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb040.ini" },
-	{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Knight, "char\\tmABCD\\cma040.ini" },
-	{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd040.ini" },
-	{ ITEMID_EasterCuepyCostume, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc040.ini" },
-	{ ITEMID_EasterCuepyCostume, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce040.ini" },
-	{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme040.ini" },
+//Hopy Costume EASTER
+{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb040.ini" },
+{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca040.ini" },
+{ ITEMID_EasterCuepyCostume, CHARACTERCLASS_Archer, "char\\tmABCD\\cd040.ini" },
+{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc040.ini" },
+{ ITEMID_EasterCuepyCostume, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb040.ini" },
+{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Knight, "char\\tmABCD\\cma040.ini" },
+{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd040.ini" },
+{ ITEMID_EasterCuepyCostume, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc040.ini" },
+{ ITEMID_EasterCuepyCostume, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce040.ini" },
+{ ITEMID_EasterHopyCostume, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme040.ini" },
 
 
-	//Silver Costume
-	{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb003.ini" },
-	{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca003.ini" },
-	{ ITEMID_SilverCostumeFemale, CHARACTERCLASS_Archer, "char\\tmABCD\\cd003.ini" },
-	{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc003.ini" },
-	{ ITEMID_SilverCostumeFemale, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb003.ini" },
-	{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Knight, "char\\tmABCD\\cma003.ini" },
-	{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd003.ini" },
-	{ ITEMID_SilverCostumeFemale, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc003.ini" },
-	{ ITEMID_SilverCostumeFemale, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce003.ini" },
-	{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme003.ini" },
+//Silver Costume
+{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb003.ini" },
+{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca003.ini" },
+{ ITEMID_SilverCostumeFemale, CHARACTERCLASS_Archer, "char\\tmABCD\\cd003.ini" },
+{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc003.ini" },
+{ ITEMID_SilverCostumeFemale, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb003.ini" },
+{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Knight, "char\\tmABCD\\cma003.ini" },
+{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd003.ini" },
+{ ITEMID_SilverCostumeFemale, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc003.ini" },
+{ ITEMID_SilverCostumeFemale, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce003.ini" },
+{ ITEMID_SilverCostumeMale, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme003.ini" },
 
-	//Chelsea Costume
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb043.ini" },
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca043.ini" },
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Archer, "char\\tmABCD\\cd043.ini" },
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc043.ini" },
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb043.ini" },
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Knight, "char\\tmABCD\\cma043.ini" },
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd043.ini" },
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc043.ini" },
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce043.ini" },
-	{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme043.ini" },
+//Chelsea Costume
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb043.ini" },
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca043.ini" },
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Archer, "char\\tmABCD\\cd043.ini" },
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc043.ini" },
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb043.ini" },
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Knight, "char\\tmABCD\\cma043.ini" },
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd043.ini" },
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc043.ini" },
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce043.ini" },
+{ ITEMID_ChelseaSoccer, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme043.ini" },
 
-	//Manchester Costume
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb044.ini" },
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca044.ini" },
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Archer, "char\\tmABCD\\cd044.ini" },
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc044.ini" },
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb044.ini" },
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Knight, "char\\tmABCD\\cma044.ini" },
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd044.ini" },
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc044.ini" },
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce044.ini" },
-	{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme044.ini" },
+//Manchester Costume
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Fighter, "char\\tmABCD\\cb044.ini" },
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Mechanician, "char\\tmABCD\\ca044.ini" },
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Archer, "char\\tmABCD\\cd044.ini" },
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Pikeman, "char\\tmABCD\\cc044.ini" },
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Atalanta, "char\\tmABCD\\cmb044.ini" },
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Knight, "char\\tmABCD\\cma044.ini" },
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Magician, "char\\tmABCD\\cmd044.ini" },
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Priestess, "char\\tmABCD\\cmc044.ini" },
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Assassin, "char\\tmABCD\\ce044.ini" },
+{ ITEMID_ManchesterSoccer, CHARACTERCLASS_Shaman, "char\\tmABCD\\cme044.ini" },
 
 
 
@@ -2241,9 +2341,9 @@ static CharacterBody saCharacterBodyList[]
 
 enum ESpecialUnitType
 {
-	SPECIALUNITTYPE_None			= 0,
+	SPECIALUNITTYPE_None = 0,
 
-	SPECIALUNITTYPE_QuestWolverine	= 100,
+	SPECIALUNITTYPE_QuestWolverine = 100,
 };
 
 struct QuestCharacterSave
@@ -2402,7 +2502,7 @@ struct UnitInfo
 
 	DWORD					  dwHashCharacterName;
 
-	char					* pszaMessage[20];
+	char* pszaMessage[20];
 	int						  iNumMessage;
 
 #if defined(_GAME)
@@ -2482,7 +2582,7 @@ struct CharacterData
 	int					  iGold;				//0x144 - Money
 	union
 	{
-		struct UnitInfo	* psUnitInfo;			//0x148 - lpMonInfo
+		struct UnitInfo* psUnitInfo;			//0x148 - lpMonInfo
 		int				 sBSAL;					//0x148
 	};
 	EMonsterType		  iMonsterType;			//0x14C - Brood
@@ -2526,10 +2626,10 @@ struct CharacterData
 
 }; //Size = 0x01D0
 
-   /// <summary>
-   /// smTRANS_PLAYERINFO
-   /// </summary>
-struct PacketUnitInfo	: Packet
+/// <summary>
+/// smTRANS_PLAYERINFO
+/// </summary>
+struct PacketUnitInfo : Packet
 {
 	CharacterData			sCharacterData;
 	ID						iID;
@@ -2538,10 +2638,10 @@ struct PacketUnitInfo	: Packet
 	BOOL					bActive;
 };
 
-struct PacketPlayerTitleList	: Packet
+struct PacketPlayerTitleList : Packet
 {
 	short iCount;
-	BYTE  baData[sizeof(PlayerTitle)*200]; //Up to 200 Titles = 4800 length
+	BYTE  baData[sizeof(PlayerTitle) * 200]; //Up to 200 Titles = 4800 length
 };
 
 //TRANS_RECORD_DATA
@@ -2594,25 +2694,25 @@ struct PacketUpdateIntegrity : Packet
 	EIntegrityUpdate		eUpdate;
 };
 
-EClassFlag				CharacterClassToClassFlag( ECharacterClass eClass );
-ECharacterClass			ClassFlagToCharacterClass( EClassFlag eFlag );
-ECharacterClass         ClassShortStrToCharacterClass (const char * str );
-char *					GetCharacterClassStringByFlag( enum EClassFlag eFlag );
-char *					GetCharacterClassStringByClassEnum( enum ECharacterClass eClass ) ;
-ECharacterRace			GetCharacterRace( ECharacterClass iClass );
-const std::string		GetCharacterTier3QuestItem( ECharacterClass iClass );
-CharacterClassData	  * GetCharacterClassData( int iClass, int iRankup );
+EClassFlag				CharacterClassToClassFlag(ECharacterClass eClass);
+ECharacterClass			ClassFlagToCharacterClass(EClassFlag eFlag);
+ECharacterClass         ClassShortStrToCharacterClass(const char* str);
+char* GetCharacterClassStringByFlag(enum EClassFlag eFlag);
+char* GetCharacterClassStringByClassEnum(enum ECharacterClass eClass);
+ECharacterRace			GetCharacterRace(ECharacterClass iClass);
+const std::string		GetCharacterTier3QuestItem(ECharacterClass iClass);
+CharacterClassData* GetCharacterClassData(int iClass, int iRankup);
 
-ItemRequeriments		* GetItemRequirementAdjustmentForClass( ECharacterClass iClass );
+ItemRequeriments* GetItemRequirementAdjustmentForClass(ECharacterClass iClass);
 
-ESkillID				 GetSkillIDFromTinyID ( ECharacterClass eClass, BYTE iSkillCode );
-ESkillID				 GetArcherSkillIDFromTinyID ( BYTE iTinySKILLID );
-ESkillID				 GetAssassinSkillIDFromTinyID ( BYTE iTinySKILLID );
-ESkillID				 GetAtalantaSkillIDFromTinyID ( BYTE iTinySKILLID );
-ESkillID				 GetFighterSkillIDFromTinyID ( BYTE iTinySKILLID );
-ESkillID				 GetKnightSkillIDFromTinyID ( BYTE iTinySKILLID );
-ESkillID				 GetMagicianSkillIDFromTinyID ( BYTE iTinySKILLID );
-ESkillID				 GetMechanicanSkillIDFromTinyID ( BYTE iTinySKILLID );
-ESkillID				 GetPikemanSkillIDFromTinyID ( BYTE iTinySKILLID );
-ESkillID				 GetPriestessSkillIDFromTinyID ( BYTE iTinySKILLID );
-ESkillID				 GetShamanSkillIDFromTinyID ( BYTE iTinySKILLID );
+ESkillID				 GetSkillIDFromTinyID(ECharacterClass eClass, BYTE iSkillCode);
+ESkillID				 GetArcherSkillIDFromTinyID(BYTE iTinySKILLID);
+ESkillID				 GetAssassinSkillIDFromTinyID(BYTE iTinySKILLID);
+ESkillID				 GetAtalantaSkillIDFromTinyID(BYTE iTinySKILLID);
+ESkillID				 GetFighterSkillIDFromTinyID(BYTE iTinySKILLID);
+ESkillID				 GetKnightSkillIDFromTinyID(BYTE iTinySKILLID);
+ESkillID				 GetMagicianSkillIDFromTinyID(BYTE iTinySKILLID);
+ESkillID				 GetMechanicanSkillIDFromTinyID(BYTE iTinySKILLID);
+ESkillID				 GetPikemanSkillIDFromTinyID(BYTE iTinySKILLID);
+ESkillID				 GetPriestessSkillIDFromTinyID(BYTE iTinySKILLID);
+ESkillID				 GetShamanSkillIDFromTinyID(BYTE iTinySKILLID);

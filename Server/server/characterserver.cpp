@@ -1405,16 +1405,16 @@ INT64 CharacterServer::GetExpFromLevel( int iLevel )
 	if ( iLevel <= 0 )
 		return 0;
 
-	//auto test = s_TotalExpPerLevel[iLevel - 1];
+	if ( iLevel > SERVER_LEVEL_MAX )
+		iLevel = SERVER_LEVEL_MAX;
 
-	//DEBUG( "Test = %I64d", test );
+	// Use our updated experience table
+	if ( iLevel <= (int)(sizeof(s_TotalExpPerLevel) / sizeof(s_TotalExpPerLevel[0])) )
+	{
+		return static_cast<INT64>(s_TotalExpPerLevel[iLevel - 1]);
+	}
 
-	//auto test3 = static_cast<INT64>(test);
-
-	//DEBUG( "Test3 = %I64d", test3 );
-
-	//return test3;
-
+	// Fallback to memory-based table for safety
 	UINT uExpLow = *( UINT* )( ( ( iLevel - 1 ) * 8 ) + 0x08B8022C );
 	UINT uExpHigh = *( UINT* )( ( ( iLevel - 1 ) * 8 ) + 0x08B80230 );
 	return ( (INT64)uExpHigh << 32 ) | ( (INT64)uExpLow & 0xFFFFFFFF );

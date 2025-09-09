@@ -73,59 +73,59 @@
 static int iGamePort = 10009;
 static int iUnitRenderDistanceMAX = DISTANCE_XY_13_meters;
 
-static void __cdecl ToolTipBox( int iX, int iY, const char * format, ... )
+static void __cdecl ToolTipBox(int iX, int iY, const char* format, ...)
 {
 
-	char szBuf[ 256 ];
-	ZeroMemory( szBuf, 256 );
+	char szBuf[256];
+	ZeroMemory(szBuf, 256);
 	va_list ap;
-	va_start( ap, format );
-	_vsnprintf_s( szBuf, 256, 255, format, ap );
-	va_end( ap );
+	va_start(ap, format);
+	_vsnprintf_s(szBuf, 256, 255, format, ap);
+	va_end(ap);
 
-	CTOOLTIP->SetText( iX, iY, szBuf );
+	CTOOLTIP->SetText(iX, iY, szBuf);
 }
 
-static void __cdecl TitlePTBox( const char * format, ... )
+static void __cdecl TitlePTBox(const char* format, ...)
 {
 
-	char szBuf[ 256 ];
-	ZeroMemory( szBuf, 256 );
+	char szBuf[256];
+	ZeroMemory(szBuf, 256);
 	va_list ap;
-	va_start( ap, format );
-	_vsnprintf_s( szBuf, 256, 255, format, ap );
-	va_end( ap );
+	va_start(ap, format);
+	_vsnprintf_s(szBuf, 256, 255, format, ap);
+	va_end(ap);
 
-	CTITLEBOX->SetText( szBuf, 3000 );
+	CTITLEBOX->SetText(szBuf, 3000);
 }
 
-static void __cdecl TeleportPlayer( int iStage )
+static void __cdecl TeleportPlayer(int iStage)
 {
-	CALL_WITH_ARG1( 0x004441D0, ( DWORD )iStage );
+	CALL_WITH_ARG1(0x004441D0, (DWORD)iStage);
 }
 
-static void __cdecl SetPlayerPattern( UnitData * Player, char * szModelFile, char * szModelFile2 )
+static void __cdecl SetPlayerPattern(UnitData* Player, char* szModelFile, char* szModelFile2)
 {
-	typedef int( __cdecl *t_SetPlayerPattern ) ( UnitData *, char *, char * );
-	t_SetPlayerPattern SetPlayerPattern = ( t_SetPlayerPattern )0x0043C410;
+	typedef int(__cdecl* t_SetPlayerPattern) (UnitData*, char*, char*);
+	t_SetPlayerPattern SetPlayerPattern = (t_SetPlayerPattern)0x0043C410;
 
-	SetPlayerPattern( Player, szModelFile, szModelFile2 );
+	SetPlayerPattern(Player, szModelFile, szModelFile2);
 }
 
-static void __cdecl PlaySoundMini( int iMiniSoundCode, int iVolume = 400 )
+static void __cdecl PlaySoundMini(int iMiniSoundCode, int iVolume = 400)
 {
-	CALL_WITH_ARG2( 0x00543A30, iMiniSoundCode, iVolume );
+	CALL_WITH_ARG2(0x00543A30, iMiniSoundCode, iVolume);
 }
 
 /// <summary>
 /// 2012 source: int	CharPlaySound( smCHAR *lpChar )
 /// </summary>
-static void __cdecl PlayUnitSound( UnitData * pcUnitData )
+static void __cdecl PlayUnitSound(UnitData* pcUnitData)
 {
-	CALL_WITH_ARG1( 0x00543F80, (DWORD)pcUnitData );
+	CALL_WITH_ARG1(0x00543F80, (DWORD)pcUnitData);
 }
 
-static int __cdecl GetSpeedFrame( int iCharacterSpeed, int iSpeed )
+static int __cdecl GetSpeedFrame(int iCharacterSpeed, int iSpeed)
 {
 	int ir = 0;
 	__asm
@@ -180,7 +180,7 @@ enum EMouseIcon : int
 };
 
 
-static void SetTextStatusColor( int iStatus, int iColor )
+static void SetTextStatusColor(int iStatus, int iColor)
 {
 	(*(int*)(0x0370713C + (iStatus * 4))) = iColor;
 }

@@ -294,7 +294,12 @@ void __cdecl ShowExpValueFormat( char * szBuf, int expType )
 	else if( expType == 5 )
 	{
 		UINT expv1 = *(UINT*)0x020802E8;
-		if( expv1 > 999999 )
+		if( expv1 > 999999999 ) // 1 billion
+		{
+			expv1 = expv1 / 1000000000;
+			wsprintfA( szBuf, "EXP     : %sB", FormatNumber( expv1 ) );
+		}
+		else if( expv1 > 999999 ) // 1 million
 		{
 			expv1 = expv1 / 1000000;
 			wsprintfA( szBuf, "EXP     : %sM", FormatNumber( expv1 ) );
