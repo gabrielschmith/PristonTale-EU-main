@@ -15,154 +15,154 @@ LogServer::~LogServer()
 {
 }
 
-void LogServer::SetLogString( char * pszLog, ELogItem eType )
+void LogServer::SetLogString(char* pszLog, ELogItem eType)
 {
-	switch ( eType )
+	switch (eType)
 	{
-		case ITEMLOGID_Get:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Got Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Put:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Dropped Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Mixing:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Mixed Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_MixLost:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Failed Mix on Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Aging:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Aged Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_AgingLost:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Lost Item on Age ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_AgingUp:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Age Item Sucess ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_BuyShop:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Bought Item from Shop ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_SellShop:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Sold Item on Shop ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Trade:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Traded Item to [%s](%s) ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Used:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Used Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Express:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Express Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_GetWing:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Got Wing ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_WingLost:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Lost Wing ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_BuyStar:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Bought Star ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Aging2Up:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Age Item +2 Sucess ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Aging2Down:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Age Item -2 Fail ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Aging1Down:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Age Item -1 Fail ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_AgingKeep:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Age Fail Same Status Fail ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_Present:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Got Start Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_PersonalShop:
-	//		STRINGCOPYLEN( pszLog, 256, "[%s](%s) Put Item on Personal Shop ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_UseAlchmy:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Used Alchemy on Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_LostAlchmy:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Lost Alchemy on Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_GetAlchmy:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Get Alchemy on Item ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_ItemRespec:
-			STRINGCOPYLEN ( pszLog, 256, "[%s](%s) Jera Respec Item ( [%s][0x%08X] %d x %d -> %d x %d )" );
-			break;
-		case ITEMLOGID_GetRecon:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Respec Item ( [%s][0x%08X] %d x %d -> %d x %d )" );
-			break;
-		case ITEMLOGID_LostRecon:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Respec Item Fail ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_SmeltingLost:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Smelting Item Fail ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_SmeltingGet:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Smelting Item Sucess ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_ManufactureLost:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Craft Item Lost ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_ManufactureGet:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Craft Item Sucess ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_ManufactureFail:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Craft Item Fail ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_MixtureResetLost:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Reset Mix Item Lost ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_MixtureResetFail:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Reset Mix Item Fail ( [%s][0x%08X] %d x %d )" );
-			break;
-		case ITEMLOGID_MixtureResetGet:
-			STRINGCOPYLEN( pszLog, 256, "[%s](%s) Reset Mix Item Sucess ( [%s][0x%08X] %d x %d )" );
-			break;
+	case ITEMLOGID_Get:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Got Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Put:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Dropped Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Mixing:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Mixed Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_MixLost:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Failed Mix on Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Aging:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Aged Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_AgingLost:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Lost Item on Age ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_AgingUp:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Age Item Sucess ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_BuyShop:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Bought Item from Shop ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_SellShop:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Sold Item on Shop ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Trade:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Traded Item to [%s](%s) ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Used:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Used Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Express:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Express Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_GetWing:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Got Wing ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_WingLost:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Lost Wing ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_BuyStar:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Bought Star ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Aging2Up:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Age Item +2 Sucess ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Aging2Down:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Age Item -2 Fail ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Aging1Down:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Age Item -1 Fail ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_AgingKeep:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Age Fail Same Status Fail ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_Present:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Got Start Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_PersonalShop:
+		//		STRINGCOPYLEN( pszLog, 256, "[%s](%s) Put Item on Personal Shop ( [%s][0x%08X] %d x %d )" );
+		break;
+	case ITEMLOGID_UseAlchmy:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Used Alchemy on Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_LostAlchmy:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Lost Alchemy on Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_GetAlchmy:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Get Alchemy on Item ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_ItemRespec:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Jera Respec Item ( [%s][0x%08X] %d x %d -> %d x %d )");
+		break;
+	case ITEMLOGID_GetRecon:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Respec Item ( [%s][0x%08X] %d x %d -> %d x %d )");
+		break;
+	case ITEMLOGID_LostRecon:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Respec Item Fail ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_SmeltingLost:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Smelting Item Fail ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_SmeltingGet:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Smelting Item Sucess ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_ManufactureLost:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Craft Item Lost ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_ManufactureGet:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Craft Item Sucess ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_ManufactureFail:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Craft Item Fail ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_MixtureResetLost:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Reset Mix Item Lost ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_MixtureResetFail:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Reset Mix Item Fail ( [%s][0x%08X] %d x %d )");
+		break;
+	case ITEMLOGID_MixtureResetGet:
+		STRINGCOPYLEN(pszLog, 256, "[%s](%s) Reset Mix Item Sucess ( [%s][0x%08X] %d x %d )");
+		break;
 
-		default:
-			break;
+	default:
+		break;
 	}
 }
 
-void LogServer::CleanUpOldLogsAsync ( )
+void LogServer::CleanUpOldLogsAsync()
 {
-	if ( GAME_SERVER )
+	if (GAME_SERVER)
 		return;
 
-	std::thread ( [this] {
+	std::thread([this] {
 
-		LOGGER->LogInfo ( "Running background task: Cleaning up old logs..." );
+		LOGGER->LogInfo("Running background task: Cleaning up old logs...");
 
-		SQLConnection * pcDB = SQLCONNECTION ( DATABASEID_LogDB_Cleaner );
-		if ( pcDB->Open () )
+		SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB_Cleaner);
+		if (pcDB->Open())
 		{
-			pcDB->Execute ( "EXEC CleanUpOldLogs" ); //execute the stored procedure stored on database for LogDB
-			pcDB->Close ();
+			pcDB->Execute("EXEC CleanUpOldLogs"); //execute the stored procedure stored on database for LogDB
+			pcDB->Close();
 		}
 
-		pcDB = SQLCONNECTION ( DATABASEID_ChatDB_Cleaner );
-		if ( pcDB->Open () )
+		pcDB = SQLCONNECTION(DATABASEID_ChatDB_Cleaner);
+		if (pcDB->Open())
 		{
-			pcDB->Execute ( "EXEC CleanUpOldChatLogs" ); //execute the stored procedure stored on database for LogDB
-			pcDB->Close ();
+			pcDB->Execute("EXEC CleanUpOldChatLogs"); //execute the stored procedure stored on database for LogDB
+			pcDB->Close();
 		}
 
-		LOGGER->LogInfo ( "Cleaning up of old logs completed!" );
+		LOGGER->LogInfo("Cleaning up of old logs completed!");
 
-	} ).detach ();
+		}).detach();
 }
 
-void LogServer::OnServerLog ( std::string message, EServerLogType plogType )
+void LogServer::OnServerLog(std::string message, EServerLogType plogType)
 {
 	//Set to false in case we run into errors / warnings while inserting into ServerLog (i.e. out of space)
 	//otherwise it will loop endlessly
-	LOGGER->SetAllowInsertIntoServerLogTable ( FALSE );
+	LOGGER->SetAllowInsertIntoServerLogTable(FALSE);
 
 
 	//Disable for now as we're not currently looking at the errors / warnings in the database.
@@ -190,11 +190,11 @@ void LogServer::OnServerLog ( std::string message, EServerLogType plogType )
 	//}
 
 
-	LOGGER->SetAllowInsertIntoServerLogTable ( TRUE );
+	LOGGER->SetAllowInsertIntoServerLogTable(TRUE);
 
 }
 
-BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisconnect, BOOL bBan )
+BOOL LogServer::OnLogCheat(UserData* pcUserData, void* pCheatLog, BOOL bDisconnect, BOOL bBan)
 {
 	if (pcUserData)
 	{
@@ -203,39 +203,39 @@ BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisco
 		char szDateTime[20];
 		GetDateTime(szDateTime);
 
-		PacketLogCheat * psPacket = (PacketLogCheat*)pCheatLog;
+		PacketLogCheat* psPacket = (PacketLogCheat*)pCheatLog;
 
-		switch ( psPacket->iCheatID )
+		switch (psPacket->iCheatID)
 		{
 			//really ignore list
-			case CHEATLOGID_LimitDamageOver:
-				return TRUE;
+		case CHEATLOGID_LimitDamageOver:
+			return TRUE;
 		}
 
 		switch (psPacket->iCheatID)
 		{
 			//skip list
-			case CHEATLOGID_ClientEnergyBarError:
-			case CHEATLOGID_ServerMoneyErrorInventory:
-			case CHEATLOGID_ClientWarningSkillForgery2:
-			case CHEATLOGID_CopiedItemError:
-			case CHEATLOGID_ServerInventoryCopiedItem:
-			case CHEATLOGID_WarningInvincibleMode:
-			case CHEATLOGID_ClientDamagePacketError:
-			case CHEATLOGID_DamagePacketError:
-			case CHEATLOGID_WarningMacroMouse:
-			case CHEATLOGID_ServerToServerItemError:
-			case CHEATLOGID_WeightError:
-				return TRUE;
+		case CHEATLOGID_ClientEnergyBarError:
+		case CHEATLOGID_ServerMoneyErrorInventory:
+		case CHEATLOGID_ClientWarningSkillForgery2:
+		case CHEATLOGID_CopiedItemError:
+		case CHEATLOGID_ServerInventoryCopiedItem:
+		case CHEATLOGID_WarningInvincibleMode:
+		case CHEATLOGID_ClientDamagePacketError:
+		case CHEATLOGID_DamagePacketError:
+		case CHEATLOGID_WarningMacroMouse:
+		case CHEATLOGID_ServerToServerItemError:
+		case CHEATLOGID_WeightError:
+			return TRUE;
 
-			//Ignore list for GM
-			case CHEATLOGID_DebuggerHack:
+			// Ignore list for GM
+		case CHEATLOGID_DebuggerHack:
+		{
+			if (pcUserData->iGameLevel == 4)
 			{
-				if (pcUserData->iGameLevel == 4)
-				{
-					return TRUE;
-				}
+				return TRUE;
 			}
+		}
 		}
 
 		WARN("Cheat detected: %d for user: %s", psPacket->iCheatID, CHARACTERSERVER->GetCharacterName(pcUserData));
@@ -245,18 +245,16 @@ BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisco
 		BOOL Disconnect = bDisconnect;
 		int iDays = 0;
 
-		char * pszIP = "";
+		char* pszIP = "";
 		DWORD dwIP = 0;
 		if (pcUserData->pcSocketData)
 		{
 			pszIP = pcUserData->pcSocketData->szIP;
 			dwIP = pcUserData->pcSocketData->lIP;
 		}
-		char * pszCharacterName = CHARACTERSERVER->GetCharacterName(pcUserData);
+		char* pszCharacterName = CHARACTERSERVER->GetCharacterName(pcUserData);
 
 		USERSERVER->SetAccountNameFromSQL(pcUserData);
-
-
 
 		switch (psPacket->iCheatID)
 		{
@@ -287,17 +285,17 @@ BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisco
 
 		case CHEATLOGID_DelaySkillHack:
 			STRINGFORMAT(szCheatLog, "Character[%s] Delay Skill Hack", pszCharacterName);
-			CHATSERVER->SendChat( USERDATATOUSER( pcUserData), EChatColor::CHATCOLOR_Error, "Skill error. Please reset your skills!" );
+			CHATSERVER->SendChat(USERDATATOUSER(pcUserData), EChatColor::CHATCOLOR_Error, "Skill error. Please reset your skills!");
 			Banned = FALSE;
 			Disconnect = FALSE;
 			break;
 
-			case CHEATLOGID_EasterEggFakeItem:
-				STRINGFORMAT( szCheatLog, "Character[%s] Fake Item Easter Reward[%08X][%d x %d]", pszCharacterName, psPacket->LParam, psPacket->SParam, psPacket->EParam );
-				break;
-			case CHEATLOGID_ChristmasRudolphFakeBox:
-				STRINGFORMAT( szCheatLog, "Character[%s] Fake Item Christmas Rudolph Reward[%08X][%d x %d]", pszCharacterName, psPacket->LParam, psPacket->SParam, psPacket->EParam );
-				break;
+		case CHEATLOGID_EasterEggFakeItem:
+			STRINGFORMAT(szCheatLog, "Character[%s] Fake Item Easter Reward[%08X][%d x %d]", pszCharacterName, psPacket->LParam, psPacket->SParam, psPacket->EParam);
+			break;
+		case CHEATLOGID_ChristmasRudolphFakeBox:
+			STRINGFORMAT(szCheatLog, "Character[%s] Fake Item Christmas Rudolph Reward[%08X][%d x %d]", pszCharacterName, psPacket->LParam, psPacket->SParam, psPacket->EParam);
+			break;
 
 		case CHEATLOGID_RespecFakeItem:
 			STRINGFORMAT(szCheatLog, "Character[%s] Fake Item Respec[%s][%08X][%d x %d]", pszCharacterName, psPacket->LxParam, psPacket->LParam, psPacket->SParam, psPacket->EParam);
@@ -540,48 +538,48 @@ BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisco
 			break;
 
 		case CHEATLOGID_ModuleSyncError:
-			STRINGFORMAT( szCheatLog, "Character[%s] Module Code Sync Error ([%d] != [%d])", pszCharacterName, psPacket->LParam, psPacket->SParam );
+			STRINGFORMAT(szCheatLog, "Character[%s] Module Code Sync Error ([%d] != [%d])", pszCharacterName, psPacket->LParam, psPacket->SParam);
 			Banned = TRUE;
 			Disconnect = TRUE;
 			break;
 
 		case CHEATLOGID_EXEModuleSyncError:
-			STRINGFORMAT( szCheatLog, "Character[%s] EXE Module Code Sync Error ([%d] != [%d])", pszCharacterName, psPacket->LParam, psPacket->SParam );
+			STRINGFORMAT(szCheatLog, "Character[%s] EXE Module Code Sync Error ([%d] != [%d])", pszCharacterName, psPacket->LParam, psPacket->SParam);
 			Banned = TRUE;
 			Disconnect = TRUE;
 			break;
 
 		case CHEATLOGID_ProcessHook:
 		{
-			std::string strProcessName = lower( ((PacketLogCheatEx *)psPacket)->szParam );
-			if ( (strProcessName.find( "gbclientapp" ) != std::string::npos) )
+			std::string strProcessName = lower(((PacketLogCheatEx*)psPacket)->szParam);
+			if ((strProcessName.find("gbclientapp") != std::string::npos))
 				break;
 
-			STRINGFORMAT( szCheatLog, "Character[%s] Process Hook Name(%s)", pszCharacterName, ((PacketLogCheatEx *)psPacket)->szParam );
+			STRINGFORMAT(szCheatLog, "Character[%s] Process Hook Name(%s)", pszCharacterName, ((PacketLogCheatEx*)psPacket)->szParam);
 			//Disconnect = TRUE;
 
-			if ( (strProcessName.find( "project1" ) != std::string::npos) || (strProcessName.find( "project2" ) != std::string::npos) ||
+			if ((strProcessName.find("project1") != std::string::npos) || (strProcessName.find("project2") != std::string::npos) ||
 				(strProcessName.find("inject") != std::string::npos) ||
 				(strProcessName.find("processhacker") != std::string::npos) ||
 				(strProcessName.find("b4ruc_inject") != std::string::npos) ||
 				(strProcessName.find("hack") != std::string::npos) ||
-				(strProcessName.find( "cheat" ) != std::string::npos) || (strProcessName.find( "engine" ) != std::string::npos) )
+				(strProcessName.find("cheat") != std::string::npos) || (strProcessName.find("engine") != std::string::npos))
 				Disconnect = TRUE;
 
 		}break;
 
 		case CHEATLOGID_ItemFakeBoughtShopID:
-			STRINGFORMAT( szCheatLog, "Character[%s] Bought Fake Item Unique ID[%d != %d] [%s]([0x%08X] %d x %d)", pszCharacterName, psPacket->WxParam, psPacket->SxParam, psPacket->szBuffer1, psPacket->LParam, psPacket->SParam, psPacket->EParam );
+			STRINGFORMAT(szCheatLog, "Character[%s] Bought Fake Item Unique ID[%d != %d] [%s]([0x%08X] %d x %d)", pszCharacterName, psPacket->WxParam, psPacket->SxParam, psPacket->szBuffer1, psPacket->LParam, psPacket->SParam, psPacket->EParam);
 			Banned = TRUE;
 			break;
 
 		case CHEATLOGID_ItemFakeBoughtShopItem:
-			STRINGFORMAT( szCheatLog, "Character[%s] Bought Fake Item [%s]([0x%08X] %d x %d)", pszCharacterName, psPacket->szBuffer1, psPacket->LParam, psPacket->SParam, psPacket->EParam );
+			STRINGFORMAT(szCheatLog, "Character[%s] Bought Fake Item [%s]([0x%08X] %d x %d)", pszCharacterName, psPacket->szBuffer1, psPacket->LParam, psPacket->SParam, psPacket->EParam);
 			Banned = TRUE;
 			break;
 
 		case CHEATLOGID_MultipleWindowHackProcess:
-			STRINGFORMAT( szCheatLog, "Character[%s] Multiple Window Process Hook[%d]", pszCharacterName, psPacket->LParam );
+			STRINGFORMAT(szCheatLog, "Character[%s] Multiple Window Process Hook[%d]", pszCharacterName, psPacket->LParam);
 			break;
 
 		case CHEATLOGID_MixingItemHack:
@@ -643,7 +641,7 @@ BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisco
 			break;
 
 		case CHEATLOGID_OnDeathCheat:
-			STRINGFORMAT(szCheatLog, "CHEATLOGID_OnDeathCheat client gold %d server gold %d", ((PacketLogCheatEx *)psPacket)->LParam, ((PacketLogCheatEx *)psPacket)->SParam);
+			STRINGFORMAT(szCheatLog, "CHEATLOGID_OnDeathCheat client gold %d server gold %d", ((PacketLogCheatEx*)psPacket)->LParam, ((PacketLogCheatEx*)psPacket)->SParam);
 			Banned = TRUE;
 			Disconnect = TRUE;
 			break;
@@ -651,8 +649,8 @@ BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisco
 		case CHEATLOGID_OnDeathCheatExp:
 		{
 			int64_t l_ExpLoose = 0;
-			((int32_t *)(&l_ExpLoose))[0] = ((PacketLogCheatEx *)psPacket)->LParam;
-			((int32_t *)(&l_ExpLoose))[1] = ((PacketLogCheatEx *)psPacket)->SParam;
+			((int32_t*)(&l_ExpLoose))[0] = ((PacketLogCheatEx*)psPacket)->LParam;
+			((int32_t*)(&l_ExpLoose))[1] = ((PacketLogCheatEx*)psPacket)->SParam;
 			STRINGFORMAT(szCheatLog, "CHEATLOGID_OnDeathCheatExp exp loose %lli", l_ExpLoose);
 			Banned = TRUE;
 			Disconnect = TRUE;
@@ -660,7 +658,7 @@ BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisco
 		}
 
 		case CHEATLOGID_GoldLimitReached:
-			STRINGFORMAT(szCheatLog, "CHEATLOGID_GoldLimitReached client gold %d server gold limit %d", ((PacketLogCheatEx *)psPacket)->LParam, ((PacketLogCheatEx *)psPacket)->SParam);
+			STRINGFORMAT(szCheatLog, "CHEATLOGID_GoldLimitReached client gold %d server gold limit %d", ((PacketLogCheatEx*)psPacket)->LParam, ((PacketLogCheatEx*)psPacket)->SParam);
 			Banned = TRUE;
 			Disconnect = TRUE;
 			break;
@@ -682,104 +680,104 @@ BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisco
 				Banned = TRUE;
 				Disconnect = TRUE;
 			}
-            break;
+			break;
 
 			//See int CheckSkillPoint( int Level , RECORD_SKILL *lpRecordSkill , int *spTotal , DWORD dwLevelQuestLog ) in record.cpp
-			case CHEATLOGID_CharacterSkillPointError:
-				STRINGFORMAT(szCheatLog, "CHEATLOGID_SkillPointError");
-				Banned = FALSE;	//changed to FALSE because false positive can occur
-				Disconnect = TRUE;
-				break;
+		case CHEATLOGID_CharacterSkillPointError:
+			STRINGFORMAT(szCheatLog, "CHEATLOGID_SkillPointError");
+			Banned = FALSE;	//changed to FALSE because false positive can occur
+			Disconnect = TRUE;
+			break;
 
-			case CHEATLOGID_ItemCodeError:
-				STRINGFORMAT(szCheatLog, "CHEATLOGID_ItemCodeError");
-				Banned = TRUE;
-				Disconnect = TRUE;
-				break;
+		case CHEATLOGID_ItemCodeError:
+			STRINGFORMAT(szCheatLog, "CHEATLOGID_ItemCodeError");
+			Banned = TRUE;
+			Disconnect = TRUE;
+			break;
 
-			case CHEATLOGID_UnsureButUsed:
-				STRINGFORMAT(szCheatLog, "CHEATLOGID_UnsureButUsed");
-				Banned = TRUE;
-				Disconnect = TRUE;
-				break;
+		case CHEATLOGID_UnsureButUsed:
+			STRINGFORMAT(szCheatLog, "CHEATLOGID_UnsureButUsed");
+			Banned = TRUE;
+			Disconnect = TRUE;
+			break;
 
-			case CHEATLOGID_UnsureButUsed2:
-				STRINGFORMAT(szCheatLog, "CHEATLOGID_UnsureButUsed2");
-				Banned = FALSE;
-				Disconnect = FALSE;
-				break;
+		case CHEATLOGID_UnsureButUsed2:
+			STRINGFORMAT(szCheatLog, "CHEATLOGID_UnsureButUsed2");
+			Banned = FALSE;
+			Disconnect = FALSE;
+			break;
 
-			default:
-				STRINGFORMAT( szCheatLog, "Character[%s] Unknown Log[%d]", pszCharacterName, psPacket->iCheatID );
-				break;
+		default:
+			STRINGFORMAT(szCheatLog, "Character[%s] Unknown Log[%d]", pszCharacterName, psPacket->iCheatID);
+			break;
 		}
 
-		if ( IsNull( szCheatLog ) )
+		if (IsNull(szCheatLog))
 			return TRUE;
 
 		int iActionType = 0;
 
 		// Get UserID
-		USERSERVER->SetAccountNameFromSQL ( pcUserData );
+		USERSERVER->SetAccountNameFromSQL(pcUserData);
 
-		SQLConnection * pcDB = SQLCONNECTION ( DATABASEID_LogDB, 19 );
-		if ( pcDB->Open () )
+		SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 19);
+		if (pcDB->Open())
 		{
-			if ( pcDB->Prepare ( "INSERT INTO CheatLog VALUES (?,?,?,?,?,?,?)" ) )
+			if (pcDB->Prepare("INSERT INTO CheatLog VALUES (?,?,?,?,?,?,?)"))
 			{
-				pcDB->BindParameterInput ( 1, PARAMTYPE_String, pszIP );
-				pcDB->BindParameterInput ( 2, PARAMTYPE_String, pcUserData->szAccountName );
-				pcDB->BindParameterInput ( 3, PARAMTYPE_Integer, &iActionType );
-				pcDB->BindParameterInput ( 4, PARAMTYPE_Integer, &psPacket->iCheatID );
-				pcDB->BindParameterInput ( 5, PARAMTYPE_String, szCheatLog );
-				pcDB->BindParameterInput ( 6, PARAMTYPE_String, szDateTime );
-				pcDB->BindParameterInput ( 7, PARAMTYPE_Integer, &GAME_SERVER );
-				pcDB->Execute ();
+				pcDB->BindParameterInput(1, PARAMTYPE_String, pszIP);
+				pcDB->BindParameterInput(2, PARAMTYPE_String, pcUserData->szAccountName);
+				pcDB->BindParameterInput(3, PARAMTYPE_Integer, &iActionType);
+				pcDB->BindParameterInput(4, PARAMTYPE_Integer, &psPacket->iCheatID);
+				pcDB->BindParameterInput(5, PARAMTYPE_String, szCheatLog);
+				pcDB->BindParameterInput(6, PARAMTYPE_String, szDateTime);
+				pcDB->BindParameterInput(7, PARAMTYPE_Integer, &GAME_SERVER);
+				pcDB->Execute();
 			}
-			pcDB->Close ();
+			pcDB->Close();
 		}
 
-		if ( pcUserData->iGameLevel == 4 )
+		if (pcUserData->iGameLevel == 4)
 		{
-			CHATSERVER->SendChatEx ( USERDATATOUSER ( pcUserData ), EChatColor::CHATCOLOR_White, "Cheat ID: %d, D/c: %d, Ban: %d", psPacket->iCheatID, Disconnect, Banned );
+			CHATSERVER->SendChatEx(USERDATATOUSER(pcUserData), EChatColor::CHATCOLOR_White, "Cheat ID: %d, D/c: %d, Ban: %d", psPacket->iCheatID, Disconnect, Banned);
 			return TRUE;
 		}
 
-		if ( Banned && pcUserData->iGameLevel == GAMELEVEL_None )
+		if (Banned && pcUserData->iGameLevel == GAMELEVEL_None)
 		{
 			iActionType = 2;
 			DWORD dwTime = 0;
-			if ( iDays )
+			if (iDays)
 				dwTime = TICKCOUNT + (60 * 60 * (24 * iDays));
 
-			SQLConnection * pcDB = SQLCONNECTION( DATABASEID_UserDB_PrimaryServer );
-			if ( pcDB->Open() )
+			SQLConnection* pcDB = SQLCONNECTION(DATABASEID_UserDB_PrimaryServer);
+			if (pcDB->Open())
 			{
-				if ( pcDB->Prepare( "UPDATE UserInfo SET BanStatus=1, UnbanDate=NULL WHERE AccountName=?" ) )
+				if (pcDB->Prepare("UPDATE UserInfo SET BanStatus=1, UnbanDate=NULL WHERE AccountName=?"))
 				{
-					pcDB->BindParameterInput( 1, PARAMTYPE_String, pcUserData->szAccountName );
+					pcDB->BindParameterInput(1, PARAMTYPE_String, pcUserData->szAccountName);
 					pcDB->ExecuteUpdate();
 				}
 				pcDB->Close();
 			}
 		}
-		else if ( Disconnect && pcUserData->iGameLevel == GAMELEVEL_None )
+		else if (Disconnect && pcUserData->iGameLevel == GAMELEVEL_None)
 		{
 			iActionType = 1;
 		}
 
-		if ( BanIP )
+		if (BanIP)
 		{
-			SOCKETSERVER->AddBanIP ( dwIP, "CHEATLOGID_TooManyPackets" );
+			SOCKETSERVER->AddBanIP(dwIP, "CHEATLOGID_TooManyPackets");
 		}
 
-		if ( (Banned || Disconnect) && pcUserData->iGameLevel == GAMELEVEL_None )
+		if ((Banned || Disconnect) && pcUserData->iGameLevel == GAMELEVEL_None)
 		{
-			if ( !USERDATATOUSER( pcUserData )->bClosingSocket )
+			if (!USERDATATOUSER(pcUserData)->bClosingSocket)
 			{
-				SENDPACKETBLANK( USERDATATOUSER(pcUserData), PKTHDR_Disconnect, TRUE );
+				SENDPACKETBLANK(USERDATATOUSER(pcUserData), PKTHDR_Disconnect, TRUE);
 				pcUserData->dwDisconnectTime = TICKCOUNT + 1500;
-				WNDPROC_SOCKETCLOSE( SOCKETSERVER->GetHWND(), pcUserData->pcSocketData );
+				WNDPROC_SOCKETCLOSE(SOCKETSERVER->GetHWND(), pcUserData->pcSocketData);
 			}
 		}
 
@@ -787,189 +785,189 @@ BOOL LogServer::OnLogCheat( UserData * pcUserData, void * pCheatLog, BOOL bDisco
 	return TRUE;
 }
 
-void LogServer::OnLogAging( UserData * pcUserData, int iLogID, const char * pszLog )
+void LogServer::OnLogAging(UserData* pcUserData, int iLogID, const char* pszLog)
 {
-	if ( pcUserData )
+	if (pcUserData)
 	{
 		// Set to database
-		char szDateTime[ 20 ];
-		GetDateTime( szDateTime );
+		char szDateTime[20];
+		GetDateTime(szDateTime);
 
-		char * pszIP = "";
-		if ( pcUserData->pcSocketData )
+		char* pszIP = "";
+		if (pcUserData->pcSocketData)
 			pszIP = pcUserData->pcSocketData->szIP;
 
-//		SQLSERVER->Select( "LogDB", "INSERT INTO ItemLog VALUES ('%s','%s',%d,'%s','%s',%d)", pszIP, pcUserData->szAccountName, iLogID, pszLog, szDateTime, GAME_SERVER );
-//		SQLSERVER->Close();
+		//		SQLSERVER->Select( "LogDB", "INSERT INTO ItemLog VALUES ('%s','%s',%d,'%s','%s',%d)", pszIP, pcUserData->szAccountName, iLogID, pszLog, szDateTime, GAME_SERVER );
+		//		SQLSERVER->Close();
 	}
 }
 
-void LogServer::OnLogMixture( UserData * pcUserData, int iLogID, const char * pszLog )
+void LogServer::OnLogMixture(UserData* pcUserData, int iLogID, const char* pszLog)
 {
-	if ( pcUserData )
+	if (pcUserData)
 	{
 		// Set to database
-		char szDateTime[ 20 ];
-		GetDateTime( szDateTime );
+		char szDateTime[20];
+		GetDateTime(szDateTime);
 
-		char * pszIP = "";
-		if ( pcUserData->pcSocketData )
+		char* pszIP = "";
+		if (pcUserData->pcSocketData)
 			pszIP = pcUserData->pcSocketData->szIP;
 
-//		SQLSERVER->Select( "LogDB", "INSERT INTO ItemLog VALUES ('%s','%s',%d,'%s','%s',%d)", pszIP, pcUserData->szAccountName, iLogID, pszLog, szDateTime, GAME_SERVER );
-//		SQLSERVER->Close();
+		//		SQLSERVER->Select( "LogDB", "INSERT INTO ItemLog VALUES ('%s','%s',%d,'%s','%s',%d)", pszIP, pcUserData->szAccountName, iLogID, pszLog, szDateTime, GAME_SERVER );
+		//		SQLSERVER->Close();
 	}
 }
 
-void LogServer::OnLogItemGeneral( UserData * pcUserData, int iLogID, const char * pszLog )
+void LogServer::OnLogItemGeneral(UserData* pcUserData, int iLogID, const char* pszLog)
 {
-	if ( pcUserData )
+	if (pcUserData)
 	{
 		// Set to database
-		char szDateTime[ 20 ];
-		GetDateTime( szDateTime );
+		char szDateTime[20];
+		GetDateTime(szDateTime);
 
-		char * pszIP = "";
-		if ( pcUserData->pcSocketData )
+		char* pszIP = "";
+		if (pcUserData->pcSocketData)
 			pszIP = pcUserData->pcSocketData->szIP;
 
-//		SQLSERVER->Select( "LogDB", "INSERT INTO ItemLog VALUES ('%s','%s',%d,'%s','%s',%d)", pszIP, pcUserData->szAccountName, iLogID, pszLog, szDateTime, GAME_SERVER );
-//		SQLSERVER->Close();
+		//		SQLSERVER->Select( "LogDB", "INSERT INTO ItemLog VALUES ('%s','%s',%d,'%s','%s',%d)", pszIP, pcUserData->szAccountName, iLogID, pszLog, szDateTime, GAME_SERVER );
+		//		SQLSERVER->Close();
 	}
 }
 
-void LogServer::OnLogWrite( UserData * pcUserData, int iLogID, const char * pszLog, ELogServerType eType )
+void LogServer::OnLogWrite(UserData* pcUserData, int iLogID, const char* pszLog, ELogServerType eType)
 {
-	switch ( eType )
+	switch (eType)
 	{
-		case ELogServerType::LOGTYPEID_Aging:
-			OnLogAging( pcUserData, iLogID, pszLog );
-			break;
+	case ELogServerType::LOGTYPEID_Aging:
+		OnLogAging(pcUserData, iLogID, pszLog);
+		break;
 
-		case ELogServerType::LOGTYPEID_Mixture:
-			OnLogMixture( pcUserData, iLogID, pszLog );
-			break;
-		case ELogServerType::LOGTYPEID_Item:
-			OnLogItemGeneral( pcUserData, iLogID, pszLog );
-			break;
+	case ELogServerType::LOGTYPEID_Mixture:
+		OnLogMixture(pcUserData, iLogID, pszLog);
+		break;
+	case ELogServerType::LOGTYPEID_Item:
+		OnLogItemGeneral(pcUserData, iLogID, pszLog);
+		break;
 
-		default:
-			break;
+	default:
+		break;
 	}
 }
 
-void LogServer::OnLogItemData( LogItem * psLog )
+void LogServer::OnLogItemData(LogItem* psLog)
 {
 	ELogItem eType = (ELogItem)psLog->Flag;
 
-	if ( eType == ITEMLOGID_Get )
+	if (eType == ITEMLOGID_Get)
 	{
-		if ( psLog->Item[0].dwCode == ITEMID_Gold )
+		if (psLog->Item[0].dwCode == ITEMID_Gold)
 			return;
-		if ( (psLog->Item[0].dwCode & 0xFF000000) == ITEMBASE_Potion )
+		if ((psLog->Item[0].dwCode & 0xFF000000) == ITEMBASE_Potion)
 			return;
 	}
 
-	char szLog[ 256 ] = { 0 };
+	char szLog[256] = { 0 };
 
 	// Set log format
-	char szLogFormat[ 256 ] = { 0 };
-	SetLogString( szLogFormat, eType );
+	char szLogFormat[256] = { 0 };
+	SetLogString(szLogFormat, eType);
 
 	int iIP = psLog->IP;
 
-	char szDateTime[ 20 ];
-	GetDateTime( szDateTime );
+	char szDateTime[20];
+	GetDateTime(szDateTime);
 
 	// Convert IP to string
-	char szIP[ 20 ] = { 0 };
-	STRINGFORMAT( szIP, "%d.%d.%d.%d",iIP & 0xFF, (iIP >> 8) & 0xFF, (iIP >> 16) & 0xFF, (iIP >> 24) & 0xFF );
+	char szIP[20] = { 0 };
+	STRINGFORMAT(szIP, "%d.%d.%d.%d", iIP & 0xFF, (iIP >> 8) & 0xFF, (iIP >> 16) & 0xFF, (iIP >> 24) & 0xFF);
 
 	BOOL bStop = FALSE;
 
 	// Set log items
 	char szItemName[32] = { 0 };
-	for ( int i = 0; i < psLog->ItemCount; i++ )
+	for (int i = 0; i < psLog->ItemCount; i++)
 	{
-		ITEMSERVER->FindItemName( psLog->Item[i].dwCode, szItemName );
-		if ( eType == ITEMLOGID_GetRecon )
+		ITEMSERVER->FindItemName(psLog->Item[i].dwCode, szItemName);
+		if (eType == ITEMLOGID_GetRecon)
 		{
-			STRINGFORMAT( szLog, szLogFormat, psLog->UserID, psLog->CharName, szItemName, psLog->Item[0].dwCode, psLog->Item[0].dwHead, psLog->Item[0].dwCheckSum,
-				psLog->Item[1].dwHead, psLog->Item[1].dwCheckSum );
+			STRINGFORMAT(szLog, szLogFormat, psLog->UserID, psLog->CharName, szItemName, psLog->Item[0].dwCode, psLog->Item[0].dwHead, psLog->Item[0].dwCheckSum,
+				psLog->Item[1].dwHead, psLog->Item[1].dwCheckSum);
 			bStop = TRUE;
 		}
 		else
-			STRINGFORMAT( szLog, szLogFormat, psLog->UserID, psLog->CharName, szItemName, psLog->Item[i].dwCode, psLog->Item[i].dwHead, psLog->Item[i].dwCheckSum );
+			STRINGFORMAT(szLog, szLogFormat, psLog->UserID, psLog->CharName, szItemName, psLog->Item[i].dwCode, psLog->Item[i].dwHead, psLog->Item[i].dwCheckSum);
 
-		SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 20 );
-		if ( pcDB->Open() )
+		SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 20);
+		if (pcDB->Open())
 		{
-			if ( pcDB->Prepare( "INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)" ) )
+			if (pcDB->Prepare("INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)"))
 			{
-				pcDB->BindParameterInput( 1, PARAMTYPE_String, szIP );
-				pcDB->BindParameterInput( 2, PARAMTYPE_String, psLog->UserID );
-				pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &psLog->Flag );
-				pcDB->BindParameterInput( 4, PARAMTYPE_String, szLog );
-				pcDB->BindParameterInput( 5, PARAMTYPE_Integer, &psLog->Item[ i ].dwHead );
-				pcDB->BindParameterInput( 6, PARAMTYPE_Integer, &psLog->Item[ i ].dwCheckSum );
-				pcDB->BindParameterInput( 7, PARAMTYPE_String, szDateTime );
-				pcDB->BindParameterInput( 8, PARAMTYPE_Integer, &GAME_SERVER );
+				pcDB->BindParameterInput(1, PARAMTYPE_String, szIP);
+				pcDB->BindParameterInput(2, PARAMTYPE_String, psLog->UserID);
+				pcDB->BindParameterInput(3, PARAMTYPE_Integer, &psLog->Flag);
+				pcDB->BindParameterInput(4, PARAMTYPE_String, szLog);
+				pcDB->BindParameterInput(5, PARAMTYPE_Integer, &psLog->Item[i].dwHead);
+				pcDB->BindParameterInput(6, PARAMTYPE_Integer, &psLog->Item[i].dwCheckSum);
+				pcDB->BindParameterInput(7, PARAMTYPE_String, szDateTime);
+				pcDB->BindParameterInput(8, PARAMTYPE_Integer, &GAME_SERVER);
 				pcDB->Execute();
 			}
 			pcDB->Close();
 		}
-		if ( bStop == TRUE )
+		if (bStop == TRUE)
 			break;
 	}
 }
 
-void LogServer::OnLogItemTradeData( LogItemTrade * psLog )
+void LogServer::OnLogItemTradeData(LogItemTrade* psLog)
 {
 	ELogItem eType = (ELogItem)psLog->Flag;
 
-	char szLog[ 256 ] = { 0 };
+	char szLog[256] = { 0 };
 
 	// Set log format
-	char szLogFormat[ 256 ] = { 0 };
-	SetLogString( szLogFormat, eType );
+	char szLogFormat[256] = { 0 };
+	SetLogString(szLogFormat, eType);
 
 	int iIP = psLog->IP;
 
-	char szDateTime[ 20 ];
-	GetDateTime( szDateTime );
+	char szDateTime[20];
+	GetDateTime(szDateTime);
 
 	// Convert IP to string
-	char szIP[ 20 ] = { 0 };
-	STRINGFORMAT( szIP, "%d.%d.%d.%d",iIP & 0xFF, (iIP >> 8) & 0xFF, (iIP >> 16) & 0xFF, (iIP >> 24) & 0xFF );
+	char szIP[20] = { 0 };
+	STRINGFORMAT(szIP, "%d.%d.%d.%d", iIP & 0xFF, (iIP >> 8) & 0xFF, (iIP >> 16) & 0xFF, (iIP >> 24) & 0xFF);
 
 	// Set log items
 	char szItemName[32] = { 0 };
 
 	int iNull = 0;
 
-	if ( eType == ITEMLOGID_PersonalShop )
+	if (eType == ITEMLOGID_PersonalShop)
 	{
-		if ( psLog->Money > 0 )
+		if (psLog->Money > 0)
 		{
 			iIP = psLog->TIP;
 
-			STRINGFORMAT( szIP, "%d.%d.%d.%d", iIP & 0xFF, (iIP >> 8) & 0xFF, (iIP >> 16) & 0xFF, (iIP >> 24) & 0xFF );
+			STRINGFORMAT(szIP, "%d.%d.%d.%d", iIP & 0xFF, (iIP >> 8) & 0xFF, (iIP >> 16) & 0xFF, (iIP >> 24) & 0xFF);
 
-			STRINGFORMAT( szLog, "[%s](%s) Received Personal Shop Gold from [%s](%s) ( %d )", psLog->UserID, psLog->CharName, psLog->TUserID, psLog->TCharName, psLog->Money );
+			STRINGFORMAT(szLog, "[%s](%s) Received Personal Shop Gold from [%s](%s) ( %d )", psLog->UserID, psLog->CharName, psLog->TUserID, psLog->TCharName, psLog->Money);
 
-			SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 21 );
-			if ( pcDB->Open() )
+			SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 21);
+			if (pcDB->Open())
 			{
-				if ( pcDB->Prepare( "INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)" ) )
+				if (pcDB->Prepare("INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)"))
 				{
-					pcDB->BindParameterInput( 1, PARAMTYPE_String, szIP );
-					pcDB->BindParameterInput( 2, PARAMTYPE_String, psLog->UserID );
-					pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &psLog->Flag );
-					pcDB->BindParameterInput( 4, PARAMTYPE_String, szLog );
-					pcDB->BindParameterInput( 5, PARAMTYPE_Integer, &psLog->Money );
-					pcDB->BindParameterInput( 6, PARAMTYPE_Integer, &iNull );
-					pcDB->BindParameterInput( 7, PARAMTYPE_String, szDateTime );
-					pcDB->BindParameterInput( 8, PARAMTYPE_Integer, &GAME_SERVER );
+					pcDB->BindParameterInput(1, PARAMTYPE_String, szIP);
+					pcDB->BindParameterInput(2, PARAMTYPE_String, psLog->UserID);
+					pcDB->BindParameterInput(3, PARAMTYPE_Integer, &psLog->Flag);
+					pcDB->BindParameterInput(4, PARAMTYPE_String, szLog);
+					pcDB->BindParameterInput(5, PARAMTYPE_Integer, &psLog->Money);
+					pcDB->BindParameterInput(6, PARAMTYPE_Integer, &iNull);
+					pcDB->BindParameterInput(7, PARAMTYPE_String, szDateTime);
+					pcDB->BindParameterInput(8, PARAMTYPE_Integer, &GAME_SERVER);
 					pcDB->Execute();
 				}
 				pcDB->Close();
@@ -977,43 +975,43 @@ void LogServer::OnLogItemTradeData( LogItemTrade * psLog )
 		}
 		else
 		{
-			ITEMSERVER->FindItemName( psLog->Item[0].dwCode, szItemName );
+			ITEMSERVER->FindItemName(psLog->Item[0].dwCode, szItemName);
 
-			STRINGFORMAT( szLog, "[%s](%s) Sold Personal Shop Item to [%s](%s) ( [%s][0x%08X] %d x %d )", psLog->TUserID, psLog->TCharName, psLog->UserID, psLog->CharName, szItemName, psLog->Item[0].dwCode, psLog->Item[0].dwHead, psLog->Item[0].dwCheckSum );
+			STRINGFORMAT(szLog, "[%s](%s) Sold Personal Shop Item to [%s](%s) ( [%s][0x%08X] %d x %d )", psLog->TUserID, psLog->TCharName, psLog->UserID, psLog->CharName, szItemName, psLog->Item[0].dwCode, psLog->Item[0].dwHead, psLog->Item[0].dwCheckSum);
 
-			SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 22 );
-			if ( pcDB->Open() )
+			SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 22);
+			if (pcDB->Open())
 			{
-				if ( pcDB->Prepare( "INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)" ) )
+				if (pcDB->Prepare("INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)"))
 				{
-					pcDB->BindParameterInput( 1, PARAMTYPE_String, szIP );
-					pcDB->BindParameterInput( 2, PARAMTYPE_String, psLog->TUserID );
-					pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &psLog->Flag );
-					pcDB->BindParameterInput( 4, PARAMTYPE_String, szLog );
-					pcDB->BindParameterInput( 5, PARAMTYPE_Integer, &psLog->Item[0].dwHead );
-					pcDB->BindParameterInput( 6, PARAMTYPE_Integer, &psLog->Item[0].dwCheckSum );
-					pcDB->BindParameterInput( 7, PARAMTYPE_String, szDateTime );
-					pcDB->BindParameterInput( 8, PARAMTYPE_Integer, &GAME_SERVER );
+					pcDB->BindParameterInput(1, PARAMTYPE_String, szIP);
+					pcDB->BindParameterInput(2, PARAMTYPE_String, psLog->TUserID);
+					pcDB->BindParameterInput(3, PARAMTYPE_Integer, &psLog->Flag);
+					pcDB->BindParameterInput(4, PARAMTYPE_String, szLog);
+					pcDB->BindParameterInput(5, PARAMTYPE_Integer, &psLog->Item[0].dwHead);
+					pcDB->BindParameterInput(6, PARAMTYPE_Integer, &psLog->Item[0].dwCheckSum);
+					pcDB->BindParameterInput(7, PARAMTYPE_String, szDateTime);
+					pcDB->BindParameterInput(8, PARAMTYPE_Integer, &GAME_SERVER);
 					pcDB->Execute();
 				}
 				pcDB->Close();
 			}
 
-			STRINGFORMAT( szLog, "[%s](%s) Bought Personal Shop Item from [%s](%s) ( [%s][0x%08X] %d x %d )", psLog->UserID, psLog->CharName, psLog->TUserID, psLog->TCharName, szItemName, psLog->Item[0].dwCode, psLog->Item[0].dwHead, psLog->Item[0].dwCheckSum );
+			STRINGFORMAT(szLog, "[%s](%s) Bought Personal Shop Item from [%s](%s) ( [%s][0x%08X] %d x %d )", psLog->UserID, psLog->CharName, psLog->TUserID, psLog->TCharName, szItemName, psLog->Item[0].dwCode, psLog->Item[0].dwHead, psLog->Item[0].dwCheckSum);
 
-			if ( pcDB->Open() )
+			if (pcDB->Open())
 			{
-				if ( pcDB->Prepare( "INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)" ) )
+				if (pcDB->Prepare("INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)"))
 				{
-					pcDB->BindParameterInput( 1, PARAMTYPE_String, szIP );
-					pcDB->BindParameterInput( 2, PARAMTYPE_String, psLog->UserID );
-					pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &psLog->Flag );
-					pcDB->BindParameterInput( 4, PARAMTYPE_String, szLog );
-					pcDB->BindParameterInput( 5, PARAMTYPE_Integer, &psLog->Item[0].dwHead );
-					pcDB->BindParameterInput( 5, PARAMTYPE_Integer, &psLog->Item[0].dwHead );
-					pcDB->BindParameterInput( 6, PARAMTYPE_Integer, &psLog->Item[0].dwCheckSum );
-					pcDB->BindParameterInput( 7, PARAMTYPE_String, szDateTime );
-					pcDB->BindParameterInput( 8, PARAMTYPE_Integer, &GAME_SERVER );
+					pcDB->BindParameterInput(1, PARAMTYPE_String, szIP);
+					pcDB->BindParameterInput(2, PARAMTYPE_String, psLog->UserID);
+					pcDB->BindParameterInput(3, PARAMTYPE_Integer, &psLog->Flag);
+					pcDB->BindParameterInput(4, PARAMTYPE_String, szLog);
+					pcDB->BindParameterInput(5, PARAMTYPE_Integer, &psLog->Item[0].dwHead);
+					pcDB->BindParameterInput(5, PARAMTYPE_Integer, &psLog->Item[0].dwHead);
+					pcDB->BindParameterInput(6, PARAMTYPE_Integer, &psLog->Item[0].dwCheckSum);
+					pcDB->BindParameterInput(7, PARAMTYPE_String, szDateTime);
+					pcDB->BindParameterInput(8, PARAMTYPE_Integer, &GAME_SERVER);
 					pcDB->Execute();
 				}
 				pcDB->Close();
@@ -1021,29 +1019,29 @@ void LogServer::OnLogItemTradeData( LogItemTrade * psLog )
 		}
 	}
 
-	if ( (eType == ITEMLOGID_Trade) )
+	if ((eType == ITEMLOGID_Trade))
 	{
 		int iLogIDT = ITEMLOGID_TradeItemSuccessReceive;
 
-		for ( int i = 0; i < psLog->ItemCount; i++ )
+		for (int i = 0; i < psLog->ItemCount; i++)
 		{
-			ITEMSERVER->FindItemName( psLog->Item[i].dwCode, szItemName );
+			ITEMSERVER->FindItemName(psLog->Item[i].dwCode, szItemName);
 
-			STRINGFORMAT( szLog, "[%s](%s) Received Trade item from [%s](%s) ( [%s][0x%08X] %d x %d )", psLog->TUserID, psLog->TCharName, psLog->UserID, psLog->CharName, szItemName, psLog->Item[0].dwCode, psLog->Item[i].dwHead, psLog->Item[i].dwCheckSum );
+			STRINGFORMAT(szLog, "[%s](%s) Received Trade item from [%s](%s) ( [%s][0x%08X] %d x %d )", psLog->TUserID, psLog->TCharName, psLog->UserID, psLog->CharName, szItemName, psLog->Item[0].dwCode, psLog->Item[i].dwHead, psLog->Item[i].dwCheckSum);
 
-			SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 23 );
-			if ( pcDB->Open() )
+			SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 23);
+			if (pcDB->Open())
 			{
-				if ( pcDB->Prepare( "INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)" ) )
+				if (pcDB->Prepare("INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)"))
 				{
-					pcDB->BindParameterInput( 1, PARAMTYPE_String, szIP );
-					pcDB->BindParameterInput( 2, PARAMTYPE_String, psLog->TUserID );
-					pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &iLogIDT );
-					pcDB->BindParameterInput( 4, PARAMTYPE_String, szLog );
-					pcDB->BindParameterInput( 5, PARAMTYPE_Integer, &psLog->Item[0].dwHead );
-					pcDB->BindParameterInput( 6, PARAMTYPE_Integer, &psLog->Item[0].dwCheckSum );
-					pcDB->BindParameterInput( 7, PARAMTYPE_String, szDateTime );
-					pcDB->BindParameterInput( 8, PARAMTYPE_Integer, &GAME_SERVER );
+					pcDB->BindParameterInput(1, PARAMTYPE_String, szIP);
+					pcDB->BindParameterInput(2, PARAMTYPE_String, psLog->TUserID);
+					pcDB->BindParameterInput(3, PARAMTYPE_Integer, &iLogIDT);
+					pcDB->BindParameterInput(4, PARAMTYPE_String, szLog);
+					pcDB->BindParameterInput(5, PARAMTYPE_Integer, &psLog->Item[0].dwHead);
+					pcDB->BindParameterInput(6, PARAMTYPE_Integer, &psLog->Item[0].dwCheckSum);
+					pcDB->BindParameterInput(7, PARAMTYPE_String, szDateTime);
+					pcDB->BindParameterInput(8, PARAMTYPE_Integer, &GAME_SERVER);
 					pcDB->Execute();
 				}
 				pcDB->Close();
@@ -1052,28 +1050,28 @@ void LogServer::OnLogItemTradeData( LogItemTrade * psLog )
 	}
 
 
-	for ( int i = 0; i < psLog->ItemCount; i++ )
+	for (int i = 0; i < psLog->ItemCount; i++)
 	{
-		if ( psLog->Flag == ITEMLOGID_PersonalShop )
+		if (psLog->Flag == ITEMLOGID_PersonalShop)
 			break;
 
-		ITEMSERVER->FindItemName( psLog->Item[i].dwCode, szItemName );
+		ITEMSERVER->FindItemName(psLog->Item[i].dwCode, szItemName);
 
-		STRINGFORMAT( szLog, szLogFormat, psLog->UserID, psLog->CharName, psLog->TUserID, psLog->TCharName, szItemName, psLog->Item[ i ].dwCode, psLog->Item[ i ].dwHead, psLog->Item[ i ].dwCheckSum );
+		STRINGFORMAT(szLog, szLogFormat, psLog->UserID, psLog->CharName, psLog->TUserID, psLog->TCharName, szItemName, psLog->Item[i].dwCode, psLog->Item[i].dwHead, psLog->Item[i].dwCheckSum);
 
-		SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 24 );
-		if ( pcDB->Open() )
+		SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 24);
+		if (pcDB->Open())
 		{
-			if ( pcDB->Prepare( "INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)" ) )
+			if (pcDB->Prepare("INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)"))
 			{
-				pcDB->BindParameterInput( 1, PARAMTYPE_String, szIP );
-				pcDB->BindParameterInput( 2, PARAMTYPE_String, psLog->UserID );
-				pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &psLog->Flag );
-				pcDB->BindParameterInput( 4, PARAMTYPE_String, szLog );
-				pcDB->BindParameterInput( 5, PARAMTYPE_Integer, &psLog->Item[ i ].dwHead );
-				pcDB->BindParameterInput( 6, PARAMTYPE_Integer, &psLog->Item[ i ].dwCheckSum );
-				pcDB->BindParameterInput( 7, PARAMTYPE_String, szDateTime );
-				pcDB->BindParameterInput( 8, PARAMTYPE_Integer, &GAME_SERVER );
+				pcDB->BindParameterInput(1, PARAMTYPE_String, szIP);
+				pcDB->BindParameterInput(2, PARAMTYPE_String, psLog->UserID);
+				pcDB->BindParameterInput(3, PARAMTYPE_Integer, &psLog->Flag);
+				pcDB->BindParameterInput(4, PARAMTYPE_String, szLog);
+				pcDB->BindParameterInput(5, PARAMTYPE_Integer, &psLog->Item[i].dwHead);
+				pcDB->BindParameterInput(6, PARAMTYPE_Integer, &psLog->Item[i].dwCheckSum);
+				pcDB->BindParameterInput(7, PARAMTYPE_String, szDateTime);
+				pcDB->BindParameterInput(8, PARAMTYPE_Integer, &GAME_SERVER);
 				pcDB->Execute();
 			}
 			pcDB->Close();
@@ -1081,149 +1079,149 @@ void LogServer::OnLogItemTradeData( LogItemTrade * psLog )
 	}
 }
 
-void LogServer::OnLogItemExpressData(LogItemGift * psLog)
+void LogServer::OnLogItemExpressData(LogItemGift* psLog)
 {
 	ELogItem eType = (ELogItem)psLog->Flag;
 
-	char szLog[ 256 ] = { 0 };
+	char szLog[256] = { 0 };
 
 	// Set log format
-	char szLogFormat[ 256 ] = { 0 };
-	SetLogString( szLogFormat, eType );
+	char szLogFormat[256] = { 0 };
+	SetLogString(szLogFormat, eType);
 
 	int iIP = psLog->IP;
 
-	char szDateTime[ 20 ];
-	GetDateTime( szDateTime );
+	char szDateTime[20];
+	GetDateTime(szDateTime);
 
 	// Convert IP to string
-	char szIP[ 20 ] = { 0 };
-	STRINGFORMAT( szIP, "%d.%d.%d.%d",iIP & 0xFF, (iIP >> 8) & 0xFF, (iIP >> 16) & 0xFF, (iIP >> 24) & 0xFF );
+	char szIP[20] = { 0 };
+	STRINGFORMAT(szIP, "%d.%d.%d.%d", iIP & 0xFF, (iIP >> 8) & 0xFF, (iIP >> 16) & 0xFF, (iIP >> 24) & 0xFF);
 
 	// Set log item
 	char szItemName[32] = { 0 };
-	ITEMSERVER->FindItemName( psLog->Item.dwCode, szItemName );
-	STRINGFORMAT( szLog, szLogFormat, psLog->UserID, psLog->CharName, szItemName, psLog->Item.dwCode, psLog->Item.dwHead, psLog->Item.dwCheckSum );
+	ITEMSERVER->FindItemName(psLog->Item.dwCode, szItemName);
+	STRINGFORMAT(szLog, szLogFormat, psLog->UserID, psLog->CharName, szItemName, psLog->Item.dwCode, psLog->Item.dwHead, psLog->Item.dwCheckSum);
 
-	SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 25 );
-	if ( pcDB->Open() )
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 25);
+	if (pcDB->Open())
 	{
-		if ( pcDB->Prepare( "INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)" ) )
+		if (pcDB->Prepare("INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)"))
 		{
-			pcDB->BindParameterInput( 1, PARAMTYPE_String, szIP );
-			pcDB->BindParameterInput( 2, PARAMTYPE_String, psLog->UserID );
-			pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &psLog->Flag );
-			pcDB->BindParameterInput( 4, PARAMTYPE_String, szLog );
-			pcDB->BindParameterInput( 5, PARAMTYPE_Integer, &psLog->Item.dwHead );
-			pcDB->BindParameterInput( 6, PARAMTYPE_Integer, &psLog->Item.dwCheckSum );
-			pcDB->BindParameterInput( 7, PARAMTYPE_String, szDateTime );
-			pcDB->BindParameterInput( 8, PARAMTYPE_Integer, &GAME_SERVER );
+			pcDB->BindParameterInput(1, PARAMTYPE_String, szIP);
+			pcDB->BindParameterInput(2, PARAMTYPE_String, psLog->UserID);
+			pcDB->BindParameterInput(3, PARAMTYPE_Integer, &psLog->Flag);
+			pcDB->BindParameterInput(4, PARAMTYPE_String, szLog);
+			pcDB->BindParameterInput(5, PARAMTYPE_Integer, &psLog->Item.dwHead);
+			pcDB->BindParameterInput(6, PARAMTYPE_Integer, &psLog->Item.dwCheckSum);
+			pcDB->BindParameterInput(7, PARAMTYPE_String, szDateTime);
+			pcDB->BindParameterInput(8, PARAMTYPE_Integer, &GAME_SERVER);
 			pcDB->Execute();
 		}
 		pcDB->Close();
 	}
 }
 
-void LogServer::OnLogItem( int eType, int iSize, void * psLogItem )
+void LogServer::OnLogItem(int eType, int iSize, void* psLogItem)
 {
-	switch ( (ELogServerType)eType )
+	switch ((ELogServerType)eType)
 	{
-		case LogServer::LOGTYPEID_LogItem:
-			OnLogItemData( (LogItem*)psLogItem );
-			break;
-		case LogServer::LOGTYPEID_LogItemTrade:
-			OnLogItemTradeData( (LogItemTrade*)psLogItem );
-			break;
-		case LogServer::LOGTYPEID_LogItemExpress:
-			OnLogItemExpressData( (LogItemGift*)psLogItem );
-			break;
-		default:
-			break;
+	case LogServer::LOGTYPEID_LogItem:
+		OnLogItemData((LogItem*)psLogItem);
+		break;
+	case LogServer::LOGTYPEID_LogItemTrade:
+		OnLogItemTradeData((LogItemTrade*)psLogItem);
+		break;
+	case LogServer::LOGTYPEID_LogItemExpress:
+		OnLogItemExpressData((LogItemGift*)psLogItem);
+		break;
+	default:
+		break;
 	}
 }
 
-void LogServer::OnLogLoadItemCharacter( UserData * pcUserData )
+void LogServer::OnLogLoadItemCharacter(UserData* pcUserData)
 {
 
 }
 
-void LogServer::OnLogUnloadItemCharacter( UserData * pcUserData )
+void LogServer::OnLogUnloadItemCharacter(UserData* pcUserData)
 {
 
 }
 
-void LogServer::OnLog( const char * pszLogName, const char * pszLog )
+void LogServer::OnLog(const char* pszLogName, const char* pszLog)
 {
 
 }
 
-void LogServer::OnLog( User * pcUser, const char * pszLogName, const char * pszLog )
+void LogServer::OnLog(User* pcUser, const char* pszLogName, const char* pszLog)
 {
 
 }
 
-void LogServer::OnLogEx( const char * pszLogName, const char * pszLog, ... )
+void LogServer::OnLogEx(const char* pszLogName, const char* pszLog, ...)
 {
 
 }
 
-void LogServer::SQLLogEvent ( User * pcUser, enum ELogEventType eEventType, int iValue1, int iValue2, int iValue3, int iValue4)
+void LogServer::SQLLogEvent(User* pcUser, enum ELogEventType eEventType, int iValue1, int iValue2, int iValue3, int iValue4)
 {
-	SQLConnection * pcDB = SQLCONNECTION ( DATABASEID_LogDB, 26 );
-	if ( pcDB->Open () )
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 26);
+	if (pcDB->Open())
 	{
-		if ( pcDB->Prepare ( "INSERT INTO EventLog ([CharacterID],[CharacterName],[EventType],[Value1],[Value2],[Value3],[Value4],[Date]) VALUES (?,?,?,?,?,?,?,GETDATE())" ) )
+		if (pcDB->Prepare("INSERT INTO EventLog ([CharacterID],[CharacterName],[EventType],[Value1],[Value2],[Value3],[Value4],[Date]) VALUES (?,?,?,?,?,?,?,GETDATE())"))
 		{
-			pcDB->BindParameterInput ( 1, PARAMTYPE_Integer, &pcUser->iCharacterID );
-			pcDB->BindParameterInput ( 2, PARAMTYPE_String, CHARACTERSERVER->GetCharacterName ( pcUser->pcUserData ) );
-			pcDB->BindParameterInput ( 3, PARAMTYPE_Integer, &eEventType );
-			pcDB->BindParameterInput ( 4, PARAMTYPE_Integer, &iValue1 );
-			pcDB->BindParameterInput ( 5, PARAMTYPE_Integer, &iValue2 );
-			pcDB->BindParameterInput ( 6, PARAMTYPE_Integer, &iValue3 );
-			pcDB->BindParameterInput ( 7, PARAMTYPE_Integer, &iValue4 );
+			pcDB->BindParameterInput(1, PARAMTYPE_Integer, &pcUser->iCharacterID);
+			pcDB->BindParameterInput(2, PARAMTYPE_String, CHARACTERSERVER->GetCharacterName(pcUser->pcUserData));
+			pcDB->BindParameterInput(3, PARAMTYPE_Integer, &eEventType);
+			pcDB->BindParameterInput(4, PARAMTYPE_Integer, &iValue1);
+			pcDB->BindParameterInput(5, PARAMTYPE_Integer, &iValue2);
+			pcDB->BindParameterInput(6, PARAMTYPE_Integer, &iValue3);
+			pcDB->BindParameterInput(7, PARAMTYPE_Integer, &iValue4);
 
-			pcDB->Execute ();
+			pcDB->Execute();
 		}
 
-		pcDB->Close ();
+		pcDB->Close();
 	}
 }
 
-void LogServer::OnLogEx( User * pcUser, int iLogID, const char * pszLog, ... )
+void LogServer::OnLogEx(User* pcUser, int iLogID, const char* pszLog, ...)
 {
 	char szLogDescription[512] = { 0 };
-	char * pszIP = NULL;
+	char* pszIP = NULL;
 	char szDateTime[20] = { 0 };
-	GetDateTime( szDateTime );
+	GetDateTime(szDateTime);
 
-	if ( pcUser )
+	if (pcUser)
 	{
-		UserData * pcUserData = pcUser->pcUserData;
+		UserData* pcUserData = pcUser->pcUserData;
 
-		if ( pcUserData )
+		if (pcUserData)
 		{
-			if ( pcUserData->pcSocketData )
+			if (pcUserData->pcSocketData)
 				pszIP = pcUserData->pcSocketData->szIP;
 		}
 
-		SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 27 );
+		SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 27);
 
 		// Set log item
 		va_list ap;
-		va_start( ap, pszLog );
-		vsnprintf_s( szLogDescription, 512, pszLog, ap );
-		va_end( ap );
+		va_start(ap, pszLog);
+		vsnprintf_s(szLogDescription, 512, pszLog, ap);
+		va_end(ap);
 
-		if ( pcDB->Open() )
+		if (pcDB->Open())
 		{
-			if ( pcDB->Prepare( "INSERT INTO CharacterLog VALUES (?,?,?,?,?,?)" ) )
+			if (pcDB->Prepare("INSERT INTO CharacterLog VALUES (?,?,?,?,?,?)"))
 			{
-				pcDB->BindParameterInput( 1, PARAMTYPE_String, pszIP );
-				pcDB->BindParameterInput( 2, PARAMTYPE_String, pcUserData->szAccountName );
-				pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &iLogID );
-				pcDB->BindParameterInput( 4, PARAMTYPE_String, szLogDescription, 512 );
-				pcDB->BindParameterInput( 5, PARAMTYPE_String, szDateTime );
-				pcDB->BindParameterInput( 6, PARAMTYPE_Integer, &GAME_SERVER );
+				pcDB->BindParameterInput(1, PARAMTYPE_String, pszIP);
+				pcDB->BindParameterInput(2, PARAMTYPE_String, pcUserData->szAccountName);
+				pcDB->BindParameterInput(3, PARAMTYPE_Integer, &iLogID);
+				pcDB->BindParameterInput(4, PARAMTYPE_String, szLogDescription, 512);
+				pcDB->BindParameterInput(5, PARAMTYPE_String, szDateTime);
+				pcDB->BindParameterInput(6, PARAMTYPE_Integer, &GAME_SERVER);
 				pcDB->Execute();
 			}
 			pcDB->Close();
@@ -1233,24 +1231,24 @@ void LogServer::OnLogEx( User * pcUser, int iLogID, const char * pszLog, ... )
 
 void LogServer::OnLogUsersOnline()
 {
-	SYSTEMTIME * ps = GetServerTime();
+	SYSTEMTIME* ps = GetServerTime();
 
-	if ( wLastHour == (-1) )
+	if (wLastHour == (-1))
 		wLastHour = ps->wHour;
 
-	if ( !GAME_SERVER && wLastHour != ps->wHour )
+	if (!GAME_SERVER && wLastHour != ps->wHour)
 	{
-		SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 28 );
-		if ( pcDB->Open() )
+		SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 28);
+		if (pcDB->Open())
 		{
-			if ( pcDB->Prepare( "INSERT INTO UsersOnlineRecord([UsersOnlineSubServer1],[UsersOnlineSubServer2],[UsersOnlineSubServer3],[TotalUsersOnline],[Date]) VALUES (?,?,?,?,GETDATE())" ) )
+			if (pcDB->Prepare("INSERT INTO UsersOnlineRecord([UsersOnlineSubServer1],[UsersOnlineSubServer2],[UsersOnlineSubServer3],[TotalUsersOnline],[Date]) VALUES (?,?,?,?,GETDATE())"))
 			{
 				int iTotal = iaUsersOnlineServers[0] + iaUsersOnlineServers[1] + iaUsersOnlineServers[2];
 
-				pcDB->BindParameterInput( 1, PARAMTYPE_Integer, &iaUsersOnlineServers[0] );
-				pcDB->BindParameterInput( 2, PARAMTYPE_Integer, &iaUsersOnlineServers[1] );
-				pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &iaUsersOnlineServers[2] );
-				pcDB->BindParameterInput( 4, PARAMTYPE_Integer, &iTotal );
+				pcDB->BindParameterInput(1, PARAMTYPE_Integer, &iaUsersOnlineServers[0]);
+				pcDB->BindParameterInput(2, PARAMTYPE_Integer, &iaUsersOnlineServers[1]);
+				pcDB->BindParameterInput(3, PARAMTYPE_Integer, &iaUsersOnlineServers[2]);
+				pcDB->BindParameterInput(4, PARAMTYPE_Integer, &iTotal);
 				pcDB->Execute();
 			}
 			pcDB->Close();
@@ -1260,57 +1258,57 @@ void LogServer::OnLogUsersOnline()
 	}
 }
 
-void LogServer::HandlePacket( PacketNetUsersOnline * psPacket )
+void LogServer::HandlePacket(PacketNetUsersOnline* psPacket)
 {
-	if ( (psPacket->iID >= 0) && (psPacket->iID < 3) )
+	if ((psPacket->iID >= 0) && (psPacket->iID < 3))
 	{
 		iaUsersOnlineServers[psPacket->iID] = psPacket->iUsersOnline;
 	}
 }
 
-void LogServer::AddFirewallBan( const char * pszIP, const char * p_Reason)
+void LogServer::AddFirewallBan(const char* pszIP, const char* p_Reason)
 {
-	if ( pszIP && pszIP[0] != 0 )
+	if (pszIP && pszIP[0] != 0)
 	{
 		static char szBlockFirewall[256] = { 0 };
-		STRINGFORMAT( szBlockFirewall, "/C netsh advfirewall firewall add rule name=\"BlockPT - %s\" protocol=TCP dir=in action=block remoteip=%s localport=10000-10050", p_Reason, pszIP );
-		ShellExecuteA( 0, NULL, "cmd.exe", szBlockFirewall, NULL, SW_HIDE );
+		STRINGFORMAT(szBlockFirewall, "/C netsh advfirewall firewall add rule name=\"BlockPT - %s\" protocol=TCP dir=in action=block remoteip=%s localport=10000-10050", p_Reason, pszIP);
+		ShellExecuteA(0, NULL, "cmd.exe", szBlockFirewall, NULL, SW_HIDE);
 	}
 }
 
-void LogServer::OnLogItemEx( User * pcUser, int iLogID, const char * pszLog, ... )
+void LogServer::OnLogItemEx(User* pcUser, int iLogID, const char* pszLog, ...)
 {
-	if ( pcUser && pcUser->IsValidAndInGame() )
+	if (pcUser && pcUser->IsValidAndInGame())
 	{
 		static char szLog[512] = { 0 };
 		char szDateTime[20];
-		GetDateTime( szDateTime );
+		GetDateTime(szDateTime);
 
 		// Convert IP to string
 		char szIP[20] = { 0 };
-		STRINGFORMAT( szIP, "%s", pcUser->pcUserData->pcSocketData->szIP );
+		STRINGFORMAT(szIP, "%s", pcUser->pcUserData->pcSocketData->szIP);
 
 		// Set log item
 		va_list ap;
-		va_start( ap, pszLog );
-		vsnprintf_s( szLog, 512, pszLog, ap );
-		va_end( ap );
+		va_start(ap, pszLog);
+		vsnprintf_s(szLog, 512, pszLog, ap);
+		va_end(ap);
 
 		int iUnk = 0;
 
-		SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 29 );
-		if ( pcDB->Open() )
+		SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 29);
+		if (pcDB->Open())
 		{
-			if ( pcDB->Prepare( "INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)" ) )
+			if (pcDB->Prepare("INSERT INTO ItemLog VALUES (?,?,?,?,?,?,?,?)"))
 			{
-				pcDB->BindParameterInput( 1, PARAMTYPE_String, szIP, 20 );
-				pcDB->BindParameterInput( 2, PARAMTYPE_String, pcUser->pcUserData->szAccountName, 32 );
-				pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &iLogID );
-				pcDB->BindParameterInput( 4, PARAMTYPE_String, szLog, 512 );
-				pcDB->BindParameterInput( 5, PARAMTYPE_Integer, &iUnk );
-				pcDB->BindParameterInput( 6, PARAMTYPE_Integer, &iUnk );
-				pcDB->BindParameterInput( 7, PARAMTYPE_String, szDateTime, 20 );
-				pcDB->BindParameterInput( 8, PARAMTYPE_Integer, &GAME_SERVER );
+				pcDB->BindParameterInput(1, PARAMTYPE_String, szIP, 20);
+				pcDB->BindParameterInput(2, PARAMTYPE_String, pcUser->pcUserData->szAccountName, 32);
+				pcDB->BindParameterInput(3, PARAMTYPE_Integer, &iLogID);
+				pcDB->BindParameterInput(4, PARAMTYPE_String, szLog, 512);
+				pcDB->BindParameterInput(5, PARAMTYPE_Integer, &iUnk);
+				pcDB->BindParameterInput(6, PARAMTYPE_Integer, &iUnk);
+				pcDB->BindParameterInput(7, PARAMTYPE_String, szDateTime, 20);
+				pcDB->BindParameterInput(8, PARAMTYPE_Integer, &GAME_SERVER);
 				pcDB->Execute();
 			}
 			pcDB->Close();
@@ -1318,33 +1316,33 @@ void LogServer::OnLogItemEx( User * pcUser, int iLogID, const char * pszLog, ...
 	}
 }
 
-void LogServer::LogSocketClose( SocketData * pcSocketData, const char * pszLocation, void * p )
+void LogServer::LogSocketClose(SocketData* pcSocketData, const char* pszLocation, void* p)
 {
 	// Log It
-	SQLConnection * pcDB = SQLCONNECTION( DATABASEID_LogDB, 30 );
-	if ( pcSocketData && pcDB->Open() )
+	SQLConnection* pcDB = SQLCONNECTION(DATABASEID_LogDB, 30);
+	if (pcSocketData && pcDB->Open())
 	{
-		char * pszAccountName = pcSocketData->ud != 0 ? pcSocketData->ud->szAccountName : "";
+		char* pszAccountName = pcSocketData->ud != 0 ? pcSocketData->ud->szAccountName : "";
 		BOOL bNetServer = pcSocketData->u != 0 ? pcSocketData->u->bNetServer : FALSE;
 		BOOL bKeepAlive = pcSocketData->bKeepAlive;
 
 		char szRetAddr[32] = { 0 };
-		STRINGFORMAT( szRetAddr, "%p", p );
+		STRINGFORMAT(szRetAddr, "%p", p);
 		char szRetAddr2[32] = { 0 };
-		STRINGFORMAT( szRetAddr2, "%p", _ReturnAddress() );
+		STRINGFORMAT(szRetAddr2, "%p", _ReturnAddress());
 
-		char * pszServer = GAME_SERVER != 0 ? "GameServer" : "LoginServer";
+		char* pszServer = GAME_SERVER != 0 ? "GameServer" : "LoginServer";
 
-		if ( pcDB->Prepare( "INSERT INTO Disconnects([IP],[AccountName],[NetServer],[KeepAlive],[ServerType],[Location],[ReturnAddress],[ReturnAddressCall],[Date]) VALUES(?,?,?,?,?,?,?,?,GETDATE())" ) )
+		if (pcDB->Prepare("INSERT INTO Disconnects([IP],[AccountName],[NetServer],[KeepAlive],[ServerType],[Location],[ReturnAddress],[ReturnAddressCall],[Date]) VALUES(?,?,?,?,?,?,?,?,GETDATE())"))
 		{
-			pcDB->BindParameterInput( 1, PARAMTYPE_String, pcSocketData->szIP, 16 );
-			pcDB->BindParameterInput( 2, PARAMTYPE_String, pszAccountName, STRLEN( pszAccountName ) );
-			pcDB->BindParameterInput( 3, PARAMTYPE_Integer, &bNetServer );
-			pcDB->BindParameterInput( 4, PARAMTYPE_Integer, &pcSocketData->bKeepAlive );
-			pcDB->BindParameterInput( 5, PARAMTYPE_String, pszServer, STRLEN( pszServer ) );
-			pcDB->BindParameterInput( 6, PARAMTYPE_String, (char*)pszLocation, STRLEN( pszLocation ) );
-			pcDB->BindParameterInput( 7, PARAMTYPE_String, szRetAddr, 32 );
-			pcDB->BindParameterInput( 8, PARAMTYPE_String, szRetAddr2, 32 );
+			pcDB->BindParameterInput(1, PARAMTYPE_String, pcSocketData->szIP, 16);
+			pcDB->BindParameterInput(2, PARAMTYPE_String, pszAccountName, STRLEN(pszAccountName));
+			pcDB->BindParameterInput(3, PARAMTYPE_Integer, &bNetServer);
+			pcDB->BindParameterInput(4, PARAMTYPE_Integer, &pcSocketData->bKeepAlive);
+			pcDB->BindParameterInput(5, PARAMTYPE_String, pszServer, STRLEN(pszServer));
+			pcDB->BindParameterInput(6, PARAMTYPE_String, (char*)pszLocation, STRLEN(pszLocation));
+			pcDB->BindParameterInput(7, PARAMTYPE_String, szRetAddr, 32);
+			pcDB->BindParameterInput(8, PARAMTYPE_String, szRetAddr2, 32);
 			pcDB->Execute();
 		}
 		pcDB->Close();

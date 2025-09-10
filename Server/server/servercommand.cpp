@@ -2292,6 +2292,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand(User* pcUser, const char* pszBuff)
 		}
 		return TRUE;
 	}
+
 	if (iLen = COMMAND("/shutdowncancel", pszBuff))
 	{
 		if (*(UINT*)0x7AC9F98)

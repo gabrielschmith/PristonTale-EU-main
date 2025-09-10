@@ -139,6 +139,11 @@ extern int								iBellatraMaintenanceTax;
 extern int								iBellatraSecondClanTax;
 extern int								iBellatraThirdClanTax;
 
+// Gold Limits Configuration
+extern int								iGoldLimitLowLevel;
+extern int								iGoldLimitMidLevelMultiplier;
+extern int								iGoldLimitHighLevel;
+
 #define USERDATATOUSER(ud)				(USERSERVER->UserdatatoUser(ud))
 #define USERDATABYID(id)				(UserServer::GetUserdata((int)id))
 #define USERDATABYNAME(n)				(UserServer::GetUserdata((char*)n))
@@ -268,5 +273,10 @@ extern int								iBellatraThirdClanTax;
 #define EVENT_BEE						bBeeEvent
 #define EVENT_REDUCE_DAMAGEMON_LIVE		(*(BOOL*)0x07AC9D4C)
 #define EVENT_REDUCE_DAMAGEMON			(*(BOOL*)0x00845FF0)
+
+// Gold Limits Configuration
+#define GOLD_LIMIT_LOW_LEVEL			iGoldLimitLowLevel
+#define GOLD_LIMIT_MID_LEVEL_MULT		iGoldLimitMidLevelMultiplier
+#define GOLD_LIMIT_HIGH_LEVEL			iGoldLimitHighLevel
 
 #endif

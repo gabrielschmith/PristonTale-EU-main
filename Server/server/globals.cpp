@@ -65,5 +65,9 @@ int								iBellatraThirdClanTax = 0;
 
 BOOL							bValantinesDayEvent = FALSE;
 
+// Gold Limits Configuration
+int								iGoldLimitLowLevel = 1'000'000;				// Level <= 10
+int								iGoldLimitMidLevelMultiplier = 200'000;		// Level < 20 (level * multiplier)
+int								iGoldLimitHighLevel = 500'000'000;			// Level >= 20
 
 SYSTEMTIME						sLocalTimeServer;

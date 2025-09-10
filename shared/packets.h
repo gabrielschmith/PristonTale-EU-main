@@ -74,13 +74,9 @@
 #define DISTANCE_MISC_Y						300
 #define DISTANCE_MISC_Y_EX					1000
 
-
-
-
-#define SERVER_LEVEL_MAX				250
+#define SERVER_LEVEL_MAX				150
 #define MAX_UNIT_PLAYDATA				75
 #define MAX_QUESTPACKETDATA				15
-
 
 enum EItemID;
 
