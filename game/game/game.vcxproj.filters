@@ -694,6 +694,9 @@
     <Filter Include="Source Files\Game\Controller\HUD\NeverSink">
       <UniqueIdentifier>{5b864b2f-4bff-4d7c-846e-e39dc1a1c7ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Library\Discord">
+      <UniqueIdentifier>{b517397d-9e00-4897-8d0d-6aeaf2a5bac6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinDump.h">
@@ -1632,6 +1635,57 @@
     <ClInclude Include="..\..\shared\CStable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\achievement_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\activity_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\application_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\core.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\discord.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\event.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\ffi.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\image_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\lobby_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\network_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\overlay_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\relationship_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\storage_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\store_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\types.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\user_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\voice_manager.h">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinDump.cpp">
@@ -2459,6 +2513,48 @@
     </ClCompile>
     <ClCompile Include="StableHandler.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\achievement_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\activity_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\application_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\core.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\image_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\lobby_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\network_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\overlay_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\relationship_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\storage_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\store_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\types.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\user_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\voice_manager.cpp">
+      <Filter>Source Files\Library\Discord</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

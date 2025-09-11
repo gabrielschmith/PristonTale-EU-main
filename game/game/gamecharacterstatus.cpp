@@ -126,8 +126,7 @@ void CGameCharacterStatus::UpdateCharacterStatus( CharacterDataLocal * psData)
 	}
 
 	//Weight Formula based on status...
-	playerData->sWeight.sMax = (short)((fStrength * 2.0f) + (fHealth + 1.5f) + (fLevel * 3.0f) + 60 +
-		playerData->iSpirit + playerData->iTalent + playerData->iAgility + iWeightAdd);
+	playerData->sWeight.sMax = (short)((fStrength * 2.0f) + (fHealth + 1.5f) + (fLevel * 3.0f) + 60 + playerData->iSpirit + playerData->iTalent + playerData->iAgility + iWeightAdd);
 
 	float fWeightCur = playerData->sWeight.sCur;
 	float fWeightMax = playerData->sWeight.sMax;

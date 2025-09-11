@@ -356,6 +356,7 @@ bool DetectCheatEngineByHWND()
             if (l_ExportAddr)
             {
                 auto l_ExportDirectory = reinterpret_cast<Structures::IMAGE_EXPORT_DIRECTORY *>(l_NTHeader->OptionalHeader.ImageBase + l_ExportAddr);
+
                 if (l_ExportDirectory->NumberOfFunctions < 1)
                     break;
 

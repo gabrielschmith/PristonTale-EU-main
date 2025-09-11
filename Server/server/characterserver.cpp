@@ -1422,6 +1422,28 @@ INT64 CharacterServer::GetExpFromLevel(int iLevel)
 	return ((INT64)uExpHigh << 32) | ((INT64)uExpLow & 0xFFFFFFFF);
 }
 
+int CharacterServer::GetLevelFromExp(INT64 iExp)
+{
+	if (iExp <= 0)
+		return 1;
+
+	static const int s_LevelMax = sizeof(s_TotalExpPerLevel) / sizeof(s_TotalExpPerLevel[0]);
+	
+	int iLevel = 1;
+	for (int i = 0; i < s_LevelMax; ++i)
+	{
+		if (static_cast<uint64_t>(iExp) >= s_TotalExpPerLevel[i])
+			iLevel = i + 1;
+		else
+			break;
+	}
+
+	if (iLevel > s_LevelMax)
+		iLevel = s_LevelMax;
+
+	return iLevel;
+}
+
 void CharacterServer::OnCharacterUpdate(UserData* pcUserData)
 {
 	char* pszCharacterName = GetCharacterName(pcUserData);

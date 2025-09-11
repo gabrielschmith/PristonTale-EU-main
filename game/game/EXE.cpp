@@ -8,8 +8,8 @@ extern DropItemView saItemsStage[1024];
 extern int bDisableSodDmgReduction;
 
 
-UI::Image * pcLowHPWarningImage = nullptr;
-UI::Image * pcBossFixedPositionImages[4] = { 0 };
+UI::Image* pcLowHPWarningImage = nullptr;
+UI::Image* pcBossFixedPositionImages[4] = { 0 };
 
 extern BOOL bLootLabelViewToggleState;
 
@@ -19,23 +19,23 @@ void EXERenderCache::FinalRender()
 {
 }
 
-void EXERenderCache::FinalRenderHandler( EXEMesh * pcThis )
+void EXERenderCache::FinalRenderHandler(EXEMesh* pcThis)
 {
-	EXERenderCacheData * psRenderData = new EXERenderCacheData;
+	EXERenderCacheData* psRenderData = new EXERenderCacheData;
 
-	CopyMemory( &psRenderData->cMesh, pcThis, sizeof( EXEMesh ) );
-	CopyMemory( &psRenderData->cRender, EXERender::GetRender(), sizeof( EXEMesh ) );
+	CopyMemory(&psRenderData->cMesh, pcThis, sizeof(EXEMesh));
+	CopyMemory(&psRenderData->cRender, EXERender::GetRender(), sizeof(EXEMesh));
 
-	vRender.push_back( psRenderData );
+	vRender.push_back(psRenderData);
 }
 
 void EXERenderCache::RenderCacheData()
 {
 }
 
-NAKED BOOL AddUnitQueueID( int iID )
+NAKED BOOL AddUnitQueueID(int iID)
 {
-	JMP( 0x0061E640 );
+	JMP(0x0061E640);
 }
 
 
@@ -53,7 +53,7 @@ void CloseDropItemView(DropItemView* ps)
 }
 
 
-BOOL RenderDropItemOverride(DropItemView * ps, BOOL bAllowBlink, BOOL bForceVisible)
+BOOL RenderDropItemOverride(DropItemView* ps, BOOL bAllowBlink, BOOL bForceVisible)
 {
 	Point3D CameraPosi, CameraAngle;
 	Point3D angle;
@@ -76,65 +76,65 @@ BOOL RenderDropItemOverride(DropItemView * ps, BOOL bAllowBlink, BOOL bForceVisi
 
 
 	//Item Auras
-	if ( MAP_ID != MAPID_RicartenTown && MAP_ID != MAPID_PillaiTown && MAP_ID != MAPID_BlessCastle )
+	if (MAP_ID != MAPID_RicartenTown && MAP_ID != MAPID_PillaiTown && MAP_ID != MAPID_BlessCastle)
 	{
 		//Display Legendary Aura
-		if ( ps->eRarity == EItemRarity::LEGENDARY )
+		if (ps->eRarity == EItemRarity::LEGENDARY)
 		{
 			int iAura = UNITGAME->iLegendaryDropParticle;
 
-			if ( PARTICLE->IsRunningItem ( ps->iItemID.ToInt(), iAura ) )
+			if (PARTICLE->IsRunningItem(ps->iItemID.ToInt(), iAura))
 			{
-				PARTICLE->UpdateItem ( ps->iItemID.ToInt(), iAura, 70.0f );
+				PARTICLE->UpdateItem(ps->iItemID.ToInt(), iAura, 70.0f);
 			}
 			else
 			{
-				int iID = PARTICLE->Start( iAura,
+				int iID = PARTICLE->Start(iAura,
 					ps->sPosition.iX,
 					ps->sPosition.iY,
-					ps->sPosition.iZ );
+					ps->sPosition.iZ);
 
-				PARTICLE->AddScript( iID, iAura, ps, 70.0f, TRUE );
+				PARTICLE->AddScript(iID, iAura, ps, 70.0f, TRUE);
 
-				SKILLMANAGERHANDLER->SkillPlaySound( 0x4950, ps->sPosition.iX, ps->sPosition.iY, ps->sPosition.iZ ); //0x4950 = Legendary Drop Sound
+				SKILLMANAGERHANDLER->SkillPlaySound(0x4950, ps->sPosition.iX, ps->sPosition.iY, ps->sPosition.iZ); //0x4950 = Legendary Drop Sound
 			}
 		}
 		//Display Epic Aura
-		else if ( ps->eRarity == EItemRarity::EPIC )
+		else if (ps->eRarity == EItemRarity::EPIC)
 		{
 			int iAura = UNITGAME->iEpicDropParticle;
 
-			if ( PARTICLE->IsRunningItem ( ps->iItemID.ToInt(), iAura ) )
+			if (PARTICLE->IsRunningItem(ps->iItemID.ToInt(), iAura))
 			{
-				PARTICLE->UpdateItem ( ps->iItemID.ToInt(), iAura, 70.0f );
+				PARTICLE->UpdateItem(ps->iItemID.ToInt(), iAura, 70.0f);
 			}
 			else
 			{
-				int iID = PARTICLE->Start( iAura,
+				int iID = PARTICLE->Start(iAura,
 					ps->sPosition.iX,
 					ps->sPosition.iY,
-					ps->sPosition.iZ );
+					ps->sPosition.iZ);
 
-				PARTICLE->AddScript( iID, iAura, ps, 70.0f, TRUE );
+				PARTICLE->AddScript(iID, iAura, ps, 70.0f, TRUE);
 			}
 		}
 		//Display Rare Aura
-		else if ( ps->eRarity == EItemRarity::RARE )
+		else if (ps->eRarity == EItemRarity::RARE)
 		{
 			int iAura = UNITGAME->iRareDropParticle;
 
-			if ( PARTICLE->IsRunningItem ( ps->iItemID.ToInt(), iAura ) )
+			if (PARTICLE->IsRunningItem(ps->iItemID.ToInt(), iAura))
 			{
-				PARTICLE->UpdateItem ( ps->iItemID.ToInt(), iAura, 70.0f );
+				PARTICLE->UpdateItem(ps->iItemID.ToInt(), iAura, 70.0f);
 			}
 			else
 			{
-				int iID = PARTICLE->Start( iAura,
+				int iID = PARTICLE->Start(iAura,
 					ps->sPosition.iX,
 					ps->sPosition.iY,
-					ps->sPosition.iZ );
+					ps->sPosition.iZ);
 
-				PARTICLE->AddScript( iID, iAura, ps, 70.0f, TRUE );
+				PARTICLE->AddScript(iID, iAura, ps, 70.0f, TRUE);
 			}
 		}
 	}
@@ -159,8 +159,8 @@ BOOL RenderDropItemOverride(DropItemView * ps, BOOL bAllowBlink, BOOL bForceVisi
 
 	BlinkFlag = FALSE;
 
-	if ( ps->iItemID.ToItemBase() == ITEMBASE_Weapon &&
-		( ( ps->eItemFlags & EItemFlag::TreasureHuntingMode ) != EItemFlag::TreasureHuntingMode ) )
+	if (ps->iItemID.ToItemBase() == ITEMBASE_Weapon &&
+		((ps->eItemFlags & EItemFlag::TreasureHuntingMode) != EItemFlag::TreasureHuntingMode))
 	{
 		angle.iX = ANGLE_90;
 	}
@@ -221,7 +221,7 @@ BOOL RenderDropItemOverride(DropItemView * ps, BOOL bAllowBlink, BOOL bForceVisi
 
 //int scITEM::Draw()
 //character.cpp
-void RenderDropItem( DropItemView * ps )
+void RenderDropItem(DropItemView* ps)
 {
 	//CALLT( pfnRenderDropItemView, (DWORD)ps );
 
@@ -229,15 +229,15 @@ void RenderDropItem( DropItemView * ps )
 
 }
 
-DropItemView * FindScItem( int x, int z )
+DropItemView* FindScItem(int x, int z)
 {
 	int cnt;
 
-	for( cnt=0; cnt < 1024; cnt++)
+	for (cnt = 0; cnt < 1024; cnt++)
 	{
-		if ( saItemsStage[cnt].bActive &&
-			 saItemsStage[cnt].sPosition.iX == x  &&
-			 saItemsStage[cnt].sPosition.iZ == z )
+		if (saItemsStage[cnt].bActive &&
+			saItemsStage[cnt].sPosition.iX == x &&
+			saItemsStage[cnt].sPosition.iZ == z)
 		{
 			return &saItemsStage[cnt];
 		}
@@ -246,13 +246,13 @@ DropItemView * FindScItem( int x, int z )
 	return NULL;
 }
 
-DropItemView * FindEmptyScItem( )
+DropItemView* FindEmptyScItem()
 {
 	int cnt;
 
-	for( cnt=0; cnt < 1024; cnt++)
+	for (cnt = 0; cnt < 1024; cnt++)
 	{
-		if ( !saItemsStage[cnt].bActive )
+		if (!saItemsStage[cnt].bActive)
 		{
 			return &saItemsStage[cnt];
 		}
@@ -265,30 +265,30 @@ DropItemView * FindEmptyScItem( )
 #define STATE_BAR_HEIGHT	16
 #define STATE_BAR_SIZE		92
 
-void RenderCharacterHP( UnitData * pcUnitData, int iX, int iY )
+void RenderCharacterHP(UnitData* pcUnitData, int iX, int iY)
 {
-	Unit * pcUnit = UNITDATATOUNIT( pcUnitData );
+	Unit* pcUnit = UNITDATATOUNIT(pcUnitData);
 
-	if ( pcUnit == NULL )
+	if (pcUnit == NULL)
 		return;
 
 	const int iCurrHp = pcUnitData->GetCurrentHealth(); // pcUnit->sHPLong.iMin;
-	const int iMaxHp  = pcUnitData->GetMaxHealth(); //pcUnit->sHPLong.iMax;
+	const int iMaxHp = pcUnitData->GetMaxHealth(); //pcUnit->sHPLong.iMax;
 
 	//CALLT_WITH_ARG2( 0x00421B30, (DWORD)pcUnitData, iX, iY );
 
 	DWORD dwColor;
 
 	// HP Max is 0? no need show
-	if( iCurrHp == 0 )
+	if (iCurrHp == 0)
 		return;
 
 	// Treepass screen? no show
-	if( iX < 0 || ( iX + STATE_BAR_WIDTH ) >= ( *(int*)0x03A9A30C ) ) //0x03A9A30C = DXSettings::WidthBBDevice
+	if (iX < 0 || (iX + STATE_BAR_WIDTH) >= (*(int*)0x03A9A30C)) //0x03A9A30C = DXSettings::WidthBBDevice
 		return;
 
 	// Treepass screen? no show
-	if( iY < 0 || ( iY + STATE_BAR_WIDTH ) >= ( *(int*)0x03A9A310 ) ) //0x03A9A310 = DXSettings::HeightBBDevice
+	if (iY < 0 || (iY + STATE_BAR_WIDTH) >= (*(int*)0x03A9A310)) //0x03A9A310 = DXSettings::HeightBBDevice
 		return;
 
 
@@ -297,17 +297,17 @@ void RenderCharacterHP( UnitData * pcUnitData, int iX, int iY )
 	int iPercent3;
 
 	// HP Percent
-	iPercent  = ( iCurrHp * STATE_BAR_SIZE ) / iMaxHp;
-	iPercent2 = ( iCurrHp * 511 ) / iMaxHp;
-	iPercent2 = ( iPercent2 * iPercent2 ) / 512;
+	iPercent = (iCurrHp * STATE_BAR_SIZE) / iMaxHp;
+	iPercent2 = (iCurrHp * 511) / iMaxHp;
+	iPercent2 = (iPercent2 * iPercent2) / 512;
 	iPercent3 = iPercent2 & 0xFF;
 
 
 	// Color based to percent HP
-	if( iPercent2 < 256 )
-		dwColor = D3DCOLOR_RGBA( 255, iPercent3, 0, 255 );
+	if (iPercent2 < 256)
+		dwColor = D3DCOLOR_RGBA(255, iPercent3, 0, 255);
 	else
-		dwColor = D3DCOLOR_RGBA( 255 - iPercent3, 255, 0, 255 );
+		dwColor = D3DCOLOR_RGBA(255 - iPercent3, 255, 0, 255);
 
 	// Calculate Bar Size relative to Resolution
 	int iHeight = (RESOLUTION_WIDTH / 4) * 3;
@@ -315,17 +315,17 @@ void RenderCharacterHP( UnitData * pcUnitData, int iX, int iY )
 
 	fSizeW = (float)RESOLUTION_WIDTH * (*(float*)0x007AFD8C);
 
-	if( iHeight == RESOLUTION_HEIGHT )
+	if (iHeight == RESOLUTION_HEIGHT)
 		fSizeH = ((float)RESOLUTION_WIDTH / 800.0f);
 	else
-		fSizeH = ((float)RESOLUTION_WIDTH / (float)( ( RESOLUTION_HEIGHT / 3 ) * 4 ));
+		fSizeH = ((float)RESOLUTION_WIDTH / (float)((RESOLUTION_HEIGHT / 3) * 4));
 
 	// Texture 0 = Bar, 1 = Color
-	int * piImage = ( (int*)0x00CDFF54 );
+	int* piImage = ((int*)0x00CDFF54);
 
 	// Functions
-	typedef void( __cdecl *tfnDrawTexImageFloat )( int Mat, float x, float y, float w, float h, float surW, float surH, float tLeft, float tTop, float tRight, float tBottom, int Transp );
-	typedef void( __cdecl *tfnDrawTexImageFloatColor )( int Mat, float x, float y, float w, float h, float surW, float surH, float tLeft, float tTop, float tRight, float tBottom, DWORD dwColor );
+	typedef void(__cdecl* tfnDrawTexImageFloat)(int Mat, float x, float y, float w, float h, float surW, float surH, float tLeft, float tTop, float tRight, float tBottom, int Transp);
+	typedef void(__cdecl* tfnDrawTexImageFloatColor)(int Mat, float x, float y, float w, float h, float surW, float surH, float tLeft, float tTop, float tRight, float tBottom, DWORD dwColor);
 	tfnDrawTexImageFloat fnDrawTexImageFloat = (tfnDrawTexImageFloat)0x00409F40;
 	tfnDrawTexImageFloatColor fnDrawTexImageFloatColor = (tfnDrawTexImageFloatColor)0x0040A240;
 
@@ -333,24 +333,24 @@ void RenderCharacterHP( UnitData * pcUnitData, int iX, int iY )
 	fSizeW = ((float)RESOLUTION_WIDTH / 800.0f);
 
 	// Draw Bar model
-	fnDrawTexImageFloat( piImage[0], (float)iX, (float)iY, 60, 11.2, 128, STATE_BAR_HEIGHT, 0, 0, STATE_BAR_WIDTH, 15, 255 );
+	fnDrawTexImageFloat(piImage[0], (float)iX, (float)iY, 60, 11.2, 128, STATE_BAR_HEIGHT, 0, 0, STATE_BAR_WIDTH, 15, 255);
 
 	// Have HP? Draw inside Bar model
-	if( iCurrHp > 0 )
-		fnDrawTexImageFloatColor( piImage[1], (float)iX, (float)iY, (float)(iPercent + 3) * 0.6f, 11.2, 128, STATE_BAR_HEIGHT, 0, 0, (float)iPercent + 3, 15, dwColor );
+	if (iCurrHp > 0)
+		fnDrawTexImageFloatColor(piImage[1], (float)iX, (float)iY, (float)(iPercent + 3) * 0.6f, 11.2, 128, STATE_BAR_HEIGHT, 0, 0, (float)iPercent + 3, 15, dwColor);
 
 
 	return;
 }
 
-void RenderCharacterChangingBar( UnitData * pcUnitData, int iX, int iY, int iMin, int iMax )
+void RenderCharacterChangingBar(UnitData* pcUnitData, int iX, int iY, int iMin, int iMax)
 {
-	CALLT_WITH_ARG4( 0x0042B320, (DWORD)pcUnitData, iX, iY, iMin, iMax );
+	CALLT_WITH_ARG4(0x0042B320, (DWORD)pcUnitData, iX, iY, iMin, iMax);
 }
 
 void ClearDrops()
 {
-	DropItemView * psItem = NULL;
+	DropItemView* psItem = NULL;
 
 	for (int i = 0; i < 1024; i++)
 	{
@@ -358,7 +358,7 @@ void ClearDrops()
 
 		if (psItem && psItem->bActive)
 		{
-			CloseDropItemView( psItem );
+			CloseDropItemView(psItem);
 		}
 	}
 }
@@ -366,7 +366,7 @@ void ClearDrops()
 /// <summary>
 /// Leaked func: int DrawPat3D( int x, int y, int z, int ax, int ay, int az )
 /// </summary>
-BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
+BOOL Render3D(int iX, int iY, int iZ, int iAX, int iAY, int iAZ)
 {
 	int iSkillDisplay = UNITDATA->dwDispAppSkill;
 
@@ -377,61 +377,61 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	int iRenderedCounter = 0;
 
 	//Instance
-	Skill * psaSkill = (Skill*)TIMERSKILLHANDLER->GetPointerSkillTimer();
+	Skill* psaSkill = (Skill*)TIMERSKILLHANDLER->GetPointerSkillTimer();
 
 
 	//Z Distance from selected target
 	int iSelectedZ = 65536 * 16384;
 
-	for ( int i = 0; i < 80; i++ )
+	for (int i = 0; i < 80; i++)
 	{
-		Skill * ps = psaSkill + i;
+		Skill* ps = psaSkill + i;
 
-		if ( ps->iFlag )
+		if (ps->iFlag)
 		{
-			if ( ps->iID )
+			if (ps->iID)
 			{
-				switch ( ps->iID )
+				switch (ps->iID)
 				{
-					case SKILLID_ExtremeShield:
-						UNITDATA->dwDispAppSkill |= SKILLMASK_ExtremeShield;
-						break;
+				case SKILLID_ExtremeShield:
+					UNITDATA->dwDispAppSkill |= SKILLMASK_ExtremeShield;
+					break;
 
-					case SKILLID_HolyReflection:
-						UNITDATA->dwDispAppSkill |= SKILLMASK_HolyReflection;
-						break;
+				case SKILLID_HolyReflection:
+					UNITDATA->dwDispAppSkill |= SKILLMASK_HolyReflection;
+					break;
 
-					case SKILLID_PhysicalAbsorb:
-					case SKILLID_MetalArmor:
-						UNITDATA->dwDispAppSkill |= SKILLMASK_PhysicalAbsorb;
-						break;
+				case SKILLID_PhysicalAbsorb:
+				case SKILLID_MetalArmor:
+					UNITDATA->dwDispAppSkill |= SKILLMASK_PhysicalAbsorb;
+					break;
 
-					case SKILLID_Maximize:
-					case SKILLID_Automation:
-						UNITDATA->dwDispAppSkill |= SKILLMASK_Automation;
-						break;
-					case SKILLID_Zenith:
-						UNITDATA->dwDispAppSkill |= SKILLMASK_CriticalHit;
-						break;
+				case SKILLID_Maximize:
+				case SKILLID_Automation:
+					UNITDATA->dwDispAppSkill |= SKILLMASK_Automation;
+					break;
+				case SKILLID_Zenith:
+					UNITDATA->dwDispAppSkill |= SKILLMASK_CriticalHit;
+					break;
 
-					case SKILLID_HolyBody:
-						UNITDATA->dwDispAppSkill |= SKILLMASK_PhysicalAbsorb;
-						UNITDATA->dwDispAppSkill |= SKILLMASK_HolyBody;
-						break;
+				case SKILLID_HolyBody:
+					UNITDATA->dwDispAppSkill |= SKILLMASK_PhysicalAbsorb;
+					UNITDATA->dwDispAppSkill |= SKILLMASK_HolyBody;
+					break;
 
-					case SKILLID_SparkShield:
-					case SKILLID_DivineShield:
-						UNITDATA->dwDispAppSkill |= SKILLMASK_SparkShield;
-						break;
+				case SKILLID_SparkShield:
+				case SKILLID_DivineShield:
+					UNITDATA->dwDispAppSkill |= SKILLMASK_SparkShield;
+					break;
 
-					case SKILLID_GodlyShield:
-					case SKILLID_FrostJavelin:
-					case SKILLID_SummonMuspell:
-						UNITDATA->dwDispAppSkill |= SKILLMASK_GodlyShield;
-						break;
+				case SKILLID_GodlyShield:
+				case SKILLID_FrostJavelin:
+				case SKILLID_SummonMuspell:
+					UNITDATA->dwDispAppSkill |= SKILLMASK_GodlyShield;
+					break;
 
-					default:
-						break;
+				default:
+					break;
 				}
 			}
 		}
@@ -440,37 +440,37 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 
 	//Stop Skill Sounds if it finished...
 	{
-		if ( (UNITDATA->dwDispAppSkill & SKILLMASK_PhysicalAbsorb) == 0 && (iSkillDisplay & SKILLMASK_PhysicalAbsorb) != 0 )
-			SKILLSOUND_STOP( SKILLSOUND_PhysicalAbsorb3 );
+		if ((UNITDATA->dwDispAppSkill & SKILLMASK_PhysicalAbsorb) == 0 && (iSkillDisplay & SKILLMASK_PhysicalAbsorb) != 0)
+			SKILLSOUND_STOP(SKILLSOUND_PhysicalAbsorb3);
 
-		if ( (UNITDATA->dwDispAppSkill & SKILLMASK_Automation) == 0 && (iSkillDisplay & SKILLMASK_Automation) != 0 )
-			SKILLSOUND_STOP( SKILLSOUND_Automation3 );
+		if ((UNITDATA->dwDispAppSkill & SKILLMASK_Automation) == 0 && (iSkillDisplay & SKILLMASK_Automation) != 0)
+			SKILLSOUND_STOP(SKILLSOUND_Automation3);
 
-		if ( (UNITDATA->dwDispAppSkill & SKILLMASK_HolyBody) == 0 && (iSkillDisplay & SKILLMASK_HolyBody) != 0 )
-			SKILLSOUND_STOP( SKILLSOUND_PhysicalAbsorb3 );
+		if ((UNITDATA->dwDispAppSkill & SKILLMASK_HolyBody) == 0 && (iSkillDisplay & SKILLMASK_HolyBody) != 0)
+			SKILLSOUND_STOP(SKILLSOUND_PhysicalAbsorb3);
 	}
 
 	//Set Camera of Render
-	RENDERER->SetCameraPosition( iX, iY, iZ, iAX, iAY, iAZ );
+	RENDERER->SetCameraPosition(iX, iY, iZ, iAX, iAY, iAZ);
 
 
 	//Set Dynamic Lights to the map
-	if ( STAGE1 )
-		SetStageDynamicLight( STAGE1, iX, iY, iZ );
-	if ( STAGE2 )
-		SetStageDynamicLight( STAGE2, iX, iY, iZ );
+	if (STAGE1)
+		SetStageDynamicLight(STAGE1, iX, iY, iZ);
+	if (STAGE2)
+		SetStageDynamicLight(STAGE2, iX, iY, iZ);
 
 
 	//Set Camera of Character
-	CAMERACHARACTER( iX, iY, iZ, iAX, iAY, iAZ );
+	CAMERACHARACTER(iX, iY, iZ, iAX, iAY, iAZ);
 
 
 	int iRestarterTime = RESTARTCOUNTER;
-	if ( UNITDATA->bNoDeath )
+	if (UNITDATA->bNoDeath)
 		iRestarterTime = (int)UNITDATA->bNoDeath;
 
 	//Restart Color
-	if ( iRestarterTime > 0 && (iRestarterTime & 0x10) == 0 )
+	if (iRestarterTime > 0 && (iRestarterTime & 0x10) == 0)
 	{
 		//Keep it safe...
 		int R = RENDERER->r;
@@ -487,25 +487,25 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	else
 	{
 		//Update Vanish need to render again??? ugly...
-		if ( UNITDATA->iVanishTimeLeft <= 0 && UNITDATA->iBlindSkill <= 0 )
+		if (UNITDATA->iVanishTimeLeft <= 0 && UNITDATA->iBlindSkill <= 0)
 			UNITDATA->Render();
 	}
 
 	//Clan Master of BC? Set Crown...
-	if ( CASTLEMASTERID && UNITDATA->sCharacterData.iClanID )
-		SetClanMaster( CASTLEMASTERID );
+	if (CASTLEMASTERID && UNITDATA->sCharacterData.iClanID)
+		SetClanMaster(CASTLEMASTERID);
 
 
 	//Reset Target
-	UnitData * pcUnitDataSelected = NULL;
+	UnitData* pcUnitDataSelected = NULL;
 
 	//All Characters Render...
-	for ( int i = 0; i < MAX_UNITS; i++ )
+	for (int i = 0; i < MAX_UNITS; i++)
 	{
-		UnitData * pc = UNITGAME->pcaUnitData + i;
+		UnitData* pc = UNITGAME->pcaUnitData + i;
 
 		//Character Displayed?
-		if ( pc->bActive && pc->DisplayAlpha == 0 )
+		if (pc->bActive && pc->DisplayAlpha == 0)
 		{
 			//JLM - Rendering Experiment
 			//Far from Distance? next Character...
@@ -525,15 +525,15 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 			int B = RENDERER->b;
 
 			//Update Pet Skill
-			if ( UNITDATA->iPetID && pc->GetCurrentHealth() > 0 )
+			if (UNITDATA->iPetID && pc->GetCurrentHealth() > 0)
 			{
 				//Scout Hawk Buff?
-				if ( UNITDATA->iPetID == SKILLID_ScoutHawk )
+				if (UNITDATA->iPetID == SKILLID_ScoutHawk)
 				{
 					//Note: Get Attack Rating from Scout Hawk
 
 					//Update Character Color based on Dark
-					if ( GetDamageFromAreaSkill( UNITDATA, pc, 0, 0, 0 ) > 0 )
+					if (GetDamageFromAreaSkill(UNITDATA, pc, 0, 0, 0) > 0)
 					{
 						int iColor = DARKCOLOR_AMOUNT >> 2;
 
@@ -547,22 +547,22 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 			DWORD dwOutlineEffectColor = 0;
 
 			//Outline Update
-			if ( UNITDATA_HOVER && UNITDATA_HOVER == pc )
+			if (UNITDATA_HOVER && UNITDATA_HOVER == pc)
 			{
 				RENDERER->r = R + 40;
 				RENDERER->g = G + 60;
 				RENDERER->b = B + 60;
 
 				//Red
-				dwOutlineEffectColor = D3DCOLOR_ARGB( 255, 255, 30, 0 );
+				dwOutlineEffectColor = D3DCOLOR_ARGB(255, 255, 30, 0);
 
 				//Green
-				if (UNITDATA_HOVER->sCharacterData.iType == ECharacterType::CHARACTERTYPE_NPC )
+				if (UNITDATA_HOVER->sCharacterData.iType == ECharacterType::CHARACTERTYPE_NPC)
 					dwOutlineEffectColor = D3DCOLOR_ARGB(255, 0, 255, 100);
 
 				//White
-				if ( UNITDATA_HOVER->sCharacterData.iType == ECharacterType::CHARACTERTYPE_Player )
-					dwOutlineEffectColor = D3DCOLOR_ARGB( 255, 255, 255, 255 );
+				if (UNITDATA_HOVER->sCharacterData.iType == ECharacterType::CHARACTERTYPE_Player)
+					dwOutlineEffectColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 				//Compute Distance...
 				int a = 0, b = 0, c = 0, d = 0, e = 0;
@@ -574,10 +574,10 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 				int iDistance = (int)sqrt(a);
 			}
 
-			if ( pc->bRenderLast == FALSE && pc->iIceOverlay == 0 && pc->RendAlpha == 0 && (pc->iVanishTimeLeft <= 0 && pc->iBlindSkill <= 0) )
+			if (pc->bRenderLast == FALSE && pc->iIceOverlay == 0 && pc->RendAlpha == 0 && (pc->iVanishTimeLeft <= 0 && pc->iBlindSkill <= 0))
 			{
 				//Athanasia Color
-				if ( pc->bNoDeath && ((int)pc->bNoDeath & 0x10) == 0 )
+				if (pc->bNoDeath && ((int)pc->bNoDeath & 0x10) == 0)
 				{
 					RENDERER->r += 80;
 					RENDERER->b += 80;
@@ -593,17 +593,17 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 				//	DX::cSelectGlow1.End( FALSE );
 				//}
 
-				if ( (dwOutlineEffectColor > 0) )
+				if ((dwOutlineEffectColor > 0))
 				{
-					if ( DX::cSelectGlow1.Begin( dwOutlineEffectColor, TRUE ) )
+					if (DX::cSelectGlow1.Begin(dwOutlineEffectColor, TRUE))
 					{
-						RenderUnitData( pc );
-						DX::cSelectGlow1.End( TRUE );
+						RenderUnitData(pc);
+						DX::cSelectGlow1.End(TRUE);
 
-						if ( DX::cSelectGlow1.Begin( dwOutlineEffectColor, FALSE ) )
+						if (DX::cSelectGlow1.Begin(dwOutlineEffectColor, FALSE))
 						{
-							RenderUnitData( pc );
-							DX::cSelectGlow1.End( FALSE );
+							RenderUnitData(pc);
+							DX::cSelectGlow1.End(FALSE);
 						}
 					}
 				}
@@ -632,23 +632,23 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 			RENDERER->b = B;
 
 			//Rendered?
-			if ( pc->bRendered )
+			if (pc->bRendered)
 			{
 				//Increment to Handle it later...
 				iRenderedCounter++;
 
 				int iZP = pc->sRenderPoint.iZ;
 
-				RECT * psRect2D = &pc->rRenderRectangle;
+				RECT* psRect2D = &pc->rRenderRectangle;
 
 				//Check Siege War for Defending Clan
 				bool bCanSelect = true;
-				if ( MAP_ID == MAPID_BlessCastle )
+				if (MAP_ID == MAPID_BlessCastle)
 				{
 
-					if ( UNITDATA->sCharacterData.iClanID && BLESSCASTLEHANDLER->GetClanID( UNITDATA->sCharacterData.iClanID ) == BLESSCASTLEHANDLER->GetCastleLeaderClanID() && BLESSCASTLEHANDLER->InSiegeWar() )
+					if (UNITDATA->sCharacterData.iClanID && BLESSCASTLEHANDLER->GetClanID(UNITDATA->sCharacterData.iClanID) == BLESSCASTLEHANDLER->GetCastleLeaderClanID() && BLESSCASTLEHANDLER->InSiegeWar())
 					{
-						if ( (pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_TOWER_B) ||
+						if ((pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_TOWER_B) ||
 							(pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_DOOR) ||
 							(pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_CRYSTAL_R) ||
 							(pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_CRYSTAL_G) ||
@@ -656,7 +656,7 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 							(pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_CRYSTAL_N) ||
 							(pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_SOLDER_A) ||
 							(pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_SOLDER_B) ||
-							(pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_SOLDER_C) )
+							(pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CASTLE_SOLDER_C))
 							bCanSelect = false;
 					}
 				}
@@ -665,11 +665,11 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 					psRect2D->left < MOUSEHANDLER->GetPosition()->iX && psRect2D->right > MOUSEHANDLER->GetPosition()->iX &&
 					psRect2D->top < MOUSEHANDLER->GetPosition()->iY && psRect2D->bottom > MOUSEHANDLER->GetPosition()->iY)
 				{
-					if ( (pc->dwLastActiveTime + 7000) > TICKCOUNT )
+					if ((pc->dwLastActiveTime + 7000) > TICKCOUNT)
 					{
 						//Set new target
-						iSelectedZ			= iZP;
-						pcUnitDataSelected	= pc;
+						iSelectedZ = iZP;
+						pcUnitDataSelected = pc;
 					}
 				}
 			}
@@ -679,13 +679,13 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	int iLastRenderedCounter = iRenderedCounter;
 
 	//Press A key?
-	if ( ISPRESSEDKEY('A') )
+	if (ISPRESSEDKEY('A'))
 	{
 		//Reset target
-		UNITDATA_HOVER	= NULL;
-		iSelectedZ			= 65536 * 16384;
+		UNITDATA_HOVER = NULL;
+		iSelectedZ = 65536 * 16384;
 
-		pcUnitDataSelected	= NULL;
+		pcUnitDataSelected = NULL;
 	}
 
 	int iRenderedItems = 0;
@@ -693,34 +693,34 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	RECT sRect;
 	Point2D sPosition2D;
 
-	DropItemView * psItem = NULL;
+	DropItemView* psItem = NULL;
 
 	RECT sRectS;
 	Point2D sPosition2DS;
 
-	for ( int i = 0; i < 1024; i++ )
+	for (int i = 0; i < 1024; i++)
 	{
-		DropItemView * ps = saItemsStage + i;
+		DropItemView* ps = saItemsStage + i;
 
-		if ( ps == NULL )
+		if (ps == NULL)
 			continue;
 
-		if ( ps->bActive )
+		if (ps->bActive)
 		{
 			//GM Debug or is an Item?
-			if ( (ps->iItemID.ToInt() || DEBUG_GM ) )
+			if ((ps->iItemID.ToInt() || DEBUG_GM))
 			{
 				//Force bVisible to FALSE to fix mouse hover issues
 				//when filtered out items are rendered near pickable items
 				ps->bVisible = FALSE;
 
 				//It's a gold? So format the number
-				if ( ps->iItemID.ToItemID() == ITEMID_Gold && ps->bFormatted == 0x0 )
+				if (ps->iItemID.ToItemID() == ITEMID_Gold && ps->bFormatted == 0x0)
 				{
-					ITEMHANDLER->FormatDropItemGold( ps );
+					ITEMHANDLER->FormatDropItemGold(ps);
 				}
 
-				if ((ITEMVIEW_SELECTED == ps) )
+				if ((ITEMVIEW_SELECTED == ps))
 				{
 					DWORD dwColor = D3DCOLOR_XRGB(255, 255, 0);
 
@@ -753,10 +753,10 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 				RenderDropItemOverride(ps, TRUE, TRUE);
 
 				//Set Camera of Render
-				RENDERER->SetCameraPosition( iX, iY, iZ, iAX, iAY, iAZ );
+				RENDERER->SetCameraPosition(iX, iY, iZ, iAX, iAY, iAZ);
 
 				//Get 2D Plane of item
-				int iZP = RENDERER->GetRectangle2D( ps->sPosition.iX, ps->sPosition.iY + (16 << 8), ps->sPosition.iZ, 32 << 8, 32 << 8, &sRect, &sPosition2D );
+				int iZP = RENDERER->GetRectangle2D(ps->sPosition.iX, ps->sPosition.iY + (16 << 8), ps->sPosition.iZ, 32 << 8, 32 << 8, &sRect, &sPosition2D);
 
 				//Set to Item
 				ps->sRenderPosition.iX = sPosition2D.iX;
@@ -764,25 +764,25 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 				ps->sRenderPosition.iZ = iZP;
 
 				//Item on plane?
-				if ( iZP > 0 && iZP < iSelectedZ &&
+				if (iZP > 0 && iZP < iSelectedZ &&
 					sRect.left < MOUSEHANDLER->GetPosition()->iX && sRect.right > MOUSEHANDLER->GetPosition()->iX &&
-					sRect.top < MOUSEHANDLER->GetPosition()->iY && sRect.bottom > MOUSEHANDLER->GetPosition()->iY )
+					sRect.top < MOUSEHANDLER->GetPosition()->iY && sRect.bottom > MOUSEHANDLER->GetPosition()->iY)
 				{
 					//Set it selected...
-					iSelectedZ	= iZP;
-					psItem		= ps;
-					CopyMemory( &sRectS, &sRect, sizeof( RECT ) );
+					iSelectedZ = iZP;
+					psItem = ps;
+					CopyMemory(&sRectS, &sRect, sizeof(RECT));
 					sPosition2DS = sPosition2D;
 				}
 			}
 		}
 		else
 		{
-			if ( ps->eRarity >= EItemRarity::RARE )
+			if (ps->eRarity >= EItemRarity::RARE)
 			{
-				PARTICLE->DeleteItem ( ps->iItemID.ToInt (), UNITGAME->iLegendaryDropParticle );
-				PARTICLE->DeleteItem ( ps->iItemID.ToInt (), UNITGAME->iEpicDropParticle );
-				PARTICLE->DeleteItem ( ps->iItemID.ToInt (), UNITGAME->iRareDropParticle );
+				PARTICLE->DeleteItem(ps->iItemID.ToInt(), UNITGAME->iLegendaryDropParticle);
+				PARTICLE->DeleteItem(ps->iItemID.ToInt(), UNITGAME->iEpicDropParticle);
+				PARTICLE->DeleteItem(ps->iItemID.ToInt(), UNITGAME->iRareDropParticle);
 			}
 		}
 	}
@@ -790,12 +790,12 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	BOOL bIgnoreMouse = FALSE;
 
 	//Target selected?
-	if ( pcUnitDataSelected )
+	if (pcUnitDataSelected)
 	{
 		//Set It
-		UNITDATA_HOVER	= pcUnitDataSelected;
+		UNITDATA_HOVER = pcUnitDataSelected;
 
-		psItem				= NULL;
+		psItem = NULL;
 	}
 	else
 	{
@@ -804,14 +804,14 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	}
 
 	//Item selected?
-	if ( psItem )
+	if (psItem)
 	{
-		RECT * psSelectR = (RECT*)0x00CF4208;
-		Point2D * psSelect2D = (Point2D*)0x00CF3FBC;
+		RECT* psSelectR = (RECT*)0x00CF4208;
+		Point2D* psSelect2D = (Point2D*)0x00CF3FBC;
 
 		//Set It
-		CopyMemory( psSelectR, &sRectS, sizeof( RECT ) );
-		CopyMemory( psSelect2D, &sPosition2DS, sizeof( Point2D ) );
+		CopyMemory(psSelectR, &sRectS, sizeof(RECT));
+		CopyMemory(psSelect2D, &sPosition2DS, sizeof(Point2D));
 
 		ITEMVIEW_SELECTED = psItem;
 	}
@@ -821,19 +821,19 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 		ITEMVIEW_SELECTED = NULL;
 	}
 
-	if ( eLastMouseCursor != MOUSE_ICON )
+	if (eLastMouseCursor != MOUSE_ICON)
 	{
 		//invalidate item info box, so that we show repair / sale price correctly
 		ITEMINFOBOX->Invalidate();
 		eLastMouseCursor = MOUSE_ICON;
 	}
 
-	if ( WINDOW_ISOPEN_NPC_SHOP || MOUSEHANDLER->IsNoMove() || MOUSEHANDLER->IsDisabled() || WINDOW_ISOPEN_PERSONALSHOP_OTHERS )
+	if (WINDOW_ISOPEN_NPC_SHOP || MOUSEHANDLER->IsNoMove() || MOUSEHANDLER->IsDisabled() || WINDOW_ISOPEN_PERSONALSHOP_OTHERS)
 	{
 		UNITDATA_HOVER = NULL;
 		ITEMVIEW_SELECTED = NULL;
 
-		if ( MOUSE_ICON == EMOUSEICON_Attack || MOUSE_ICON == EMOUSEICON_Talk || MOUSE_ICON == EMOUSEICON_GetItem1 || MOUSE_ICON == EMOUSEICON_GetItem2 )
+		if (MOUSE_ICON == EMOUSEICON_Attack || MOUSE_ICON == EMOUSEICON_Talk || MOUSE_ICON == EMOUSEICON_GetItem1 || MOUSE_ICON == EMOUSEICON_GetItem2)
 			MOUSE_ICON = EMOUSEICON_Default;
 
 		return TRUE;
@@ -841,26 +841,26 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 
 	MOUSE_ICON = EMOUSEICON_None;
 
-	if ( ITEMHANDLER->GetMouseItem()->bValid == FALSE )
+	if (ITEMHANDLER->GetMouseItem()->bValid == FALSE)
 	{
 		MOUSE_ICON = EMOUSEICON_Default;
 
-		if ( UNITDATA_HOVER )
+		if (UNITDATA_HOVER)
 		{
-			if ( UNITDATA_HOVER->sCharacterData.iType == CHARACTERTYPE_Monster )
+			if (UNITDATA_HOVER->sCharacterData.iType == CHARACTERTYPE_Monster)
 				MOUSE_ICON = EMOUSEICON_Attack;
-			else if ( UNITDATA_HOVER->sCharacterData.iType == CHARACTERTYPE_NPC )
+			else if (UNITDATA_HOVER->sCharacterData.iType == CHARACTERTYPE_NPC)
 				MOUSE_ICON = EMOUSEICON_Talk;
 		}
 
-		if ( ITEMVIEW_SELECTED )
+		if (ITEMVIEW_SELECTED)
 		{
 			//if (ITEMHANDLER->CanViewDropItem(ITEMVIEW_SELECTED))
 			//{
-				if (ISMOUSELEFT_CLICKED)
-					MOUSE_ICON = EMOUSEICON_GetItem2;
-				else
-					MOUSE_ICON = EMOUSEICON_GetItem1;
+			if (ISMOUSELEFT_CLICKED)
+				MOUSE_ICON = EMOUSEICON_GetItem2;
+			else
+				MOUSE_ICON = EMOUSEICON_GetItem1;
 			//}
 		}
 	}
@@ -870,30 +870,30 @@ BOOL Render3D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 
 NAKED BOOL Render3DAlpha()
 {
-	JMP( pfnRender3DAlpha );
+	JMP(pfnRender3DAlpha);
 }
 
-void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
+void WINAPI Render(int iX, int iY, int iZ, int iAX, int iAY, int iAZ)
 {
 	POLYCOUNT = 0;
 
 	//Render Sight
-	if ( RENDERER->iGameFieldView )
+	if (RENDERER->iGameFieldView)
 	{
 		VIEWPOINTSIGHT = 38 * 64 + RENDERSIGHTPOSITION;
 		ZDISTANCEMIN = VIEWPOINTSIGHT - (20 * 64 + RENDERSIGHTPOSITION / 4);
 	}
 
 	//Y Check?
-	if ( DEBUG_USER == FALSE )
+	if (DEBUG_USER == FALSE)
 	{
-		Stage * pcStage = STAGE2 != NULL ? STAGE2 : STAGE1;
+		Stage* pcStage = STAGE2 != NULL ? STAGE2 : STAGE1;
 
-		if ( pcStage )
+		if (pcStage)
 		{
-			int iMapY = pcStage->GetHighestPoint( iX, iZ );
+			int iMapY = pcStage->GetHighestPoint(iX, iZ);
 
-			if ( iMapY > iY )
+			if (iMapY > iY)
 			{
 				iY = iMapY;
 
@@ -903,7 +903,7 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	}
 
 	//Video Ram
-	CALL( 0x00457990 );
+	CALL(0x00457990);
 
 	//Update Color...
 	RENDERER->r = (-DARKCOLOR_AMOUNT) + COLOR_R;
@@ -914,9 +914,9 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	iY += 32 << 8;
 
 	//Y Distance?
-	if ( ANGLE_X <= 40 )
+	if (ANGLE_X <= 40)
 	{
-		if ( GAME_DISTANCE <= 100 )
+		if (GAME_DISTANCE <= 100)
 			iY -= (110 - GAME_DISTANCE) << 8;
 	}
 
@@ -927,7 +927,7 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	TRACETARGET->iZ = iZ;
 
 	//Camera Target Update... auto mode
-	if ( ISAUTOCAMERA )
+	if (ISAUTOCAMERA)
 	{
 		UpdateMovementCamera();
 
@@ -939,9 +939,9 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	//Compute Y Player
 	int iYBase = UNITDATA->sPosition.iY + (32 << 8);
 
-	if ( ANGLE_X <= 40 )
+	if (ANGLE_X <= 40)
 	{
-		if ( GAME_DISTANCE <= 100 )
+		if (GAME_DISTANCE <= 100)
 			iYBase += (100 - GAME_DISTANCE) << 8;
 	}
 
@@ -950,41 +950,41 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	//Camera
 	EXECameraTrace sCamera;
 
-	if ( UNITDATA && UNITDATA->iLoadedMapIndex >= 0 && FIELDGAME[UNITDATA->iLoadedMapIndex]->iMapType == MAPTYPE_Distorted )
+	if (UNITDATA && UNITDATA->iLoadedMapIndex >= 0 && FIELDGAME[UNITDATA->iLoadedMapIndex]->iMapType == MAPTYPE_Distorted)
 	{
 		//Update Camera
-		SetupCamera( &sCamera, &iX, &iY, &iZ );
+		SetupCamera(&sCamera, &iX, &iY, &iZ);
 
 		iAX = sCamera.sAngle.iX;
 		iAY = sCamera.sAngle.iY;
 
 		//Set Camera Position
-		RENDERER->SetCameraPosition( iX, iY, iZ, &sCamera.sRotationMatrix );
+		RENDERER->SetCameraPosition(iX, iY, iZ, &sCamera.sRotationMatrix);
 
 		ACTIONMODE = TRUE;
 	}
-	else if ( DEBUG_USER == FALSE )
+	else if (DEBUG_USER == FALSE)
 	{
 		//Setup Camera Matrix
-		SetupCameraMatrix( &sCamera, iX, iY, iZ, UNITDATA->sPosition.iX, iYBase, UNITDATA->sPosition.iZ );
+		SetupCameraMatrix(&sCamera, iX, iY, iZ, UNITDATA->sPosition.iX, iYBase, UNITDATA->sPosition.iZ);
 
 		iAX = sCamera.sAngle.iX;
 		iAY = sCamera.sAngle.iY;
 
 		//Set Camera Position
-		RENDERER->SetCameraPosition( iX, iY, iZ, &sCamera.sRotationMatrix );
+		RENDERER->SetCameraPosition(iX, iY, iZ, &sCamera.sRotationMatrix);
 	}
 
 	RENDERER->ClearLight();
 
-	if ( DARKCOLOR_AMOUNT > 0 )
+	if (DARKCOLOR_AMOUNT > 0)
 	{
-		if ( UNITDATA->iLoadedMapIndex >= 0 )
+		if (UNITDATA->iLoadedMapIndex >= 0)
 		{
 			int iLight = DARKCOLOR_AMOUNT + (DARKCOLOR_AMOUNT >> 2);
 
 			//Dungeon Map?
-			if ( FIELDGAME[UNITDATA->iLoadedMapIndex]->iMapType == MAPTYPE_Dungeon )
+			if (FIELDGAME[UNITDATA->iLoadedMapIndex]->iMapType == MAPTYPE_Dungeon)
 			{
 				DARKLIGHTCOLOR_RANGE = 400 << 8;
 
@@ -995,14 +995,14 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 				DARKLIGHTCOLOR_RANGE = 260 << 8;
 			}
 
-			if ( FIELDGAME[UNITDATA->iLoadedMapIndex]->iMapType == MAPTYPE_Town )
+			if (FIELDGAME[UNITDATA->iLoadedMapIndex]->iMapType == MAPTYPE_Town)
 			{
 				//Nothing...
 			}
 			else
 			{
 				//Add Dynamic Light
-				RENDERER->AddDynamicLight( UNITDATA->sPosition.iX, UNITDATA->sPosition.iY + (32 << 8), UNITDATA->sPosition.iZ, iLight, iLight, iLight, 0, DARKLIGHTCOLOR_RANGE );
+				RENDERER->AddDynamicLight(UNITDATA->sPosition.iX, UNITDATA->sPosition.iY + (32 << 8), UNITDATA->sPosition.iZ, iLight, iLight, iLight, 0, DARKLIGHTCOLOR_RANGE);
 			}
 		}
 	}
@@ -1011,22 +1011,22 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	SetDynamicLights();
 
 	//Render Sky
-	RenderSky( iX, iY, iZ, iAX, iAY, iAZ );
+	RenderSky(iX, iY, iZ, iAX, iAY, iAZ);
 
 	//Update Fog Render State
-	RENDERER->UpdateFogState( TRUE );
+	RENDERER->UpdateFogState(TRUE);
 
 	//Apply Lights on next render
 	RENDERER->bApplyObjectLight = TRUE;
 
-	WRITEDWORD( 0x04B0D9E0, FALSE );
+	WRITEDWORD(0x04B0D9E0, FALSE);
 
-	Render3D( iX, iY, iZ, iAX, iAY, iAZ );
+	Render3D(iX, iY, iZ, iAX, iAY, iAZ);
 
 	//Not Apply lights on next render
 	RENDERER->bApplyObjectLight = FALSE;
 
-	POLYCOUNT = RenderStage( iX, iY, iZ, iAX, iAY, iAZ );
+	POLYCOUNT = RenderStage(iX, iY, iZ, iAX, iAY, iAZ);
 
 	RENDERER->bApplyObjectLight = TRUE;
 
@@ -1036,7 +1036,7 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	RENDERER->bApplyObjectLight = FALSE;
 	RENDERER->iObjectLightCount = 0;
 
-	RENDERER->UpdateFogState( FALSE );
+	RENDERER->UpdateFogState(FALSE);
 
 	RENDERER->ClearLight();
 	RENDERER->r = 0;
@@ -1045,59 +1045,59 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 	RENDERER->a = 0;
 
 	//Crown Renderer
-	if ( Game::GetGameMode() == GAMEMODE_InGame )
+	if (Game::GetGameMode() == GAMEMODE_InGame)
 	{
-		if ( ISSHOW_INTERFACE )
+		if (ISSHOW_INTERFACE)
 		{
-			for ( UINT i = 0; i < MAX_UNITS; i++ )
+			for (UINT i = 0; i < MAX_UNITS; i++)
 			{
-				if ( UNITGAME->pcaUnitData[i].bActive && UNITGAME->pcaUnitData[i].bRendered )
-					RenderBlessCastleCrown( &UNITGAME->pcaUnitData[i] );
+				if (UNITGAME->pcaUnitData[i].bActive && UNITGAME->pcaUnitData[i].bRendered)
+					RenderBlessCastleCrown(&UNITGAME->pcaUnitData[i]);
 			}
 
-			RenderBlessCastleCrown( UNITDATA );
+			RenderBlessCastleCrown(UNITDATA);
 		}
 	}
 
-	RenderModelShadow( iX, iY, iZ, iAX, iAY, iAZ );
+	RenderModelShadow(iX, iY, iZ, iAX, iAY, iAZ);
 
 	UpdateUITextures();
 
-	RenderEffects( iX, iY, iZ, iAX, iAY, iAZ );
+	RenderEffects(iX, iY, iZ, iAX, iAY, iAZ);
 
-	Render3DEngine( iX, iY, iZ, iAX, iAY, iAZ );
+	Render3DEngine(iX, iY, iZ, iAX, iAY, iAZ);
 
-	RenderModel2D( iX, iY, iZ, iAX, iAY, iAZ );
+	RenderModel2D(iX, iY, iZ, iAX, iAY, iAZ);
 
 	//Run Mode
-	if ( FOLLOWMODE_ACTION == FALSE && ISMOUSELEFT_CLICKED == 0 || UNITDATA->sCharacterData.sSP.sCur > (UNITDATA->sCharacterData.sSP.sMax >> 2) )
+	if (FOLLOWMODE_ACTION == FALSE && ISMOUSELEFT_CLICKED == 0 || UNITDATA->sCharacterData.sSP.sCur > (UNITDATA->sCharacterData.sSP.sMax >> 2))
 	{
 		UNITDATA->bRunMode = RUN_UIMODE;
 
-		if ( ACTIONMODE )
+		if (ACTIONMODE)
 			UNITDATA->bRunMode = ACTIONMODE_MOVE;
 	}
 	else
 	{
-		if ( UNITDATA->sCharacterData.sSP.sCur == 0 )
+		if (UNITDATA->sCharacterData.sSP.sCur == 0)
 			UNITDATA->bRunMode = FALSE;
 	}
 
 	RENDERER->CloseCamera();
 
-	if( !pcLowHPWarningImage )
-		pcLowHPWarningImage = UI::ImageLoader::LoadImage( "game\\images\\UI\\hud\\lowhpwarning.png" );
+	if (!pcLowHPWarningImage)
+		pcLowHPWarningImage = UI::ImageLoader::LoadImage("game\\images\\UI\\hud\\lowhpwarning.png");
 
 	//Low HP Warning
-	if( CHARACTERGAME->GetCurrentHP() > 0 && UNITDATA->psModelAnimation->iType != ANIMATIONTYPE_Die )
+	if (CHARACTERGAME->GetCurrentHP() > 0 && UNITDATA->psModelAnimation->iType != ANIMATIONTYPE_Die)
 	{
 		float fDelta = 0.5f - (float)CHARACTERGAME->GetCurrentHP() / (float)UNITDATA->sCharacterData.sHP.sMax;
-		if( fDelta > 1.0f )
+		if (fDelta > 1.0f)
 			fDelta = 1.0f;
-		else if( fDelta < 0.0f )
+		else if (fDelta < 0.0f)
 			fDelta = 0.0f;
 
-		UI::ImageRender::Render( pcLowHPWarningImage, 0, 0, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, D3DCOLOR_ARGB( (int)(fDelta * 255), 255, 255, 255 ) );
+		UI::ImageRender::Render(pcLowHPWarningImage, 0, 0, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, D3DCOLOR_ARGB((int)(fDelta * 255), 255, 255, 255));
 	}
 
 	if (ISBIGMAP > 0)
@@ -1113,108 +1113,108 @@ void WINAPI Render( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
 
 BOOL IsCreatedNewRenderTarget()
 {
-	return (BOOL)CALL( 0x0046EE40 );
+	return (BOOL)CALL(0x0046EE40);
 }
 
-NAKED void SetStageDynamicLight( Stage * pcStage, int iX, int iY, int iZ )
+NAKED void SetStageDynamicLight(Stage* pcStage, int iX, int iY, int iZ)
 {
-	JMP( pfnSetDynamicLight );
+	JMP(pfnSetDynamicLight);
 }
 
-NAKED void SetCharacterCamera( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
+NAKED void SetCharacterCamera(int iX, int iY, int iZ, int iAX, int iAY, int iAZ)
 {
-	JMP( pfnSetCameraCharacter );
+	JMP(pfnSetCameraCharacter);
 }
 
-NAKED void SetClanMaster( DWORD dwID )
+NAKED void SetClanMaster(DWORD dwID)
 {
-	JMP( pfnSetCastleMaster );
+	JMP(pfnSetCastleMaster);
 }
 
-NAKED int GetDamageFromAreaSkill( UnitData * pcUnitData, UnitData * pcTarget, int iDestX, int iDestY, int iDestZ )
+NAKED int GetDamageFromAreaSkill(UnitData* pcUnitData, UnitData* pcTarget, int iDestX, int iDestY, int iDestZ)
 {
-	JMP( pfnGetDamageFromArea );
+	JMP(pfnGetDamageFromArea);
 }
 
-NAKED int SetupCamera( EXECameraTrace * psCamera, int * iX, int * iY, int * iZ )
+NAKED int SetupCamera(EXECameraTrace* psCamera, int* iX, int* iY, int* iZ)
 {
-	JMP( pfnSetupCamera );
+	JMP(pfnSetupCamera);
 }
 
-NAKED int SetupCameraMatrix( EXECameraTrace * psCamera, int iX, int iY, int iZ, int iDX, int iDY, int iDZ )
+NAKED int SetupCameraMatrix(EXECameraTrace* psCamera, int iX, int iY, int iZ, int iDX, int iDY, int iDZ)
 {
-	JMP( pfnSetupCameraMatrix );
+	JMP(pfnSetupCameraMatrix);
 }
 
-NAKED void RenderSky( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
+NAKED void RenderSky(int iX, int iY, int iZ, int iAX, int iAY, int iAZ)
 {
-	JMP( pfnRenderSky );
+	JMP(pfnRenderSky);
 }
 
-NAKED int RenderStage( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
+NAKED int RenderStage(int iX, int iY, int iZ, int iAX, int iAY, int iAZ)
 {
-	JMP( pfnRenderStage );
+	JMP(pfnRenderStage);
 }
 
-NAKED int RenderModelShadow( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
+NAKED int RenderModelShadow(int iX, int iY, int iZ, int iAX, int iAY, int iAZ)
 {
-	JMP( pfnRenderModelShadow );
+	JMP(pfnRenderModelShadow);
 }
 
 NAKED void UpdateUITextures()
 {
-	JMP( pfnUpdateUITextures );
+	JMP(pfnUpdateUITextures);
 }
 
-NAKED void RenderEffects( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
+NAKED void RenderEffects(int iX, int iY, int iZ, int iAX, int iAY, int iAZ)
 {
-	JMP( pfnRenderEffects );
+	JMP(pfnRenderEffects);
 }
 
-NAKED void RenderModel2D( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
+NAKED void RenderModel2D(int iX, int iY, int iZ, int iAX, int iAY, int iAZ)
 {
-	JMP( pfnRenderModel2D );
+	JMP(pfnRenderModel2D);
 }
 
-void Render3DEngine( int iX, int iY, int iZ, int iAX, int iAY, int iAZ )
+void Render3DEngine(int iX, int iY, int iZ, int iAX, int iAY, int iAZ)
 {
-	CALLT_WITH_ARG6( pfnRender3DEngine, 0x03707170, iX, iY, iZ, iAX, iAY, iAZ );
+	CALLT_WITH_ARG6(pfnRender3DEngine, 0x03707170, iX, iY, iZ, iAX, iAY, iAZ);
 }
 
 NAKED void RenderZoomMap()
 {
-	JMP( pfnRenderZoomMap );
+	JMP(pfnRenderZoomMap);
 }
 
 /// <summary>
 /// 2012 source: OpenEachPlayer
 /// </summary>
-NAKED void PrepareUnitDataHUD( UnitData * p )
+NAKED void PrepareUnitDataHUD(UnitData* p)
 {
-	JMP( 0x004558F0 );
+	JMP(0x004558F0);
 }
 
 
 
-void RenderUnitDataHUD( Point2D * sCenterPos, int iCameraDistance, int iType )
+void RenderUnitDataHUD(Point2D* sCenterPos, int iCameraDistance, int iType)
 {
-	UnitData * pcCurrentTarget = (*(UnitData**)0x0CF48D0);
+	UnitData* pcCurrentTarget = (*(UnitData**)0x0CF48D0);
 
 	//Render UnitData
-	if ( TARGET_UNITDATA->bActive && pcCurrentTarget && pcCurrentTarget->bActive )
+	if (TARGET_UNITDATA->bActive && pcCurrentTarget && pcCurrentTarget->bActive)
 	{
-		if ( pcCurrentTarget->sCharacterData.bExclusiveBoss )
+		if (pcCurrentTarget->sCharacterData.bExclusiveBoss)
 		{
-			if ( HUDHANDLER->GetTargetUnitData() )
+			if (HUDHANDLER->GetTargetUnitData())
 			{
-				HUDHANDLER->UpdateTargetInfo( HUDHANDLER->GetTargetUnitData() );
-				HUDHANDLER->SetRenderTarget( TRUE );
+				HUDHANDLER->UpdateTargetInfo(HUDHANDLER->GetTargetUnitData());
+				HUDHANDLER->SetRenderTarget(TRUE);
 			}
 			else
-				HUDHANDLER->SetRenderTarget( FALSE );
+				HUDHANDLER->SetRenderTarget(FALSE);
 		}
-		else if ( !pcCurrentTarget->sCharacterData.bExclusiveBoss &&
-			       CHARACTERGAME->GetStageID() != MAPID_Bellatra) //don't render in Bellatra SOD
+		else if (!pcCurrentTarget->sCharacterData.bExclusiveBoss &&
+			CHARACTERGAME->GetStageID() != MAPID_Bellatra) //don't render in Bellatra SOD
 		{
 			if (HUDHANDLER->UpdateTargetInfo(pcCurrentTarget))
 			{
@@ -1228,48 +1228,48 @@ void RenderUnitDataHUD( Point2D * sCenterPos, int iCameraDistance, int iType )
 	}
 
 	//Prepare UnitData to Render, if dont have yet
-	if ( UNITDATA_FOCUSED )
+	if (UNITDATA_FOCUSED)
 	{
-		if ( pcCurrentTarget != UNITDATA_FOCUSED )
+		if (pcCurrentTarget != UNITDATA_FOCUSED)
 		{
-			WRITEDWORD( 0x0CF48D4, FALSE );
-			PrepareUnitDataHUD( UNITDATA_FOCUSED );
-			WRITEDWORD( 0x00CF48DC, TRUE );
+			WRITEDWORD(0x0CF48D4, FALSE);
+			PrepareUnitDataHUD(UNITDATA_FOCUSED);
+			WRITEDWORD(0x00CF48DC, TRUE);
 		}
 	}
-	else if ( UNITDATA_HOVER && pcCurrentTarget != UNITDATA_HOVER )
+	else if (UNITDATA_HOVER && pcCurrentTarget != UNITDATA_HOVER)
 	{
-		PrepareUnitDataHUD( UNITDATA_HOVER );
-		WRITEDWORD( 0x00CF48DC, TRUE );
+		PrepareUnitDataHUD(UNITDATA_HOVER);
+		WRITEDWORD(0x00CF48DC, TRUE);
 	}
 	//Render Character Debug Text
-	if ( GM_MODE && *(int*)0x35E11D8 != 0 && DEBUG_GM )
+	if (GM_MODE && *(int*)0x35E11D8 != 0 && DEBUG_GM)
 		UNITGAME->RenderCharacterDebugText();
 }
 
 NAKED void UpdateMovementCamera()
 {
-	JMP( pfnUpdateMovementCamera );
+	JMP(pfnUpdateMovementCamera);
 }
 
 NAKED void FakeRenderGameState()
 {
-	JMP( pfnFakeRenderGameState );
+	JMP(pfnFakeRenderGameState);
 }
 
 BOOL RenderGameState()
 {
-	if( pcBossFixedPositionImages[0] == NULL )
-		pcBossFixedPositionImages[0] = UI::ImageLoader::LoadImage( "game\\images\\UI\\hud\\target\\bossbackground.png" );
+	if (pcBossFixedPositionImages[0] == NULL)
+		pcBossFixedPositionImages[0] = UI::ImageLoader::LoadImage("game\\images\\UI\\hud\\target\\bossbackground.png");
 
-	if( pcBossFixedPositionImages[1] == NULL )
-		pcBossFixedPositionImages[1] = UI::ImageLoader::LoadImage( "game\\images\\UI\\hud\\target\\bosshp.png" );
+	if (pcBossFixedPositionImages[1] == NULL)
+		pcBossFixedPositionImages[1] = UI::ImageLoader::LoadImage("game\\images\\UI\\hud\\target\\bosshp.png");
 
-	if( pcBossFixedPositionImages[2] == NULL )
-		pcBossFixedPositionImages[2] = UI::ImageLoader::LoadImage( "game\\images\\UI\\hud\\target\\bosshp_.png" );
+	if (pcBossFixedPositionImages[2] == NULL)
+		pcBossFixedPositionImages[2] = UI::ImageLoader::LoadImage("game\\images\\UI\\hud\\target\\bosshp_.png");
 
-	if( pcBossFixedPositionImages[3] == NULL )
-		pcBossFixedPositionImages[3] = UI::ImageLoader::LoadImage( "game\\images\\UI\\hud\\target\\type\\background.png" );
+	if (pcBossFixedPositionImages[3] == NULL)
+		pcBossFixedPositionImages[3] = UI::ImageLoader::LoadImage("game\\images\\UI\\hud\\target\\type\\background.png");
 
 	int iOldDarkColor = 0;
 
@@ -1278,7 +1278,7 @@ BOOL RenderGameState()
 	iOldDarkColor = DARKCOLOR_AMOUNT;
 	DARKCOLOR_AMOUNT = 0;
 
-	UnitData * pcUnitData = NULL, * pcBossUnitData = NULL;
+	UnitData* pcUnitData = NULL, * pcBossUnitData = NULL;
 
 	BOOL bDisplayItemLabel = FALSE;
 
@@ -1288,16 +1288,16 @@ BOOL RenderGameState()
 		bDisplayItemLabel = ISPRESSEDKEY('A');
 
 
-	if ( bDisplayItemLabel )
+	if (bDisplayItemLabel)
 	{
-		for ( int i = 0; i < 1024; i++ )
+		for (int i = 0; i < 1024; i++)
 		{
-			DropItemView * ps = saItemsStage + i;
+			DropItemView* ps = saItemsStage + i;
 
-			if ( ps->bActive &&
-				 ps->iItemID.ToInt() != 0 &&
-				 ps != ITEMVIEW_SELECTED &&
-				 (ps->eItemFlags & EItemFlag::TreasureHuntingMode) == EItemFlag::None)
+			if (ps->bActive &&
+				ps->iItemID.ToInt() != 0 &&
+				ps != ITEMVIEW_SELECTED &&
+				(ps->eItemFlags & EItemFlag::TreasureHuntingMode) == EItemFlag::None)
 			{
 				if (UNITDATA->sPosition.WithinXZYDistance(&ps->sPosition, DISTANCE_XY_20_meters))
 				{
@@ -1306,7 +1306,7 @@ BOOL RenderGameState()
 
 					ESkinID ItemSkin = SKINID_Normal;
 
-					if ( ps->eRarity != EItemRarity::NONE )
+					if (ps->eRarity != EItemRarity::NONE)
 						ItemSkin = ESkinID(static_cast<int>(ps->eRarity) + 3);
 
 					MESSAGEBALLOON->SetSkin(ItemSkin);
@@ -1314,7 +1314,7 @@ BOOL RenderGameState()
 					MESSAGEBALLOON->SetMessage(ps->szName);
 
 					ARGBNew rarityColor = rarityColorsGround[ps->eRarity];
-					MESSAGEBALLOON->SetColor ( RGBA ( rarityColor.red, rarityColor.green, rarityColor.blue, rarityColor.alpha ) );
+					MESSAGEBALLOON->SetColor(RGBA(rarityColor.red, rarityColor.green, rarityColor.blue, rarityColor.alpha));
 					MESSAGEBALLOON->Render(ps->sRenderPosition.iX, ps->sRenderPosition.iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0);
 				}
 			}
@@ -1323,56 +1323,56 @@ BOOL RenderGameState()
 
 	int iZoomAmount = 0;
 
-	if ( SETTINGSHANDLER->GetModel ()->GetSettings ().bARPGCamera )
+	if (SETTINGSHANDLER->GetModel()->GetSettings().bARPGCamera)
 	{
 		CAMERA->iCameraZoom = 530;
 		CAMERA->iCameraAngle = 500;
 		CAMERA->iCameraTurn = 500;
 	}
-	else if ( SETTINGSHANDLER->GetModel ()->GetSettings ().bARPGCamera != TRUE &&
-		SETTINGSHANDLER->GetModel ()->GetSettings ().bCustomZoom &&
-		SETTINGSHANDLER->GetModel ()->GetSettings ().bCustomZoomTown != TRUE )
+	else if (SETTINGSHANDLER->GetModel()->GetSettings().bARPGCamera != TRUE &&
+		SETTINGSHANDLER->GetModel()->GetSettings().bCustomZoom &&
+		SETTINGSHANDLER->GetModel()->GetSettings().bCustomZoomTown != TRUE)
 	{
-		iZoomAmount = 100 + SETTINGSHANDLER->GetModel ()->GetSettings ().iZoomLevel * 9;
+		iZoomAmount = 100 + SETTINGSHANDLER->GetModel()->GetSettings().iZoomLevel * 9;
 
-		if ( iZoomAmount < 100 )
+		if (iZoomAmount < 100)
 			iZoomAmount = 100;
-		else if ( iZoomAmount > 1000 )
+		else if (iZoomAmount > 1000)
 			iZoomAmount = 1000;
 
 		CAMERA->iCameraZoom = iZoomAmount;
 		CAMERA->iCameraAngle = -1;
 		CAMERA->iCameraTurn = -1;
 	}
-	else if ( SETTINGSHANDLER->GetModel ()->GetSettings ().bARPGCamera != TRUE &&
-		SETTINGSHANDLER->GetModel ()->GetSettings ().bCustomZoom &&
-		SETTINGSHANDLER->GetModel ()->GetSettings ().bCustomZoomTown )
+	else if (SETTINGSHANDLER->GetModel()->GetSettings().bARPGCamera != TRUE &&
+		SETTINGSHANDLER->GetModel()->GetSettings().bCustomZoom &&
+		SETTINGSHANDLER->GetModel()->GetSettings().bCustomZoomTown)
 	{
-		if ( MAP_ID == MAPID_PillaiTown || MAP_ID == MAPID_RicartenTown )
-			iZoomAmount = 100 + SETTINGSHANDLER->GetModel ()->GetSettings ().iZoomTownLevel * 9;
+		if (MAP_ID == MAPID_PillaiTown || MAP_ID == MAPID_RicartenTown)
+			iZoomAmount = 100 + SETTINGSHANDLER->GetModel()->GetSettings().iZoomTownLevel * 9;
 		else
-			iZoomAmount = 100 + SETTINGSHANDLER->GetModel ()->GetSettings ().iZoomLevel * 9;
+			iZoomAmount = 100 + SETTINGSHANDLER->GetModel()->GetSettings().iZoomLevel * 9;
 
-		if ( iZoomAmount < 100 )
+		if (iZoomAmount < 100)
 			iZoomAmount = 100;
-		else if ( iZoomAmount > 1000 )
+		else if (iZoomAmount > 1000)
 			iZoomAmount = 1000;
 
 		CAMERA->iCameraZoom = iZoomAmount;
 		CAMERA->iCameraAngle = -1;
 		CAMERA->iCameraTurn = -1;
 	}
-	else if ( SETTINGSHANDLER->GetModel ()->GetSettings ().bARPGCamera != TRUE &&
-		SETTINGSHANDLER->GetModel ()->GetSettings ().bCustomZoom != TRUE &&
-		SETTINGSHANDLER->GetModel ()->GetSettings ().bCustomZoomTown )
+	else if (SETTINGSHANDLER->GetModel()->GetSettings().bARPGCamera != TRUE &&
+		SETTINGSHANDLER->GetModel()->GetSettings().bCustomZoom != TRUE &&
+		SETTINGSHANDLER->GetModel()->GetSettings().bCustomZoomTown)
 	{
-		if ( MAP_ID == MAPID_PillaiTown || MAP_ID == MAPID_RicartenTown )
+		if (MAP_ID == MAPID_PillaiTown || MAP_ID == MAPID_RicartenTown)
 		{
-			iZoomAmount = 100 + SETTINGSHANDLER->GetModel ()->GetSettings ().iZoomTownLevel * 9;
+			iZoomAmount = 100 + SETTINGSHANDLER->GetModel()->GetSettings().iZoomTownLevel * 9;
 
-			if ( iZoomAmount < 100 )
+			if (iZoomAmount < 100)
 				iZoomAmount = 100;
-			else if ( iZoomAmount > 1000 )
+			else if (iZoomAmount > 1000)
 				iZoomAmount = 1000;
 
 			CAMERA->iCameraZoom = iZoomAmount;
@@ -1406,10 +1406,10 @@ BOOL RenderGameState()
 		{
 			MESSAGEBALLOON->ResetMessage();
 
-			if(SETTINGSHANDLER->GetModel()->GetSettings().bShowFrameAboveHead)
-				MESSAGEBALLOON->SetSkin( SKINID_Normal );
+			if (SETTINGSHANDLER->GetModel()->GetSettings().bShowFrameAboveHead)
+				MESSAGEBALLOON->SetSkin(SKINID_Normal);
 			else
-				MESSAGEBALLOON->SetSkin( SKINID_Transparent );
+				MESSAGEBALLOON->SetSkin(SKINID_Transparent);
 
 			MESSAGEBALLOON->SetColor(D3DCOLOR_XRGB(255, 255, 255));
 			MESSAGEBALLOON->AddCharTitleText(pcUnit->szTitle, pcUnit->sTitleRarity);
@@ -1419,7 +1419,7 @@ BOOL RenderGameState()
 
 	}
 
-	if ( ITEMVIEW_SELECTED && UNITDATA_HOVER == NULL && UNITDATA_FOCUSED == NULL )
+	if (ITEMVIEW_SELECTED && UNITDATA_HOVER == NULL && UNITDATA_FOCUSED == NULL)
 	{
 		Point2D* psSelect2D = (Point2D*)0x00CF3FBC;
 
@@ -1433,7 +1433,7 @@ BOOL RenderGameState()
 
 		ESkinID ItemSkin = SKINID_Normal;
 
-		if ( ITEMVIEW_SELECTED->eRarity != EItemRarity::NONE )
+		if (ITEMVIEW_SELECTED->eRarity != EItemRarity::NONE)
 			ItemSkin = ESkinID(static_cast<int>(ITEMVIEW_SELECTED->eRarity) + 3);
 
 		MESSAGEBALLOON->SetSkin(ItemSkin);
@@ -1441,83 +1441,83 @@ BOOL RenderGameState()
 
 		ARGBNew rarityColor = rarityColorsGroundHover[ITEMVIEW_SELECTED->eRarity];
 
-		MESSAGEBALLOON->SetColor ( RGBA ( rarityColor.red, rarityColor.green, rarityColor.blue, rarityColor.alpha ) );
+		MESSAGEBALLOON->SetColor(RGBA(rarityColor.red, rarityColor.green, rarityColor.blue, rarityColor.alpha));
 		MESSAGEBALLOON->Render(psSelect2D->iX, psSelect2D->iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0);
 	}
 
 	CHARACTERMESSAGE_COUNT = 0;
 
-	for ( int i = 0; i < MAX_UNITS; i++ )
+	for (int i = 0; i < MAX_UNITS; i++)
 	{
-		UnitData * pc = UNITGAME->pcaUnitData + i;
+		UnitData* pc = UNITGAME->pcaUnitData + i;
 
-		if( pc->bActive && pc->bRendered && pc->sCharacterData.szName[0] )
+		if (pc->bActive && pc->bRendered && pc->sCharacterData.szName[0])
 		{
 			//Party Handler
-			if( PARTYHANDLER->IsPartyMember( pc->iID ) )
+			if (PARTYHANDLER->IsPartyMember(pc->iID))
 				pc->PartyFlag = 1;
-			else if( PARTYHANDLER->IsRaidMember( pc->iID ) )
+			else if (PARTYHANDLER->IsRaidMember(pc->iID))
 				pc->PartyFlag = 2;
 			else
 				pc->PartyFlag = 0;
 
 			//Exclusive Boss
-			if( pc->sCharacterData.bExclusiveBoss && !pc->sCharacterData.bGrandFuryBoss )
+			if (pc->sCharacterData.bExclusiveBoss && !pc->sCharacterData.bGrandFuryBoss)
 				pcBossUnitData = pc;
 
 			int iSelected = 0;
 
-			if ( pc->sRenderPoint.iZ < (64 * 32 * 256) )
+			if (pc->sRenderPoint.iZ < (64 * 32 * 256))
 			{
-				Unit * pcUnit = UNITDATATOUNIT ( pc );
+				Unit* pcUnit = UNITDATATOUNIT(pc);
 
-				if ( pcUnit && pcUnit->vDamageInfoList.size () > 0 )
+				if (pcUnit && pcUnit->vDamageInfoList.size() > 0)
 				{
-					DAMAGEINFOHANDLER->RenderUnitDamageInfo ( pcUnit );
+					DAMAGEINFOHANDLER->RenderUnitDamageInfo(pcUnit);
 				}
 
-				if ( pc->szMessage[0] )
+				if (pc->szMessage[0])
 				{
-					if ( pc->dwMessageEndTime < TICKCOUNT )
+					if (pc->dwMessageEndTime < TICKCOUNT)
 					{
 						pc->szMessage[0] = 0;
 					}
-					else if ( ( lstrlenA ( pc->szMessage ) == 2 && pc->szMessage[0] == 'e' ) && isdigit ( pc->szMessage[1] ) )
+					else if ((lstrlenA(pc->szMessage) == 2 && pc->szMessage[0] == 'e') && isdigit(pc->szMessage[1]))
 					{
 						pc->szMessage[0] = 0;
 					}
-					else if ( pc->sCharacterData.iType )
+					else if (pc->sCharacterData.iType)
 					{
 						CHARACTERMESSAGE[CHARACTERMESSAGE_COUNT++] = pc;
 						iSelected++;
 					}
 				}
 
-				if ( pc->iPersonalShop && iSelected == 0 )
+				if (pc->iPersonalShop && iSelected == 0)
 				{
 					CHARACTERMESSAGE[CHARACTERMESSAGE_COUNT++] = pc;
 					iSelected++;
 				}
 			}
 
-			if ( iSelected == 0 )
+			if (iSelected == 0)
 			{
-				if ( UNITDATA_FOCUSED == pc || UNITDATA_HOVER == pc ||
+				if (UNITDATA_FOCUSED == pc || UNITDATA_HOVER == pc ||
 					(pc->sCharacterData.iType == CHARACTERTYPE_NPC && pc->sRenderPoint.iZ < (64 * 64 * 256)) ||
 					(pc->GetCurrentHealth() > 0 && pc->sCharacterData.iType == CHARACTERTYPE_Monster && pc->sCharacterData.iMonsterType == MONSTERTYPE_Summon) ||
 					(pc->sCharacterData.iClanID && pc->sCharacterData.iClanID == UNITDATA->sCharacterData.iClanID) ||
-					pc->iBellatraCrown || pc->PartyFlag )
+					pc->iBellatraCrown || pc->PartyFlag)
 				{
 					CHARACTERMESSAGE[CHARACTERMESSAGE_COUNT++] = pc;
 				}
 				else
 				{
-					if ( pc->sCharacterData.iType == CHARACTERTYPE_Player || pc->PkMode_CharState == CHARACTERTYPE_Player )
+					if (pc->sCharacterData.iType == CHARACTERTYPE_Player || pc->PkMode_CharState == CHARACTERTYPE_Player)
 					{
-						Unit * pcUnit1 = UNITDATATOUNIT( pc );
-						if ( pcUnit1 )
+						Unit* pcUnit1 = UNITDATATOUNIT(pc);
+						if (pcUnit1)
 						{
-							if ( pcUnit1->sBellatraSoloCrown )
+							if (pcUnit1->sBellatraSoloCrown)
 							{
 								CHARACTERMESSAGE[CHARACTERMESSAGE_COUNT++] = pc;
 							}
@@ -1529,39 +1529,39 @@ BOOL RenderGameState()
 	}
 
 
-	if ( UNIT && UNIT->vDamageInfoList.size () > 0 )
+	if (UNIT && UNIT->vDamageInfoList.size() > 0)
 	{
-		DAMAGEINFOHANDLER->RenderUnitDamageInfo ( UNIT );
+		DAMAGEINFOHANDLER->RenderUnitDamageInfo(UNIT);
 	}
 
-	if ( UNITDATA->szMessage[0] )
+	if (UNITDATA->szMessage[0])
 	{
-		if ( UNITDATA->dwMessageEndTime < TICKCOUNT )
+		if (UNITDATA->dwMessageEndTime < TICKCOUNT)
 			UNITDATA->szMessage[0] = 0;
-		else if( (lstrlenA(UNITDATA->szMessage) == 2 && UNITDATA->szMessage[0] == 'e') && isdigit(UNITDATA->szMessage[1]) )
+		else if ((lstrlenA(UNITDATA->szMessage) == 2 && UNITDATA->szMessage[0] == 'e') && isdigit(UNITDATA->szMessage[1]))
 			UNITDATA->szMessage[0] = 0;
 		else
 			CHARACTERMESSAGE[CHARACTERMESSAGE_COUNT++] = UNITDATA;
 	}
 	else
 	{
-		if ( UNITDATA->iPersonalShop )
+		if (UNITDATA->iPersonalShop)
 		{
 			CHARACTERMESSAGE[CHARACTERMESSAGE_COUNT++] = UNITDATA;
 		}
 	}
 
-	if ( CHARACTERMESSAGE_COUNT > 0 )
+	if (CHARACTERMESSAGE_COUNT > 0)
 	{
-		for ( int i = 0; i < CHARACTERMESSAGE_COUNT; i++ )
+		for (int i = 0; i < CHARACTERMESSAGE_COUNT; i++)
 		{
-			for ( int j = i + 1; j < CHARACTERMESSAGE_COUNT; j++ )
+			for (int j = i + 1; j < CHARACTERMESSAGE_COUNT; j++)
 			{
-				UnitData * pc1 = CHARACTERMESSAGE[i];
-				UnitData * pc2 = CHARACTERMESSAGE[j];
+				UnitData* pc1 = CHARACTERMESSAGE[i];
+				UnitData* pc2 = CHARACTERMESSAGE[j];
 
-				if ( pc1->sRenderPoint.iZ < pc2->sRenderPoint.iZ ||
-					pc1 == UNITDATA_FOCUSED || pc1 == UNITDATA_HOVER )
+				if (pc1->sRenderPoint.iZ < pc2->sRenderPoint.iZ ||
+					pc1 == UNITDATA_FOCUSED || pc1 == UNITDATA_HOVER)
 				{
 					pcUnitData = pc1;
 					CHARACTERMESSAGE[i] = CHARACTERMESSAGE[j];
@@ -1574,48 +1574,48 @@ BOOL RenderGameState()
 	int iY = 8 + ((*(int*)0x00824FA8) >> 6);
 
 
-	if ( SETTINGSHANDLER->GetModel()->GetSettings().bHPBarOnSelf )
+	if (SETTINGSHANDLER->GetModel()->GetSettings().bHPBarOnSelf)
 	{
-		if ( MAP_ID != MAPID_RicartenTown && MAP_ID != MAPID_PillaiTown && MAP_ID != MAPID_Eura && MAP_ID != MAPID_Atlantis )
+		if (MAP_ID != MAPID_RicartenTown && MAP_ID != MAPID_PillaiTown && MAP_ID != MAPID_Eura && MAP_ID != MAPID_Atlantis)
 		{
 			//Render this player's HP
-			RenderCharacterHP( UNITDATA, UNITDATA->sRenderPoint.iX - 30, UNITDATA->rRenderRectangle.top + iY - 24 );
+			RenderCharacterHP(UNITDATA, UNITDATA->sRenderPoint.iX - 30, UNITDATA->rRenderRectangle.top + iY - 24);
 
 		}
 	}
 
-	for ( int i = 0; i < CHARACTERMESSAGE_COUNT; i++ )
+	for (int i = 0; i < CHARACTERMESSAGE_COUNT; i++)
 	{
-		DWORD dwColor = RGBA( 255, 255, 255, 200 );
+		DWORD dwColor = RGBA(255, 255, 255, 200);
 		DWORD dwTitleColor = RGBA(255, 225, 150, 255);
 		BOOL bShowBar = FALSE;
 		BOOL bShowOwner = FALSE;
 		BOOL bSelected = FALSE;
 
-		UnitData * pc = CHARACTERMESSAGE[i];
+		UnitData* pc = CHARACTERMESSAGE[i];
 
 		/*if (!pc->sPosition.WithinXZDistance(&UNITDATA->sPosition, DISTANCE_XY_16))
 			continue;*/
 
-		if ( pc->PartyFlag == 1 )				//Party
+		if (pc->PartyFlag == 1)				//Party
 		{
-			dwColor = RGBA( 255, 220, 255, 160 );
+			dwColor = RGBA(255, 220, 255, 160);
 			bShowBar = TRUE;
 		}
-		else if( pc->PartyFlag == 2 )			//Raid
+		else if (pc->PartyFlag == 2)			//Raid
 		{
-			dwColor = RGBA( 255, 40, 240, 230 );
+			dwColor = RGBA(255, 40, 240, 230);
 			bShowBar = TRUE;
 		}
-		else if ( pc->sCharacterData.iType == CHARACTERTYPE_Monster )
+		else if (pc->sCharacterData.iType == CHARACTERTYPE_Monster)
 		{
-			if ( pc->sCharacterData.iMonsterType == MONSTERTYPE_Summon )
+			if (pc->sCharacterData.iMonsterType == MONSTERTYPE_Summon)
 			{
-				dwColor = RGBA( 255, 220, 255, 160 );
+				dwColor = RGBA(255, 220, 255, 160);
 
-				if ( pc->sCharacterData.iOwnerID == UNITDATA->iID )
+				if (pc->sCharacterData.iOwnerID == UNITDATA->iID)
 				{
-					dwColor = RGBA( 255, 0, 162, 232 );
+					dwColor = RGBA(255, 0, 162, 232);
 					bShowOwner = TRUE;
 					bShowBar = TRUE;
 				}
@@ -1623,72 +1623,72 @@ BOOL RenderGameState()
 					bShowOwner = TRUE;
 			}
 			else
-				dwColor = RGBA( 255, 255, 210, 210 );
+				dwColor = RGBA(255, 255, 210, 210);
 		}
-		else if ( pc->sCharacterData.iType == CHARACTERTYPE_NPC )
+		else if (pc->sCharacterData.iType == CHARACTERTYPE_NPC)
 		{
-			dwColor = RGBA( 255, 180, 180, 255 );
+			dwColor = RGBA(255, 180, 180, 255);
 		}
 
-		if ( pc == UNITDATA_FOCUSED )
+		if (pc == UNITDATA_FOCUSED)
 		{
-			if ( pc->sCharacterData.iType == CHARACTERTYPE_Monster && pc->sCharacterData.iMonsterType != MONSTERTYPE_Summon )
-				dwColor = RGBA( 255, 255, 230, 200 );
+			if (pc->sCharacterData.iType == CHARACTERTYPE_Monster && pc->sCharacterData.iMonsterType != MONSTERTYPE_Summon)
+				dwColor = RGBA(255, 255, 230, 200);
 			else
-				dwColor = RGBA( 255, 255, 255, 255 );
+				dwColor = RGBA(255, 255, 255, 255);
 
 			bSelected = TRUE;
 		}
 		else
 		{
-			if ( pc == UNITDATA_HOVER && pc->szMessage[0] )
+			if (pc == UNITDATA_HOVER && pc->szMessage[0])
 				bSelected = TRUE;
 		}
 
-		EXESurfaceOld * psTextureClanIcon = NULL;
-		char * pszClanName = NULL;
+		EXESurfaceOld* psTextureClanIcon = NULL;
+		char* pszClanName = NULL;
 		DWORD dwClanBit = 0;
 
-		ClanInfo * psClanInfo = (ClanInfo*)0x03AA4608;
+		ClanInfo* psClanInfo = (ClanInfo*)0x03AA4608;
 
-		if ( pc->sCharacterData.iClanID )
+		if (pc->sCharacterData.iClanID)
 		{
-			if ( pc == UNITDATA )
+			if (pc == UNITDATA)
 			{
-				psTextureClanIcon = (EXESurfaceOld*)READDWORD( 0x03B18BC4 );
+				psTextureClanIcon = (EXESurfaceOld*)READDWORD(0x03B18BC4);
 				pszClanName = (char*)0x03B17984;
 			}
-			else if ( pc->iClanInfoIndex >= 0 )
+			else if (pc->iClanInfoIndex >= 0)
 			{
 				psTextureClanIcon = psClanInfo[pc->iClanInfoIndex].psTexture32;
 				pszClanName = psClanInfo[pc->iClanInfoIndex].sHeader.szClanName;
 			}
 		}
 
-		if ( ((pc->szMessage[0] || pc->iPersonalShop) && (pc->sRenderPoint.iZ < (64 * 32 * 256)) || pc == UNITDATA) )
+		if (((pc->szMessage[0] || pc->iPersonalShop) && (pc->sRenderPoint.iZ < (64 * 32 * 256)) || pc == UNITDATA))
 		{
-			if ( pszClanName && pc != UNITDATA_FOCUSED && pc != UNITDATA_HOVER )
+			if (pszClanName && pc != UNITDATA_FOCUSED && pc != UNITDATA_HOVER)
 			{
-				if ( UNITDATA->sCharacterData.iClanID == 0 || pc->sCharacterData.iClanID != UNITDATA->sCharacterData.iClanID )
+				if (UNITDATA->sCharacterData.iClanID == 0 || pc->sCharacterData.iClanID != UNITDATA->sCharacterData.iClanID)
 					pszClanName = NULL;
 			}
 
-			if ( pc->szMessage[0] )
+			if (pc->szMessage[0])
 			{
 				//Draw Box...
 				MESSAGEBALLOON->ResetMessage();
 
-				if ( psTextureClanIcon )
-					MESSAGEBALLOON->SetClanIconTexture( psTextureClanIcon );
+				if (psTextureClanIcon)
+					MESSAGEBALLOON->SetClanIconTexture(psTextureClanIcon);
 
-				MESSAGEBALLOON->IsCharacterMessage( TRUE );
-				MESSAGEBALLOON->SetSkin( SKINID_Normal );
+				MESSAGEBALLOON->IsCharacterMessage(TRUE);
+				MESSAGEBALLOON->SetSkin(SKINID_Normal);
 
-				if( pc->sCharacterData.iType == CHARACTERTYPE_NPC )
+				if (pc->sCharacterData.iType == CHARACTERTYPE_NPC)
 				{
-					MESSAGEBALLOON->SetMessage( FormatString( "%s: %s", pc->sCharacterData.szName, pc->szMessage ) );
-					MESSAGEBALLOON->GetTextMessage()->SetHighlightTextColor( dwColor );
-					MESSAGEBALLOON->SetColor ( -1 );
+					MESSAGEBALLOON->SetMessage(FormatString("%s: %s", pc->sCharacterData.szName, pc->szMessage));
+					MESSAGEBALLOON->GetTextMessage()->SetHighlightTextColor(dwColor);
+					MESSAGEBALLOON->SetColor(-1);
 
 					MESSAGEBALLOON->SetNotifyQuestIconID(QUESTGAMEHANDLER->GetNpcQuestStatus(pc->sCharacterData.iNPCId));
 				}
@@ -1696,53 +1696,53 @@ BOOL RenderGameState()
 				{
 					Unit* pcUnit = UNITDATATOUNIT(pc);
 					MESSAGEBALLOON->AddCharTitleText(pcUnit->szTitle, pcUnit->sTitleRarity);
-					MESSAGEBALLOON->SetMessage( pc->szMessage );
-					MESSAGEBALLOON->SetColor ( dwColor );
+					MESSAGEBALLOON->SetMessage(pc->szMessage);
+					MESSAGEBALLOON->SetColor(dwColor);
 				}
 
-				MESSAGEBALLOON->Render( pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0 );
+				MESSAGEBALLOON->Render(pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0);
 			}
 			else
 			{
-				if ( pc->szPersonalShop[0] )
+				if (pc->szPersonalShop[0])
 				{
 					MESSAGEBALLOON->ResetMessage();
 
-					if ( psTextureClanIcon )
-						MESSAGEBALLOON->SetClanIconTexture( psTextureClanIcon );
+					if (psTextureClanIcon)
+						MESSAGEBALLOON->SetClanIconTexture(psTextureClanIcon);
 
-					MESSAGEBALLOON->IsCharacterMessage( TRUE );
-					MESSAGEBALLOON->SetSkin( SKINID_Blue );
-					MESSAGEBALLOON->SetMessage( pc->szPersonalShop );
-					MESSAGEBALLOON->SetColor ( dwColor );
-					MESSAGEBALLOON->Render( pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0 );
+					MESSAGEBALLOON->IsCharacterMessage(TRUE);
+					MESSAGEBALLOON->SetSkin(SKINID_Blue);
+					MESSAGEBALLOON->SetMessage(pc->szPersonalShop);
+					MESSAGEBALLOON->SetColor(dwColor);
+					MESSAGEBALLOON->Render(pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0);
 				}
 			}
 		}
-		else if( pc->sRenderPoint.iZ < ( 64 * 32 * 256 ) )
+		else if (pc->sRenderPoint.iZ < (64 * 32 * 256))
 		{
-			if ( pc->bVisible )
+			if (pc->bVisible)
 			{
-				if ( pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CrystalTower )
+				if (pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CrystalTower)
 				{
 					//Nothing...
 				}
-				else if ( bShowOwner && pc->sCharacterData.iClanID == 0 )
+				else if (bShowOwner && pc->sCharacterData.iClanID == 0)
 				{
-					STRINGFORMATLEN( ((char*)0x00A17420), 240, "(%s)", pc->sCharacterData.Pet.szOwnerName );
+					STRINGFORMATLEN(((char*)0x00A17420), 240, "(%s)", pc->sCharacterData.Pet.szOwnerName);
 
 					//Draw Box Two Lines
 					MESSAGEBALLOON->ResetMessage();
 
-					if ( psTextureClanIcon )
-						MESSAGEBALLOON->SetClanIconTexture( psTextureClanIcon );
+					if (psTextureClanIcon)
+						MESSAGEBALLOON->SetClanIconTexture(psTextureClanIcon);
 
-					MESSAGEBALLOON->IsCharacterMessage( TRUE );
-					MESSAGEBALLOON->SetSkin( SKINID_Normal );
-					MESSAGEBALLOON->SetMessage( pc->sCharacterData.szName );
-					MESSAGEBALLOON->SetPetName( ((char*)0x00A17420) );
-					MESSAGEBALLOON->SetColor( dwColor );
-					MESSAGEBALLOON->Render( pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0 );
+					MESSAGEBALLOON->IsCharacterMessage(TRUE);
+					MESSAGEBALLOON->SetSkin(SKINID_Normal);
+					MESSAGEBALLOON->SetMessage(pc->sCharacterData.szName);
+					MESSAGEBALLOON->SetPetName(((char*)0x00A17420));
+					MESSAGEBALLOON->SetColor(dwColor);
+					MESSAGEBALLOON->Render(pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0);
 				}
 				else
 				{
@@ -1763,16 +1763,16 @@ BOOL RenderGameState()
 						MESSAGEBALLOON->IsCharacterMessage(TRUE);
 						MESSAGEBALLOON->SetSkin(SKINID_Normal);
 						MESSAGEBALLOON->SetMessage(pc->sCharacterData.szName);
-						MESSAGEBALLOON->SetBellatraIconID( pc->iBellatraCrown );
-						MESSAGEBALLOON->SetClanName( ((char*)0x00A17420) );
-						MESSAGEBALLOON->SetColor( dwColor );
+						MESSAGEBALLOON->SetBellatraIconID(pc->iBellatraCrown);
+						MESSAGEBALLOON->SetClanName(((char*)0x00A17420));
+						MESSAGEBALLOON->SetColor(dwColor);
 
-						if ( ( pc->sCharacterData.iType == CHARACTERTYPE_Player || pc->PkMode_CharState == CHARACTERTYPE_Player ) )
+						if ((pc->sCharacterData.iType == CHARACTERTYPE_Player || pc->PkMode_CharState == CHARACTERTYPE_Player))
 						{
 							Unit* pcUnit = UNITDATATOUNIT(pc);
-							if ( pcUnit && pcUnit->sTitleRarity )
+							if (pcUnit && pcUnit->sTitleRarity)
 							{
-								MESSAGEBALLOON->AddCharTitleText (pcUnit->szTitle, pcUnit->sTitleRarity );
+								MESSAGEBALLOON->AddCharTitleText(pcUnit->szTitle, pcUnit->sTitleRarity);
 							}
 
 							if (MAP_ID != MAPID_Bellatra && MAP_ID != MAPID_BlessCastle && pcUnit->sBellatraSoloCrown > 0)
@@ -1784,190 +1784,187 @@ BOOL RenderGameState()
 
 
 						//Only if user want to see
-						if ( MESSAGEBOX_SHOWALWAYS || (pc->sCharacterData.iType == CHARACTERTYPE_NPC) || (pc->sCharacterData.iType == CHARACTERTYPE_Monster) )
-							MESSAGEBALLOON->Render( pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0 );
+						if (MESSAGEBOX_SHOWALWAYS || (pc->sCharacterData.iType == CHARACTERTYPE_NPC) || (pc->sCharacterData.iType == CHARACTERTYPE_Monster))
+							MESSAGEBALLOON->Render(pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0);
 					}
 					else
 					{
 						//Draw Box
 						MESSAGEBALLOON->ResetMessage();
 
-						if ( UNITDATA->sPosition.WithinXZDistance( &pc->sPosition, DISTANCE_XY_41_meters ) )
+						if (UNITDATA->sPosition.WithinXZDistance(&pc->sPosition, DISTANCE_XY_41_meters))
 						{
-							if ( psTextureClanIcon )
-								MESSAGEBALLOON->SetClanIconTexture( psTextureClanIcon );
+							if (psTextureClanIcon)
+								MESSAGEBALLOON->SetClanIconTexture(psTextureClanIcon);
 
-							if ( pc->sCharacterData.iType == CHARACTERTYPE_NPC ) // Check if is NPC
+							if (pc->sCharacterData.iType == CHARACTERTYPE_NPC) // Check if is NPC
 							{
-
-
-								MESSAGEBALLOON->IsCharacterMessage( TRUE );
-									MESSAGEBALLOON->SetSkin( SKINID_Normal );
-									MESSAGEBALLOON->SetMessage( pc->sCharacterData.szName );
-								MESSAGEBALLOON->SetColor( dwColor );
-								MESSAGEBALLOON->SetNotifyQuestIconID( QUESTGAMEHANDLER->GetNpcQuestStatus( pc->sCharacterData.iNPCId ) );
-
+								MESSAGEBALLOON->IsCharacterMessage(TRUE);
+								MESSAGEBALLOON->SetSkin(SKINID_Normal);
+								MESSAGEBALLOON->SetMessage(pc->sCharacterData.szName);
+								MESSAGEBALLOON->SetColor(dwColor);
+								MESSAGEBALLOON->SetNotifyQuestIconID(QUESTGAMEHANDLER->GetNpcQuestStatus(pc->sCharacterData.iNPCId));
 							}
 							else
 							{
-								MESSAGEBALLOON->IsCharacterMessage( TRUE );
-								MESSAGEBALLOON->SetSkin( SKINID_Normal );
-								MESSAGEBALLOON->SetMessage( pc->sCharacterData.szName );
-								MESSAGEBALLOON->SetBellatraIconID( pc->iBellatraCrown );
-								MESSAGEBALLOON->SetColor( dwColor );
-
+								MESSAGEBALLOON->IsCharacterMessage(TRUE);
+								MESSAGEBALLOON->SetSkin(SKINID_Normal);
+								MESSAGEBALLOON->SetMessage(pc->sCharacterData.szName);
+								MESSAGEBALLOON->SetBellatraIconID(pc->iBellatraCrown);
+								MESSAGEBALLOON->SetColor(dwColor);
 							}
 
-							if ( ( pc->sCharacterData.iType == CHARACTERTYPE_Player || pc->PkMode_CharState == CHARACTERTYPE_Player ) )
+							if ((pc->sCharacterData.iType == CHARACTERTYPE_Player || pc->PkMode_CharState == CHARACTERTYPE_Player))
 							{
-								Unit * pcUnit = UNITDATATOUNIT( pc );
-								if ( pcUnit )
+								Unit* pcUnit = UNITDATATOUNIT(pc);
+
+								if (pcUnit)
 								{
-									if ( pcUnit->sTitleRarity )
+									if (pcUnit->sTitleRarity)
 									{
-										MESSAGEBALLOON->AddCharTitleText( pcUnit->szTitle, pcUnit->sTitleRarity );
+										MESSAGEBALLOON->AddCharTitleText(pcUnit->szTitle, pcUnit->sTitleRarity);
 									}
 
-									if ( MAP_ID != MAPID_Bellatra && MAP_ID != MAPID_BlessCastle && pcUnit->sBellatraSoloCrown > 0 )
+									if (MAP_ID != MAPID_Bellatra && MAP_ID != MAPID_BlessCastle && pcUnit->sBellatraSoloCrown > 0)
 									{
-										MESSAGEBALLOON->SetBellatraSoloIconID( pcUnit->sBellatraSoloCrown );
-										MESSAGEBALLOON->SetCharacterClass( pc->sCharacterData.iClass );
+										MESSAGEBALLOON->SetBellatraSoloIconID(pcUnit->sBellatraSoloCrown);
+										MESSAGEBALLOON->SetCharacterClass(pc->sCharacterData.iClass);
 									}
 								}
 							}
 
 							//Only if user want to see
-							if ( MESSAGEBOX_SHOWALWAYS || ( pc->sCharacterData.iType == CHARACTERTYPE_NPC ) || ( pc->sCharacterData.iType == CHARACTERTYPE_Monster ) )
-								MESSAGEBALLOON->Render( pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0 );
+							if (MESSAGEBOX_SHOWALWAYS || (pc->sCharacterData.iType == CHARACTERTYPE_NPC) || (pc->sCharacterData.iType == CHARACTERTYPE_Monster))
+								MESSAGEBALLOON->Render(pc->sRenderPoint.iX, pc->rRenderRectangle.top + iY, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, 0, 0);
 						}
 					}
 				}
 			}
 		}
 
-		if ( pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CrystalTower )
+		if (pc->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_CrystalTower)
 		{
-			HUDHANDLER->RenderHPCrystalTower( pc->sRenderPoint.iX - 30, pc->rRenderRectangle.top + iY - 16, pc->GetCurrentHealth(), pc->GetMaxHealth() );
+			HUDHANDLER->RenderHPCrystalTower(pc->sRenderPoint.iX - 30, pc->rRenderRectangle.top + iY - 16, pc->GetCurrentHealth(), pc->GetMaxHealth());
 		}
-		else if ( bShowBar || (SETTINGSHANDLER->GetModel()->GetSettings().bHPBarOnTarget && UNITDATA_HOVER == pc && pc->sCharacterData.iType == CHARACTERTYPE_Monster) )
+		else if (bShowBar || (SETTINGSHANDLER->GetModel()->GetSettings().bHPBarOnTarget && UNITDATA_HOVER == pc && pc->sCharacterData.iType == CHARACTERTYPE_Monster))
 		{
 			//Show Bar
-			RenderCharacterHP( pc, pc->sRenderPoint.iX - 30, pc->rRenderRectangle.top + iY - 16 );
+			RenderCharacterHP(pc, pc->sRenderPoint.iX - 30, pc->rRenderRectangle.top + iY - 16);
 		}
 	}
 
 
 
-	if ( UNITDATA->sActiveSkill.iValue )
+	if (UNITDATA->sActiveSkill.iValue)
 	{
-		switch ( UNITDATA->sCharacterData.iClass )
+		switch (UNITDATA->sCharacterData.iClass)
 		{
-			case CHARACTERCLASS_Archer:
-				if ( UNITDATA->sActiveSkill.cSkillTinyID == SKILLPLAYID_T42 )
-				{
-					if ( UNITDATA->psModelAnimation )
-					{
-						int iFrame = UNITDATA->iFrame - UNITDATA->psModelAnimation->iBeginFrame * 160;
-						if ( (DWORD)UNITDATA->psModelAnimation->iaEventFrame[0] < (DWORD)iFrame && (DWORD)UNITDATA->psModelAnimation->iaEventFrame[1] > (DWORD)iFrame )
-						{
-							int iEventFrame1 = iFrame - UNITDATA->psModelAnimation->iaEventFrame[0];
-							int iEventFrame2 = UNITDATA->psModelAnimation->iaEventFrame[1] - UNITDATA->psModelAnimation->iaEventFrame[0];
-
-							//Draw Charging Bar...
-							RenderCharacterChangingBar( UNITDATA, UNITDATA->sRenderPoint.iX - 30, UNITDATA->rRenderRectangle.bottom, iEventFrame1, iEventFrame2 );
-						}
-					}
-				}
-				break;
-
-			case CHARACTERCLASS_Pikeman:
-				if ( UNITDATA->sActiveSkill.cSkillTinyID == SKILLPLAYID_T42 )
-				{
-					if ( UNITDATA->psModelAnimation )
-					{
-						int iFrame = UNITDATA->iFrame - UNITDATA->psModelAnimation->iBeginFrame * 160;
-						if ( (DWORD)UNITDATA->psModelAnimation->iaEventFrame[0] < (DWORD)iFrame && (DWORD)UNITDATA->psModelAnimation->iaEventFrame[1] > (DWORD)iFrame )
-						{
-							int iEventFrame1 = iFrame - UNITDATA->psModelAnimation->iaEventFrame[0];
-							int iEventFrame2 = UNITDATA->psModelAnimation->iaEventFrame[1] - UNITDATA->psModelAnimation->iaEventFrame[0];
-
-							//Draw Charging Bar...
-							RenderCharacterChangingBar( UNITDATA, UNITDATA->sRenderPoint.iX - 30, UNITDATA->rRenderRectangle.bottom, iEventFrame1, iEventFrame2 );
-						}
-					}
-				}
-				break;
-		}
-	}
-
-	if ( ISSHOW_INTERFACE )
-	{
-		if( (pcBossUnitData) && pcBossUnitData->GetCurrentHealth() > 0 && pcBossUnitData->psModelAnimation->iType != ANIMATIONTYPE_Die )
-		{
-			Unit * pcUnit = UNITDATATOUNIT( pcBossUnitData );
-			int iTextWidth = FONTHANDLER->GetWidthText(0, pcBossUnitData->sCharacterData.szName, lstrlenA(pcBossUnitData->sCharacterData.szName) );
-
-			if( pcBossFixedPositionImages[0] )
+		case CHARACTERCLASS_Archer:
+			if (UNITDATA->sActiveSkill.cSkillTinyID == SKILLPLAYID_T42)
 			{
-				UI::ImageRender::Render( pcBossFixedPositionImages[0], (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1), 100, pcBossFixedPositionImages[0]->GetWidth(), pcBossFixedPositionImages[0]->GetHeight(), -1 );
-				FONTHANDLER->Draw(0,RECT{(RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1) + 1, 105, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1), 124}, pcBossUnitData->sCharacterData.szName, DT_EXPANDTABS|DT_SINGLELINE|DT_CENTER, D3DCOLOR_XRGB(0,0,0) );
-				FONTHANDLER->Draw(0,RECT{(RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1), 104, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1), 124}, pcBossUnitData->sCharacterData.szName, DT_EXPANDTABS|DT_SINGLELINE|DT_CENTER, -1 );
+				if (UNITDATA->psModelAnimation)
+				{
+					int iFrame = UNITDATA->iFrame - UNITDATA->psModelAnimation->iBeginFrame * 160;
+					if ((DWORD)UNITDATA->psModelAnimation->iaEventFrame[0] < (DWORD)iFrame && (DWORD)UNITDATA->psModelAnimation->iaEventFrame[1] > (DWORD)iFrame)
+					{
+						int iEventFrame1 = iFrame - UNITDATA->psModelAnimation->iaEventFrame[0];
+						int iEventFrame2 = UNITDATA->psModelAnimation->iaEventFrame[1] - UNITDATA->psModelAnimation->iaEventFrame[0];
+
+						//Draw Charging Bar...
+						RenderCharacterChangingBar(UNITDATA, UNITDATA->sRenderPoint.iX - 30, UNITDATA->rRenderRectangle.bottom, iEventFrame1, iEventFrame2);
+					}
+				}
+			}
+			break;
+
+		case CHARACTERCLASS_Pikeman:
+			if (UNITDATA->sActiveSkill.cSkillTinyID == SKILLPLAYID_T42)
+			{
+				if (UNITDATA->psModelAnimation)
+				{
+					int iFrame = UNITDATA->iFrame - UNITDATA->psModelAnimation->iBeginFrame * 160;
+					if ((DWORD)UNITDATA->psModelAnimation->iaEventFrame[0] < (DWORD)iFrame && (DWORD)UNITDATA->psModelAnimation->iaEventFrame[1] > (DWORD)iFrame)
+					{
+						int iEventFrame1 = iFrame - UNITDATA->psModelAnimation->iaEventFrame[0];
+						int iEventFrame2 = UNITDATA->psModelAnimation->iaEventFrame[1] - UNITDATA->psModelAnimation->iaEventFrame[0];
+
+						//Draw Charging Bar...
+						RenderCharacterChangingBar(UNITDATA, UNITDATA->sRenderPoint.iX - 30, UNITDATA->rRenderRectangle.bottom, iEventFrame1, iEventFrame2);
+					}
+				}
+			}
+			break;
+		}
+	}
+
+	if (ISSHOW_INTERFACE)
+	{
+		if ((pcBossUnitData) && pcBossUnitData->GetCurrentHealth() > 0 && pcBossUnitData->psModelAnimation->iType != ANIMATIONTYPE_Die)
+		{
+			Unit* pcUnit = UNITDATATOUNIT(pcBossUnitData);
+			int iTextWidth = FONTHANDLER->GetWidthText(0, pcBossUnitData->sCharacterData.szName, lstrlenA(pcBossUnitData->sCharacterData.szName));
+
+			if (pcBossFixedPositionImages[0])
+			{
+				UI::ImageRender::Render(pcBossFixedPositionImages[0], (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1), 100, pcBossFixedPositionImages[0]->GetWidth(), pcBossFixedPositionImages[0]->GetHeight(), -1);
+				FONTHANDLER->Draw(0, RECT{ (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1) + 1, 105, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1), 124 }, pcBossUnitData->sCharacterData.szName, DT_EXPANDTABS | DT_SINGLELINE | DT_CENTER, D3DCOLOR_XRGB(0, 0, 0));
+				FONTHANDLER->Draw(0, RECT{ (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1), 104, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1), 124 }, pcBossUnitData->sCharacterData.szName, DT_EXPANDTABS | DT_SINGLELINE | DT_CENTER, -1);
 			}
 
-			if( pcBossFixedPositionImages[1] )
-				UI::ImageRender::Render( pcBossFixedPositionImages[1], (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[1]->GetWidth() >> 1), 108, pcBossFixedPositionImages[1]->GetWidth(), pcBossFixedPositionImages[1]->GetHeight(), -1 );
+			if (pcBossFixedPositionImages[1])
+				UI::ImageRender::Render(pcBossFixedPositionImages[1], (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[1]->GetWidth() >> 1), 108, pcBossFixedPositionImages[1]->GetWidth(), pcBossFixedPositionImages[1]->GetHeight(), -1);
 
-			if( pcBossFixedPositionImages[2] )
-				UI::ImageRender::Render( pcBossFixedPositionImages[2], (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[2]->GetWidth() >> 1), 129,(pcBossUnitData->GetCurrentHealth() * pcBossFixedPositionImages[2]->GetWidth()) / pcBossUnitData->GetMaxHealth(), pcBossFixedPositionImages[2]->GetHeight(), 0, 0, -1, 1.0f );
+			if (pcBossFixedPositionImages[2])
+				UI::ImageRender::Render(pcBossFixedPositionImages[2], (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[2]->GetWidth() >> 1), 129, (pcBossUnitData->GetCurrentHealth() * pcBossFixedPositionImages[2]->GetWidth()) / pcBossUnitData->GetMaxHealth(), pcBossFixedPositionImages[2]->GetHeight(), 0, 0, -1, 1.0f);
 
-			if ( pcBossFixedPositionImages[0] && pcUnit )
+			if (pcBossFixedPositionImages[0] && pcUnit)
 			{
-				FONTHANDLER->Draw( 0, RECT{ (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1) + 1, 130, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1), 150 }, FormatString( "%d/%d", pcUnit->sHPLong.iMin, pcUnit->sHPLong.iMax ), DT_EXPANDTABS | DT_SINGLELINE | DT_CENTER, D3DCOLOR_XRGB( 0, 0, 0 ) );
-				FONTHANDLER->Draw( 0, RECT{ (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1), 129, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1), 150 }, FormatString( "%d/%d", pcUnit->sHPLong.iMin, pcUnit->sHPLong.iMax ), DT_EXPANDTABS | DT_SINGLELINE | DT_CENTER, D3DCOLOR_XRGB( 255, 170, 170 ) );
+				FONTHANDLER->Draw(0, RECT{ (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1) + 1, 130, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1), 150 }, FormatString("%d/%d", pcUnit->sHPLong.iMin, pcUnit->sHPLong.iMax), DT_EXPANDTABS | DT_SINGLELINE | DT_CENTER, D3DCOLOR_XRGB(0, 0, 0));
+				FONTHANDLER->Draw(0, RECT{ (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1), 129, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1), 150 }, FormatString("%d/%d", pcUnit->sHPLong.iMin, pcUnit->sHPLong.iMax), DT_EXPANDTABS | DT_SINGLELINE | DT_CENTER, D3DCOLOR_XRGB(255, 170, 170));
 
-				if ( pcUnit->sHPLong.iMax > 0 )
+				if (pcUnit->sHPLong.iMax > 0)
 				{
 					int iPercentHP = (pcUnit->sHPLong.iMin * 100) / pcUnit->sHPLong.iMax;
-					FONTHANDLER->Draw( 0, RECT{ (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1), 129, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1) - 40, 150 }, FormatString( "%d%%", iPercentHP ), DT_EXPANDTABS | DT_SINGLELINE | DT_RIGHT, D3DCOLOR_XRGB( 255, 170, 170 ) );
+					FONTHANDLER->Draw(0, RECT{ (RESOLUTION_WIDTH >> 1) - (pcBossFixedPositionImages[0]->GetWidth() >> 1), 129, (RESOLUTION_WIDTH >> 1) + (pcBossFixedPositionImages[0]->GetWidth() >> 1) - 40, 150 }, FormatString("%d%%", iPercentHP), DT_EXPANDTABS | DT_SINGLELINE | DT_RIGHT, D3DCOLOR_XRGB(255, 170, 170));
 				}
 			}
 
-			if( iTextWidth )
+			if (iTextWidth)
 			{
-				UI::ImageRender::Render( pcBossFixedPositionImages[3], (RESOLUTION_WIDTH >> 1) - (iTextWidth >> 1) - 28, 104, pcBossFixedPositionImages[3]->GetWidth(), pcBossFixedPositionImages[3]->GetHeight(), -1 );
+				UI::ImageRender::Render(pcBossFixedPositionImages[3], (RESOLUTION_WIDTH >> 1) - (iTextWidth >> 1) - 28, 104, pcBossFixedPositionImages[3]->GetWidth(), pcBossFixedPositionImages[3]->GetHeight(), -1);
 
-				UI::Image * pImageMonsterType = NULL;
-				if( pcBossUnitData->sCharacterData.iMonsterType == MONSTERTYPE_Demon )
+				UI::Image* pImageMonsterType = NULL;
+				if (pcBossUnitData->sCharacterData.iMonsterType == MONSTERTYPE_Demon)
 					pImageMonsterType = HUDHANDLER->GetTargetTypeImage(0);
-				else if( pcBossUnitData->sCharacterData.iMonsterType == MONSTERTYPE_Mutant )
+				else if (pcBossUnitData->sCharacterData.iMonsterType == MONSTERTYPE_Mutant)
 					pImageMonsterType = HUDHANDLER->GetTargetTypeImage(2);
-				else if( pcBossUnitData->sCharacterData.iMonsterType == MONSTERTYPE_Undead )
+				else if (pcBossUnitData->sCharacterData.iMonsterType == MONSTERTYPE_Undead)
 					pImageMonsterType = HUDHANDLER->GetTargetTypeImage(4);
-				else if( pcBossUnitData->sCharacterData.iMonsterType == MONSTERTYPE_Normal )
+				else if (pcBossUnitData->sCharacterData.iMonsterType == MONSTERTYPE_Normal)
 					pImageMonsterType = HUDHANDLER->GetTargetTypeImage(3);
 
-				if( pImageMonsterType )
-					UI::ImageRender::Render( pImageMonsterType, (RESOLUTION_WIDTH >> 1) - (iTextWidth >> 1) - 26, 105, pImageMonsterType->GetWidth(), pImageMonsterType->GetHeight(), -1 );
+				if (pImageMonsterType)
+					UI::ImageRender::Render(pImageMonsterType, (RESOLUTION_WIDTH >> 1) - (iTextWidth >> 1) - 26, 105, pImageMonsterType->GetWidth(), pImageMonsterType->GetHeight(), -1);
 			}
 		}
 
-		Point2D * psPointFix = (Point2D*)0x00A04790;
+		Point2D* psPointFix = (Point2D*)0x00A04790;
 		psPointFix->iX = RESOLUTION_WIDTH - 800;
 		psPointFix->iY = RESOLUTION_HEIGHT - 600;
-		WRITEDWORD( 0x00A0478C, 3 );
+		WRITEDWORD(0x00A0478C, 3);
 
-		Point2D * p = ((Point2D*)0x00A17518);
+		Point2D* p = ((Point2D*)0x00A17518);
 
-		CALL_WITH_ARG2( 0x00409CC0, (DWORD)p, 3 );
+		CALL_WITH_ARG2(0x00409CC0, (DWORD)p, 3);
 
 		//Party, Friends...
-		CALL( 0x0057ED70 );
+		CALL(0x0057ED70);
 
-		WRITEDWORD( 0x00A0478C, 0 );
+		WRITEDWORD(0x00A0478C, 0);
 		psPointFix->iX = 0;
 		psPointFix->iY = 0;
 
-		CALL_WITH_ARG2( 0x00409CC0, (DWORD)p, 0 );
+		CALL_WITH_ARG2(0x00409CC0, (DWORD)p, 0);
 
 
 		//Draw Unit Data Target
@@ -1975,81 +1972,81 @@ BOOL RenderGameState()
 
 	}
 
-	UnitData * pp = (*(UnitData**)0x00CF48D0);
+	UnitData* pp = (*(UnitData**)0x00CF48D0);
 
-	if ( (*(BOOL*)0x00CF48D4) && pp )
+	if ((*(BOOL*)0x00CF48D4) && pp)
 	{
-		CALL( 0x00454D00 );
+		CALL(0x00454D00);
 	}
 
 	//Display Sod Score
-	CALL( 0x00460110 );
+	CALL(0x00460110);
 
-	Point2D * psPointFix = (Point2D*)0x00A04790;
+	Point2D* psPointFix = (Point2D*)0x00A04790;
 	psPointFix->iX = RESOLUTION_WIDTH - 800;
 	psPointFix->iY = RESOLUTION_HEIGHT - 600;
 
-	if ( ISSHOW_INTERFACE )
-		CALL( 0x004CFBF0 ); //Interface...
+	if (ISSHOW_INTERFACE)
+		CALL(0x004CFBF0); //Interface...
 
 	psPointFix->iX = 0;
 	psPointFix->iY = 0;
 
-	if ( (*(BOOL*)0x03A97614) )
-		CALL( 0x004060E0 ); //Bellatra Font Effect...
+	if ((*(BOOL*)0x03A97614))
+		CALL(0x004060E0); //Bellatra Font Effect...
 
 	//Render Debug Text
-	if ( DEBUG_GM && GM_MODE )
+	if (DEBUG_GM && GM_MODE)
 		UNITGAME->RenderDebugText();
 
-	if ( DISCONNECT_TIME )
+	if (DISCONNECT_TIME)
 	{
 		// UNITGAME->Log( "%d = Disconnected from Server (%d)", TICKCOUNT, DISCONNECT_TYPE );
 
-		switch ( DISCONNECT_TYPE )
+		switch (DISCONNECT_TYPE)
 		{
-			case 0:
-				DrawMessageMiddle( "Disconnected from Server" );
-				break;
-			case 1:
-				DrawMessageMiddle( "Disconnected from Server (1)" );
-				break;
-			case 2:
-				DrawMessageMiddle( "Disconnected from Server (2)" );
-				break;
-			case 3:
-				DrawMessageMiddle( "Disconnected from Server (3)" );
-				break;
-			case 4:
-				DrawMessageMiddle( "Disconnected from Server (4)" );
-				break;
+		case 0:
+			DrawMessageMiddle("Disconnected from Server");
+			break;
+		case 1:
+			DrawMessageMiddle("Disconnected from Server (1)");
+			break;
+		case 2:
+			DrawMessageMiddle("Disconnected from Server (2)");
+			break;
+		case 3:
+			DrawMessageMiddle("Disconnected from Server (3)");
+			break;
+		case 4:
+			DrawMessageMiddle("Disconnected from Server (4)");
+			break;
 		}
 
-		if ( GM_MODE )
+		if (GM_MODE)
 		{
-			if ( GameCore::QuitGame() )
+			if (GameCore::QuitGame())
 			{
-				if ( (DISCONNECT_TIME + 5000) < TICKCOUNT )
-					GameCore::QuitGame( TRUE );
+				if ((DISCONNECT_TIME + 5000) < TICKCOUNT)
+					GameCore::QuitGame(TRUE);
 			}
 		}
 	}
 	else
 	{
-		if ( GameCore::QuitGame() )
-			DrawMessageMiddle( "Exiting the Game!" );
+		if (GameCore::QuitGame())
+			DrawMessageMiddle("Exiting the Game!");
 		else
 		{
-			DWORD dwCloseWindow = READDWORD( 0x00CF476C );
+			DWORD dwCloseWindow = READDWORD(0x00CF476C);
 
-			if ( dwCloseWindow && dwCloseWindow > TICKCOUNT )
-				DrawMessageMiddle( "Close the open windows before exiting the Game!" );
+			if (dwCloseWindow && dwCloseWindow > TICKCOUNT)
+				DrawMessageMiddle("Close the open windows before exiting the Game!");
 			else
 			{
-				if ( (*(DWORD*)0x00CF4768) )
+				if ((*(DWORD*)0x00CF4768))
 				{
-					if ( ((*(DWORD*)0x00CF4768) + 5000) > TICKCOUNT )
-						DrawMessageMiddle( "You cannot disconnect during combat!" );
+					if (((*(DWORD*)0x00CF4768) + 5000) > TICKCOUNT)
+						DrawMessageMiddle("You cannot disconnect during combat!");
 					else
 						(*(DWORD*)0x00CF4768) = 0;
 				}
@@ -2064,7 +2061,7 @@ BOOL RenderGameState()
 
 NAKED void SetDynamicLights()
 {
-	JMP( pfnSetDynamicLights );
+	JMP(pfnSetDynamicLights);
 }
 
 /// <summary>
@@ -2072,12 +2069,12 @@ NAKED void SetDynamicLights()
 /// ASM: 0x0040C080
 /// Dynamic light setup
 /// </summary>
-NAKED void SetDynamicLight( int iX, int iY, int iZ, int iR, int iG, int iB, int iA, int iPower, int iTime )
+NAKED void SetDynamicLight(int iX, int iY, int iZ, int iR, int iG, int iB, int iA, int iPower, int iTime)
 {
-	JMP( SetDynamicLight2 );
+	JMP(SetDynamicLight2);
 }
 
-int __stdcall RenderStageMesh( EXEStageModel * psStageModel )
+int __stdcall RenderStageMesh(EXEStageModel* psStageModel)
 {
 	struct RenderStageModel
 	{
@@ -2089,8 +2086,8 @@ int __stdcall RenderStageMesh( EXEStageModel * psStageModel )
 		int				iSum;
 	};
 
-	RenderStageModel * pcThis;
-	READTHIS( pcThis );
+	RenderStageModel* pcThis;
+	READTHIS(pcThis);
 
 	Point3D s = psStageModel->sPosition;
 	Point3D a = psStageModel->sAngle;
@@ -2099,125 +2096,125 @@ int __stdcall RenderStageMesh( EXEStageModel * psStageModel )
 
 	DWORD dwLastTime = psStageModel->dwTimeUpdate;
 
-	int iFrame		= psStageModel->pcModel->uFrame;
-	int iMaxFrame	= psStageModel->pcModel->uMaxFrame;
+	int iFrame = psStageModel->pcModel->uFrame;
+	int iMaxFrame = psStageModel->pcModel->uMaxFrame;
 
-	if ( (GetTickCount() - dwLastTime) >= 14 )
+	if ((GetTickCount() - dwLastTime) >= 14)
 	{
-		int iDiff	= (GetTickCount() - dwLastTime) / 14;
+		int iDiff = (GetTickCount() - dwLastTime) / 14;
 
-		iFrame		+= (iDiff * 70);
+		iFrame += (iDiff * 70);
 
 		psStageModel->dwTimeUpdate = GetTickCount();
 	}
 
-	if ( psStageModel->pcModel->pcBoneContainer )
+	if (psStageModel->pcModel->pcBoneContainer)
 		iMaxFrame = psStageModel->pcModel->pcBoneContainer->uMaxFrame;
 
-	if ( iFrame < 0 || iFrame > iMaxFrame )
+	if (iFrame < 0 || iFrame > iMaxFrame)
 		iFrame = 0;
 
 	psStageModel->pcModel->uFrame = iFrame;
-	psStageModel->pcModel->SetPosition( &s, &a );
+	psStageModel->pcModel->SetPosition(&s, &a);
 	psStageModel->pcModel->SetFixedPosition();
 
 
 	//Fix Camera
-	WRITEDWORD( 0x02619824, TRUE );
+	WRITEDWORD(0x02619824, TRUE);
 
-	RENDERER->SetRenderClip( 0x3C );
+	RENDERER->SetRenderClip(0x3C);
 
-	iRenderedCount = psStageModel->pcModel->Render( &pcThis->sCamera, &pcThis->sAngle );
+	iRenderedCount = psStageModel->pcModel->Render(&pcThis->sCamera, &pcThis->sAngle);
 
-	WRITEDWORD( 0x02619824, FALSE );
+	WRITEDWORD(0x02619824, FALSE);
 
 	psStageModel->iSum = pcThis->iSum;
 
 	return iRenderedCount;
 }
 
-void DrawMessageMiddle( const char * pszText )
+void DrawMessageMiddle(const char* pszText)
 {
-	CTITLEBOX->RenderTextMiddle( pszText );
+	CTITLEBOX->RenderTextMiddle(pszText);
 }
 
-void DrawCharacterMessage( int iX, int iY, char * pszText, int iLineSize, DWORD dwClan, char * pszClanName, DWORD dwColor, BOOL bSelected, int iBellatra )
+void DrawCharacterMessage(int iX, int iY, char* pszText, int iLineSize, DWORD dwClan, char* pszClanName, DWORD dwColor, BOOL bSelected, int iBellatra)
 {
-	BOOL bMessage		= FALSE;
+	BOOL bMessage = FALSE;
 	BOOL bCharacterName = FALSE;
-	BOOL bClan			= dwClan != NULL ? TRUE : FALSE;
+	BOOL bClan = dwClan != NULL ? TRUE : FALSE;
 
-	int iMessageIndex	= 0;
+	int iMessageIndex = 0;
 
-	char szName[32]			= { 0 };
+	char szName[32] = { 0 };
 
-	char szNameFinder[20]	= { 0 };
+	char szNameFinder[20] = { 0 };
 
-	STRINGCOPY( szNameFinder, pszText );
+	STRINGCOPY(szNameFinder, pszText);
 
-	if ( strstr( szNameFinder, ":" ) != NULL )
+	if (strstr(szNameFinder, ":") != NULL)
 	{
-		bMessage		= TRUE;
-		bCharacterName	= TRUE;
+		bMessage = TRUE;
+		bCharacterName = TRUE;
 
-		for ( int i = 0; i < STRLEN( szNameFinder ); i++ )
+		for (int i = 0; i < STRLEN(szNameFinder); i++)
 		{
-			if ( szNameFinder[i] == ':' )
+			if (szNameFinder[i] == ':')
 			{
 				iMessageIndex = i + 1;
-				STRINGCOPYLEN( szName, i + 1, szNameFinder );
+				STRINGCOPYLEN(szName, i + 1, szNameFinder);
 				break;
 			}
 		}
 	}
 
 
-	if ( pszText )
+	if (pszText)
 	{
-		auto DrawMessageBox = []( int iX, int iY, int iWidth, int iHeight, bool bUnk = false, BOOL bSelected = FALSE ) -> int
-		{
-			return CALLT_WITH_ARG6( 0x0066B260, 0x040C2FC0, iX, iY, iWidth, iHeight, bUnk, bSelected );
-		};
+		auto DrawMessageBox = [](int iX, int iY, int iWidth, int iHeight, bool bUnk = false, BOOL bSelected = FALSE) -> int
+			{
+				return CALLT_WITH_ARG6(0x0066B260, 0x040C2FC0, iX, iY, iWidth, iHeight, bUnk, bSelected);
+			};
 
-		int iWidthName = GETWIDTHTEXT( szName );
-		int iWidthText = GETWIDTHTEXT( szName ) + GETWIDTHTEXT( &pszText[iMessageIndex] );
+		int iWidthName = GETWIDTHTEXT(szName);
+		int iWidthText = GETWIDTHTEXT(szName) + GETWIDTHTEXT(&pszText[iMessageIndex]);
 		int iHeight = (iWidthText / 200);
 
 		iX -= ((iWidthText >> 1) + 4);
 		iY -= 40;
 
-		if ( iHeight == 0 )
+		if (iHeight == 0)
 			iHeight++;
 
 		//Compute Space
 		std::string str = &pszText[iMessageIndex];
 
-		while ( GETWIDTHTEXT( str.c_str() ) < iWidthName )
-			str.insert( str.begin(), ' ' );
+		while (GETWIDTHTEXT(str.c_str()) < iWidthName)
+			str.insert(str.begin(), ' ');
 
 
-		if ( (bMessage == TRUE) && (bCharacterName == TRUE) )
-			DrawMessageBox( iX, iY, iWidthText, iHeight, (bCharacterName == TRUE), bSelected );
+		if ((bMessage == TRUE) && (bCharacterName == TRUE))
+			DrawMessageBox(iX, iY, iWidthText, iHeight, (bCharacterName == TRUE), bSelected);
 		else
-			DrawMessageBox( iX + 2, iY, str.length(), iHeight, (bCharacterName == TRUE), bSelected );
+			DrawMessageBox(iX + 2, iY, str.length(), iHeight, (bCharacterName == TRUE), bSelected);
 
 
 		RECT r;
-		r.left		= iX + 10;
-		r.top		= iY + 4;
-		r.right		= r.left + 200;
-		r.bottom	= r.top + 32;
+		r.left = iX + 10;
+		r.top = iY + 4;
+		r.right = r.left + 200;
+		r.bottom = r.top + 32;
 
-		if ( bCharacterName == TRUE )
-			FONTHANDLER->Draw( 0, r, szName, 0, dwColor );
+		if (bCharacterName == TRUE)
+			FONTHANDLER->Draw(0, r, szName, 0, dwColor);
 
-		FONTHANDLER->Draw( 0, r, str, DT_WORDBREAK, dwColor );
+		FONTHANDLER->Draw(0, r, str, DT_WORDBREAK, dwColor);
 	}
 }
 
-NAKED BOOL LoadUnitData( UnitData * pcUnitData, char * pszBodyModel, char * pszHeadModel, Point3D * psPosition, Point3D * psAngle )
+NAKED BOOL LoadUnitData(UnitData* pcUnitData, char* pszBodyModel, char* pszHeadModel, Point3D* psPosition, Point3D* psAngle)
 {
-	JMP( 0x00438DD0 );
+	JMP(0x00438DD0);
 }
 
 int DrawGameInterface3D()
@@ -2225,43 +2222,43 @@ int DrawGameInterface3D()
 	return 1;
 }
 
-NAKED int SetItemTextureColor( UnitTool * psTool )
+NAKED int SetItemTextureColor(UnitTool* psTool)
 {
-	JMP( 0x00420940 );
+	JMP(0x00420940);
 }
 
 NAKED void ResetItemTextureColor()
 {
-	JMP( 0x00420A80 );
+	JMP(0x00420A80);
 }
 
-NAKED void SetShieldStrikeEffect( Point3D * psPosition )
+NAKED void SetShieldStrikeEffect(Point3D* psPosition)
 {
-	JMP( 0x00531780 );
+	JMP(0x00531780);
 }
 
-BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
+BOOL __cdecl RenderUnitData(UnitData* pcUnitData)
 {
 
 
-	if ( (pcUnitData->bVisible == FALSE) || (pcUnitData->psModelAnimation == NULL) )
+	if ((pcUnitData->bVisible == FALSE) || (pcUnitData->psModelAnimation == NULL))
 		return FALSE;
 
-	if ( pcUnitData->pcBody && pcUnitData->pcBody->iCount <= 0 )
+	if (pcUnitData->pcBody && pcUnitData->pcBody->iCount <= 0)
 	{
 		pcUnitData->Free();
 
-		if ( DEBUG_GM )
-			ChatGame::AddChatBoxText( "Model Error" );
+		if (DEBUG_GM)
+			ChatGame::AddChatBoxText("Model Error");
 
 		return FALSE;
 	}
 
-	if ( pcUnitData->eActionPattern == ACTIONMODE_ClientUnit )
+	if (pcUnitData->eActionPattern == ACTIONMODE_ClientUnit)
 	{
-		if ( pcUnitData->iLastPlayDataType )
+		if (pcUnitData->iLastPlayDataType)
 		{
-			if ( (pcUnitData->dwLastActiveTime + 16000) < TICKCOUNT )
+			if ((pcUnitData->dwLastActiveTime + 16000) < TICKCOUNT)
 			{
 				pcUnitData->dwDispAppSkill = 0;
 				return TRUE;
@@ -2269,7 +2266,7 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 		}
 		else
 		{
-			if ( (pcUnitData->dwLastActiveTime + 16000) < TICKCOUNT )
+			if ((pcUnitData->dwLastActiveTime + 16000) < TICKCOUNT)
 			{
 				pcUnitData->dwDispAppSkill = 0;
 				return TRUE;
@@ -2294,9 +2291,9 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 
 	sDistance >>= 8;
 
-	int iDistance	= sDistance.iX * sDistance.iX;
-	iDistance	   += sDistance.iY * sDistance.iY;
-	iDistance	   += sDistance.iZ * sDistance.iZ;
+	int iDistance = sDistance.iX * sDistance.iX;
+	iDistance += sDistance.iY * sDistance.iY;
+	iDistance += sDistance.iZ * sDistance.iZ;
 
 	Point3D sCameraPosition;
 	sCameraPosition.iX = UNITTARGETPOSITION_X;
@@ -2311,9 +2308,9 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 	Point3D sAngle = pcUnitData->sAngle;
 	sAngle.iY = (-sAngle.iY + PTANGLE_180) & PTANGLE_Mask;
 
-	if ( ACTIONMODE )
+	if (ACTIONMODE)
 	{
-		if ( sAngle.iY > PTANGLE_180 )
+		if (sAngle.iY > PTANGLE_180)
 			sAngle.iY = PTANGLE_270;
 		else
 			sAngle.iY = PTANGLE_90;
@@ -2321,56 +2318,56 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 
 	pcUnitData->sPosi = pcUnitData->sPosition;
 
-	EXEModel * pcBodyMeshContainer = pcUnitData->pcBodyMeshContainer;
-	EXEModel * pcHeadMeshContainer = pcUnitData->pcHeadMeshContainer;
+	EXEModel* pcBodyMeshContainer = pcUnitData->pcBodyMeshContainer;
+	EXEModel* pcHeadMeshContainer = pcUnitData->pcHeadMeshContainer;
 
-	pcBodyMeshContainer->SetPosition( &pcUnitData->sPosi, &sAngle );
+	pcBodyMeshContainer->SetPosition(&pcUnitData->sPosi, &sAngle);
 
-	if ( pcBodyMeshContainer->pcBoneContainer && ((int)pcBodyMeshContainer->pcBoneContainer->uMaxFrame > pcUnitData->iFrame) )
+	if (pcBodyMeshContainer->pcBoneContainer && ((int)pcBodyMeshContainer->pcBoneContainer->uMaxFrame > pcUnitData->iFrame))
 		pcBodyMeshContainer->uFrame = (UINT)pcUnitData->iFrame;
 	else
 		pcBodyMeshContainer->uFrame = 80;
 
-	char * pszaModelName[4];
+	char* pszaModelName[4];
 
 	int iRed, iGreen, iBlue, iAlpha, iERed, iEGreen, iEBlue, iEAlpha;
 
-	iRed	= RENDERER->r;
-	iGreen	= RENDERER->g;
-	iBlue	= RENDERER->b;
-	iAlpha	= RENDERER->a;
+	iRed = RENDERER->r;
+	iGreen = RENDERER->g;
+	iBlue = RENDERER->b;
+	iAlpha = RENDERER->a;
 
-	iERed	= pcUnitData->sAddColorEffect[2];
-	iEGreen	= pcUnitData->sAddColorEffect[1];
-	iEBlue	= pcUnitData->sAddColorEffect[0];
-	iEAlpha	= pcUnitData->sAddColorEffect[3];
+	iERed = pcUnitData->sAddColorEffect[2];
+	iEGreen = pcUnitData->sAddColorEffect[1];
+	iEBlue = pcUnitData->sAddColorEffect[0];
+	iEAlpha = pcUnitData->sAddColorEffect[3];
 
-	if ( pcUnitData->sCharacterData.sMonsterClass == EMonsterClass::Boss )
+	if (pcUnitData->sCharacterData.sMonsterClass == EMonsterClass::Boss)
 	{
 		int iCount = pcUnitData->iLoopCounter & 0x1F;
 
-		if ( (pcUnitData->iLoopCounter & 0x20) == 0 )
+		if ((pcUnitData->iLoopCounter & 0x20) == 0)
 			iCount = 0x1F - iCount;
 
-		iERed	= (iERed * iCount) >> 5;
+		iERed = (iERed * iCount) >> 5;
 		iEGreen = (iEGreen * iCount) >> 5;
-		iEBlue	= (iEBlue * iCount) >> 5;
+		iEBlue = (iEBlue * iCount) >> 5;
 	}
 
 
 
 	RENDERER->r = iRed + abs(pcUnitData->iFireOverlay) + iERed;
-	RENDERER->g = iGreen - (abs( pcUnitData->iFireOverlay) >> 1 ) + iEGreen + abs( pcUnitData->iPoisonOverlay );
-	RENDERER->b = iBlue + abs( pcUnitData->iIceOverlay ) + iEBlue;
-	RENDERER->a = iAlpha + pcUnitData->DisplayAlpha - ( abs( pcUnitData->iIceOverlay ) >> 1 ) + iEAlpha;
+	RENDERER->g = iGreen - (abs(pcUnitData->iFireOverlay) >> 1) + iEGreen + abs(pcUnitData->iPoisonOverlay);
+	RENDERER->b = iBlue + abs(pcUnitData->iIceOverlay) + iEBlue;
+	RENDERER->a = iAlpha + pcUnitData->DisplayAlpha - (abs(pcUnitData->iIceOverlay) >> 1) + iEAlpha;
 
-	if ( pcUnitData->bBitterOrdeal )
+	if (pcUnitData->bBitterOrdeal)
 	{
 		RENDERER->r += 100;
 		RENDERER->b += 100;
 	}
 
-	if ( pcUnitData->bDistortion && (pcUnitData->IsDead() == FALSE) )
+	if (pcUnitData->bDistortion && (pcUnitData->IsDead() == FALSE))
 	{
 		RENDERER->iDistortionMesh = 1;
 
@@ -2378,23 +2375,23 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 		RENDERER->g += 80;
 	}
 
-	if ( pcUnitData->iCurseLazy && (pcUnitData->IsDead() == FALSE) )
+	if (pcUnitData->iCurseLazy && (pcUnitData->IsDead() == FALSE))
 	{
 		RENDERER->iDistortionMesh = 0;
 
 		RENDERER->b += 40;
 
-		EffectGame::InertiaTarget( "CurseLazy2", pcUnitData );
+		EffectGame::InertiaTarget("CurseLazy2", pcUnitData);
 	}
 
-	if ( pcUnitData->sCharacterData.sSize )
+	if (pcUnitData->sCharacterData.sSize)
 		RENDERER->iObjectVertexScale = pcUnitData->sCharacterData.sSize;
 
 	int iDark = 0;
 
-	if ( DARKCOLOR_AMOUNT > 0 && pcUnitData->iLoadedMapIndex >= 0 )
+	if (DARKCOLOR_AMOUNT > 0 && pcUnitData->iLoadedMapIndex >= 0)
 	{
-		if ( FIELDGAME[pcUnitData->iLoadedMapIndex]->iMapType == MAPTYPE_Town )
+		if (FIELDGAME[pcUnitData->iLoadedMapIndex]->iMapType == MAPTYPE_Town)
 		{
 			iDark = DARKCOLOR_AMOUNT;
 			RENDERER->r += iDark;
@@ -2403,7 +2400,7 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 
 			iDark = 0;
 
-			if ( RENDERER->iLightCount > 0 && RENDERER->sObjectLight[0].iRange == DARKLIGHTCOLOR_RANGE )
+			if (RENDERER->iLightCount > 0 && RENDERER->sObjectLight[0].iRange == DARKLIGHTCOLOR_RANGE)
 			{
 				RENDERER->sObjectLight[0].iRange = 0;
 				iDark = 1;
@@ -2411,9 +2408,9 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 		}
 	}
 
-	if ( pcUnitData->IsDead() )
+	if (pcUnitData->IsDead())
 	{
-		if ( pcUnitData->iFrameCounter > 400 )
+		if (pcUnitData->iFrameCounter > 400)
 		{
 			RENDERER->r -= 100;
 			RENDERER->g -= 100;
@@ -2421,7 +2418,7 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 		}
 		else
 		{
-			if ( pcUnitData->iFrameCounter > 200 )
+			if (pcUnitData->iFrameCounter > 200)
 			{
 				int iColor = (pcUnitData->iFrameCounter - 200) >> 1;
 				RENDERER->r -= iColor;
@@ -2432,20 +2429,20 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 
 		int iMonsterEffectID = pcUnitData->sCharacterData.iMonsterEffectID;
 
-		if ( iMonsterEffectID == MONSTEREFFECTID_FIGON || iMonsterEffectID == MONSTEREFFECTID_STYGIANLORD ||
+		if (iMonsterEffectID == MONSTEREFFECTID_FIGON || iMonsterEffectID == MONSTEREFFECTID_STYGIANLORD ||
 			iMonsterEffectID == MONSTEREFFECTID_GUARDIAN_SAINT || iMonsterEffectID == MONSTEREFFECTID_S_F_ELEMENTAL ||
-			iMonsterEffectID == MONSTEREFFECTID_CHAOSCARA )
+			iMonsterEffectID == MONSTEREFFECTID_CHAOSCARA)
 		{
 			RENDERER->a = iAlpha - (pcUnitData->iFrameCounter << 1);
 
-			if ( RENDERER->a < (-400) )
+			if (RENDERER->a < (-400))
 			{
 				RENDERER->r = iRed;
 				RENDERER->g = iGreen;
 				RENDERER->b = iBlue;
 				RENDERER->a = iAlpha;
 
-				if ( iDark )
+				if (iDark)
 					RENDERER->sObjectLight[0].iRange = DARKLIGHTCOLOR_RANGE;
 
 				RENDERER->iDistortionMesh = 0;
@@ -2459,130 +2456,130 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 		}
 	}
 
-	if ( pcUnitData->psBody )
+	if (pcUnitData->psBody)
 	{
-		ModelData::MeshQuality * psMeshQuality = &pcUnitData->psBody->sMediumMeshQuality;
+		ModelData::MeshQuality* psMeshQuality = &pcUnitData->psBody->sMediumMeshQuality;
 
-		if ( pcUnitData->iTalkFrame )
+		if (pcUnitData->iTalkFrame)
 		{
-			if ( (int)pcUnitData->pcTalkBoneContainer->uMaxFrame > pcUnitData->iTalkFrame )
+			if ((int)pcUnitData->pcTalkBoneContainer->uMaxFrame > pcUnitData->iTalkFrame)
 				pcUnitData->pcTalkBoneContainer->uMaxFrame = (UINT)pcUnitData->iTalkFrame;
 			else
 				pcUnitData->iTalkFrame = 0;
 		}
 
-		if ( pcUnitData->iPatDispMode & 1 )
+		if (pcUnitData->iPatDispMode & 1)
 		{
 
-			if ( pcBodyMeshContainer->pcBoneContainer )
+			if (pcBodyMeshContainer->pcBoneContainer)
 				pcBodyMeshContainer->pcBoneContainer->iLastFrame = -1;
 			else
 				pcBodyMeshContainer->iLastFrame = -1;
 
 
-			if ( ((psMeshQuality != NULL) && ((DWORD)psMeshQuality != 0x104)) && psMeshQuality->iCount )
+			if (((psMeshQuality != NULL) && ((DWORD)psMeshQuality != 0x104)) && psMeshQuality->iCount)
 			{
 				pszaModelName[0] = psMeshQuality->szMeshName1;
 				pszaModelName[1] = psMeshQuality->szMeshName2;
 				pszaModelName[2] = psMeshQuality->szMeshName3;
 				pszaModelName[3] = psMeshQuality->szMeshName4;
 
-				if ( pcUnitData->iTalkFrame && pcUnitData->psTalkModelAnimation->iType )
-					pcUnitData->bRendered += pcBodyMeshContainer->PreRender( &sCameraPosition, &sCameraAngle, pszaModelName, psMeshQuality->iCount, pcUnitData->pcTalkBoneContainer, (EXEFrame*)&pcUnitData->iStartFrame );
+				if (pcUnitData->iTalkFrame && pcUnitData->psTalkModelAnimation->iType)
+					pcUnitData->bRendered += pcBodyMeshContainer->PreRender(&sCameraPosition, &sCameraAngle, pszaModelName, psMeshQuality->iCount, pcUnitData->pcTalkBoneContainer, (EXEFrame*)&pcUnitData->iStartFrame);
 				else
-					pcUnitData->bRendered += pcBodyMeshContainer->PreRender( &sCameraPosition, &sCameraAngle, pszaModelName, psMeshQuality->iCount, (EXEFrame*)&pcUnitData->iStartFrame );
+					pcUnitData->bRendered += pcBodyMeshContainer->PreRender(&sCameraPosition, &sCameraAngle, pszaModelName, psMeshQuality->iCount, (EXEFrame*)&pcUnitData->iStartFrame);
 			}
 			else
 			{
-				if ( pcUnitData->iTalkFrame && pcUnitData->psTalkModelAnimation->iType )
-					pcUnitData->bRendered += pcBodyMeshContainer->Render( &sCameraPosition, &sCameraAngle, pcUnitData->pcTalkBoneContainer, (EXEFrame*)&pcUnitData->iStartFrame );
+				if (pcUnitData->iTalkFrame && pcUnitData->psTalkModelAnimation->iType)
+					pcUnitData->bRendered += pcBodyMeshContainer->Render(&sCameraPosition, &sCameraAngle, pcUnitData->pcTalkBoneContainer, (EXEFrame*)&pcUnitData->iStartFrame);
 				else
-					pcUnitData->bRendered += pcBodyMeshContainer->Render( &sCameraPosition, &sCameraAngle, (EXEFrame*)&pcUnitData->iStartFrame );
+					pcUnitData->bRendered += pcBodyMeshContainer->Render(&sCameraPosition, &sCameraAngle, (EXEFrame*)&pcUnitData->iStartFrame);
 			}
 		}
 	}
 
-	if ( pcUnitData->pcHead && pcHeadMeshContainer && (pcUnitData->iPatDispMode & 2) )
+	if (pcUnitData->pcHead && pcHeadMeshContainer && (pcUnitData->iPatDispMode & 2))
 	{
 
-		ModelData::MeshQuality * psMeshQuality = &pcUnitData->pcHead->psModelData->sMediumMeshQuality;
+		ModelData::MeshQuality* psMeshQuality = &pcUnitData->pcHead->psModelData->sMediumMeshQuality;
 
-		pcHeadMeshContainer->SetPosition( &pcUnitData->sPosi, &sAngle );
+		pcHeadMeshContainer->SetPosition(&pcUnitData->sPosi, &sAngle);
 
-		if ( pcHeadMeshContainer->pcBoneContainer && (int)pcHeadMeshContainer->pcBoneContainer->uMaxFrame > pcUnitData->iFrame )
+		if (pcHeadMeshContainer->pcBoneContainer && (int)pcHeadMeshContainer->pcBoneContainer->uMaxFrame > pcUnitData->iFrame)
 			pcHeadMeshContainer->uFrame = (UINT)pcUnitData->iFrame;
 
-/*
-		if ( pcHeadMeshContainer->pcBoneContainer )
-			pcHeadMeshContainer->pcBoneContainer->iLastFrame = -1;
-		else
-			pcHeadMeshContainer->iLastFrame = -1;
-*/
+		/*
+				if ( pcHeadMeshContainer->pcBoneContainer )
+					pcHeadMeshContainer->pcBoneContainer->iLastFrame = -1;
+				else
+					pcHeadMeshContainer->iLastFrame = -1;
+		*/
 
-		if ( ((psMeshQuality != NULL) && ((DWORD)psMeshQuality != 0x104)) && psMeshQuality->iCount )
+		if (((psMeshQuality != NULL) && ((DWORD)psMeshQuality != 0x104)) && psMeshQuality->iCount)
 		{
 			pszaModelName[0] = psMeshQuality->szMeshName1;
 			pszaModelName[1] = psMeshQuality->szMeshName2;
 			pszaModelName[2] = psMeshQuality->szMeshName3;
 			pszaModelName[3] = psMeshQuality->szMeshName4;
 
-			if ( pcUnitData->iTalkFrame && pcUnitData->psTalkModelAnimation->iType )
-				pcUnitData->bRendered += pcHeadMeshContainer->PreRender( &sCameraPosition, &sCameraAngle, pszaModelName, psMeshQuality->iCount, pcUnitData->pcTalkBoneContainer, (EXEFrame*)&pcUnitData->iStartFrame );
+			if (pcUnitData->iTalkFrame && pcUnitData->psTalkModelAnimation->iType)
+				pcUnitData->bRendered += pcHeadMeshContainer->PreRender(&sCameraPosition, &sCameraAngle, pszaModelName, psMeshQuality->iCount, pcUnitData->pcTalkBoneContainer, (EXEFrame*)&pcUnitData->iStartFrame);
 			else
-				pcUnitData->bRendered += pcHeadMeshContainer->PreRender( &sCameraPosition, &sCameraAngle, pszaModelName, psMeshQuality->iCount, (EXEFrame*)&pcUnitData->iStartFrame );
+				pcUnitData->bRendered += pcHeadMeshContainer->PreRender(&sCameraPosition, &sCameraAngle, pszaModelName, psMeshQuality->iCount, (EXEFrame*)&pcUnitData->iStartFrame);
 		}
 		else
 		{
-			if ( pcUnitData->iTalkFrame && pcUnitData->psTalkModelAnimation->iType )
-				pcUnitData->bRendered += pcHeadMeshContainer->Render( &sCameraPosition, &sCameraAngle, pcUnitData->pcTalkBoneContainer, (EXEFrame*)&pcUnitData->iStartFrame );
+			if (pcUnitData->iTalkFrame && pcUnitData->psTalkModelAnimation->iType)
+				pcUnitData->bRendered += pcHeadMeshContainer->Render(&sCameraPosition, &sCameraAngle, pcUnitData->pcTalkBoneContainer, (EXEFrame*)&pcUnitData->iStartFrame);
 			else
-				pcUnitData->bRendered += pcHeadMeshContainer->Render( &sCameraPosition, &sCameraAngle, (EXEFrame*)&pcUnitData->iStartFrame );
+				pcUnitData->bRendered += pcHeadMeshContainer->Render(&sCameraPosition, &sCameraAngle, (EXEFrame*)&pcUnitData->iStartFrame);
 		}
 	}
 
-	if ( pcUnitData->bRendered )
+	if (pcUnitData->bRendered)
 	{
 		int iWidthModel = 44 << 8;
 		int iHeightModel = pcUnitData->iModelHeight;
 
-		if ( (pcUnitData->sCharacterData.sSize > 0) && (pcUnitData->sCharacterData.sSize != 256) )
+		if ((pcUnitData->sCharacterData.sSize > 0) && (pcUnitData->sCharacterData.sSize != 256))
 		{
 			iWidthModel = (iWidthModel * pcUnitData->sCharacterData.sSize) >> 8;
 			iHeightModel = (iHeightModel * pcUnitData->sCharacterData.sSize) >> 8;
 		}
 
-		if ( iHeightModel < (44 << 8) )
+		if (iHeightModel < (44 << 8))
 			iHeightModel = (44 << 8);
 
-		RENDERER->SetCameraPosition( sCameraPosition.iX, sCameraPosition.iY, sCameraPosition.iZ, sCameraAngle.iX, sCameraAngle.iY, sCameraAngle.iZ );
+		RENDERER->SetCameraPosition(sCameraPosition.iX, sCameraPosition.iY, sCameraPosition.iZ, sCameraAngle.iX, sCameraAngle.iY, sCameraAngle.iZ);
 
-		Point2D sPoint( 0, 0 );
+		Point2D sPoint(0, 0);
 
-		pcUnitData->sRenderPoint.iZ = RENDERER->GetRectangle2D( pcUnitData->sPosition.iX, pcUnitData->sPosition.iY + (iHeightModel >> 1), pcUnitData->sPosition.iZ, iWidthModel, iHeightModel, &pcUnitData->rRenderRectangle, &sPoint );
+		pcUnitData->sRenderPoint.iZ = RENDERER->GetRectangle2D(pcUnitData->sPosition.iX, pcUnitData->sPosition.iY + (iHeightModel >> 1), pcUnitData->sPosition.iZ, iWidthModel, iHeightModel, &pcUnitData->rRenderRectangle, &sPoint);
 		pcUnitData->sRenderPoint.iX = sPoint.iX;
 		pcUnitData->sRenderPoint.iY = sPoint.iY;
 
-		if ( bUIDebug )
+		if (bUIDebug)
 		{
 			int iX = pcUnitData->rRenderRectangle.left;
 			int iY = pcUnitData->rRenderRectangle.top;
 			int iWidth = pcUnitData->rRenderRectangle.right - iX;
 			int iHeight = pcUnitData->rRenderRectangle.bottom - iY;
 
-			GRAPHICENGINE->DrawRectangle2D( Rectangle2D( iX, iY, iWidth, 1 ), D3DCOLOR_XRGB( 255, 255, 100 ) );
-			GRAPHICENGINE->DrawRectangle2D( Rectangle2D( iX, iY + iHeight - 1, iWidth, 1 ), D3DCOLOR_XRGB( 255, 255, 100 ) );
-			GRAPHICENGINE->DrawRectangle2D( Rectangle2D( iX, iY, 1, iHeight ), D3DCOLOR_XRGB( 255, 255, 100 ) );
-			GRAPHICENGINE->DrawRectangle2D( Rectangle2D( iX + iWidth - 1, iY, 1, iHeight ), D3DCOLOR_XRGB( 255, 255, 100 ) );
+			GRAPHICENGINE->DrawRectangle2D(Rectangle2D(iX, iY, iWidth, 1), D3DCOLOR_XRGB(255, 255, 100));
+			GRAPHICENGINE->DrawRectangle2D(Rectangle2D(iX, iY + iHeight - 1, iWidth, 1), D3DCOLOR_XRGB(255, 255, 100));
+			GRAPHICENGINE->DrawRectangle2D(Rectangle2D(iX, iY, 1, iHeight), D3DCOLOR_XRGB(255, 255, 100));
+			GRAPHICENGINE->DrawRectangle2D(Rectangle2D(iX + iWidth - 1, iY, 1, iHeight), D3DCOLOR_XRGB(255, 255, 100));
 		}
 	}
 
-	if ( !pcBodyMeshContainer->pcBoneContainer || pcUnitData->bVisibleEquipment == FALSE )
+	if (!pcBodyMeshContainer->pcBoneContainer || pcUnitData->bVisibleEquipment == FALSE)
 	{
 		RENDERER->r = iRed;
 		RENDERER->g = iGreen;
 		RENDERER->b = iBlue;
 
-		if ( iDark )
+		if (iDark)
 			RENDERER->sLight[0].iRange = DARKLIGHTCOLOR_RANGE;
 
 		return TRUE;
@@ -2590,10 +2587,10 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 
 	BOOL bColorIncrease = FALSE;
 
-	if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Attack && TICKCOUNT & 0x20 )
+	if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Attack && TICKCOUNT & 0x20)
 		bColorIncrease = TRUE;
 
-	if ( bColorIncrease && (pcUnitData->bProjectileMode == FALSE) )
+	if (bColorIncrease && (pcUnitData->bProjectileMode == FALSE))
 	{
 		RENDERER->r += 80;
 		RENDERER->g += 80;
@@ -2603,46 +2600,46 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 	pcUnitData->bRenderLeftHand = TRUE;
 	pcUnitData->bRenderRightHand = TRUE;
 
-	EXEModel * pcModelShield = NULL;
+	EXEModel* pcModelShield = NULL;
 
-	if ( pcUnitData->sCharacterData.iType == CHARACTERTYPE_Player || pcUnitData->PkMode_CharState == CHARACTERTYPE_Player )
+	if (pcUnitData->sCharacterData.iType == CHARACTERTYPE_Player || pcUnitData->PkMode_CharState == CHARACTERTYPE_Player)
 	{
 		//Wing
-		if ( pcUnitData->pcaBackBone[0] && pcUnitData->pcaBackBone[0]->pParentMesh )
-			CopyMemory( &pcUnitData->sWingMatrix, &pcUnitData->pcaBackBone[0]->pParentMesh->sWorld, sizeof( EXEMatrixI ) );
+		if (pcUnitData->pcaBackBone[0] && pcUnitData->pcaBackBone[0]->pParentMesh)
+			CopyMemory(&pcUnitData->sWingMatrix, &pcUnitData->pcaBackBone[0]->pParentMesh->sWorld, sizeof(EXEMatrixI));
 
-		if ( pcUnitData->pcaBackBone[2] )
-			CopyMemory( &pcUnitData->sWingSkillMatrix, &pcUnitData->pcaBackBone[2]->sWorld, sizeof( EXEMatrixI ) );
+		if (pcUnitData->pcaBackBone[2])
+			CopyMemory(&pcUnitData->sWingSkillMatrix, &pcUnitData->pcaBackBone[2]->sWorld, sizeof(EXEMatrixI));
 
-		if ( pcUnitData->eToolEquipModeTown == TOOLEQUIPMODETOWN_None || (pcUnitData->iLoadedMapIndex >= 0 && FIELDGAME[pcUnitData->iLoadedMapIndex]->iMapType != MAPTYPE_Town && pcUnitData->GetAnimation() != ANIMATIONTYPE_Yahoo) )
+		if (pcUnitData->eToolEquipModeTown == TOOLEQUIPMODETOWN_None || (pcUnitData->iLoadedMapIndex >= 0 && FIELDGAME[pcUnitData->iLoadedMapIndex]->iMapType != MAPTYPE_Town && pcUnitData->GetAnimation() != ANIMATIONTYPE_Yahoo))
 		{
-			if ( pcUnitData->sLeftHandTool.pModel )
+			if (pcUnitData->sLeftHandTool.pModel)
 			{
 				pcModelShield = pcUnitData->sLeftHandTool.pModel;
 
-				if ( ItemID(pcUnitData->sLeftHandTool.eItemID).ToItemType() == ITEMTYPE_Shield )
+				if (ItemID(pcUnitData->sLeftHandTool.eItemID).ToItemType() == ITEMTYPE_Shield)
 				{
-					if ( (pcUnitData->dwDispAppSkill & SKILLMASK_SparkShield) && SPARKSHIELD_MODEL && pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Mechanician )
+					if ((pcUnitData->dwDispAppSkill & SKILLMASK_SparkShield) && SPARKSHIELD_MODEL && pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Mechanician)
 					{
-						if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill && pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T34 )
+						if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill && pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T34)
 						{
 
 						}
 						else
 							pcModelShield = SPARKSHIELD_MODEL;
 					}
-					if ( (pcUnitData->dwDispAppSkill & SKILLMASK_SparkShield) && DIVINESHIELD_MODEL && pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Knight )
+					if ((pcUnitData->dwDispAppSkill & SKILLMASK_SparkShield) && DIVINESHIELD_MODEL && pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Knight)
 					{
-						if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill && pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T32 )
+						if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill && pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T32)
 						{
 
 						}
 						else
 							pcModelShield = DIVINESHIELD_MODEL;
 					}
-					if ( (pcUnitData->dwDispAppSkill & SKILLMASK_GodlyShield) && GODLYSHIELD_MODEL && pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Knight )
+					if ((pcUnitData->dwDispAppSkill & SKILLMASK_GodlyShield) && GODLYSHIELD_MODEL && pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Knight)
 					{
-						if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill && pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T42 )
+						if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill && pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T42)
 						{
 
 						}
@@ -2651,9 +2648,9 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 					}
 				}
 
-				if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill && pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Atalanta && (pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T11 || pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T23) && pcUnitData->pcShieldBone )
+				if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill && pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Atalanta && (pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T11 || pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T23) && pcUnitData->pcShieldBone)
 				{
-					pcModelShield->SetParentBone( pcUnitData->pcBoneContainer, pcUnitData->pcShieldBone );
+					pcModelShield->SetParentBone(pcUnitData->pcBoneContainer, pcUnitData->pcShieldBone);
 
 					RENDERER->r += 100;
 					RENDERER->g += 100;
@@ -2661,43 +2658,43 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 				}
 				else
 				{
-					if ( pcUnitData->sLeftHandTool.pBone )
+					if (pcUnitData->sLeftHandTool.pBone)
 					{
 						//Dagger? ( PVP and PVE )
-						if ( pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Assassin )
+						if (pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Assassin)
 						{
-							if ( ItemID( pcUnitData->eWeaponItemID ).ToItemType() == ITEMTYPE_Dagger )
+							if (ItemID(pcUnitData->eWeaponItemID).ToItemType() == ITEMTYPE_Dagger)
 							{
 								EXEMatrixI sMatrix;
-								EXEMatrixIdentityI( sMatrix );
+								EXEMatrixIdentityI(sMatrix);
 								//EXEMatrixRotateZI( sMatrix, PTANGLE_180 & PTANGLE_Mask );
 
-								pcUnitData->sLeftHandTool.pBone->sWorld = EXEMatrixMultiplyI( sMatrix, pcUnitData->sLeftHandTool.pBone->sWorld );
+								pcUnitData->sLeftHandTool.pBone->sWorld = EXEMatrixMultiplyI(sMatrix, pcUnitData->sLeftHandTool.pBone->sWorld);
 							}
 						}
 
-						pcModelShield->SetParentBone( pcUnitData->pcBoneContainer, pcUnitData->sLeftHandTool.pBone );
+						pcModelShield->SetParentBone(pcUnitData->pcBoneContainer, pcUnitData->sLeftHandTool.pBone);
 
 					}
 				}
 
-				pcModelShield->SetPosition( &pcUnitData->sPosi, &sAngle );
+				pcModelShield->SetPosition(&pcUnitData->sPosi, &sAngle);
 				pcModelShield->uFrame = (UINT)pcUnitData->iFrame;
 
-				if ( pcUnitData->sLeftHandTool.pBone )
-					CopyMemory( &pcUnitData->sLeftHandMatrix, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof( EXEMatrixI ) );
+				if (pcUnitData->sLeftHandTool.pBone)
+					CopyMemory(&pcUnitData->sLeftHandMatrix, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof(EXEMatrixI));
 
-				if ( !pcUnitData->sLeftHandTool.iBlinkSpeed || !pcUnitData->sLeftHandTool.saBlinkColor[3] )
+				if (!pcUnitData->sLeftHandTool.iBlinkSpeed || !pcUnitData->sLeftHandTool.saBlinkColor[3])
 				{
-					int iColorSpeed = SetItemTextureColor( &pcUnitData->sLeftHandTool );
+					int iColorSpeed = SetItemTextureColor(&pcUnitData->sLeftHandTool);
 					int iColorScale = (iColorSpeed * pcUnitData->sLeftHandTool.iBlinkScale) >> 8;
 
-					if ( pcUnitData->sLeftHandTool.iBlinkScale && iColorSpeed )
+					if (pcUnitData->sLeftHandTool.iBlinkScale && iColorSpeed)
 					{
 						EXEMatrixI sMatrix;
-						EXEMatrixIdentityI( sMatrix );
+						EXEMatrixIdentityI(sMatrix);
 
-						if ( pcUnitData->sLeftHandTool.iBlinkScale < 0 )
+						if (pcUnitData->sLeftHandTool.iBlinkScale < 0)
 							iColorScale = -iColorScale;
 
 						sMatrix.i[0][0] = iColorScale;
@@ -2706,90 +2703,90 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 
 						pcModelShield->uFrame = -1;
 
-						if ( pcUnitData->sLeftHandTool.pBone && pcModelShield->paMesh[0] )
+						if (pcUnitData->sLeftHandTool.pBone && pcModelShield->paMesh[0])
 						{
-							CopyMemory( &pcModelShield->paMesh[0]->sWorld, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof( EXEMatrixI ) );
-							pcModelShield->paMesh[0]->sWorld = EXEMatrixMultiplyI( sMatrix, pcModelShield->paMesh[0]->sWorld );
+							CopyMemory(&pcModelShield->paMesh[0]->sWorld, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof(EXEMatrixI));
+							pcModelShield->paMesh[0]->sWorld = EXEMatrixMultiplyI(sMatrix, pcModelShield->paMesh[0]->sWorld);
 						}
 					}
 
-					pcModelShield->Render( &sCameraPosition, &sCameraAngle );
+					pcModelShield->Render(&sCameraPosition, &sCameraAngle);
 					ResetItemTextureColor();
 
 
-					if ( pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Atalanta && (pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T11 || pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T23) && pcUnitData->pcShieldBone )
+					if (pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Atalanta && (pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T11 || pcUnitData->sActiveSkill.cSkillTinyID == SKILLPLAYID_T23) && pcUnitData->pcShieldBone)
 					{
-						if ( pcModelShield->paMesh[0] )
+						if (pcModelShield->paMesh[0])
 						{
 							Point3D sShieldPosition;
 							sShieldPosition.iX = pcModelShield->paMesh[0]->sWorld.i[3][0] + pcUnitData->sPosition.iX;
 							sShieldPosition.iZ = pcModelShield->paMesh[0]->sWorld.i[3][1] + pcUnitData->sPosition.iZ;
 							sShieldPosition.iY = pcModelShield->paMesh[0]->sWorld.i[3][2] + pcUnitData->sPosition.iY;
-							SetShieldStrikeEffect( &sShieldPosition );
+							SetShieldStrikeEffect(&sShieldPosition);
 						}
 					}
 				}
 				else
 					pcUnitData->bRenderLeftHand = FALSE;
 
-				pcModelShield->SetParentBone( NULL, NULL );
+				pcModelShield->SetParentBone(NULL, NULL);
 				pcModelShield->iLastFrame = -1;
 			}
 
-			if ( pcUnitData->sRightHandTool.pModel && !pcUnitData->bHideRightWeapon )
+			if (pcUnitData->sRightHandTool.pModel && !pcUnitData->bHideRightWeapon)
 			{
-				if ( ItemID( pcUnitData->eWeaponItemID ).ToItemType() == ITEMTYPE_Javelin && pcUnitData->iProjectileType )
+				if (ItemID(pcUnitData->eWeaponItemID).ToItemType() == ITEMTYPE_Javelin && pcUnitData->iProjectileType)
 				{
 
 				}
 				else
 				{
-					EXEModel * pcModelWeapon = pcUnitData->sRightHandTool.pModel;
-					EXEMesh * pcBoneWeapon = pcUnitData->sRightHandTool.pBone;
+					EXEModel* pcModelWeapon = pcUnitData->sRightHandTool.pModel;
+					EXEMesh* pcBoneWeapon = pcUnitData->sRightHandTool.pBone;
 
-					if ( pcBoneWeapon )
+					if (pcBoneWeapon)
 					{
 						//Shaman & Phantom? ( PVP & PVE )
-						if ( pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Shaman )
+						if (pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Shaman)
 						{
-							if ( ItemID( pcUnitData->eWeaponItemID ).ToItemType() == ITEMTYPE_Phantom )
+							if (ItemID(pcUnitData->eWeaponItemID).ToItemType() == ITEMTYPE_Phantom)
 							{
-								if ( pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1] )
+								if (pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1])
 								{
 									pcBoneWeapon = pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1];
 
 									EXEMatrixI sMatrix;
-									EXEMatrixIdentityI( sMatrix );
-									EXEMatrixRotateYI( sMatrix, 2250 );
-									EXEMatrixTranslate( sMatrix, 0, 0, 10 );
+									EXEMatrixIdentityI(sMatrix);
+									EXEMatrixRotateYI(sMatrix, 2250);
+									EXEMatrixTranslate(sMatrix, 0, 0, 10);
 
 									pcUnitData->sPosi.iY += 1000;
 
-									pcBoneWeapon->sWorld = EXEMatrixMultiplyI( sMatrix, pcBoneWeapon->sWorld );
+									pcBoneWeapon->sWorld = EXEMatrixMultiplyI(sMatrix, pcBoneWeapon->sWorld);
 								}
 							}
 						}
 
-						pcModelWeapon->SetParentBone( pcUnitData->pcBoneContainer, pcBoneWeapon );
+						pcModelWeapon->SetParentBone(pcUnitData->pcBoneContainer, pcBoneWeapon);
 					}
 
-					pcModelWeapon->SetPosition( &pcUnitData->sPosi, &sAngle );
+					pcModelWeapon->SetPosition(&pcUnitData->sPosi, &sAngle);
 					pcModelWeapon->uFrame = (UINT)pcUnitData->iFrame;
 
-					if ( pcBoneWeapon )
-						CopyMemory( &pcUnitData->sRightHandMatrix, &pcBoneWeapon->sWorld, sizeof( EXEMatrixI ) );
+					if (pcBoneWeapon)
+						CopyMemory(&pcUnitData->sRightHandMatrix, &pcBoneWeapon->sWorld, sizeof(EXEMatrixI));
 
-					if ( !pcUnitData->sRightHandTool.iBlinkSpeed || !pcUnitData->sRightHandTool.saBlinkColor[3] )
+					if (!pcUnitData->sRightHandTool.iBlinkSpeed || !pcUnitData->sRightHandTool.saBlinkColor[3])
 					{
-						int iColorSpeed = SetItemTextureColor( &pcUnitData->sRightHandTool );
+						int iColorSpeed = SetItemTextureColor(&pcUnitData->sRightHandTool);
 						int iColorScale = (iColorSpeed * pcUnitData->sRightHandTool.iBlinkScale) >> 8;
 
-						if ( pcUnitData->sRightHandTool.iBlinkScale && iColorSpeed )
+						if (pcUnitData->sRightHandTool.iBlinkScale && iColorSpeed)
 						{
 							EXEMatrixI sMatrix;
-							EXEMatrixIdentityI( sMatrix );
+							EXEMatrixIdentityI(sMatrix);
 
-							if ( pcUnitData->sRightHandTool.iBlinkScale < 0 )
+							if (pcUnitData->sRightHandTool.iBlinkScale < 0)
 								iColorScale = -iColorScale;
 
 							sMatrix.i[0][0] = iColorScale;
@@ -2798,51 +2795,51 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 
 							pcModelWeapon->uFrame = -1;
 
-							if ( pcUnitData->sRightHandTool.pBone && pcModelWeapon->paMesh[0] )
+							if (pcUnitData->sRightHandTool.pBone && pcModelWeapon->paMesh[0])
 							{
-								CopyMemory( &pcModelWeapon->paMesh[0]->sWorld, &pcUnitData->sRightHandTool.pBone->sWorld, sizeof( EXEMatrixI ) );
-								pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI( sMatrix, pcModelWeapon->paMesh[0]->sWorld );
+								CopyMemory(&pcModelWeapon->paMesh[0]->sWorld, &pcUnitData->sRightHandTool.pBone->sWorld, sizeof(EXEMatrixI));
+								pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI(sMatrix, pcModelWeapon->paMesh[0]->sWorld);
 							}
 						}
 
-						pcModelWeapon->Render( &sCameraPosition, &sCameraAngle );
+						pcModelWeapon->Render(&sCameraPosition, &sCameraAngle);
 						ResetItemTextureColor();
 					}
 					else
 						pcUnitData->bRenderRightHand = FALSE;
 
-					pcModelWeapon->SetParentBone( NULL, NULL );
+					pcModelWeapon->SetParentBone(NULL, NULL);
 					pcModelWeapon->iLastFrame = -1;
 				}
 			}
 		}
 		else
 		{
-			EXEModel * pcModelWeapon = NULL;
+			EXEModel* pcModelWeapon = NULL;
 
-			if ( pcUnitData->eWeaponItemID )
+			if (pcUnitData->eWeaponItemID)
 			{
 				int iColorScale = 0;
 
-				if ( pcUnitData->sLeftHandTool.eItemID == pcUnitData->eWeaponItemID )
+				if (pcUnitData->sLeftHandTool.eItemID == pcUnitData->eWeaponItemID)
 				{
 					pcModelWeapon = pcUnitData->sLeftHandTool.pModel;
 
-					if ( !pcUnitData->sLeftHandTool.iBlinkSpeed || !pcUnitData->sLeftHandTool.saBlinkColor[3] )
+					if (!pcUnitData->sLeftHandTool.iBlinkSpeed || !pcUnitData->sLeftHandTool.saBlinkColor[3])
 					{
-						if ( pcModelWeapon )
+						if (pcModelWeapon)
 						{
-							int iColorSpeed = SetItemTextureColor( &pcUnitData->sLeftHandTool );
+							int iColorSpeed = SetItemTextureColor(&pcUnitData->sLeftHandTool);
 
-							if ( pcUnitData->sLeftHandTool.iBlinkScale && iColorSpeed )
+							if (pcUnitData->sLeftHandTool.iBlinkScale && iColorSpeed)
 							{
 								iColorScale = (iColorSpeed * pcUnitData->sLeftHandTool.iBlinkScale) >> 8;
 
-								if ( pcUnitData->sLeftHandTool.iBlinkScale < 0 )
+								if (pcUnitData->sLeftHandTool.iBlinkScale < 0)
 									iColorScale = -iColorScale;
 
-								if ( pcUnitData->sLeftHandTool.pBone && pcModelWeapon->paMesh[0] )
-									CopyMemory( &pcModelWeapon->paMesh[0]->sWorld, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof( EXEMatrixI ) );
+								if (pcUnitData->sLeftHandTool.pBone && pcModelWeapon->paMesh[0])
+									CopyMemory(&pcModelWeapon->paMesh[0]->sWorld, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof(EXEMatrixI));
 							}
 						}
 					}
@@ -2850,25 +2847,25 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 						pcUnitData->bRenderLeftHand = FALSE;
 				}
 
-				if ( pcUnitData->sRightHandTool.eItemID == pcUnitData->eWeaponItemID )
+				if (pcUnitData->sRightHandTool.eItemID == pcUnitData->eWeaponItemID)
 				{
 					pcModelWeapon = pcUnitData->sRightHandTool.pModel;
 
-					if ( !pcUnitData->sRightHandTool.iBlinkSpeed || !pcUnitData->sRightHandTool.saBlinkColor[3] )
+					if (!pcUnitData->sRightHandTool.iBlinkSpeed || !pcUnitData->sRightHandTool.saBlinkColor[3])
 					{
-						if ( pcModelWeapon )
+						if (pcModelWeapon)
 						{
-							int iColorSpeed = SetItemTextureColor( &pcUnitData->sRightHandTool );
+							int iColorSpeed = SetItemTextureColor(&pcUnitData->sRightHandTool);
 
-							if ( pcUnitData->sRightHandTool.iBlinkScale && iColorSpeed )
+							if (pcUnitData->sRightHandTool.iBlinkScale && iColorSpeed)
 							{
 								iColorScale = (iColorSpeed * pcUnitData->sRightHandTool.iBlinkScale) >> 8;
 
-								if ( pcUnitData->sRightHandTool.iBlinkScale < 0 )
+								if (pcUnitData->sRightHandTool.iBlinkScale < 0)
 									iColorScale = -iColorScale;
 
-								if ( pcUnitData->sRightHandTool.pBone && pcModelWeapon->paMesh[0] )
-									CopyMemory( &pcModelWeapon->paMesh[0]->sWorld, &pcUnitData->sRightHandTool.pBone->sWorld, sizeof( EXEMatrixI ) );
+								if (pcUnitData->sRightHandTool.pBone && pcModelWeapon->paMesh[0])
+									CopyMemory(&pcModelWeapon->paMesh[0]->sWorld, &pcUnitData->sRightHandTool.pBone->sWorld, sizeof(EXEMatrixI));
 							}
 						}
 					}
@@ -2876,101 +2873,101 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 						pcUnitData->bRenderRightHand = FALSE;
 				}
 
-				if ( pcModelWeapon )
+				if (pcModelWeapon)
 				{
-					if ( pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1] )
+					if (pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1])
 					{
 						//Shaman & Phantom? ( Town )
-						if ( pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Shaman )
+						if (pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Shaman)
 						{
-							if ( ItemID( pcUnitData->eWeaponItemID ).ToItemType() == ITEMTYPE_Phantom )
+							if (ItemID(pcUnitData->eWeaponItemID).ToItemType() == ITEMTYPE_Phantom)
 							{
 								EXEMatrixI sMatrix;
-								EXEMatrixIdentityI( sMatrix );
-								EXEMatrixRotateYI( sMatrix, 2250 );
-								EXEMatrixTranslate( sMatrix, 0, 0, 10 );
+								EXEMatrixIdentityI(sMatrix);
+								EXEMatrixRotateYI(sMatrix, 2250);
+								EXEMatrixTranslate(sMatrix, 0, 0, 10);
 
 								pcUnitData->sPosi.iY += 1000;
 
-								pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1]->sWorld = EXEMatrixMultiplyI( sMatrix, pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1]->sWorld );
+								pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1]->sWorld = EXEMatrixMultiplyI(sMatrix, pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1]->sWorld);
 							}
 						}
 
-						pcModelWeapon->SetParentBone( pcUnitData->pcBoneContainer, pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1] );
+						pcModelWeapon->SetParentBone(pcUnitData->pcBoneContainer, pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1]);
 					}
 
-					pcModelWeapon->SetPosition( &pcUnitData->sPosi, &sAngle );
+					pcModelWeapon->SetPosition(&pcUnitData->sPosi, &sAngle);
 					pcModelWeapon->uFrame = (UINT)pcUnitData->iFrame;
 
-					if ( iColorScale )
+					if (iColorScale)
 					{
 						EXEMatrixI sMatrix;
 
-						EXEMatrixIdentityI( sMatrix );
+						EXEMatrixIdentityI(sMatrix);
 						sMatrix.i[0][0] = iColorScale;
 						sMatrix.i[1][1] = iColorScale;
 						sMatrix.i[2][2] = iColorScale;
 						pcModelWeapon->uFrame = -1;
 
-						if ( pcModelWeapon->paMesh[0] )
-							pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI( sMatrix, pcModelWeapon->paMesh[0]->sWorld );
+						if (pcModelWeapon->paMesh[0])
+							pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI(sMatrix, pcModelWeapon->paMesh[0]->sWorld);
 					}
 
-					if ( pcUnitData->sLeftHandTool.eItemID == pcUnitData->eWeaponItemID )
+					if (pcUnitData->sLeftHandTool.eItemID == pcUnitData->eWeaponItemID)
 					{
-						if ( pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1] )
-							CopyMemory( &pcUnitData->sLeftHandMatrix, &pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1]->sWorld, sizeof( EXEMatrixI ) );
+						if (pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1])
+							CopyMemory(&pcUnitData->sLeftHandMatrix, &pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1]->sWorld, sizeof(EXEMatrixI));
 
-						if ( pcUnitData->bRenderLeftHand )
+						if (pcUnitData->bRenderLeftHand)
 						{
 							//Assassin & Dagger? ( Town )
-							if ( pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Assassin )
+							if (pcUnitData->sCharacterData.iClass == CHARACTERCLASS_Assassin)
 							{
-								if ( ItemID( pcUnitData->eWeaponItemID ).ToItemType() == ITEMTYPE_Dagger )
+								if (ItemID(pcUnitData->eWeaponItemID).ToItemType() == ITEMTYPE_Dagger)
 								{
-									for ( int i = 0; i < 2; i++ )
+									for (int i = 0; i < 2; i++)
 									{
-										EXEMesh * pcBone = pcUnitData->pcaWeaponDaggerBone[i];
-										if ( pcBone )
+										EXEMesh* pcBone = pcUnitData->pcaWeaponDaggerBone[i];
+										if (pcBone)
 										{
 											EXEMatrixI sMatrix;
-											EXEMatrixIdentityI( sMatrix );
+											EXEMatrixIdentityI(sMatrix);
 
-											if ( pcUnitData->eWeaponItemID == pcUnitData->sLeftHandTool.eItemID )
-												EXEMatrixRotateZI( sMatrix, PTANGLE_180 & PTANGLE_Mask );
+											if (pcUnitData->eWeaponItemID == pcUnitData->sLeftHandTool.eItemID)
+												EXEMatrixRotateZI(sMatrix, PTANGLE_180 & PTANGLE_Mask);
 
-											pcBone->sWorld = EXEMatrixMultiplyI( sMatrix, pcBone->sWorld );
+											pcBone->sWorld = EXEMatrixMultiplyI(sMatrix, pcBone->sWorld);
 
-											pcModelWeapon->SetParentBone( pcUnitData->pcBoneContainer, pcBone );
+											pcModelWeapon->SetParentBone(pcUnitData->pcBoneContainer, pcBone);
 
-											pcModelWeapon->SetPosition( &pcUnitData->sPosi, &sAngle );
+											pcModelWeapon->SetPosition(&pcUnitData->sPosi, &sAngle);
 											pcModelWeapon->uFrame = (UINT)pcUnitData->iFrame;
 
-											if ( pcModelWeapon->paMesh[0] )
-												pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI( sMatrix, pcModelWeapon->paMesh[0]->sWorld );
+											if (pcModelWeapon->paMesh[0])
+												pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI(sMatrix, pcModelWeapon->paMesh[0]->sWorld);
 
 											pcModelWeapon->uFrame++;
 
 											BOOL bRenderWeapon = FALSE;
 
-											if ( pcUnitData->eWeaponItemID == pcUnitData->sLeftHandTool.eItemID )
+											if (pcUnitData->eWeaponItemID == pcUnitData->sLeftHandTool.eItemID)
 											{
-												CopyMemory( &pcUnitData->sLeftHandMatrix, &pcBone->sWorld, sizeof( EXEMatrixI ) );
+												CopyMemory(&pcUnitData->sLeftHandMatrix, &pcBone->sWorld, sizeof(EXEMatrixI));
 												bRenderWeapon = pcUnitData->bRenderLeftHand;
 											}
 											else
 											{
-												CopyMemory( &pcUnitData->sRightHandMatrix, &pcBone->sWorld, sizeof( EXEMatrixI ) );
+												CopyMemory(&pcUnitData->sRightHandMatrix, &pcBone->sWorld, sizeof(EXEMatrixI));
 												bRenderWeapon = pcUnitData->bRenderRightHand;
 											}
 
-											if ( bRenderWeapon )
+											if (bRenderWeapon)
 											{
 												ResetItemTextureColor();
-												pcModelWeapon->Render( &sCameraPosition, &sCameraAngle );
+												pcModelWeapon->Render(&sCameraPosition, &sCameraAngle);
 											}
 
-											pcModelWeapon->SetParentBone( NULL, NULL );
+											pcModelWeapon->SetParentBone(NULL, NULL);
 											pcModelWeapon->iLastFrame = -1;
 										}
 									}
@@ -2978,9 +2975,9 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 							}
 							else
 							{
-								pcModelWeapon->Render( &sCameraPosition, &sCameraAngle );
+								pcModelWeapon->Render(&sCameraPosition, &sCameraAngle);
 
-								pcModelWeapon->SetParentBone( NULL, NULL );
+								pcModelWeapon->SetParentBone(NULL, NULL);
 								pcModelWeapon->iLastFrame = -1;
 							}
 
@@ -2989,71 +2986,71 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 					}
 					else
 					{
-						if ( pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1] )
-							CopyMemory( &pcUnitData->sRightHandMatrix, &pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1]->sWorld, sizeof( EXEMatrixI ) );
+						if (pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1])
+							CopyMemory(&pcUnitData->sRightHandMatrix, &pcUnitData->pcaBackBone[pcUnitData->eToolEquipModeTown - 1]->sWorld, sizeof(EXEMatrixI));
 
-						if ( pcUnitData->bRenderRightHand )
+						if (pcUnitData->bRenderRightHand)
 						{
-							if ( ItemID( pcUnitData->eWeaponItemID ).ToItemType() == ITEMTYPE_Claw )
+							if (ItemID(pcUnitData->eWeaponItemID).ToItemType() == ITEMTYPE_Claw)
 							{
-								EXEMesh * pcBone = pcUnitData->pcBoneContainer->GetMesh( "Bip01 R Hand" );
-								if ( pcBone )
+								EXEMesh* pcBone = pcUnitData->pcBoneContainer->GetMesh("Bip01 R Hand");
+								if (pcBone)
 								{
 									EXEMatrixI sMatrix;
-									EXEMatrixIdentityI( sMatrix );
+									EXEMatrixIdentityI(sMatrix);
 
-									pcBone->sWorld = EXEMatrixMultiplyI( sMatrix, pcBone->sWorld );
+									pcBone->sWorld = EXEMatrixMultiplyI(sMatrix, pcBone->sWorld);
 
-									pcModelWeapon->SetParentBone( pcUnitData->pcBoneContainer, pcBone );
+									pcModelWeapon->SetParentBone(pcUnitData->pcBoneContainer, pcBone);
 
-									pcModelWeapon->SetPosition( &pcUnitData->sPosi, &sAngle );
+									pcModelWeapon->SetPosition(&pcUnitData->sPosi, &sAngle);
 									pcModelWeapon->uFrame = (UINT)pcUnitData->iFrame;
 
-									if ( pcModelWeapon->paMesh[0] )
-										pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI( sMatrix, pcModelWeapon->paMesh[0]->sWorld );
+									if (pcModelWeapon->paMesh[0])
+										pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI(sMatrix, pcModelWeapon->paMesh[0]->sWorld);
 
 									pcModelWeapon->uFrame++;
 
-									CopyMemory( &pcUnitData->sRightHandMatrix, &pcBone->sWorld, sizeof( EXEMatrixI ) );
+									CopyMemory(&pcUnitData->sRightHandMatrix, &pcBone->sWorld, sizeof(EXEMatrixI));
 								}
 							}
 
-							pcModelWeapon->Render( &sCameraPosition, &sCameraAngle );
+							pcModelWeapon->Render(&sCameraPosition, &sCameraAngle);
 							ResetItemTextureColor();
 						}
 					}
 
-					pcModelWeapon->SetParentBone( NULL, NULL );
+					pcModelWeapon->SetParentBone(NULL, NULL);
 					pcModelWeapon->iLastFrame = -1;
 				}
 			}
 
-			if ( pcUnitData->sLeftHandTool.pModel && pcUnitData->eWeaponItemID != pcUnitData->sLeftHandTool.eItemID )
+			if (pcUnitData->sLeftHandTool.pModel && pcUnitData->eWeaponItemID != pcUnitData->sLeftHandTool.eItemID)
 			{
 				pcModelWeapon = pcUnitData->sLeftHandTool.pModel;
 
-				if ( pcUnitData->sLeftHandTool.pBone )
-					pcModelWeapon->SetParentBone( pcUnitData->pcBoneContainer, pcUnitData->sLeftHandTool.pBone );
+				if (pcUnitData->sLeftHandTool.pBone)
+					pcModelWeapon->SetParentBone(pcUnitData->pcBoneContainer, pcUnitData->sLeftHandTool.pBone);
 
-				pcModelWeapon->SetPosition( &pcUnitData->sPosi, &sAngle );
+				pcModelWeapon->SetPosition(&pcUnitData->sPosi, &sAngle);
 				pcModelWeapon->uFrame = (UINT)pcUnitData->iFrame;
 
-				if ( pcUnitData->sLeftHandTool.pBone )
-					CopyMemory( &pcUnitData->sLeftHandMatrix, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof( EXEMatrixI ) );
+				if (pcUnitData->sLeftHandTool.pBone)
+					CopyMemory(&pcUnitData->sLeftHandMatrix, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof(EXEMatrixI));
 
-				if ( !pcUnitData->sLeftHandTool.iBlinkSpeed || !pcUnitData->sLeftHandTool.saBlinkColor[3] )
+				if (!pcUnitData->sLeftHandTool.iBlinkSpeed || !pcUnitData->sLeftHandTool.saBlinkColor[3])
 				{
-					int iColorSpeed = SetItemTextureColor( &pcUnitData->sLeftHandTool );
+					int iColorSpeed = SetItemTextureColor(&pcUnitData->sLeftHandTool);
 
-					if ( pcUnitData->sLeftHandTool.iBlinkScale && iColorSpeed )
+					if (pcUnitData->sLeftHandTool.iBlinkScale && iColorSpeed)
 					{
 						int iColorScale = (iColorSpeed * pcUnitData->sLeftHandTool.iBlinkScale) >> 8;
 
-						if ( pcUnitData->sLeftHandTool.iBlinkScale < 0 )
+						if (pcUnitData->sLeftHandTool.iBlinkScale < 0)
 							iColorScale = -iColorScale;
 
 						EXEMatrixI sMatrix;
-						EXEMatrixIdentityI( sMatrix );
+						EXEMatrixIdentityI(sMatrix);
 
 						sMatrix.i[0][0] = iColorScale;
 						sMatrix.i[1][1] = iColorScale;
@@ -3061,53 +3058,53 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 
 						pcModelWeapon->uFrame = -1;
 
-						if ( pcUnitData->sLeftHandTool.pBone && pcModelWeapon->paMesh[0] )
+						if (pcUnitData->sLeftHandTool.pBone && pcModelWeapon->paMesh[0])
 						{
-							CopyMemory( &pcModelWeapon->paMesh[0]->sWorld, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof( EXEMatrixI ) );
-							pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI( sMatrix, pcModelWeapon->paMesh[0]->sWorld );
+							CopyMemory(&pcModelWeapon->paMesh[0]->sWorld, &pcUnitData->sLeftHandTool.pBone->sWorld, sizeof(EXEMatrixI));
+							pcModelWeapon->paMesh[0]->sWorld = EXEMatrixMultiplyI(sMatrix, pcModelWeapon->paMesh[0]->sWorld);
 						}
 					}
 
-					pcModelWeapon->Render( &sCameraPosition, &sCameraAngle );
+					pcModelWeapon->Render(&sCameraPosition, &sCameraAngle);
 					ResetItemTextureColor();
 				}
 				else
 					pcUnitData->bRenderLeftHand = FALSE;
 
-				pcModelWeapon->SetParentBone( NULL, NULL );
+				pcModelWeapon->SetParentBone(NULL, NULL);
 				pcModelWeapon->iLastFrame = -1;
 			}
 		}
 
-		EXEModel * pcModelProjectile = NULL;
+		EXEModel* pcModelProjectile = NULL;
 
-		if ( (pcUnitData->GetAnimation() == ANIMATIONTYPE_Attack || pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill) &&
-			ItemID( pcUnitData->eWeaponItemID ).ToItemType() == ITEMTYPE_Bow &&
-			pcUnitData->sRightHandTool.pModel == NULL && pcUnitData->iProjectileType == FALSE && pcUnitData->bHideRightWeapon == FALSE )
+		if ((pcUnitData->GetAnimation() == ANIMATIONTYPE_Attack || pcUnitData->GetAnimation() == ANIMATIONTYPE_Skill) &&
+			ItemID(pcUnitData->eWeaponItemID).ToItemType() == ITEMTYPE_Bow &&
+			pcUnitData->sRightHandTool.pModel == NULL && pcUnitData->iProjectileType == FALSE && pcUnitData->bHideRightWeapon == FALSE)
 		{
 			pcModelProjectile = PROJECTILE_MODEL;
-			if ( pcModelProjectile )
+			if (pcModelProjectile)
 			{
-				if ( pcUnitData->sRightHandTool.pBone )
-					pcModelProjectile->SetParentBone( pcUnitData->pcBoneContainer, pcUnitData->sRightHandTool.pBone );
+				if (pcUnitData->sRightHandTool.pBone)
+					pcModelProjectile->SetParentBone(pcUnitData->pcBoneContainer, pcUnitData->sRightHandTool.pBone);
 
-				pcModelProjectile->SetPosition( &pcUnitData->sPosi, &sAngle );
+				pcModelProjectile->SetPosition(&pcUnitData->sPosi, &sAngle);
 				pcModelProjectile->uFrame = (UINT)pcUnitData->iFrame;
-				pcModelProjectile->Render( &sCameraPosition, &sCameraAngle );
-				pcModelProjectile->SetParentBone( NULL, NULL );
+				pcModelProjectile->Render(&sCameraPosition, &sCameraAngle);
+				pcModelProjectile->SetParentBone(NULL, NULL);
 				pcModelProjectile->iLastFrame = -1;
 			}
 		}
 	}
 
-	if ( pcUnitData->iProjectileType )
+	if (pcUnitData->iProjectileType)
 	{
-		EXEModel * pcModelProjectile = NULL;
+		EXEModel* pcModelProjectile = NULL;
 
-		CopyMemory( &sAngle, &pcUnitData->sProjectileAngle, sizeof( Point3D ) );
+		CopyMemory(&sAngle, &pcUnitData->sProjectileAngle, sizeof(Point3D));
 		sAngle.iY = (-sAngle.iY + PTANGLE_180) & PTANGLE_Mask;
 
-		if ( ItemID( pcUnitData->eWeaponItemID ).ToItemType() == ITEMTYPE_Bow )
+		if (ItemID(pcUnitData->eWeaponItemID).ToItemType() == ITEMTYPE_Bow)
 			pcModelProjectile = PROJECTILE_MODEL;
 		else
 		{
@@ -3116,11 +3113,11 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 			sAngle.iX = (sAngle.iX - PTANGLE_90) & PTANGLE_Mask;
 		}
 
-		if ( pcModelProjectile )
+		if (pcModelProjectile)
 		{
-			pcModelProjectile->SetPosition( &pcUnitData->sProjectilePosition, &sAngle );
+			pcModelProjectile->SetPosition(&pcUnitData->sProjectilePosition, &sAngle);
 			pcModelProjectile->uFrame = 0;
-			pcModelProjectile->Render( &sCameraPosition, &sCameraAngle );
+			pcModelProjectile->Render(&sCameraPosition, &sCameraAngle);
 		}
 	}
 
@@ -3129,7 +3126,7 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 	RENDERER->b = iBlue;
 	RENDERER->a = iAlpha;
 
-	if ( iDark )
+	if (iDark)
 		RENDERER->sLight[0].iRange = DARKLIGHTCOLOR_RANGE;
 
 	RENDERER->iDistortionMesh = 0;
@@ -3146,7 +3143,7 @@ BOOL __cdecl RenderUnitData( UnitData * pcUnitData )
 // For attacking events
 // It can occur on another player, not just self
 // So take that into consideration.
-BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
+BOOL ClientUnitDataUpdate(UnitData* pcUnitData)
 {
 	//bIsMonster is a NPC monster or other player
 	BOOL bIsAMonster = pcUnitData->PkMode_CharState == CHARACTERTYPE_Monster || pcUnitData->sCharacterData.iType == CHARACTERTYPE_Monster;
@@ -3157,14 +3154,14 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 	//bIsNPC is a NPC (non-monster)
 	BOOL bIsANPC = pcUnitData->PkMode_CharState == CHARACTERTYPE_NPC || pcUnitData->sCharacterData.iType == CHARACTERTYPE_NPC;
 
-	if (bIsAPlayer && pcUnitData->bAddFrameUnit )
+	if (bIsAPlayer && pcUnitData->bAddFrameUnit)
 	{
-		if ( (pcUnitData->GetAnimation() == ANIMATIONTYPE_Walking) || (pcUnitData->GetAnimation() == ANIMATIONTYPE_Running) )
+		if ((pcUnitData->GetAnimation() == ANIMATIONTYPE_Walking) || (pcUnitData->GetAnimation() == ANIMATIONTYPE_Running))
 		{
-			if ( pcUnitData->iPlayBuffCnt >= pcUnitData->iPlayBuffPosiEnd )
+			if (pcUnitData->iPlayBuffCnt >= pcUnitData->iPlayBuffPosiEnd)
 			{
 				int iCompareFrame = pcUnitData->iFrame / 160;
-				if ( pcUnitData->psModelAnimation && (iCompareFrame >= pcUnitData->psModelAnimation->iEndFrame) )
+				if (pcUnitData->psModelAnimation && (iCompareFrame >= pcUnitData->psModelAnimation->iEndFrame))
 				{
 					pcUnitData->iFrame = (pcUnitData->psModelAnimation->iBeginFrame - pcUnitData->psModelAnimation->iEndFrame) + iCompareFrame;
 				}
@@ -3173,7 +3170,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 	}
 
 	//End of buffer sequence?
-	if ( pcUnitData->iPlayBuffCnt == pcUnitData->iPlayBuffPosiEnd )
+	if (pcUnitData->iPlayBuffCnt == pcUnitData->iPlayBuffPosiEnd)
 	{
 		//If the unit isn't idle, set it to idle
 		if ((pcUnitData->GetAnimation() != ANIMATIONTYPE_Idle) &&
@@ -3189,8 +3186,8 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 
 		int iCompareFrame = pcUnitData->iFrame / 160;
 
-		if ( pcUnitData->psModelAnimation &&
-			(iCompareFrame >= pcUnitData->psModelAnimation->iEndFrame) )
+		if (pcUnitData->psModelAnimation &&
+			(iCompareFrame >= pcUnitData->psModelAnimation->iEndFrame))
 		{
 			if (pcUnitData->psModelAnimation->bLoop)
 			{
@@ -3222,7 +3219,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 		pcUnitData->sAngle.iX = 0; //always 0
 		pcUnitData->sAngle.iY = psPlayBuff->saAngle[1];
 		pcUnitData->sAngle.iZ = 0;  //always 0
-		pcUnitData->iAction   = psPlayBuff->saAngle[3];
+		pcUnitData->iAction = psPlayBuff->saAngle[3];
 
 		if (pcUnitData->iAction == 0)
 		{
@@ -3343,7 +3340,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 							//DEBUG("%d = CALLT_WITH_ARG1(0x00438EF0, (DWORD)pcUnitData, FALSE);", TICKCOUNT);
 
 							CALLT_WITH_ARG1(0x00438EF0, (DWORD)pcUnitData, FALSE); //Execute skipped events - int smCHAR::EventAttack(int Flag)
-						    pcUnitData->dwAttackPlayTime = 0;					   //Except for long-range character attacks
+							pcUnitData->dwAttackPlayTime = 0;					   //Except for long-range character attacks
 							CALLT(0x00422170, (DWORD)pcUnitData);				   //ResetAttackTrans: AttackTrans.code = GetAttackTrans_XorCode();
 						}
 
@@ -3365,7 +3362,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 
 					ActiveSkill activeSkill{};
 					activeSkill.cLevel = sSkillCode & 0xF;
-					activeSkill.cSkillTinyID = ( sSkillCode >> 8 ) & 0xFF;
+					activeSkill.cSkillTinyID = (sSkillCode >> 8) & 0xFF;
 					activeSkill.sParam = static_cast<USHORT>(psPlayBuff->saAngle[2]); //grab the parameter elsewhere
 
 					//Start skill
@@ -3479,9 +3476,9 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 		}
 
 		ActiveSkill lsActiveSkill{};
-		lsActiveSkill.cLevel		= psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_SKIL] & 0xF;
-		lsActiveSkill.cSkillTinyID  = psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_SKIL] >> 8 & 0xFF;
-		lsActiveSkill.sParam		= psPlayBuff->saAngle[2];
+		lsActiveSkill.cLevel = psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_SKIL] & 0xF;
+		lsActiveSkill.cSkillTinyID = psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_SKIL] >> 8 & 0xFF;
+		lsActiveSkill.sParam = psPlayBuff->saAngle[2];
 
 		pcUnitData->sActiveSkill.iValue = lsActiveSkill.iValue;
 
@@ -3492,65 +3489,65 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 		CALLT_WITH_ARG1(0x00438EF0, (DWORD)pcUnitData, FALSE);							//0x00438EF0 = EventAttack()
 
 
-		if ( (pcUnitData->sCharacterData.iType != CHARACTERTYPE_Player) &&
-		   ( (pcUnitData->GetAnimation() == ANIMATIONTYPE_Walking) || (pcUnitData->GetAnimation() == ANIMATIONTYPE_Running)) )
+		if ((pcUnitData->sCharacterData.iType != CHARACTERTYPE_Player) &&
+			((pcUnitData->GetAnimation() == ANIMATIONTYPE_Walking) || (pcUnitData->GetAnimation() == ANIMATIONTYPE_Running)))
 		{
 			//Footsteps sound (bargon and giant monster)
-			if ( pcUnitData->psModelAnimation->iaEventFrame[0] )
+			if (pcUnitData->psModelAnimation->iaEventFrame[0])
 			{
 				int iCompareFrame = pcUnitData->iFrame - (pcUnitData->psModelAnimation->iBeginFrame * 160);
-				if ( (pcUnitData->psModelAnimation->iaEventFrame[0] > (iCompareFrame - 80)) && (pcUnitData->psModelAnimation->iaEventFrame[0] <= iCompareFrame) )
-					PlayUnitSound( pcUnitData );
+				if ((pcUnitData->psModelAnimation->iaEventFrame[0] > (iCompareFrame - 80)) && (pcUnitData->psModelAnimation->iaEventFrame[0] <= iCompareFrame))
+					PlayUnitSound(pcUnitData);
 			}
 
-			if ( pcUnitData->psModelAnimation->iaEventFrame[1] )
+			if (pcUnitData->psModelAnimation->iaEventFrame[1])
 			{
 				int iCompareFrame = pcUnitData->iFrame - (pcUnitData->psModelAnimation->iBeginFrame * 160);
-				if ( (pcUnitData->psModelAnimation->iaEventFrame[1] > (iCompareFrame - 80)) && (pcUnitData->psModelAnimation->iaEventFrame[1] <= iCompareFrame) )
-					PlayUnitSound( pcUnitData );
+				if ((pcUnitData->psModelAnimation->iaEventFrame[1] > (iCompareFrame - 80)) && (pcUnitData->psModelAnimation->iaEventFrame[1] <= iCompareFrame))
+					PlayUnitSound(pcUnitData);
 			}
 		}
 
 		pcUnitData->iFrameStep = 80;
 
-		if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Potion )
+		if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Potion)
 		{
 			//Potion action
-			if ( pcUnitData->psModelAnimation->iaEventFrame[0] )
+			if (pcUnitData->psModelAnimation->iaEventFrame[0])
 			{
 				int iCompareFrame = pcUnitData->iFrame - (pcUnitData->psModelAnimation->iBeginFrame * 160);
-				if ( (pcUnitData->psModelAnimation->iaEventFrame[0] > (iCompareFrame - pcUnitData->iFrameStep)) && (pcUnitData->psModelAnimation->iaEventFrame[0] <= iCompareFrame) )
+				if ((pcUnitData->psModelAnimation->iaEventFrame[0] > (iCompareFrame - pcUnitData->iFrameStep)) && (pcUnitData->psModelAnimation->iaEventFrame[0] <= iCompareFrame))
 				{
 					int iHeightEffect = pcUnitData->sPosition.iY + pcUnitData->iModelHeight;
-					if ( pcUnitData->sCharacterData.iType == CHARACTERTYPE_Player )
+					if (pcUnitData->sCharacterData.iType == CHARACTERTYPE_Player)
 						iHeightEffect = pcUnitData->sPosition.iY + 0x3000;
 
-					switch ( pcUnitData->iPotionStatus )
+					switch (pcUnitData->iPotionStatus)
 					{
-						case POTIONSTATUS_HP:
-							SKILLMANAGERHANDLER->StartSkillEffectOld( pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 600 );
-							PLAYMINISOUND( 20, SOUNDHANDLER->GetDistanceVolume( pcUnitData->sPosition ) );
-							break;
-						case POTIONSTATUS_MP:
-							SKILLMANAGERHANDLER->StartSkillEffectOld( pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 700 );
-							PLAYMINISOUND( 20, SOUNDHANDLER->GetDistanceVolume( pcUnitData->sPosition ) );
-							break;
-						case POTIONSTATUS_SP:
-							SKILLMANAGERHANDLER->StartSkillEffectOld( pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 800 );
-							PLAYMINISOUND( 20, SOUNDHANDLER->GetDistanceVolume( pcUnitData->sPosition ) );
-							break;
-						case POTIONSTATUS_HPMPSP:
-							SKILLMANAGERHANDLER->StartSkillEffectOld( pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 800 );
-							SKILLMANAGERHANDLER->StartSkillEffectOld( pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 700 );
-							SKILLMANAGERHANDLER->StartSkillEffectOld( pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 600 );
-							PLAYMINISOUND( 20, SOUNDHANDLER->GetDistanceVolume( pcUnitData->sPosition ) );
-							break;
-						case POTIONSTATUS_EtherCore:
-							SKILLMANAGERHANDLER->StartSkillEffectOld( pcUnitData->sPosition.iX, pcUnitData->sPosition.iY + 0x3000, pcUnitData->sPosition.iZ, 3500 );
-							SKILLMANAGERHANDLER->SkillPlaySound( 0x1000, pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ );
-							break;
-						default:
-							break;
+					case POTIONSTATUS_HP:
+						SKILLMANAGERHANDLER->StartSkillEffectOld(pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 600);
+						PLAYMINISOUND(20, SOUNDHANDLER->GetDistanceVolume(pcUnitData->sPosition));
+						break;
+					case POTIONSTATUS_MP:
+						SKILLMANAGERHANDLER->StartSkillEffectOld(pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 700);
+						PLAYMINISOUND(20, SOUNDHANDLER->GetDistanceVolume(pcUnitData->sPosition));
+						break;
+					case POTIONSTATUS_SP:
+						SKILLMANAGERHANDLER->StartSkillEffectOld(pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 800);
+						PLAYMINISOUND(20, SOUNDHANDLER->GetDistanceVolume(pcUnitData->sPosition));
+						break;
+					case POTIONSTATUS_HPMPSP:
+						SKILLMANAGERHANDLER->StartSkillEffectOld(pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 800);
+						SKILLMANAGERHANDLER->StartSkillEffectOld(pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 700);
+						SKILLMANAGERHANDLER->StartSkillEffectOld(pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ, 600);
+						PLAYMINISOUND(20, SOUNDHANDLER->GetDistanceVolume(pcUnitData->sPosition));
+						break;
+					case POTIONSTATUS_EtherCore:
+						SKILLMANAGERHANDLER->StartSkillEffectOld(pcUnitData->sPosition.iX, pcUnitData->sPosition.iY + 0x3000, pcUnitData->sPosition.iZ, 3500);
+						SKILLMANAGERHANDLER->SkillPlaySound(0x1000, pcUnitData->sPosition.iX, iHeightEffect, pcUnitData->sPosition.iZ);
+						break;
+					default:
+						break;
 					}
 				}
 			}
@@ -3561,14 +3558,14 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 
 		BOOL bIsMonSelfDestructOnDeath = pcUnitData->psModelAnimation->iType == ANIMATIONTYPE_Die &&
 			(pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_MYSTIC ||
-			pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_SEALCRASHER);
+				pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_SEALCRASHER);
 
 
 		//Monster NPC only
 		if (bIsAMonster == TRUE && bIsAPlayer == FALSE &&
 			(pcUnitData->psModelAnimation->iType == ANIMATIONTYPE_Skill ||
-			 pcUnitData->psModelAnimation->iType == ANIMATIONTYPE_Attack ||
-			 bIsMonSelfDestructOnDeath))
+				pcUnitData->psModelAnimation->iType == ANIMATIONTYPE_Attack ||
+				bIsMonSelfDestructOnDeath))
 		{
 			iCompareFrame = pcUnitData->iFrame - (pcUnitData->psModelAnimation->iBeginFrame * 160);
 
@@ -3601,12 +3598,12 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 
 			//no events frame values, and yet the monster is 'attacking' or using a 'skill'? let's use the middle frame number between begin and end
 			BOOL bContainsNoEventFrameValues = bContainsEvent0 == FALSE && bContainsEvent1 == FALSE && bContainsEvent2 == FALSE && bContainsEvent3 == FALSE;
-			if ( bContainsNoEventFrameValues )
+			if (bContainsNoEventFrameValues)
 			{
-				int targetFrame = ( ( pcUnitData->psModelAnimation->iEndFrame - pcUnitData->psModelAnimation->iBeginFrame ) / 2 ) * 160;
+				int targetFrame = ((pcUnitData->psModelAnimation->iEndFrame - pcUnitData->psModelAnimation->iBeginFrame) / 2) * 160;
 
-				if ( targetFrame > ( iCompareFrame - pcUnitData->iFrameStep ) &&
-					( targetFrame <= iCompareFrame ) )
+				if (targetFrame > (iCompareFrame - pcUnitData->iFrameStep) &&
+					(targetFrame <= iCompareFrame))
 				{
 					bContainsEvent0 = TRUE;
 					bEvent0 = TRUE;
@@ -3667,7 +3664,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 					//Also the monster could be attacking another character, but not me. So need the 2000ms check
 					//For last received damage
 					BOOL bSkip = ((TICKCOUNT - pcUnit->dwLastSkillAttackReceived) < 500) &&
-								 iEventIndex == pcUnit->iLastSkillAttackEvent;
+						iEventIndex == pcUnit->iLastSkillAttackEvent;
 
 					//Skip if received basic or skill damage is more than 2 seconds old or that the last attack is more than 2 seconds old.
 					// It's likely that the monster is attacking another player, or that we haven't received skill damage from the server yet
@@ -3681,7 +3678,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 					//Skip event frames that occurs within 80ms from previous. Too fast.
 					//Some monsters have this issue - like 'Ice Goblin'
 					BOOL bSkip2 = ((TICKCOUNT - pcUnit->dwLastSkillAttackReceived) < 80) &&
-								iEventIndex != pcUnit->iLastSkillAttackEvent;
+						iEventIndex != pcUnit->iLastSkillAttackEvent;
 
 					int maxDistToMon = 400;
 
@@ -3708,7 +3705,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 						}
 					}
 					else if (pcUnit->sLatestSkillAttackTrans.sPosition.iX != 0 &&
-							 pcUnit->sLatestSkillAttackTrans.sPosition.iZ != 0)
+						pcUnit->sLatestSkillAttackTrans.sPosition.iZ != 0)
 					{
 						int x = (pcUnit->sLatestSkillAttackTrans.sPosition.iX - UNITDATA->sPosition.iX) >> 8;
 						int y = (pcUnit->sLatestSkillAttackTrans.sPosition.iY - UNITDATA->sPosition.iY) >> 8;
@@ -3778,17 +3775,17 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 
 						if (pcUnitData->bDamageReduction)
 						{
-							pcUnitData->sAttackTrans.iDamage -= ( pcUnitData->bDamageReduction * pcUnitData->sAttackTrans.iDamage ) / 100;
+							pcUnitData->sAttackTrans.iDamage -= (pcUnitData->bDamageReduction * pcUnitData->sAttackTrans.iDamage) / 100;
 							bUpdateChecksum = TRUE;
 						}
 
-						if ( UNITDATA->sCharacterData.iClass == ECharacterClass::CHARACTERCLASS_Priestess &&
-							 pcUnitData->sCharacterData.iMonsterType == EMonsterType::MONSTERTYPE_Undead)
+						if (UNITDATA->sCharacterData.iClass == ECharacterClass::CHARACTERCLASS_Priestess &&
+							pcUnitData->sCharacterData.iMonsterType == EMonsterType::MONSTERTYPE_Undead)
 						{
-							int absorb = TIMERSKILLHANDLER->FindSkillTimerIntValue ( SKILLID_SummonMuspell, ESkillArrayPointer::Priestess_SummonMuspell_UndeadAbsorb_New );
-							if ( absorb > 0 )
+							int absorb = TIMERSKILLHANDLER->FindSkillTimerIntValue(SKILLID_SummonMuspell, ESkillArrayPointer::Priestess_SummonMuspell_UndeadAbsorb_New);
+							if (absorb > 0)
 							{
-								pcUnitData->sAttackTrans.iDamage -= ( absorb * pcUnitData->sAttackTrans.iDamage ) / 100;
+								pcUnitData->sAttackTrans.iDamage -= (absorb * pcUnitData->sAttackTrans.iDamage) / 100;
 								bUpdateChecksum = TRUE;
 							}
 						}
@@ -3806,7 +3803,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 							}
 						}
 
-						if ( bUpdateChecksum)
+						if (bUpdateChecksum)
 						{
 							pcUnitData->sAttackTrans.dwChkSum = pcUnitData->sAttackTrans.iDamage * 2002 + (pcUnitData->sAttackTrans.sPosition.iX * pcUnitData->sAttackTrans.sPosition.iY * pcUnitData->sAttackTrans.sPosition.iZ);
 							pcUnitData->sAttackTrans.dwDamageChkSum = CHARACTERGAME->GetDamgeChkSum_S2V(&pcUnitData->sAttackTrans);
@@ -3872,7 +3869,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 
 					if (bSkip2)
 					{
-					//	DEBUG("bSkip2");
+						//	DEBUG("bSkip2");
 					}
 
 					if (bSkip3)
@@ -3899,17 +3896,17 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 
 						if (pcUnitData->bDamageReduction)
 						{
-							pcUnitData->sAttackTrans.iDamage -= ( pcUnitData->bDamageReduction * pcUnitData->sAttackTrans.iDamage ) / 100;
+							pcUnitData->sAttackTrans.iDamage -= (pcUnitData->bDamageReduction * pcUnitData->sAttackTrans.iDamage) / 100;
 							bUpdateChecksum = TRUE;
 						}
 
-						if ( UNITDATA->sCharacterData.iClass == ECharacterClass::CHARACTERCLASS_Priestess &&
-							 pcUnitData->sCharacterData.iMonsterType == EMonsterType::MONSTERTYPE_Undead)
+						if (UNITDATA->sCharacterData.iClass == ECharacterClass::CHARACTERCLASS_Priestess &&
+							pcUnitData->sCharacterData.iMonsterType == EMonsterType::MONSTERTYPE_Undead)
 						{
-							int absorb = TIMERSKILLHANDLER->FindSkillTimerIntValue ( SKILLID_SummonMuspell, ESkillArrayPointer::Priestess_SummonMuspell_UndeadAbsorb_New );
-							if ( absorb > 0 )
+							int absorb = TIMERSKILLHANDLER->FindSkillTimerIntValue(SKILLID_SummonMuspell, ESkillArrayPointer::Priestess_SummonMuspell_UndeadAbsorb_New);
+							if (absorb > 0)
 							{
-								pcUnitData->sAttackTrans.iDamage -= ( absorb * pcUnitData->sAttackTrans.iDamage ) / 100;
+								pcUnitData->sAttackTrans.iDamage -= (absorb * pcUnitData->sAttackTrans.iDamage) / 100;
 								bUpdateChecksum = TRUE;
 							}
 						}
@@ -3930,7 +3927,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 						if (bUpdateChecksum)
 						{
 							pcUnitData->sAttackTrans.dwChkSum = pcUnitData->sAttackTrans.iDamage * 2002 + (pcUnitData->sAttackTrans.sPosition.iX * pcUnitData->sAttackTrans.sPosition.iY * pcUnitData->sAttackTrans.sPosition.iZ);
-							pcUnitData->sAttackTrans.dwDamageChkSum = CHARACTERGAME->GetDamgeChkSum_S2V( &pcUnitData->sAttackTrans );
+							pcUnitData->sAttackTrans.dwDamageChkSum = CHARACTERGAME->GetDamgeChkSum_S2V(&pcUnitData->sAttackTrans);
 						}
 
 						/*if ( pcUnitData->sAttackTrans.dwDamageChkSum != CHARACTERGAME->GetDamgeChkSum_S2V( &pcUnitData->sAttackTrans ) )
@@ -3954,7 +3951,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 					}
 					else
 					{
-					//DEBUG("%d = SKIPPING EVENT - BASIC. bSkip = %d, bSkip1 = %d, bSkip2 = %d, EventIndex = %d, Delta %d", TICKCOUNT, bSkip, bSkip1, bSkip2, iEventIndex, TICKCOUNT - pcUnit->dwLastReceivedAttackTrans);
+						//DEBUG("%d = SKIPPING EVENT - BASIC. bSkip = %d, bSkip1 = %d, bSkip2 = %d, EventIndex = %d, Delta %d", TICKCOUNT, bSkip, bSkip1, bSkip2, iEventIndex, TICKCOUNT - pcUnit->dwLastReceivedAttackTrans);
 					}
 				}
 
@@ -3964,15 +3961,15 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 
 		iCompareFrame = pcUnitData->iFrame / 160;
 
-		if ( iCompareFrame < pcUnitData->psModelAnimation->iBeginFrame )
+		if (iCompareFrame < pcUnitData->psModelAnimation->iBeginFrame)
 		{
 			pcUnitData->iFrame = pcUnitData->psModelAnimation->iBeginFrame * 160;
 		}
 
-		if ( iCompareFrame >= pcUnitData->psModelAnimation->iEndFrame )
+		if (iCompareFrame >= pcUnitData->psModelAnimation->iEndFrame)
 		{
-			if ( pcUnitData->psModelAnimation->bLoop )
-				pcUnitData->ChangeAnimationID( pcUnitData->iAction, pcUnitData->iAnimDisplayMode );
+			if (pcUnitData->psModelAnimation->bLoop)
+				pcUnitData->ChangeAnimationID(pcUnitData->iAction, pcUnitData->iAnimDisplayMode);
 			else
 				pcUnitData->iFrame = pcUnitData->psModelAnimation->iEndFrame * 160;
 
@@ -3981,42 +3978,42 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 
 
 		//Check the installed item code and apply changes
-		if ( bIsAPlayer )
+		if (bIsAPlayer)
 		{
 			//Left Hand
 			//If the equipped item on the left hand doesn't match, and there is an equipped item
 			// in the animation sequence. Then equip the correct item or the unit.
-			if ( psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_LEFT] != pcUnitData->saEquippedItems[smPLAYBUFF_ITEM_LEFT] )
+			if (psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_LEFT] != pcUnitData->saEquippedItems[smPLAYBUFF_ITEM_LEFT])
 			{
-				if ( psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_LEFT] >= 0 )
+				if (psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_LEFT] >= 0)
 				{
-					ITEMHANDLER->EquipItem( pcUnitData, ITEMHANDLER->FindItemTable( psPlayBuff->saEquippedItems[1] )->sBaseItemID.ToItemID(), 2 );
+					ITEMHANDLER->EquipItem(pcUnitData, ITEMHANDLER->FindItemTable(psPlayBuff->saEquippedItems[1])->sBaseItemID.ToItemID(), 2);
 					pcUnitData->sLeftHandTool.iBlinkSpeed = 0;
 					pcUnitData->sLeftHandTool.bStarEffect = FALSE;
 				}
 				else
-					ITEMHANDLER->EquipItem( pcUnitData, ITEMID_None, 2 );
+					ITEMHANDLER->EquipItem(pcUnitData, ITEMID_None, 2);
 			}
 
 			//Right Hand
 			//If the equipped item on the right hand doesn't match, and there is an equipped item
 			// in the animation sequence. Then equip the correct item or the unit.
-			if ( psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_RIGHT] != pcUnitData->saEquippedItems[smPLAYBUFF_ITEM_RIGHT] )
+			if (psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_RIGHT] != pcUnitData->saEquippedItems[smPLAYBUFF_ITEM_RIGHT])
 			{
-				if ( psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_RIGHT] >= 0 )
+				if (psPlayBuff->saEquippedItems[smPLAYBUFF_ITEM_RIGHT] >= 0)
 				{
-					ITEMHANDLER->EquipItem( pcUnitData, ITEMHANDLER->FindItemTable( psPlayBuff->saEquippedItems[2] )->sBaseItemID.ToItemID(), 1 );
+					ITEMHANDLER->EquipItem(pcUnitData, ITEMHANDLER->FindItemTable(psPlayBuff->saEquippedItems[2])->sBaseItemID.ToItemID(), 1);
 					pcUnitData->sRightHandTool.iBlinkSpeed = 0;
 					pcUnitData->sRightHandTool.bStarEffect = FALSE;
 				}
 				else
-					ITEMHANDLER->EquipItem( pcUnitData, ITEMID_None, 1 );
+					ITEMHANDLER->EquipItem(pcUnitData, ITEMID_None, 1);
 			}
 
 			//Body
-			if ( psPlayBuff->saEquippedItems[0] != pcUnitData->saEquippedItems[0] )
+			if (psPlayBuff->saEquippedItems[0] != pcUnitData->saEquippedItems[0])
 			{
-				ITEMHANDLER->EquipBody( pcUnitData, psPlayBuff->saEquippedItems[0] );
+				ITEMHANDLER->EquipBody(pcUnitData, psPlayBuff->saEquippedItems[0]);
 				pcUnitData->saEquippedItems[0] = psPlayBuff->saEquippedItems[0];
 			}
 		}
@@ -4043,57 +4040,57 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 		//	}
 		//}
 
-		if ( pcUnitData->iFireOverlay != 0 )
+		if (pcUnitData->iFireOverlay != 0)
 		{
-			if ( ( ( pcUnitData->iFireOverlay > 0 ) && ( pcUnitData->iFireOverlay < 160 ) ) || ( pcUnitData->iFireOverlay < 0 ) )
+			if (((pcUnitData->iFireOverlay > 0) && (pcUnitData->iFireOverlay < 160)) || (pcUnitData->iFireOverlay < 0))
 				pcUnitData->iFireOverlay++; //increment buring until it gets to 160 or 0 if -ve
 
-			if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Die )
+			if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Die)
 				pcUnitData->iFireOverlay = 0;
 		}
 
-		if ( pcUnitData->iIceOverlay != 0 )
+		if (pcUnitData->iIceOverlay != 0)
 		{
-			if ( ((pcUnitData->iIceOverlay > 0) && (pcUnitData->iIceOverlay < 160)) || (pcUnitData->iIceOverlay < 0) )
+			if (((pcUnitData->iIceOverlay > 0) && (pcUnitData->iIceOverlay < 160)) || (pcUnitData->iIceOverlay < 0))
 				pcUnitData->iIceOverlay++;
 
-			if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Die )
+			if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Die)
 				pcUnitData->iIceOverlay = 0;
 		}
 
 		//Poison infection which can be +ve and -ve.. ?
 		//with -ve value, it increments until 0 then stops
 		//with +ve value, it stays in effect until set to 0
-		if ( pcUnitData->iPoisonOverlay != 0 )
+		if (pcUnitData->iPoisonOverlay != 0)
 		{
-			if ( ((pcUnitData->iPoisonOverlay > 0) && (pcUnitData->iPoisonOverlay < 160)) || (pcUnitData->iPoisonOverlay < 0) )
+			if (((pcUnitData->iPoisonOverlay > 0) && (pcUnitData->iPoisonOverlay < 160)) || (pcUnitData->iPoisonOverlay < 0))
 				pcUnitData->iPoisonOverlay++; //increment poison until it gets to 160 or 0 if -ve
 
-			if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Die )
+			if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Die)
 				pcUnitData->iPoisonOverlay = 0;
 		}
 
 
 
 		//Distortion function
-		if ( pcUnitData->bDistortion > 0 )
+		if (pcUnitData->bDistortion > 0)
 			pcUnitData->bDistortion--;
 
 		//Map check every ~1s
-		if ( ((pcUnitData->iPlayBuffCnt % 64) == 0) && (pcUnitData->sCharacterData.iType != CHARACTERTYPE_Monster) )
+		if (((pcUnitData->iPlayBuffCnt % 64) == 0) && (pcUnitData->sCharacterData.iType != CHARACTERTYPE_Monster))
 		{
 			pcUnitData->iLoadedMapIndex = -1;
 
 			int iHeight = 0;
 
-			if ( STAGE1 )
+			if (STAGE1)
 			{
-				iHeight = STAGE1->GetHighestPoint( pcUnitData->sPosition.iX, pcUnitData->sPosition.iY, pcUnitData->sPosition.iZ, pcUnitData->pcBodyMeshContainer->uMeshHeight );
+				iHeight = STAGE1->GetHighestPoint(pcUnitData->sPosition.iX, pcUnitData->sPosition.iY, pcUnitData->sPosition.iZ, pcUnitData->pcBodyMeshContainer->uMeshHeight);
 
 				pcUnitData->iLoadedMapIndex = 0;
 			}
 
-			if ( (iHeight == (-32767)) && STAGE2 ) //-32767 = CLIP_OUT
+			if ((iHeight == (-32767)) && STAGE2) //-32767 = CLIP_OUT
 				pcUnitData->iLoadedMapIndex = 1;
 		}
 
@@ -4111,7 +4108,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 		if (pcUnitData->bVisible == FALSE)
 		{
 			int iDistanceXZY = 0, iDistanceXZ = 0, iDistanceX = 0, iDistanceZ = 0, iDistanceY = 0;
-			pcUnitData->sPosition.GetPTDistanceXZY(&UNITDATA->sPosition, iDistanceXZY,  iDistanceXZ, iDistanceX, iDistanceZ, iDistanceY);
+			pcUnitData->sPosition.GetPTDistanceXZY(&UNITDATA->sPosition, iDistanceXZY, iDistanceXZ, iDistanceX, iDistanceZ, iDistanceY);
 
 			if (iDistanceXZ < DISTANCE_MAX_UNIT_BASIC_VIEW && iDistanceX < DISTANCE_MISC && iDistanceZ < DISTANCE_MISC && iDistanceY < DISTANCE_MISC_Y)
 			{
@@ -4120,31 +4117,31 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 		}
 	}
 
-	if ( (pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_WOLVERLIN) && (pcUnitData->sCharacterData.iType == CHARACTERTYPE_Monster) )
+	if ((pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_WOLVERLIN) && (pcUnitData->sCharacterData.iType == CHARACTERTYPE_Monster))
 	{
-		if ( ((pcUnitData->iLoopCounter & 1) == 0) && (pcUnitData->GetAnimation() != ANIMATIONTYPE_Die) && (pcUnitData->GetAnimation() == ANIMATIONTYPE_Running) )
+		if (((pcUnitData->iLoopCounter & 1) == 0) && (pcUnitData->GetAnimation() != ANIMATIONTYPE_Die) && (pcUnitData->GetAnimation() == ANIMATIONTYPE_Running))
 		{
-			CALL_WITH_ARG6( 0x0048AF40, 0, 0, (Dice::RandomI(0, 48) - 24) << 8, 0, pcUnitData->sAngle.iY, 0 );
-			CALL_WITH_ARG7( 0x005266B0, 0x01000001, pcUnitData->sPosition.iX + RADIAN3D_X, pcUnitData->sPosition.iY + (30 << 8), pcUnitData->sPosition.iZ + RADIAN3D_Z, 1000, 1, 0 );
+			CALL_WITH_ARG6(0x0048AF40, 0, 0, (Dice::RandomI(0, 48) - 24) << 8, 0, pcUnitData->sAngle.iY, 0);
+			CALL_WITH_ARG7(0x005266B0, 0x01000001, pcUnitData->sPosition.iX + RADIAN3D_X, pcUnitData->sPosition.iY + (30 << 8), pcUnitData->sPosition.iZ + RADIAN3D_Z, 1000, 1, 0);
 		}
 
-		if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Die )
+		if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Die)
 		{
 			//Red
-			if ( pcUnitData->sAddColorEffect[2] > 0 )
+			if (pcUnitData->sAddColorEffect[2] > 0)
 				pcUnitData->sAddColorEffect[2]--;
 			//Green
-			if ( pcUnitData->sAddColorEffect[1] > 0 )
+			if (pcUnitData->sAddColorEffect[1] > 0)
 				pcUnitData->sAddColorEffect[1]--;
 			//Blue
-			if ( pcUnitData->sAddColorEffect[0] > 0 )
+			if (pcUnitData->sAddColorEffect[0] > 0)
 				pcUnitData->sAddColorEffect[0]--;
 		}
 	}
 
-	if ( pcUnitData->GetMaxHealth() > 0 )
+	if (pcUnitData->GetMaxHealth() > 0)
 	{
-		if ( pcUnitData->sCharacterData.sSize )
+		if (pcUnitData->sCharacterData.sSize)
 		{
 			//Christmas Goblin Size, ho ho ho! ^_^
 			/*if ( (pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_HOBGOBLIN) && (pcUnitData->sCharacterData.iLevel == 60) )
@@ -4156,7 +4153,7 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 		}
 
 		//Moriph
-		if ( (pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_NPC_MORIF) && (pcUnitData->sCharacterData.iLevel == 60) )
+		if ((pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_NPC_MORIF) && (pcUnitData->sCharacterData.iLevel == 60))
 		{
 			int iSize = ((pcUnitData->GetMaxHealth() - pcUnitData->GetCurrentHealth()) * 700) / pcUnitData->GetMaxHealth();
 			iSize += 300;
@@ -4164,52 +4161,52 @@ BOOL ClientUnitDataUpdate( UnitData * pcUnitData )
 		}
 	}
 
-	if ( pcUnitData->GetCurrentHealth() != pcUnitData->iCurHPBar )
+	if (pcUnitData->GetCurrentHealth() != pcUnitData->iCurHPBar)
 	{
-		if ( pcUnitData->iCurHPBar < pcUnitData->GetCurrentHealth() )
+		if (pcUnitData->iCurHPBar < pcUnitData->GetCurrentHealth())
 			pcUnitData->iCurHPBar++;
 		else
 			pcUnitData->iCurHPBar--;
 	}
 
 
-	if ( pcUnitData->GetAnimation() == ANIMATIONTYPE_Special )
+	if (pcUnitData->GetAnimation() == ANIMATIONTYPE_Special)
 	{
-		if ( (pcUnitData->iFrameCounter > 10) && (pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_WOLVERLIN) )
+		if ((pcUnitData->iFrameCounter > 10) && (pcUnitData->sCharacterData.iMonsterEffectID == MONSTEREFFECTID_WOLVERLIN))
 		{
 			//Red
-			if ( pcUnitData->sAddColorEffect[2] > 0 )
+			if (pcUnitData->sAddColorEffect[2] > 0)
 				pcUnitData->sAddColorEffect[2] -= 8;
 			//Green
-			if ( pcUnitData->sAddColorEffect[1] > 0 )
+			if (pcUnitData->sAddColorEffect[1] > 0)
 				pcUnitData->sAddColorEffect[1] -= 8;
 			//Blue
-			if ( pcUnitData->sAddColorEffect[0] > 0 )
+			if (pcUnitData->sAddColorEffect[0] > 0)
 				pcUnitData->sAddColorEffect[0] -= 8;
 			//Alpha
-			if ( pcUnitData->sAddColorEffect[3] > (-256) )
+			if (pcUnitData->sAddColorEffect[3] > (-256))
 				pcUnitData->sAddColorEffect[3] -= 8;
 
 			pcUnitData->DisplayAlpha = -16;
 		}
 	}
 
-	if ( pcUnitData->dwEnchantWeaponTimeOut )
+	if (pcUnitData->dwEnchantWeaponTimeOut)
 	{
-		if ( pcUnitData->dwEnchantWeaponTimeOut < TICKCOUNT )
+		if (pcUnitData->dwEnchantWeaponTimeOut < TICKCOUNT)
 		{
-			pcUnitData->dwEnchantWeaponTimeOut	= 0;
-			pcUnitData->iEnchantWeaponType		= 0;
+			pcUnitData->dwEnchantWeaponTimeOut = 0;
+			pcUnitData->iEnchantWeaponType = 0;
 		}
 	}
 
-	if ( pcUnitData->iVanishTimeLeft > 0 )
+	if (pcUnitData->iVanishTimeLeft > 0)
 		pcUnitData->iVanishTimeLeft--;
 
-	if ( pcUnitData->bNoDeath )
+	if (pcUnitData->bNoDeath)
 		pcUnitData->bNoDeath--;
 
-	if ( pcUnitData->sCharacterData.iClanID )
+	if (pcUnitData->sCharacterData.iClanID)
 	{
 		if (pcUnitData->iClanInfoIndex < 0)
 		{
@@ -4291,16 +4288,16 @@ int AdjustMonsterDamageForBellatra(int iDamage)
 
 DWORD dwNPCIgnoreClickTime = 0;
 
-void SendNpcUnitClick( UnitData * pcUnitData, int iState  )
+void SendNpcUnitClick(UnitData* pcUnitData, int iState)
 {
-	if ( pcUnitData &&
-		 pcUnitData->sCharacterData.iType == ECharacterType::CHARACTERTYPE_NPC )
+	if (pcUnitData &&
+		pcUnitData->sCharacterData.iType == ECharacterType::CHARACTERTYPE_NPC)
 	{
-		if ( ITEMONMOUSE )
+		if (ITEMONMOUSE)
 			return;
 
-		if ( dwNPCIgnoreClickTime != 0 &&
-			PLAYTIME < dwNPCIgnoreClickTime )
+		if (dwNPCIgnoreClickTime != 0 &&
+			PLAYTIME < dwNPCIgnoreClickTime)
 		{
 			return;
 		}
@@ -4309,22 +4306,22 @@ void SendNpcUnitClick( UnitData * pcUnitData, int iState  )
 
 		PacketNPCClick sPacketNPC{};
 		sPacketNPC.iHeader = PKTHDR_NpcUnitClick;
-		sPacketNPC.iLength = sizeof( PacketNPCClick );
+		sPacketNPC.iLength = sizeof(PacketNPCClick);
 		sPacketNPC.dwTarObjectSerial = pcUnitData->iID;
 		sPacketNPC.iNPCId = pcUnitData->sCharacterData.iNPCId;
 		sPacketNPC.iQuestData = iState;
 
-		SENDPACKETG( &sPacketNPC );
+		SENDPACKETG(&sPacketNPC);
 		return;
 	}
 }
 
-BOOL SendSingleDamageUnit( UnitData * pcUnitData, int iDamageMin, int iDamageMax, int iState, int iResistance, int iSkillCode, BOOL bChance, SocketData * pcSocketData )
+BOOL SendSingleDamageUnit(UnitData* pcUnitData, int iDamageMin, int iDamageMax, int iState, int iResistance, int iSkillCode, BOOL bChance, SocketData* pcSocketData)
 {
-	if ( pcUnitData &&
-		pcUnitData->sCharacterData.iType == ECharacterType::CHARACTERTYPE_NPC )
+	if (pcUnitData &&
+		pcUnitData->sCharacterData.iType == ECharacterType::CHARACTERTYPE_NPC)
 	{
-		SendNpcUnitClick( pcUnitData, iState );
+		SendNpcUnitClick(pcUnitData, iState);
 		return FALSE;
 	}
 
@@ -4337,68 +4334,68 @@ BOOL SendSingleDamageUnit( UnitData * pcUnitData, int iDamageMin, int iDamageMax
 
 	PacketSingleTargetSkillData sPacket;
 
-	ZeroMemory( &sPacket, sizeof(PacketSingleTargetSkillData) );
+	ZeroMemory(&sPacket, sizeof(PacketSingleTargetSkillData));
 
-	if ( (UNITDATA->iEndFrame - UNITDATA->iStartFrame) <= (160 * 5) )
+	if ((UNITDATA->iEndFrame - UNITDATA->iStartFrame) <= (160 * 5))
 		return FALSE;
 
 	DAMAGESINGLE_COUNT++;
 
-	BOOL bTestMap = ( GM_MODE && MAP_ID == MAPID_QuestArena );
+	BOOL bTestMap = (GM_MODE && MAP_ID == MAPID_QuestArena);
 
 	//Disallow attack if the attacker is in the safe zone
-	if ( MAP_ID == MAPID_BlessCastle &&
+	if (MAP_ID == MAPID_BlessCastle &&
 		UNITDATA->sPosition.iZ > CastleBattleZoneAttacker_LineZ)
 	{
 		return FALSE;
 	}
 
 	//Disallow attack if the target is in the safe zone
-	if ( pcUnitData && pcUnitData->pcMap &&
+	if (pcUnitData && pcUnitData->pcMap &&
 		pcUnitData->pcMap->pcBaseMap->iMapID == MAPID_BlessCastle &&
-		pcUnitData->sPosition.iZ <= CastleBattleZoneDamage_LineZ )
+		pcUnitData->sPosition.iZ <= CastleBattleZoneDamage_LineZ)
 	{
 		return FALSE;
 	}
 
-	if ( bChance )
+	if (bChance)
 	{
 
-		switch ( pcUnitData->sCharacterData.iType )
+		switch (pcUnitData->sCharacterData.iType)
 		{
-			case CHARACTERTYPE_Monster:
+		case CHARACTERTYPE_Monster:
+		{
+			BATTLETIME = PLAYTIME;
+
+			//miss chance is calculated on server side for pvp
+			if (pcUnitData->PkMode_CharState != CHARACTERTYPE_Player)
 			{
-				BATTLETIME = PLAYTIME;
-
-				//miss chance is calculated on server side for pvp
-				if ( pcUnitData->PkMode_CharState != CHARACTERTYPE_Player )
+				if ((UNITGAME->PlayerAttackChance(pcUnitData->sCharacterData.iDefenseRating) > Dice::RandomI(0, 99)) == FALSE)
 				{
-					if ( ( UNITGAME->PlayerAttackChance( pcUnitData->sCharacterData.iDefenseRating ) > Dice::RandomI( 0, 99 ) ) == FALSE )
-					{
-						DAMAGEINFOHANDLER->RelayInfoToOthers( pcUnitData->iID, EDamageTextType::Defense ); //show 'Defense' for the others
-						DAMAGEINFOHANDLER->SetDefenseInfo( EDamageTextType::Miss, 0, pcUnitData->iID, UNITDATA->iID ); //show 'Miss' for the attacker
-						return FALSE;
-					}
+					DAMAGEINFOHANDLER->RelayInfoToOthers(pcUnitData->iID, EDamageTextType::Defense); //show 'Defense' for the others
+					DAMAGEINFOHANDLER->SetDefenseInfo(EDamageTextType::Miss, 0, pcUnitData->iID, UNITDATA->iID); //show 'Miss' for the attacker
+					return FALSE;
 				}
-
-				break;
 			}
 
-			//Iron: not sure what this is for.
-			case CHARACTERTYPE_NPC:
-				if ( ITEMONMOUSE )
-					return FALSE;
+			break;
+		}
 
-				iState		= iResistance;
-				iResistance = 0;
-				break;
+		//Iron: not sure what this is for.
+		case CHARACTERTYPE_NPC:
+			if (ITEMONMOUSE)
+				return FALSE;
 
-			default:
-				break;
+			iState = iResistance;
+			iResistance = 0;
+			break;
+
+		default:
+			break;
 		}
 	}
 
-	AddUnitQueueID( pcUnitData->sCharacterData.iUniqueMonsterID );
+	AddUnitQueueID(pcUnitData->sCharacterData.iUniqueMonsterID);
 
 	sPacket.iLength = sizeof(PacketSingleTargetSkillData);
 	sPacket.iHeader = PKTHDR_SingleTargetSkillData;
@@ -4417,25 +4414,25 @@ BOOL SendSingleDamageUnit( UnitData * pcUnitData, int iDamageMin, int iDamageMax
 
 	//these are usually from force orbs or buffs via ASM - display only damage additions
 	//sinTempDamage2[0] and sinTempDamage2[1]
-	const int sinTempDamage2_Min = ( *(int *)0x035EB600 );
-	const int sinTempDamage2_Max = ( *(int *)0x035EB604 );
+	const int sinTempDamage2_Min = (*(int*)0x035EB600);
+	const int sinTempDamage2_Max = (*(int*)0x035EB604);
 
 	//This is final min / max attack power post buff that is being dislayed on client side (only used for checking purposes)
 	//This is final min / max attack power post buff that is being dislayed on client side (only used for checking purposes)
 	sPacket.iaParametersEx[0] = sinTempDamage2_Min + PLAYERDATA->iMinDamage;
 	sPacket.iaParametersEx[1] = sinTempDamage2_Max + PLAYERDATA->iMaxDamage;
 
-	if ( iDamageMin || iDamageMax )
+	if (iDamageMin || iDamageMax)
 	{
 		sPacket.WeaponAttackPowerMin = iDamageMin;
 		sPacket.WeaponAttackPowerMax = iDamageMax;
 	}
 	else
 	{
-		if ( iSkillCode == 0 )
+		if (iSkillCode == 0)
 		{
-			ItemData * pcItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[0].iItemIndex - 1];
-			if ( pcItemData )
+			ItemData* pcItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[0].iItemIndex - 1];
+			if (pcItemData)
 			{
 				sPacket.WeaponAttackPowerMin = sPacket.AttackPowerMin - pcItemData->sItem.sDamage.sMin;
 				sPacket.WeaponAttackPowerMax = sPacket.AttackPowerMax - pcItemData->sItem.sDamage.sMax;
@@ -4445,29 +4442,29 @@ BOOL SendSingleDamageUnit( UnitData * pcUnitData, int iDamageMin, int iDamageMax
 
 	sPacket.sCriticalChance = UNITDATA->sCharacterData.iCritical;
 
-	switch ( UNITDATA->sCharacterData.iClass )
+	switch (UNITDATA->sCharacterData.iClass)
 	{
-		case CHARACTERCLASS_Fighter:
-		case CHARACTERCLASS_Mechanician:
-		case CHARACTERCLASS_Pikeman:
-		case CHARACTERCLASS_Knight:
-		case CHARACTERCLASS_Assassin:
-			sPacket.sPrimaryStats = UNITDATA->sCharacterData.iStrength;
-			break;
+	case CHARACTERCLASS_Fighter:
+	case CHARACTERCLASS_Mechanician:
+	case CHARACTERCLASS_Pikeman:
+	case CHARACTERCLASS_Knight:
+	case CHARACTERCLASS_Assassin:
+		sPacket.sPrimaryStats = UNITDATA->sCharacterData.iStrength;
+		break;
 
-		case CHARACTERCLASS_Magician:
-		case CHARACTERCLASS_Priestess:
-		case CHARACTERCLASS_Shaman:
-			sPacket.sPrimaryStats = UNITDATA->sCharacterData.iSpirit;
-			break;
+	case CHARACTERCLASS_Magician:
+	case CHARACTERCLASS_Priestess:
+	case CHARACTERCLASS_Shaman:
+		sPacket.sPrimaryStats = UNITDATA->sCharacterData.iSpirit;
+		break;
 
-		case CHARACTERCLASS_Archer:
-		case CHARACTERCLASS_Atalanta:
-			sPacket.sPrimaryStats = UNITDATA->sCharacterData.iAgility;
-			break;
+	case CHARACTERCLASS_Archer:
+	case CHARACTERCLASS_Atalanta:
+		sPacket.sPrimaryStats = UNITDATA->sCharacterData.iAgility;
+		break;
 
-		default:
-			break;
+	default:
+		break;
 	}
 
 	sPacket.eAttackState = (EAttackState)(iState & 0x0000FFFF);
@@ -4482,7 +4479,7 @@ BOOL SendSingleDamageUnit( UnitData * pcUnitData, int iDamageMin, int iDamageMax
 
 	sPacket.dwWeaponCode = UNITDATA->eWeaponItemID;
 
-	if ( UNITDATA->iLoadedMapIndex >= 0 && pcUnitData->sCharacterData.iType == CHARACTERTYPE_Monster )
+	if (UNITDATA->iLoadedMapIndex >= 0 && pcUnitData->sCharacterData.iType == CHARACTERTYPE_Monster)
 		sPacket.StageId = FIELDGAME[UNITDATA->iLoadedMapIndex]->iMapID;
 	else
 		sPacket.StageId = -1;
@@ -4491,37 +4488,37 @@ BOOL SendSingleDamageUnit( UnitData * pcUnitData, int iDamageMin, int iDamageMax
 	sPacket.dwTarObjectSerial = pcUnitData->iID;
 	pcUnitData->iTryAttackCount++;
 
-	sPacket.dwChkSum = CHARACTERGAME->GetDamgeChkSum_S2V( &sPacket ); //CALL_WITH_ARG1( 0x00408280, (DWORD)&sPacket );
+	sPacket.dwChkSum = CHARACTERGAME->GetDamgeChkSum_S2V(&sPacket); //CALL_WITH_ARG1( 0x00408280, (DWORD)&sPacket );
 
 	//CHATBOX->AddDebugMessage( FormatString( "dwChkSum = %d", sPacket.dwChkSum ) );
 
 	//Check Damage
-	CALL( 0x00408DF0 );
+	CALL(0x00408DF0);
 
-	SocketData * pcSocketSend = SOCKETG;
+	SocketData* pcSocketSend = SOCKETG;
 
-	if ( UNITDATA != pcUnitData )
-		pcSocketSend = GETSERVER_SOCKET( pcUnitData->iServerCode );
+	if (UNITDATA != pcUnitData)
+		pcSocketSend = GETSERVER_SOCKET(pcUnitData->iServerCode);
 
-	if ( pcSocketData )
+	if (pcSocketData)
 		pcSocketSend = pcSocketData;
 
-	if ( pcSocketSend )
+	if (pcSocketSend)
 	{
-		if ( bTestMap )
+		if (bTestMap)
 		{
-			TESTMAPHANDLER->OnSingleTargetSkillHit ( &sPacket, &UNITDATA->sActiveSkill );
+			TESTMAPHANDLER->OnSingleTargetSkillHit(&sPacket, &UNITDATA->sActiveSkill);
 		}
 
 		//Encode
-		CALL_WITH_ARG1( READDWORD( 0x0A04758 ), (DWORD)&sPacket );
+		CALL_WITH_ARG1(READDWORD(0x0A04758), (DWORD)&sPacket);
 
-		pcSocketSend->SendPacket( &sPacket, FALSE );
+		pcSocketSend->SendPacket(&sPacket, FALSE);
 
 		//Show Bar
-		CALL_WITH_ARG2( 0x00408340, (DWORD)pcUnitData, iSkillCode );
+		CALL_WITH_ARG2(0x00408340, (DWORD)pcUnitData, iSkillCode);
 
-		ApplyLightingEnchantWeaponAoEOnTarget( pcUnitData );
+		ApplyLightingEnchantWeaponAoEOnTarget(pcUnitData);
 
 		return TRUE;
 	}
@@ -4529,32 +4526,32 @@ BOOL SendSingleDamageUnit( UnitData * pcUnitData, int iDamageMin, int iDamageMax
 	return FALSE;
 }
 
-BOOL ApplyLightingEnchantWeaponAoEOnTarget(UnitData * pcTarget)
+BOOL ApplyLightingEnchantWeaponAoEOnTarget(UnitData* pcTarget)
 {
-	if ( UNITDATA == NULL )
+	if (UNITDATA == NULL)
 		return FALSE;
 
-	if ( pcTarget == NULL )
+	if (pcTarget == NULL)
 		return FALSE;
 
-	if ( UNITDATA->iEnchantWeaponLevel <= 0 && UNITDATA->iEnchantWeaponLevel > 10 )
+	if (UNITDATA->iEnchantWeaponLevel <= 0 && UNITDATA->iEnchantWeaponLevel > 10)
 		return FALSE;
 
-	if ( UNITDATA->iEnchantWeaponType != ( EElementID::Lightning + 1 ) )
+	if (UNITDATA->iEnchantWeaponType != (EElementID::Lightning + 1))
 		return FALSE;
 
 	//Set Units to Area Damage
-	int range = SKILLMANAGERHANDLER->GetSkillIntValue( ESkillArrayPointer::Magician_EnchantWeapon_LightningRange_New, UNITDATA->iEnchantWeaponLevel - 1 );
+	int range = SKILLMANAGERHANDLER->GetSkillIntValue(ESkillArrayPointer::Magician_EnchantWeapon_LightningRange_New, UNITDATA->iEnchantWeaponLevel - 1);
 
 	//max 10 targets
-	SKILLMANAGERHANDLER->SelectRangeChained ( UNITDATA, pcTarget, 10, range, range + 20 );
+	SKILLMANAGERHANDLER->SelectRangeChained(UNITDATA, pcTarget, 10, range, range + 20);
 
-	if ( UNITS_AREA_COUNT > 0 )
+	if (UNITS_AREA_COUNT > 0)
 	{
 		//Skill Impulsion Effect to Targets...
-		CALL_WITH_ARG2( 0x005D5410, (DWORD)UNITS_AREA_TARGET, UNITS_AREA_COUNT );
+		CALL_WITH_ARG2(0x005D5410, (DWORD)UNITS_AREA_TARGET, UNITS_AREA_COUNT);
 
-		SKILLMANAGERHANDLER->SendRangeDamage( pcTarget, pcTarget->sPosition, 0, 0, 0, 0, TINYSKILLID_ENCHANT_WEAPON_LIGHTING );
+		SKILLMANAGERHANDLER->SendRangeDamage(pcTarget, pcTarget->sPosition, 0, 0, 0, 0, TINYSKILLID_ENCHANT_WEAPON_LIGHTING);
 
 		return TRUE;
 	}
@@ -4562,18 +4559,18 @@ BOOL ApplyLightingEnchantWeaponAoEOnTarget(UnitData * pcTarget)
 	return FALSE;
 }
 
-BOOL SendAreaDamageUnit( int iX, int iY, int iZ, UnitData * pcUnitData, int iDamageMin, int iDamageMax, int iState, int iResistance, int iSkillID )
+BOOL SendAreaDamageUnit(int iX, int iY, int iZ, UnitData* pcUnitData, int iDamageMin, int iDamageMax, int iState, int iResistance, int iSkillID)
 {
-	PacketMultiTargetSkillData * psPacket = (*(PacketMultiTargetSkillData**)0x00A04760);
+	PacketMultiTargetSkillData* psPacket = (*(PacketMultiTargetSkillData**)0x00A04760);
 
-	if ( psPacket == NULL )
+	if (psPacket == NULL)
 		return FALSE;
 
-	if ( psPacket->iTargetCount == 0 && pcUnitData == NULL )
+	if (psPacket->iTargetCount == 0 && pcUnitData == NULL)
 	{
-		ZeroMemory( psPacket, sizeof(PacketMultiTargetSkillData) );
-		SAFE_DELETE( psPacket );
-		WRITEDWORD( 0x00A04760, 0 );
+		ZeroMemory(psPacket, sizeof(PacketMultiTargetSkillData));
+		SAFE_DELETE(psPacket);
+		WRITEDWORD(0x00A04760, 0);
 		return FALSE;
 	}
 
@@ -4595,28 +4592,28 @@ BOOL SendAreaDamageUnit( int iX, int iY, int iZ, UnitData * pcUnitData, int iDam
 	//}
 
 	//disallow players to target friendly players in Bless Castle / PVP otherwise they could spam AoE at gate
-	if ( ( RESTARTCOUNTER != 0 ) ||
-		 ( (MAP_ID == MAPID_BlessCastle || MAP_ID == MAPID_BattleTown) && UNITGAME->IsBlockedRangeTarget () == TRUE ) )
+	if ((RESTARTCOUNTER != 0) ||
+		((MAP_ID == MAPID_BlessCastle || MAP_ID == MAPID_BattleTown) && UNITGAME->IsBlockedRangeTarget() == TRUE))
 	{
-		ZeroMemory( psPacket, sizeof(PacketMultiTargetSkillData) );
-		SAFE_DELETE( psPacket );
-		WRITEDWORD( 0x00A04760, 0 );
+		ZeroMemory(psPacket, sizeof(PacketMultiTargetSkillData));
+		SAFE_DELETE(psPacket);
+		WRITEDWORD(0x00A04760, 0);
 		return FALSE;
 	}
 
-	if ( (UNITDATA->iEndFrame - UNITDATA->iStartFrame) <= (160 * 5) )
+	if ((UNITDATA->iEndFrame - UNITDATA->iStartFrame) <= (160 * 5))
 	{
-		ZeroMemory( psPacket, sizeof( PacketMultiTargetSkillData ) );
-		SAFE_DELETE( psPacket );
-		WRITEDWORD( 0x00A04760, 0 );
+		ZeroMemory(psPacket, sizeof(PacketMultiTargetSkillData));
+		SAFE_DELETE(psPacket);
+		WRITEDWORD(0x00A04760, 0);
 		return FALSE;
 	}
 
 
 	DAMAGESINGLE_COUNT++;
 
-	psPacket->iLength = (sizeof(PacketMultiTargetSkillData) - (sizeof( int ) * 128));
-	psPacket->iLength += (sizeof( int ) * psPacket->iTargetCount) + 16;
+	psPacket->iLength = (sizeof(PacketMultiTargetSkillData) - (sizeof(int) * 128));
+	psPacket->iLength += (sizeof(int) * psPacket->iTargetCount) + 16;
 	psPacket->iHeader = PKTHDR_MultiTargetSkillData;
 	psPacket->sPosition.iX = iX;
 	psPacket->sPosition.iY = iY;
@@ -4625,13 +4622,13 @@ BOOL SendAreaDamageUnit( int iX, int iY, int iZ, UnitData * pcUnitData, int iDam
 	psPacket->dwTime = TICKCOUNT;
 	psPacket->iDamageState = iState;
 
-	if ( pcUnitData )
+	if (pcUnitData)
 	{
-		if ( PRECISIONTARGET_RANGE )
+		if (PRECISIONTARGET_RANGE)
 		{
-			for ( int i = 0; i < psPacket->iTargetCount; i++ )
+			for (int i = 0; i < psPacket->iTargetCount; i++)
 			{
-				if ( psPacket->iaTargetID[i] == pcUnitData->iID )
+				if (psPacket->iaTargetID[i] == pcUnitData->iID)
 				{
 					psPacket->iTargetID = pcUnitData->iID;
 					break;
@@ -4655,8 +4652,8 @@ BOOL SendAreaDamageUnit( int iX, int iY, int iZ, UnitData * pcUnitData, int iDam
 
 	//these are usually from force orbs or damage buffs (usually timers via ASM) - display only damage additions
 	//sinTempDamage2[0] and sinTempDamage2[1]
-	const int sinTempDamage2_Min = ( *(int *)0x035EB600 );
-	const int sinTempDamage2_Max = ( *(int *)0x035EB604 );
+	const int sinTempDamage2_Min = (*(int*)0x035EB600);
+	const int sinTempDamage2_Max = (*(int*)0x035EB604);
 
 	//This is final min / max attack power post buff that is being dislayed on client side (only used for checking purposes)
 	psPacket->iaParametersEx[0] = sinTempDamage2_Min + PLAYERDATA->iMinDamage;
@@ -4665,103 +4662,103 @@ BOOL SendAreaDamageUnit( int iX, int iY, int iZ, UnitData * pcUnitData, int iDam
 	psPacket->WeaponAttackPower[0] = iDamageMin;
 	psPacket->WeaponAttackPower[1] = iDamageMax;
 
-	switch ( UNITDATA->sCharacterData.iClass )
+	switch (UNITDATA->sCharacterData.iClass)
 	{
-		case CHARACTERCLASS_Fighter:
-		case CHARACTERCLASS_Mechanician:
-		case CHARACTERCLASS_Pikeman:
-		case CHARACTERCLASS_Assassin:
-		case CHARACTERCLASS_Knight:
-			psPacket->sPrimaryStats = PLAYERDATA->iStrength;
-			break;
+	case CHARACTERCLASS_Fighter:
+	case CHARACTERCLASS_Mechanician:
+	case CHARACTERCLASS_Pikeman:
+	case CHARACTERCLASS_Assassin:
+	case CHARACTERCLASS_Knight:
+		psPacket->sPrimaryStats = PLAYERDATA->iStrength;
+		break;
 
-		case CHARACTERCLASS_Magician:
-		case CHARACTERCLASS_Priestess:
-		case CHARACTERCLASS_Shaman:
-			psPacket->sPrimaryStats = PLAYERDATA->iSpirit;
-			break;
+	case CHARACTERCLASS_Magician:
+	case CHARACTERCLASS_Priestess:
+	case CHARACTERCLASS_Shaman:
+		psPacket->sPrimaryStats = PLAYERDATA->iSpirit;
+		break;
 
-		case CHARACTERCLASS_Archer:
-		case CHARACTERCLASS_Atalanta:
-			psPacket->sPrimaryStats = PLAYERDATA->iAgility;
-			break;
+	case CHARACTERCLASS_Archer:
+	case CHARACTERCLASS_Atalanta:
+		psPacket->sPrimaryStats = PLAYERDATA->iAgility;
+		break;
 
-		default:
-			break;
+	default:
+		break;
 	}
 
 	psPacket->iRange = 320;
 	psPacket->sAttackRange = static_cast<short>(PLAYERDATA->iAttackRange);
-	if ( psPacket->sAttackRange > 400 )
+	if (psPacket->sAttackRange > 400)
 		psPacket->sAttackRange = 400;
 
 #ifdef SKILLS_BEHAVIOUR_DEBUG
-	CHATBOX->AddDebugMessage ( FormatString("Attack Range = %d, # targets = %d", PLAYERDATA->iAttackRange, psPacket->iTargetCount) );
+	CHATBOX->AddDebugMessage(FormatString("Attack Range = %d, # targets = %d", PLAYERDATA->iAttackRange, psPacket->iTargetCount));
 #endif
 	//CHATBOX->AddDebugMessage ( FormatString("Enchant lvl = %d, %d, type = %d", UNITDATA->iEnchantWeaponLevel, READDWORD( (&UNITDATA + 4680)), UNITDATA->iEnchantWeaponType) );
 
 	psPacket->dwWeaponCode = UNITDATA->eWeaponItemID;
 
-	if ( UNITDATA->iLoadedMapIndex >= 0 )
+	if (UNITDATA->iLoadedMapIndex >= 0)
 		psPacket->sMapID = FIELDGAME[UNITDATA->iLoadedMapIndex]->iMapID;
 
-	psPacket->dwChkSum = CALL( 0x00418DD0 );
+	psPacket->dwChkSum = CALL(0x00418DD0);
 
-	if ( GM_MODE && MAP_ID == MAPID_QuestArena )
+	if (GM_MODE && MAP_ID == MAPID_QuestArena)
 	{
-		TESTMAPHANDLER->OnMultiTargetSkillHit ( psPacket, &UNITDATA->sActiveSkill );
+		TESTMAPHANDLER->OnMultiTargetSkillHit(psPacket, &UNITDATA->sActiveSkill);
 	}
 	//Send
-	CALL( 0x00408DF0 );
+	CALL(0x00408DF0);
 
-	SocketData * pcSocketSend = (SocketData*)CALL( 0x0061EB70 );
+	SocketData* pcSocketSend = (SocketData*)CALL(0x0061EB70);
 
-	if ( pcSocketSend && psPacket->iTargetCount > 0 )
+	if (pcSocketSend && psPacket->iTargetCount > 0)
 	{
-		pcSocketSend->SendPacket( psPacket, FALSE );
+		pcSocketSend->SendPacket(psPacket, FALSE);
 
-		CALL_WITH_ARG1( 0x00408380, psPacket->iSkillID );
+		CALL_WITH_ARG1(0x00408380, psPacket->iSkillID);
 	}
 
-	ZeroMemory( psPacket, sizeof(PacketMultiTargetSkillData) );
-	SAFE_DELETE( psPacket );
-	WRITEDWORD( 0x00A04760, 0 );
+	ZeroMemory(psPacket, sizeof(PacketMultiTargetSkillData));
+	SAFE_DELETE(psPacket);
+	WRITEDWORD(0x00A04760, 0);
 
 	return TRUE;
 }
 
-BOOL FreeUnitData( UnitData * pcUnitData )
+BOOL FreeUnitData(UnitData* pcUnitData)
 {
-	auto DeleteModelData = []( EXEModelData * ps )->void
-	{
-		CALL_WITH_ARG1( 0x0045A5F0, (DWORD)ps );
-	};
+	auto DeleteModelData = [](EXEModelData* ps)->void
+		{
+			CALL_WITH_ARG1(0x0045A5F0, (DWORD)ps);
+		};
 
 	pcUnitData->bActive = FALSE;
 
 	pcUnitData->iClanInfoIndex = (-1);
 
-	if ( pcUnitData->pcBody )
+	if (pcUnitData->pcBody)
 	{
-		DeleteModelData( pcUnitData->pcBody );
+		DeleteModelData(pcUnitData->pcBody);
 		pcUnitData->pcBody = NULL;
 	}
 
-	if ( pcUnitData->pcHead )
+	if (pcUnitData->pcHead)
 	{
-		DeleteModelData( pcUnitData->pcHead );
+		DeleteModelData(pcUnitData->pcHead);
 		pcUnitData->pcHead = NULL;
 	}
 
-	if ( pcUnitData->pcLeftHandTool )
+	if (pcUnitData->pcLeftHandTool)
 	{
-		DeleteModelData( pcUnitData->pcLeftHandTool );
+		DeleteModelData(pcUnitData->pcLeftHandTool);
 		pcUnitData->pcLeftHandTool = NULL;
 	}
 
-	if ( pcUnitData->pcRightHandTool )
+	if (pcUnitData->pcRightHandTool)
 	{
-		DeleteModelData( pcUnitData->pcRightHandTool );
+		DeleteModelData(pcUnitData->pcRightHandTool);
 		pcUnitData->pcRightHandTool = NULL;
 	}
 
@@ -4778,23 +4775,23 @@ BOOL FreeUnitData( UnitData * pcUnitData )
 
 	pcUnitData->dwDispAppSkill = 0;
 
-	if ( pcUnitData->psaDamageUsersData )
+	if (pcUnitData->psaDamageUsersData)
 	{
-		SAFE_DELETE_ARRAY( pcUnitData->psaDamageUsersData );
+		SAFE_DELETE_ARRAY(pcUnitData->psaDamageUsersData);
 	}
 
-	if ( pcUnitData->pcaUnitDataTargetList )
+	if (pcUnitData->pcaUnitDataTargetList)
 	{
-		SAFE_DELETE_ARRAY( pcUnitData->pcaUnitDataTargetList );
+		SAFE_DELETE_ARRAY(pcUnitData->pcaUnitDataTargetList);
 	}
 
-	if ( (pcUnitData->sCharacterData.iType == CHARACTERTYPE_Player) || (pcUnitData->PkMode_CharState == CHARACTERTYPE_Player) )
-		pcUnitData->psModelAnimation = ITEMHANDLER->GetModelDefault( pcUnitData->sCharacterData.iClass );
+	if ((pcUnitData->sCharacterData.iType == CHARACTERTYPE_Player) || (pcUnitData->PkMode_CharState == CHARACTERTYPE_Player))
+		pcUnitData->psModelAnimation = ITEMHANDLER->GetModelDefault(pcUnitData->sCharacterData.iClass);
 
 	return TRUE;
 }
 
-void RenderBlessCastleCrown( UnitData * pcUnitData )
+void RenderBlessCastleCrown(UnitData* pcUnitData)
 {
 	Point3D sCameraPosition;
 	sCameraPosition.iX = UNITTARGETPOSITION_X;
@@ -4806,13 +4803,13 @@ void RenderBlessCastleCrown( UnitData * pcUnitData )
 	sCameraAngle.iY = UNITTARGETANGLE_Y;
 	sCameraAngle.iZ = UNITTARGETANGLE_Z;
 
-	BOOL bLeader = STRINGCOMPAREI( ((char *)0x03B36C10), pcUnitData->sCharacterData.szName );
+	BOOL bLeader = STRINGCOMPAREI(((char*)0x03B36C10), pcUnitData->sCharacterData.szName);
 
-	EXEModel * pcBlessCastleCrownModel = BLESSCASTLEHANDLER->GetCrownModelByClanID( pcUnitData->sCharacterData.iClanID );
+	EXEModel* pcBlessCastleCrownModel = BLESSCASTLEHANDLER->GetCrownModelByClanID(pcUnitData->sCharacterData.iClanID);
 
-	if ( pcUnitData->sCharacterData.iClanID && pcBlessCastleCrownModel && pcUnitData->bRendered && (pcUnitData->sRenderPoint.iZ < (12 * 64 * 256)) && (pcUnitData->iVanishTimeLeft <= 0) )
+	if (pcUnitData->sCharacterData.iClanID && pcBlessCastleCrownModel && pcUnitData->bRendered && (pcUnitData->sRenderPoint.iZ < (12 * 64 * 256)) && (pcUnitData->iVanishTimeLeft <= 0))
 	{
-		GetMoveLocation( 0, 0, 0, 0, pcUnitData->sAngle.iY, 0 );
+		GetMoveLocation(0, 0, 0, 0, pcUnitData->sAngle.iY, 0);
 
 		Point3D sCrownPosition;
 		sCrownPosition.iX = pcUnitData->sPosition.iX + RADIAN3D_X;
@@ -4828,17 +4825,17 @@ void RenderBlessCastleCrown( UnitData * pcUnitData )
 		sCrownAngle.iY = (TICKCOUNT >> 2) & 4095;
 		sCrownAngle.iZ = 0;
 
-		GRAPHICENGINE->GetDevice()->SetRenderState( D3DRS_ZWRITEENABLE, FALSE );
-		RENDERER->SetTextureManager( EXETEXTUREMANAGER_DEFAULT );
+		GRAPHICENGINE->GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+		RENDERER->SetTextureManager(EXETEXTUREMANAGER_DEFAULT);
 
-		EXEModel * pcCrownModel = pcBlessCastleCrownModel; //bLeader ? BLESSCASTLE_BLUE_CROWN_MODEL : BLESSCASTLE_GOLDEN_CROWN_MODEL;
-		if ( pcCrownModel )
+		EXEModel* pcCrownModel = pcBlessCastleCrownModel; //bLeader ? BLESSCASTLE_BLUE_CROWN_MODEL : BLESSCASTLE_GOLDEN_CROWN_MODEL;
+		if (pcCrownModel)
 		{
-			pcCrownModel->SetPosition( &sCrownPosition, &sCrownAngle );
-			pcCrownModel->Render( &sCameraPosition, &sCameraAngle );
+			pcCrownModel->SetPosition(&sCrownPosition, &sCrownAngle);
+			pcCrownModel->Render(&sCameraPosition, &sCameraAngle);
 		}
 
-		GRAPHICENGINE->GetDevice()->SetRenderState( D3DRS_ZWRITEENABLE, TRUE );
+		GRAPHICENGINE->GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	}
 }
 
@@ -5119,55 +5116,55 @@ const ListNPC saListNPC[MAX_QUEST] =
 };
 
 //CHECK NPC QUEST XXSTR
-int QuestNPCCheck(char * NameNPC, int PlayerLVL)
+int QuestNPCCheck(char* NameNPC, int PlayerLVL)
 {
 	for (int iDQuest = 1500; iDQuest < 7006; iDQuest++)
 
-	if (CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest) && PlayerLVL >= 2)
-	{
-		if (!CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
+		if (CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest) && PlayerLVL >= 2)
 		{
-			for (int i = 0; i < MAX_QUEST; i++)
+			if (!CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
 			{
-				if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCProgressName) == 0)
-					return 2; // 2 = Grijs ?
-				if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-					return 0;
-				//}
+				for (int i = 0; i < MAX_QUEST; i++)
+				{
+					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCProgressName) == 0)
+						return 2; // 2 = Grijs ?
+					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+						return 0;
+					//}
+				}
 			}
-		}
-		// Else Show Completion
-		else if (CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest) && PlayerLVL >= 2)
-		{
-			for (int i = 0; i < MAX_QUEST; i++)
+			// Else Show Completion
+			else if (CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest) && PlayerLVL >= 2)
 			{
-				if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCCompleteName) == 0)
-					return 3; // 2 = Geel ?
+				for (int i = 0; i < MAX_QUEST; i++)
+				{
+					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCCompleteName) == 0)
+						return 3; // 2 = Geel ?
 
-				if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-					return 0;
-				//}
+					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+						return 0;
+					//}
+				}
 			}
 		}
-	}
 
 	// If not active Show Quest
 	for (int iDQuest = 1500; iDQuest < 7006; iDQuest++)
 
-	if (!CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest) && (!CQUESTGAME->GetQuestInstance()->IsDoneQuest(iDQuest) && PlayerLVL >= 2))
-	{
-		for (int i = 0; i < MAX_QUEST; i++)
+		if (!CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest) && (!CQUESTGAME->GetQuestInstance()->IsDoneQuest(iDQuest) && PlayerLVL >= 2))
 		{
-			if (PlayerLVL >= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-				return 1; // return 1 = yellow !
-			else if
-				(PlayerLVL == saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-				return 1; // return 1 = yellow !
-			else if
-				(PlayerLVL <= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-				return 4; // return 4 = gray !
+			for (int i = 0; i < MAX_QUEST; i++)
+			{
+				if (PlayerLVL >= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+					return 1; // return 1 = yellow !
+				else if
+					(PlayerLVL == saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+					return 1; // return 1 = yellow !
+				else if
+					(PlayerLVL <= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+					return 4; // return 4 = gray !
+			}
 		}
-	}
 
 	//Morion
 	switch (UNITDATA->sCharacterData.iClass)
@@ -5178,52 +5175,52 @@ int QuestNPCCheck(char * NameNPC, int PlayerLVL)
 	case CHARACTERCLASS_Knight:
 	case CHARACTERCLASS_Atalanta:
 
-	for (int iDQuest = 8000; iDQuest < 8019; iDQuest++)
+		for (int iDQuest = 8000; iDQuest < 8019; iDQuest++)
 
-		if (CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest))
-		{
-			if (!CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
+			if (CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest))
+			{
+				if (!CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
+				{
+					for (int i = 0; i < MAX_QUEST; i++)
+					{
+						if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCProgressName) == 0)
+							return 2; // 2 = Grijs ?
+						if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+							return 0;
+						//}
+					}
+				}
+				// Else Show Completion
+				else if (CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
+				{
+					for (int i = 0; i < MAX_QUEST; i++)
+					{
+						if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCCompleteName) == 0)
+							return 3; // 2 = Geel ?
+
+						if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+							return 0;
+						//}
+					}
+				}
+			}
+
+		// If not active Show Quest
+		for (int iDQuest = 8000; iDQuest < 8019; iDQuest++)
+			if (!CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest) && (!CQUESTGAME->GetQuestInstance()->IsDoneQuest(iDQuest)))
 			{
 				for (int i = 0; i < MAX_QUEST; i++)
 				{
-					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCProgressName) == 0)
-						return 2; // 2 = Grijs ?
-					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-						return 0;
-					//}
+					if (PlayerLVL >= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+						return 1; // return 1 = yellow !
+					else if
+						(PlayerLVL == saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+						return 1; // return 1 = yellow !
+					else if
+						(PlayerLVL <= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+						return 4; // return 4 = gray !
 				}
 			}
-			// Else Show Completion
-			else if (CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
-			{
-				for (int i = 0; i < MAX_QUEST; i++)
-				{
-					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCCompleteName) == 0)
-						return 3; // 2 = Geel ?
-
-					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-						return 0;
-					//}
-				}
-			}
-		}
-
-	// If not active Show Quest
-	for (int iDQuest = 8000; iDQuest < 8019; iDQuest++)
-		if (!CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest) && (!CQUESTGAME->GetQuestInstance()->IsDoneQuest(iDQuest)))
-		{
-			for (int i = 0; i < MAX_QUEST; i++)
-			{
-				if (PlayerLVL >= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-					return 1; // return 1 = yellow !
-				else if
-					(PlayerLVL == saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-					return 1; // return 1 = yellow !
-				else if
-					(PlayerLVL <= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-					return 4; // return 4 = gray !
-			}
-		}
 	}
 
 	switch (UNITDATA->sCharacterData.iClass)
@@ -5234,52 +5231,52 @@ int QuestNPCCheck(char * NameNPC, int PlayerLVL)
 	case CHARACTERCLASS_Mechanician:
 	case CHARACTERCLASS_Assassin:
 
-	for (int iDQuest = 9000; iDQuest < 9018; iDQuest++)
+		for (int iDQuest = 9000; iDQuest < 9018; iDQuest++)
 
-		if (CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest))
-		{
-			if (!CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
+			if (CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest))
+			{
+				if (!CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
+				{
+					for (int i = 0; i < MAX_QUEST; i++)
+					{
+						if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCProgressName) == 0)
+							return 2; // 2 = Grijs ?
+						if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+							return 0;
+						//}
+					}
+				}
+				// Else Show Completion
+				else if (CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
+				{
+					for (int i = 0; i < MAX_QUEST; i++)
+					{
+						if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCCompleteName) == 0)
+							return 3; // 2 = Geel ?
+
+						if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+							return 0;
+						//}
+					}
+				}
+			}
+
+		// If not active Show Quest
+		for (int iDQuest = 9000; iDQuest < 9018; iDQuest++)
+			if (!CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest) && (!CQUESTGAME->GetQuestInstance()->IsDoneQuest(iDQuest)))
 			{
 				for (int i = 0; i < MAX_QUEST; i++)
 				{
-					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCProgressName) == 0)
-						return 2; // 2 = Grijs ?
-					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-						return 0;
-					//}
+					if (PlayerLVL >= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+						return 1; // return 1 = yellow !
+					else if
+						(PlayerLVL == saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+						return 1; // return 1 = yellow !
+					else if
+						(PlayerLVL <= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
+						return 4; // return 4 = gray !
 				}
 			}
-			// Else Show Completion
-			else if (CQUESTGAME->GetQuestInstance()->IsFinishedQuestKills(iDQuest))
-			{
-				for (int i = 0; i < MAX_QUEST; i++)
-				{
-					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCCompleteName) == 0)
-						return 3; // 2 = Geel ?
-
-					if (saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-						return 0;
-					//}
-				}
-			}
-		}
-
-	// If not active Show Quest
-	for (int iDQuest = 9000; iDQuest < 9018; iDQuest++)
-		if (!CQUESTGAME->GetQuestInstance()->IsActiveQuest(iDQuest) && (!CQUESTGAME->GetQuestInstance()->IsDoneQuest(iDQuest)))
-		{
-			for (int i = 0; i < MAX_QUEST; i++)
-			{
-				if (PlayerLVL >= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-					return 1; // return 1 = yellow !
-				else if
-					(PlayerLVL == saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-					return 1; // return 1 = yellow !
-				else if
-					(PlayerLVL <= saListNPC[i].szQuestLevel && saListNPC[i].IDQuest == iDQuest && strcmp(NameNPC, saListNPC[i].szNPCName) == 0)
-					return 4; // return 4 = gray !
-			}
-		}
 	}
 	return 0;
 }

@@ -1045,8 +1045,13 @@ BOOL ServerCommand::OnGameMasterAdminCommand(User* pcUser, const char* pszBuff)
 	}
 
 	//override the EXE one
-	else if (COMMAND("/getitem", pszBuff) ||
-		COMMAND("/getitemold", pszBuff))
+	// Supports multiple items: /get_item item1,item2,item3 [class] [spec] [age] [rarity] [perfect]
+	// Supports quantities: /get_item item1*5,item2*10 [class] [spec] [age] [rarity] [perfect]
+	// Examples:
+	//   /get_item A1,A2,A3 - Creates 3 different items
+	//   /get_item A1*5 - Creates 5 of item A1
+	//   /get_item A1*3,A2*2,A3 - Creates 3 of A1, 2 of A2, and 1 of A3
+	else if (COMMAND("/get_item", pszBuff) || COMMAND("/get_item_old", pszBuff))
 	{
 		if (GAME_SERVER)
 		{
@@ -1056,14 +1061,15 @@ BOOL ServerCommand::OnGameMasterAdminCommand(User* pcUser, const char* pszBuff)
 		{
 			if (GetParameterString(pszBuff, 1, szCommandParam1))
 			{
-				BOOL bIsOld = COMMAND("/getitemold", pszBuff);
+				BOOL bIsOld = COMMAND("/get_item_old", pszBuff);
 
-				ECharacterClass charClass = ECharacterClass::CHARACTERCLASS_None; //Default = 0 = random spec, including non-spec
+				ECharacterClass charClass = ECharacterClass::CHARACTERCLASS_None; // Default = 0 = random spec, including non-spec
 				int iSpecAtkRating = 0;
 				int iItemAge = 0;
 				int iItemRarity = 0;
 				BOOL bPerfect = FALSE;
 
+				// Parse additional parameters
 				if (GetParameterString(pszBuff, 2, szCommandParam2))
 				{
 					charClass = ClassShortStrToCharacterClass(szCommandParam2);
@@ -1104,39 +1110,121 @@ BOOL ServerCommand::OnGameMasterAdminCommand(User* pcUser, const char* pszBuff)
 						bPerfect = TRUE;
 				}
 
-				Item sItem;
-				auto psDef = bIsOld ? ITEMSERVER->FindOldItemDefByCode(szCommandParam1) : ITEMSERVER->FindItemDefByCode(szCommandParam1);
-				if (psDef)
+				// Parse multiple items from the first parameter
+				char szItemList[256];
+				strcpy_s(szItemList, sizeof(szItemList), szCommandParam1);
+				
+				char* pToken;
+				char* pContext = NULL;
+				int iItemsCreated = 0;
+				int iItemsFailed = 0;
+
+				// Split items by comma
+				pToken = strtok_s(szItemList, ",", &pContext);
+
+				while (pToken != NULL && iItemsCreated < 50) // Limit to 50 items max
 				{
-					ZeroMemory(&sItem, sizeof(Item));
+					char szItemCode[64];
+					int iQuantity = 1;
+					
+					// Check if quantity is specified with * (e.g., "item*5")
+					char* pQuantityPos = strchr(pToken, '*');
 
-					EItemRarity CurrentRarity = static_cast<EItemRarity>(iItemRarity);
-
-					if (bPerfect)
+					if (pQuantityPos)
 					{
-						*(UINT*)0x8B70264 = 1;
-						*(UINT*)0x8B70268 = charClass;
-						ITEMSERVER->CreateItem(&sItem, psDef, EItemSource::GameMaster, charClass, iSpecAtkRating, iItemAge);
-						*(UINT*)0x8B70264 = 0;
-						*(UINT*)0x8B70268 = 0;
+						*pQuantityPos = '\0';
+						strcpy_s(szItemCode, sizeof(szItemCode), pToken);
+						iQuantity = atoi(pQuantityPos + 1);
+						
+						// Validate quantity
+						if (iQuantity < 1) 
+						{
+							iQuantity = 1;
+						}
 
-						ITEMSERVER->OnSetItemPerfect(&sItem);
-
-						sItem.iItemSpecialType = 1;
+						if (iQuantity > 100) 
+						{
+							iQuantity = 100; // Max 100 per item
+						}
 					}
 					else
 					{
-						ITEMSERVER->CreateItem(&sItem, psDef, EItemSource::GameMaster, charClass, iSpecAtkRating, iItemAge, CurrentRarity);
+						strcpy_s(szItemCode, sizeof(szItemCode), pToken);
 					}
 
-					ITEMSERVER->ReformItem(&sItem);
-					ITEMSERVER->SendItemData(pcUser->pcUserData, &sItem, TRUE);
-					ITEMSERVER->AddItemInventory(pcUser->pcUserData, &sItem);
-					CHATSERVER->SendChatAllGM("GM> Get Item: %s", sItem.szItemName);
+					// Remove leading/trailing spaces
+					char* pStart = szItemCode;
+					
+					while (*pStart == ' ')
+					{
+						pStart++;
+					}
+					
+					char* pEnd = pStart + strlen(pStart) - 1;
+					
+					while (pEnd > pStart && *pEnd == ' ')
+					{
+						*pEnd-- = '\0';
+					}
+
+					// Create the items
+					auto psDef = bIsOld ? ITEMSERVER->FindOldItemDefByCode(pStart) : ITEMSERVER->FindItemDefByCode(pStart);
+
+					if (psDef)
+					{
+						for (int i = 0; i < iQuantity; i++)
+						{
+							Item sItem;
+							ZeroMemory(&sItem, sizeof(Item));
+
+							EItemRarity CurrentRarity = static_cast<EItemRarity>(iItemRarity);
+
+							if (bPerfect)
+							{
+								*(UINT*)0x8B70264 = 1;
+								*(UINT*)0x8B70268 = charClass;
+								ITEMSERVER->CreateItem(&sItem, psDef, EItemSource::GameMaster, charClass, iSpecAtkRating, iItemAge);
+								*(UINT*)0x8B70264 = 0;
+								*(UINT*)0x8B70268 = 0;
+
+								ITEMSERVER->OnSetItemPerfect(&sItem);
+
+								sItem.iItemSpecialType = 1;
+							}
+							else
+							{
+								ITEMSERVER->CreateItem(&sItem, psDef, EItemSource::GameMaster, charClass, iSpecAtkRating, iItemAge, CurrentRarity);
+							}
+
+							ITEMSERVER->ReformItem(&sItem);
+							ITEMSERVER->SendItemData(pcUser->pcUserData, &sItem, TRUE);
+							ITEMSERVER->AddItemInventory(pcUser->pcUserData, &sItem);
+							iItemsCreated++;
+
+							CHATSERVER->SendChatAllGM("GM> Get Item: %s", sItem.szItemName);
+						}
+					}
+					else
+					{
+						CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Get Item Failed for: '%s'", pStart);
+						iItemsFailed++;
+					}
+
+					pToken = strtok_s(NULL, ",", &pContext);
 				}
-				else
+
+				// Send summary message
+				if (iItemsCreated > 0 && iItemsFailed > 0)
 				{
-					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Get Item Failed for: '%s'", szCommandParam1);
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_White, "> Created %d items, %d failed", iItemsCreated, iItemsFailed);
+				}
+				else if (iItemsCreated > 0)
+				{
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_White, "> Successfully created %d items", iItemsCreated);
+				}
+				else if (iItemsFailed > 0)
+				{
+					CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Failed to create %d items", iItemsFailed);
 				}
 			}
 		}
@@ -2278,15 +2366,48 @@ BOOL ServerCommand::OnGameMasterAdminCommand(User* pcUser, const char* pszBuff)
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
 		{
-			if (atoi(szCommandParam1) > pcUserData->sCharacterData.iLevel)
+			int iTargetLevel = atoi(szCommandParam1);
+			
+			if (iTargetLevel > pcUserData->sCharacterData.iLevel && iTargetLevel <= SERVER_LEVEL_MAX)
 			{
-				INT64 iExp = CHARACTERSERVER->GetExpFromLevel(atoi(szCommandParam1));
+				int iLevelOld = pcUserData->sCharacterData.iLevel;
+				INT64 iExp = CHARACTERSERVER->GetExpFromLevel(iTargetLevel);
 				INT64 iExpOld = CHARACTERSERVER->GetExp(pcUserData);
 
+				// Update experience in database
 				CHARACTERSERVER->SQLSetEXP(USERDATATOUSER(pcUserData), iExp);
+				
+				// Update character level in memory
+				pcUserData->sCharacterData.iLevel = iTargetLevel;
+				
+				// Give experience to client for UI update
 				CHARACTERSERVER->GiveEXP(USERDATATOUSER(pcUserData), iExp - iExpOld);
-				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> New Level Exp (%I64d)[%d]", iExp, atoi(szCommandParam1));
+				
+				// Update level and job code in database
+				CHARACTERSERVER->SQLUpdateLevelAndJobCode(&pcUserData->sCharacterData);
+				
+				// Update level up date
+				CHARACTERSERVER->SQLUpdateLevelUpDate(USERDATATOUSER(pcUserData)->iCharacterID);
+				
+				// Send level up notifications
+				if (pcUser->bParty)
+				{
+					PARTYHANDLER->SendChatParty(pcUser, FormatString("> %s has leveled up to %d!", CHARACTERSERVER->GetCharacterName(pcUserData), iTargetLevel), CHATCOLOR_Party, true);
+				}
+				
+				if (pcUserData->iClanID)
+				{
+					CHATSERVER->SendChatAllUsersInClan(pcUserData, CHATCOLOR_Clan, "> %s has leveled up to %d!", CHARACTERSERVER->GetCharacterName(pcUserData), iTargetLevel);
+				}
+				
+				// Update quest icons and send new quests
+				QUESTSERVER->UpdateNPCQuestIconForUserPostLevelUp(USERDATATOUSER(pcUserData));
+				QUESTSERVER->SendNewQuestsPostLevelUp(USERDATATOUSER(pcUserData));
+				
+				CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "> Level updated to %d with %I64d experience", iTargetLevel, iExp);
 			}
+			else if (iTargetLevel > SERVER_LEVEL_MAX)
+				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Level cannot exceed server maximum!");
 			else
 				CHATSERVER->SendChat(pcUser, CHATCOLOR_Error, "> Level must be major than your level!");
 		}
@@ -3150,6 +3271,7 @@ BOOL ServerCommand::OnGameMasterAdminCommand(User* pcUser, const char* pszBuff)
 
 		return TRUE;
 	}
+
 	if (MAPSDATA[MAPID_BlessCastle].iState)
 	{
 		if (COMMAND("/start_siege_war", pszBuff))
@@ -3230,8 +3352,6 @@ BOOL ServerCommand::OnGameMasterAdminCommand(User* pcUser, const char* pszBuff)
 		return TRUE;
 	}
 
-
-
 	if (iLen = COMMAND("/test_monster_drop_table", pszBuff))
 	{
 		if (GetParameterString(pszBuff, 1, szCommandParam1))
@@ -3240,7 +3360,6 @@ BOOL ServerCommand::OnGameMasterAdminCommand(User* pcUser, const char* pszBuff)
 			CHATSERVER->SendChatEx(pcUser, CHATCOLOR_Error, "GM> Drop Table Tested for ID: %s", szCommandParam1);
 		}
 	}
-
 
 	if (COMMAND("/setbosstime", pszBuff))
 	{

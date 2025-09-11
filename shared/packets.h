@@ -10,11 +10,8 @@
 #define PKTCRC					BYTE
 #define PKTHDR					DWORD
 
-
-
 #define MAX_SKILL_ARRAY_DATA			150
 #define MAX_COMMON_SKILL_INFO_DATA		25
-
 
 #define SLOW_SPEED_BASE 256
 #define SERVER_CHAR_FRAME_STEP			320
@@ -74,7 +71,7 @@
 #define DISTANCE_MISC_Y						300
 #define DISTANCE_MISC_Y_EX					1000
 
-#define SERVER_LEVEL_MAX				150
+#define SERVER_LEVEL_MAX				155
 #define MAX_UNIT_PLAYDATA				75
 #define MAX_QUESTPACKETDATA				15
 
@@ -95,46 +92,46 @@ struct StructFuryArenaBoss
 
 enum ECharacterType : int
 {
-	CHARACTERTYPE_None				= 0,
+	CHARACTERTYPE_None = 0,
 
-	CHARACTERTYPE_NPC				= 0x00,
-	CHARACTERTYPE_Monster			= 0x01,
-	CHARACTERTYPE_Player			= 0x80, //smCHAR_STATE_PLAYER
+	CHARACTERTYPE_NPC = 0x00,
+	CHARACTERTYPE_Monster = 0x01,
+	CHARACTERTYPE_Player = 0x80, //smCHAR_STATE_PLAYER
 };
 
 
 enum EClassFlag : int
 {
-	CLASSFLAG_Unknown				= -1,
+	CLASSFLAG_Unknown = -1,
 
-	CLASSFLAG_None					= 0,
-	CLASSFLAG_Fighter				= 2,
-	CLASSFLAG_Mechanician			= 1,
-	CLASSFLAG_Archer				= 4,
-	CLASSFLAG_Pikeman				= 3,
-	CLASSFLAG_Atalanta				= 0x00020000,
-	CLASSFLAG_Knight				= 0x00010000,
-	CLASSFLAG_Magician				= 0x00040000,
-	CLASSFLAG_Priestess				= 0x00030000,
-	CLASSFLAG_Assassin				= 0x00050100,
-	CLASSFLAG_Shaman				= 0x00050000,
+	CLASSFLAG_None = 0,
+	CLASSFLAG_Fighter = 2,
+	CLASSFLAG_Mechanician = 1,
+	CLASSFLAG_Archer = 4,
+	CLASSFLAG_Pikeman = 3,
+	CLASSFLAG_Atalanta = 0x00020000,
+	CLASSFLAG_Knight = 0x00010000,
+	CLASSFLAG_Magician = 0x00040000,
+	CLASSFLAG_Priestess = 0x00030000,
+	CLASSFLAG_Assassin = 0x00050100,
+	CLASSFLAG_Shaman = 0x00050000,
 };
 
 enum class EAllowedClassSpecFlag : int
 {
 	None = 0,
 
-	Fighter			= 1 << 0,
-	Mechanician		= 1 << 1,
-	Archer          = 1 << 2,
-	Pikeman         = 1 << 3,
-	Assassin        = 1 << 4,
+	Fighter = 1 << 0,
+	Mechanician = 1 << 1,
+	Archer = 1 << 2,
+	Pikeman = 1 << 3,
+	Assassin = 1 << 4,
 
-	Atalanta        = 1 << 8,
-	Knight          = 1 << 9,
-	Magician        = 1 << 10,
-	Priestess       = 1 << 11,
-	Shaman          = 1 << 12
+	Atalanta = 1 << 8,
+	Knight = 1 << 9,
+	Magician = 1 << 10,
+	Priestess = 1 << 11,
+	Shaman = 1 << 12
 };
 
 enum ECharacterRank
@@ -153,18 +150,18 @@ enum ECharacterRank
 
 enum ECharacterClass
 {
-	CHARACTERCLASS_None					= 0,
+	CHARACTERCLASS_None = 0,
 
-	CHARACTERCLASS_Fighter				= 1,
-	CHARACTERCLASS_Mechanician			= 2,
-	CHARACTERCLASS_Archer				= 3,
-	CHARACTERCLASS_Pikeman				= 4,
-	CHARACTERCLASS_Atalanta				= 5,
-	CHARACTERCLASS_Knight				= 6,
-	CHARACTERCLASS_Magician				= 7,
-	CHARACTERCLASS_Priestess			= 8,
-	CHARACTERCLASS_Assassin				= 9,
-	CHARACTERCLASS_Shaman				= 10,
+	CHARACTERCLASS_Fighter = 1,
+	CHARACTERCLASS_Mechanician = 2,
+	CHARACTERCLASS_Archer = 3,
+	CHARACTERCLASS_Pikeman = 4,
+	CHARACTERCLASS_Atalanta = 5,
+	CHARACTERCLASS_Knight = 6,
+	CHARACTERCLASS_Magician = 7,
+	CHARACTERCLASS_Priestess = 8,
+	CHARACTERCLASS_Assassin = 9,
+	CHARACTERCLASS_Shaman = 10,
 };
 
 enum ECharacterRace
@@ -175,31 +172,31 @@ enum ECharacterRace
 
 enum ECharacterTitleRank
 {
-	CHARACTERTITLERANK_White			= 0,
-	CHARACTERTITLERANK_Green			= 1,
-	CHARACTERTITLERANK_Blue				= 2,
-	CHARACTERTITLERANK_Purple			= 3,
-	CHARACTERTITLERANK_Orange			= 4,
-	CHARACTERTITLERANK_Teal				= 5,
+	CHARACTERTITLERANK_White = 0,
+	CHARACTERTITLERANK_Green = 1,
+	CHARACTERTITLERANK_Blue = 2,
+	CHARACTERTITLERANK_Purple = 3,
+	CHARACTERTITLERANK_Orange = 4,
+	CHARACTERTITLERANK_Teal = 5,
 };
 
 enum EMonsterType
 {
-	MONSTERTYPE_Normal					= 0x00,
-	MONSTERTYPE_Undead					= 0x90,
-	MONSTERTYPE_Mutant					= 0x91,
-	MONSTERTYPE_Demon					= 0x92,
+	MONSTERTYPE_Normal = 0x00,
+	MONSTERTYPE_Undead = 0x90,
+	MONSTERTYPE_Mutant = 0x91,
+	MONSTERTYPE_Demon = 0x92,
 	//MONSTERTYPE_Mechanic				= 0x93, //Fused with Normal types now
-	MONSTERTYPE_Netural					= 0x94, //Has no bonus dmg against this type, for test map etc.
-	MONSTERTYPE_Summon					= 0xA0,	//smCHAR_MONSTER_SUMMON
-	MONSTERTYPE_Pet						= 0xA1	//
+	MONSTERTYPE_Netural = 0x94, //Has no bonus dmg against this type, for test map etc.
+	MONSTERTYPE_Summon = 0xA0,	//smCHAR_MONSTER_SUMMON
+	MONSTERTYPE_Pet = 0xA1	//
 };
 
 enum EMonsterNature
 {
-	MONSTERNATURE_Neutral				= 0x80,
-	MONSTERNATURE_Good					= 0x81,
-	MONSTERNATURE_Evil					= 0x82,
+	MONSTERNATURE_Neutral = 0x80,
+	MONSTERNATURE_Good = 0x81,
+	MONSTERNATURE_Evil = 0x82,
 };
 
 
@@ -210,7 +207,7 @@ enum EElementID : unsigned short
 	Fire = 2,		//sITEMINFO_FIRE		2	- Fire
 	Ice = 3,		//sITEMINFO_ICE			3	- Chill
 	Lightning = 4,	//sITEMINFO_LIGHTING	4	- Lightning
-	Poison = 5 ,	//sITEMINFO_POISON		5	- Posion
+	Poison = 5,	//sITEMINFO_POISON		5	- Posion
 	Water = 6,		//sITEMINFO_WATER		6	- Water			-- not used
 	Wind = 7,		//sITEMINFO_WIND		7	- Wind			-- not used
 	None = 15,		//sITEMINFO_NONE		15	- None
@@ -219,26 +216,26 @@ enum EElementID : unsigned short
 
 enum class EDamageTextType : short
 {
-	Undefined	= -1,
-	None		= 0,
-	Defense		= 1,
-	Block		= 2,
-	Evade		= 3,
-	Unknown		= 4,
-	Normal		= 5,
-	Critical	= 6,
-	Gold		= 7, //for gold pickup
-	Poison		= 8,
-	Miss		= 9,
-	PetAttack	= 10,
-	Flinch		= 11,	  //debug only
-	Burning		= 12,
-	Freezing	= 13,
-	Stun		= 14,
-	Distortion	= 15,
-	Curse		= 16,
-	Healing		= 17,
-	Damage		= 18,
+	Undefined = -1,
+	None = 0,
+	Defense = 1,
+	Block = 2,
+	Evade = 3,
+	Unknown = 4,
+	Normal = 5,
+	Critical = 6,
+	Gold = 7, //for gold pickup
+	Poison = 8,
+	Miss = 9,
+	PetAttack = 10,
+	Flinch = 11,	  //debug only
+	Burning = 12,
+	Freezing = 13,
+	Stun = 14,
+	Distortion = 15,
+	Curse = 16,
+	Healing = 17,
+	Damage = 18,
 };
 
 enum EAttackState : short
@@ -276,7 +273,7 @@ enum class EAttackProperty : short
 	Fire = 3,		//sITEMINFO_FIRE		Fire
 	Ice = 4,		//sITEMINFO_ICE			Chill
 	Lightning = 5,	//sITEMINFO_LIGHTING	Lightning
-	Poison = 6 ,	//sITEMINFO_POISON		Posion
+	Poison = 6,	//sITEMINFO_POISON		Posion
 	Water = 7,		//sITEMINFO_WATER		Water
 	Wind = 8,		//sITEMINFO_WIND		Wind
 	Holy = 9,		//						Holy
@@ -286,15 +283,15 @@ enum class EAttackProperty : short
 
 enum class EItemFlag : unsigned char //max is 0xFF (8 bits total)
 {
-	None			= 0,
-	ForceAllowDrop	= 0x01, //if the item was originally not allowed to be dropped, but can be dropped. Also it will hide from 'A' key press
-	TreasureHuntingMode		= 0x02,
-	UNUSED_3		= 0x04,
-	UNUSED_4		= 0x08,
-	UNUSED_5		= 0x10,
-	UNUSED_6		= 0x20,
-	UNUSED_7		= 0x40,
-	UNUSED_8		= 0x80,
+	None = 0,
+	ForceAllowDrop = 0x01, //if the item was originally not allowed to be dropped, but can be dropped. Also it will hide from 'A' key press
+	TreasureHuntingMode = 0x02,
+	UNUSED_3 = 0x04,
+	UNUSED_4 = 0x08,
+	UNUSED_5 = 0x10,
+	UNUSED_6 = 0x20,
+	UNUSED_7 = 0x40,
+	UNUSED_8 = 0x80,
 };
 
 
@@ -302,456 +299,456 @@ enum class EItemFlag : unsigned char //max is 0xFF (8 bits total)
 enum PacketsHeader
 {
 	//Net Server
-	PKTHDR_NetIdentifier							= 0x7F000001,
-	PKTHDR_NetExp									= 0x7F000002,
-	PKTHDR_NetGetExp								= 0x7F000003,
-	PKTHDR_NetGameMaster							= 0x7F000004,
-	PKTHDR_NetGetGameMaster							= 0x7F000005,
-	PKTHDR_NetClan									= 0x7F000006,
-	PKTHDR_NetDisconnectUser						= 0x7F000007,
-	PKTHDR_NetForceOrb								= 0x7F000008,
-	PKTHDR_NetVersion								= 0x7F000009,
-	PKTHDR_NetCharacterSync							= 0x7F00000A,
-	PKTHDR_NetGiveExp								= 0x7F00000B,
-	PKTHDR_NetPingPong								= 0x7F00000C,
-	PKTHDR_NetBCStatusReq							= 0x7F00000D,
-	PKTHDR_NetBCStatusSnd							= 0x7F00000E,
-	PKTHDR_NetBCNewOwnerClanID						= 0x7F00000F,
-	PKTHDR_NetBotAdd								= 0x7F000010,
-	PKTHDR_NetPremiumEXP							= 0x7F000011,
-	PKTHDR_NetUnloadUser							= 0x7F000012,
-	PKTHDR_NetEXPEvent								= 0x7F000013,
-	PKTHDR_NetTradeCoin								= 0x7F000014,
-	PKTHDR_NetUsersOnline							= 0x7F000015,
-	PKTHDR_NetQuestT5Data							= 0x7F000016,
-	PKTHDR_NetQuestUpdateData						= 0x7F000017,
-	PKTHDR_NetQuestUpdateDataPart					= 0x7F000018,
-	PKTHDR_NetQuestCancelOrFinish					= 0x7F000019,
-	PKTHDR_NetLoadPVPData							= 0x7F000020,
-	PKTHDR_NetLoadQuestData							= 0x7F000021,
-	PKTHDR_NetSyncFinishedQuestData					= 0x7F000022, //to game servers
-	PKTHDR_NetPlayerWorldToken						= 0x7F000040,
-	PKTHDR_NetPlayerInventory						= 0x7F000041,
-	PKTHDR_NetPlayerGold     						= 0x7F000042,
-	PKTHDR_NetPlayerGoldDiff  						= 0x7F000043,
-	PKTHDR_NetPlayerThrow    						= 0x7F000044,
-	PKTHDR_NetStartMaintenance						= 0x7F000045,
-	PKTHDR_NetPlayerItemPut 						= 0x7F000046,
-	PKTHDR_NetEasterEvent							= 0x7F000047,
-	PKTHDR_NetAgingEvent							= 0x7F000048,
-	PKTHDR_NetBellatraSoloRanking                   = 0x7F000049,
-	PKTHDR_NetHallowenEvent							= 0x7F000050,
-	PKTHDR_NetOpenWarehouse							= 0x7F000051,
-	PKTHDR_NetOpenWarehouseSeasonal					= 0x7F000052,
-	PKTHDR_NetChristmasEvent						= 0x7F000053,
-	PKTHDR_NetFreeEventGirl							= 0x7F000054,
-	PKTHDR_NetStopMaintenance						= 0x7F000056,
-	PKTHDR_NetLevelUp								= 0x7F000058,
-	PKTHDR_NetSetVersion							= 0x7F000059,
-	PKTHDR_NetReloadCoinShop						= 0x7F000060,
-	PKTHDR_NetClearTickRO							= 0x7F000061,
-	PKTHDR_NetClearTickChristmas					= 0x7F000062,
-	PKTHDR_NetKickAll								= 0x7F000063,
-	PKTHDR_NetMuteSync								= 0x7F000064,
-	PKTHDR_NetGetMuteSync							= 0x7F000065,
-	PKTHDR_NetStarWarsEvent							= 0x7F000066,
-	PKTHDR_NetBeeEvent								= 0x7F000067,
-	PKTHDR_NetOpenItemDistributor					= 0x7F000068,
-	PKTHDR_NetGameMasterCommand						= 0x7F000069,
-	PKTHDR_NetPlayDataEx							= 0x7F000070, //game server to login server
-	PKTHDR_NetRemoveFinishedQuestData				= 0x7F000071, //game server to login server or vice versa
-	PKTHDR_NetSendItemData							= 0x7F000072, //game server to login server
-	PKTHDR_NetMimicEvent							= 0x7F000073, //game server to login server
+	PKTHDR_NetIdentifier = 0x7F000001,
+	PKTHDR_NetExp = 0x7F000002,
+	PKTHDR_NetGetExp = 0x7F000003,
+	PKTHDR_NetGameMaster = 0x7F000004,
+	PKTHDR_NetGetGameMaster = 0x7F000005,
+	PKTHDR_NetClan = 0x7F000006,
+	PKTHDR_NetDisconnectUser = 0x7F000007,
+	PKTHDR_NetForceOrb = 0x7F000008,
+	PKTHDR_NetVersion = 0x7F000009,
+	PKTHDR_NetCharacterSync = 0x7F00000A,
+	PKTHDR_NetGiveExp = 0x7F00000B,
+	PKTHDR_NetPingPong = 0x7F00000C,
+	PKTHDR_NetBCStatusReq = 0x7F00000D,
+	PKTHDR_NetBCStatusSnd = 0x7F00000E,
+	PKTHDR_NetBCNewOwnerClanID = 0x7F00000F,
+	PKTHDR_NetBotAdd = 0x7F000010,
+	PKTHDR_NetPremiumEXP = 0x7F000011,
+	PKTHDR_NetUnloadUser = 0x7F000012,
+	PKTHDR_NetEXPEvent = 0x7F000013,
+	PKTHDR_NetTradeCoin = 0x7F000014,
+	PKTHDR_NetUsersOnline = 0x7F000015,
+	PKTHDR_NetQuestT5Data = 0x7F000016,
+	PKTHDR_NetQuestUpdateData = 0x7F000017,
+	PKTHDR_NetQuestUpdateDataPart = 0x7F000018,
+	PKTHDR_NetQuestCancelOrFinish = 0x7F000019,
+	PKTHDR_NetLoadPVPData = 0x7F000020,
+	PKTHDR_NetLoadQuestData = 0x7F000021,
+	PKTHDR_NetSyncFinishedQuestData = 0x7F000022, //to game servers
+	PKTHDR_NetPlayerWorldToken = 0x7F000040,
+	PKTHDR_NetPlayerInventory = 0x7F000041,
+	PKTHDR_NetPlayerGold = 0x7F000042,
+	PKTHDR_NetPlayerGoldDiff = 0x7F000043,
+	PKTHDR_NetPlayerThrow = 0x7F000044,
+	PKTHDR_NetStartMaintenance = 0x7F000045,
+	PKTHDR_NetPlayerItemPut = 0x7F000046,
+	PKTHDR_NetEasterEvent = 0x7F000047,
+	PKTHDR_NetAgingEvent = 0x7F000048,
+	PKTHDR_NetBellatraSoloRanking = 0x7F000049,
+	PKTHDR_NetHallowenEvent = 0x7F000050,
+	PKTHDR_NetOpenWarehouse = 0x7F000051,
+	PKTHDR_NetOpenWarehouseSeasonal = 0x7F000052,
+	PKTHDR_NetChristmasEvent = 0x7F000053,
+	PKTHDR_NetFreeEventGirl = 0x7F000054,
+	PKTHDR_NetStopMaintenance = 0x7F000056,
+	PKTHDR_NetLevelUp = 0x7F000058,
+	PKTHDR_NetSetVersion = 0x7F000059,
+	PKTHDR_NetReloadCoinShop = 0x7F000060,
+	PKTHDR_NetClearTickRO = 0x7F000061,
+	PKTHDR_NetClearTickChristmas = 0x7F000062,
+	PKTHDR_NetKickAll = 0x7F000063,
+	PKTHDR_NetMuteSync = 0x7F000064,
+	PKTHDR_NetGetMuteSync = 0x7F000065,
+	PKTHDR_NetStarWarsEvent = 0x7F000066,
+	PKTHDR_NetBeeEvent = 0x7F000067,
+	PKTHDR_NetOpenItemDistributor = 0x7F000068,
+	PKTHDR_NetGameMasterCommand = 0x7F000069,
+	PKTHDR_NetPlayDataEx = 0x7F000070, //game server to login server
+	PKTHDR_NetRemoveFinishedQuestData = 0x7F000071, //game server to login server or vice versa
+	PKTHDR_NetSendItemData = 0x7F000072, //game server to login server
+	PKTHDR_NetMimicEvent = 0x7F000073, //game server to login server
 
-    PKTHDR_Connected                                = 0x48470080,
+	PKTHDR_Connected = 0x48470080,
 
 	//Packets Item Data
-	PKTHDR_PerfectItemData							= 0x5A320002,
-	PKTHDR_MixDescription							= 0x5A320001,
-	PKTHDR_OpenMixItem								= 0x48470049,
-	PKTHDR_RecvWarehouse							= 0x48470048,
-	PKTHDR_SendWarehouse							= 0x48470047,
-	PKTHDR_TradeData								= 0x48470041,
-	PKTHDR_TradeRequest								= 0x48470042,
-	PKTHDR_TradeItems								= 0x48470043, //Trade Time...( when trade your inventory item to player... )
-	PKTHDR_TradeReady								= 0x48470044,
-	PKTHDR_ThrowItem								= 0x48470053, //smTRANSCODE_THROWITEM
-	PKTHDR_CheckItemUseSlot							= 0x48478930,
-	PKTHDR_CheckItemUseSlotEx						= 0x48478931,
+	PKTHDR_PerfectItemData = 0x5A320002,
+	PKTHDR_MixDescription = 0x5A320001,
+	PKTHDR_OpenMixItem = 0x48470049,
+	PKTHDR_RecvWarehouse = 0x48470048,
+	PKTHDR_SendWarehouse = 0x48470047,
+	PKTHDR_TradeData = 0x48470041,
+	PKTHDR_TradeRequest = 0x48470042,
+	PKTHDR_TradeItems = 0x48470043, //Trade Time...( when trade your inventory item to player... )
+	PKTHDR_TradeReady = 0x48470044,
+	PKTHDR_ThrowItem = 0x48470053, //smTRANSCODE_THROWITEM
+	PKTHDR_CheckItemUseSlot = 0x48478930,
+	PKTHDR_CheckItemUseSlotEx = 0x48478931,
 
- 	PKTHDR_Skill_Healing							= 0x484700D2, //smTRANSCODE_HEALING
-	PKTHDR_Skill_HolyMind							= 0x484700D3, //smTRANSCODE_HOLYMIND
-	PKTHDR_Skill_GrandHealing						= 0x484700D4, //smTRANSCODE_GRAND_HEALING
+	PKTHDR_Skill_Healing = 0x484700D2, //smTRANSCODE_HEALING
+	PKTHDR_Skill_HolyMind = 0x484700D3, //smTRANSCODE_HOLYMIND
+	PKTHDR_Skill_GrandHealing = 0x484700D4, //smTRANSCODE_GRAND_HEALING
 
 
-	PKTHDR_KeySet									= 0x4847FFFF,
-	PKTHDR_Crash									= 0x4847FFFE,
-	PKTHDR_CrashData								= 0x4847FFFD,
+	PKTHDR_KeySet = 0x4847FFFF,
+	PKTHDR_Crash = 0x4847FFFE,
+	PKTHDR_CrashData = 0x4847FFFD,
 
 	// Packets Character Data
-	PKTHDR_PacketFun								= 0x43550001,
-	PKTHDR_SetExp									= 0x43550002,
-	PKTHDR_AttackRatingSend							= 0x43550003,
-	PKTHDR_DamageDebugInfo							= 0x43550004,
-	PKTHDR_ServerInfo								= 0x43550005,
-	PKTHDR_PlayDataEx								= 0x43550006,	//received from each player every 5 seconds
-	PKTHDR_PremiumData								= 0x43550007,
-	PKTHDR_SetItemTimer								= 0x43550008,
-	PKTHDR_DisableGM								= 0x43550009,
-	PKTHDR_QuestData								= 0x4355000A, ///< Obselete
-	PKTHDR_UpdateQuestData							= 0x4355000B,
-	PKTHDR_FinishQuest								= 0x4355000C,
-	PKTHDR_RestartQuest								= 0x4355000D,
-	PKTHDR_BellatraCrown							= 0x4355000E,
-	PKTHDR_PVPDataUpdate							= 0x4355000F,
-	PKTHDR_UpdateSWPhase							= 0x43550010,
-	PKTHDR_CancelQuest								= 0x43550011,
-	PKTHDR_CrystalUse								= 0x43550012,
-	PKTHDR_CrystalUseDie							= 0x43550013,
-	PKTHDR_UserOnline								= 0x43550014,
-	PKTHDR_CancelForceOrb							= 0x43550015,
-	PKTHDR_FireMeteorite							= 0x43550016,
-	PKTHDR_NPCEasterEgg								= 0x43550017,
-	PKTHDR_PvPKill									= 0x43550018,
-	PKTHDR_NPCIhinRewardRequest						= 0x43550019,
-	PKTHDR_CharacterHeadOldUse						= 0x4355001A,
-	PKTHDR_BlessCastleIndividualScore				= 0x4355001B,
-	PKTHDR_BlessCastleUserScoreUpdate				= 0x4355001C,
-	PKTHDR_NPCRudolphChristmas						= 0x4355001D,
-	PKTHDR_CancelItemTimer							= 0x4355001E,
-	PKTHDR_NPCMixGuild								= 0x4355001F, //xxstr mix guild
-	PKTHDR_NPCRankList								= 0x43550020, //xxstr rank list
-	PKTHDR_TOP_LEVEL								= 0x44550022, //xxstr top level
-	PKTHDR_WrapCamera								= 0x44550024,
-	PKTHDR_BlessCastleTopClanSync					= 0x44550025,
+	PKTHDR_PacketFun = 0x43550001,
+	PKTHDR_SetExp = 0x43550002,
+	PKTHDR_AttackRatingSend = 0x43550003,
+	PKTHDR_DamageDebugInfo = 0x43550004,
+	PKTHDR_ServerInfo = 0x43550005,
+	PKTHDR_PlayDataEx = 0x43550006,	//received from each player every 5 seconds
+	PKTHDR_PremiumData = 0x43550007,
+	PKTHDR_SetItemTimer = 0x43550008,
+	PKTHDR_DisableGM = 0x43550009,
+	PKTHDR_QuestData = 0x4355000A, ///< Obselete
+	PKTHDR_UpdateQuestData = 0x4355000B,
+	PKTHDR_FinishQuest = 0x4355000C,
+	PKTHDR_RestartQuest = 0x4355000D,
+	PKTHDR_BellatraCrown = 0x4355000E,
+	PKTHDR_PVPDataUpdate = 0x4355000F,
+	PKTHDR_UpdateSWPhase = 0x43550010,
+	PKTHDR_CancelQuest = 0x43550011,
+	PKTHDR_CrystalUse = 0x43550012,
+	PKTHDR_CrystalUseDie = 0x43550013,
+	PKTHDR_UserOnline = 0x43550014,
+	PKTHDR_CancelForceOrb = 0x43550015,
+	PKTHDR_FireMeteorite = 0x43550016,
+	PKTHDR_NPCEasterEgg = 0x43550017,
+	PKTHDR_PvPKill = 0x43550018,
+	PKTHDR_NPCIhinRewardRequest = 0x43550019,
+	PKTHDR_CharacterHeadOldUse = 0x4355001A,
+	PKTHDR_BlessCastleIndividualScore = 0x4355001B,
+	PKTHDR_BlessCastleUserScoreUpdate = 0x4355001C,
+	PKTHDR_NPCRudolphChristmas = 0x4355001D,
+	PKTHDR_CancelItemTimer = 0x4355001E,
+	PKTHDR_NPCMixGuild = 0x4355001F, //xxstr mix guild
+	PKTHDR_NPCRankList = 0x43550020, //xxstr rank list
+	PKTHDR_TOP_LEVEL = 0x44550022, //xxstr top level
+	PKTHDR_WrapCamera = 0x44550024,
+	PKTHDR_BlessCastleTopClanSync = 0x44550025,
 
 	//jlm - seperated packets
-	PKTHDR_NPCRankListAllPlayers					= 0x43550030,
-	PKTHDR_NPCRankListPVP							= 0x43550031,
-	PKTHDR_NPCRankListByClass						= 0x43550032,
-	PKTHDR_NPCRankListClanSod						= 0x43550033,
-	PKTHDR_NPCRankListIndividualSod					= 0x43550034,
-	PKTHDR_NPCRankListBlessedCastle					= 0x43550035,
-	PKTHDR_NPCRankListSoloSod						= 0x43550037,
+	PKTHDR_NPCRankListAllPlayers = 0x43550030,
+	PKTHDR_NPCRankListPVP = 0x43550031,
+	PKTHDR_NPCRankListByClass = 0x43550032,
+	PKTHDR_NPCRankListClanSod = 0x43550033,
+	PKTHDR_NPCRankListIndividualSod = 0x43550034,
+	PKTHDR_NPCRankListBlessedCastle = 0x43550035,
+	PKTHDR_NPCRankListSoloSod = 0x43550037,
 
 	//Packets Protect
-	PKTHDR_LogCheat									= 0x6F6A0001,
-	PKTHDR_DCAccount								= 0x6A6A0001,
-	PKTHDR_ReconnectedServer						= 0x6A6A0002,
-	PKTHDR_SendToLoginServer						= 0x6A6A0003,
-	PKTHDR_Microphone								= 0x6A6A0004,
-	PKTHDR_LogDataSimple							= 0x6A6A0005,
-	PKTHDR_CheckSum									= 0x6A6A0006,
-	PKTHDR_LogDebugger								= 0x6A6A0008,
-	PKTHDR_UndentifiedPacket						= 0x6A6A0007,
-	PKTHDR_AddExp									= 0x6A6A0009,
-	PKTHDR_LoseExp									= 0x6A6A000A,
-	PKTHDR_GetItemData								= 0x6A6A000B,
-	PKTHDR_SetItemData								= 0x6A6A000C,
-	PKTHDR_SetGold									= 0x6A6A000D,
-	PKTHDR_WindowList								= 0x6A6A000E,
-	PKTHDR_SettingsData								= 0x6A6A000F,
-	PKTHDR_RetryWarehouse							= 0x6A6A0010,
-	PKTHDR_WarehouseSaveSuccess						= 0x6A6A0011,
-	PKTHDR_DamageQuick								= 0x6A6A0012,
-	PKTHDR_QuestNPCOpen								= 0x6A6A0013,
-	PKTHDR_QuestNPCAccept							= 0x6A6A0014,
-	PKTHDR_QuestStartData							= 0x6A6A0015,
-	PKTHDR_QuestUpdateData							= 0x6A6A0016,
-	PKTHDR_QuestCancel								= 0x6A6A0017,
-	PKTHDR_QuestNPCFinish							= 0x6A6A0018,
-	PKTHDR_QuestNPCItemList							= 0x6A6A0019,
-	PKTHDR_QuestHandleFinished						= 0x6A6A001A,
-	PKTHDR_CharacterDataEx							= 0x6A6A001B,
-	PKTHDR_ItemSlotHandle							= 0x6A6A001C,
-	PKTHDR_T5QuestArena								= 0x6A6A001D,
-	PKTHDR_RequestParty								= 0x6A6A001E,
-	PKTHDR_JoinParty								= 0x6A6A001F,
-	PKTHDR_UpdateParty								= 0x6A6A0020,
-	PKTHDR_UpdatePartyData							= 0x6A6A0021,
-	PKTHDR_ActionParty								= 0x6A6A0022,
-	PKTHDR_RequestRaid								= 0x6A6A0023,
-	PKTHDR_JoinRaid									= 0x6A6A0024,
-	PKTHDR_RollDiceDropItem							= 0x6A6A0025,
-	PKTHDR_RollDiceRanking							= 0x6A6A0026,
-	PKTHDR_QuestItemSwap							= 0x6A6A0027,
-	PKTHDR_BossTimeUpdate							= 0x6A6A0028,
-	PKTHDR_IntegrityUpdateItem						= 0x6A6A0029,
-	PKTHDR_UpdatePetDataEx							= 0x6A6A002A,
-	PKTHDR_DynamicQuestOpen							= 0x6A6A002B,
-	PKTHDR_DynamicQuestOpenNPC						= 0x6A6A002C,
-	PKTHDR_QuestHandleFinishedContainer				= 0x6A6A002D,
-	PKTHDR_DamageQuickPVP							= 0x6A6A002E,
-	PKTHDR_GoldPickup								= 0x6A6A002F,
-	PKTHDR_CharacterCombatData						= 0x6A6A0030,	//mainly for pvp
-	PKTHDR_QuestDataRequest                         = 0x6A6A0031,
-	PKTHDR_QuestDataResponse                        = 0x6A6A0032,
-	PKTHDR_QuestNamesRequest						= 0x6A6A0033,
-	PKTHDR_QuestNamesResponse						= 0x6A6A0034,
-	PKTHDR_NewQuestNamesPostLvlUp					= 0x6A6A0035, //addition quests post level up
-	PKTHDR_NeverSinkTeleportRequest					= 0x6A6A0036,
-	PKTHDR_NeverSinkOpenUI							= 0x6A6A0037,
-	PKTHDR_MissingRequiredQuestItems				= 0x6A6A0038, //items didn't exist on client side on completion
-	PKTHDR_RemoveFinishedQuest						= 0x6A6A0039,
-	PKTHDR_RollDiceDropUserResult					= 0x6A6A0040,
+	PKTHDR_LogCheat = 0x6F6A0001,
+	PKTHDR_DCAccount = 0x6A6A0001,
+	PKTHDR_ReconnectedServer = 0x6A6A0002,
+	PKTHDR_SendToLoginServer = 0x6A6A0003,
+	PKTHDR_Microphone = 0x6A6A0004,
+	PKTHDR_LogDataSimple = 0x6A6A0005,
+	PKTHDR_CheckSum = 0x6A6A0006,
+	PKTHDR_LogDebugger = 0x6A6A0008,
+	PKTHDR_UndentifiedPacket = 0x6A6A0007,
+	PKTHDR_AddExp = 0x6A6A0009,
+	PKTHDR_LoseExp = 0x6A6A000A,
+	PKTHDR_GetItemData = 0x6A6A000B,
+	PKTHDR_SetItemData = 0x6A6A000C,
+	PKTHDR_SetGold = 0x6A6A000D,
+	PKTHDR_WindowList = 0x6A6A000E,
+	PKTHDR_SettingsData = 0x6A6A000F,
+	PKTHDR_RetryWarehouse = 0x6A6A0010,
+	PKTHDR_WarehouseSaveSuccess = 0x6A6A0011,
+	PKTHDR_DamageQuick = 0x6A6A0012,
+	PKTHDR_QuestNPCOpen = 0x6A6A0013,
+	PKTHDR_QuestNPCAccept = 0x6A6A0014,
+	PKTHDR_QuestStartData = 0x6A6A0015,
+	PKTHDR_QuestUpdateData = 0x6A6A0016,
+	PKTHDR_QuestCancel = 0x6A6A0017,
+	PKTHDR_QuestNPCFinish = 0x6A6A0018,
+	PKTHDR_QuestNPCItemList = 0x6A6A0019,
+	PKTHDR_QuestHandleFinished = 0x6A6A001A,
+	PKTHDR_CharacterDataEx = 0x6A6A001B,
+	PKTHDR_ItemSlotHandle = 0x6A6A001C,
+	PKTHDR_T5QuestArena = 0x6A6A001D,
+	PKTHDR_RequestParty = 0x6A6A001E,
+	PKTHDR_JoinParty = 0x6A6A001F,
+	PKTHDR_UpdateParty = 0x6A6A0020,
+	PKTHDR_UpdatePartyData = 0x6A6A0021,
+	PKTHDR_ActionParty = 0x6A6A0022,
+	PKTHDR_RequestRaid = 0x6A6A0023,
+	PKTHDR_JoinRaid = 0x6A6A0024,
+	PKTHDR_RollDiceDropItem = 0x6A6A0025,
+	PKTHDR_RollDiceRanking = 0x6A6A0026,
+	PKTHDR_QuestItemSwap = 0x6A6A0027,
+	PKTHDR_BossTimeUpdate = 0x6A6A0028,
+	PKTHDR_IntegrityUpdateItem = 0x6A6A0029,
+	PKTHDR_UpdatePetDataEx = 0x6A6A002A,
+	PKTHDR_DynamicQuestOpen = 0x6A6A002B,
+	PKTHDR_DynamicQuestOpenNPC = 0x6A6A002C,
+	PKTHDR_QuestHandleFinishedContainer = 0x6A6A002D,
+	PKTHDR_DamageQuickPVP = 0x6A6A002E,
+	PKTHDR_GoldPickup = 0x6A6A002F,
+	PKTHDR_CharacterCombatData = 0x6A6A0030,	//mainly for pvp
+	PKTHDR_QuestDataRequest = 0x6A6A0031,
+	PKTHDR_QuestDataResponse = 0x6A6A0032,
+	PKTHDR_QuestNamesRequest = 0x6A6A0033,
+	PKTHDR_QuestNamesResponse = 0x6A6A0034,
+	PKTHDR_NewQuestNamesPostLvlUp = 0x6A6A0035, //addition quests post level up
+	PKTHDR_NeverSinkTeleportRequest = 0x6A6A0036,
+	PKTHDR_NeverSinkOpenUI = 0x6A6A0037,
+	PKTHDR_MissingRequiredQuestItems = 0x6A6A0038, //items didn't exist on client side on completion
+	PKTHDR_RemoveFinishedQuest = 0x6A6A0039,
+	PKTHDR_RollDiceDropUserResult = 0x6A6A0040,
 
 
 	//Coin Shop
-	PKTHDR_CoinShopNPC								= 0x48476A01,
-	PKTHDR_CoinShopAmount							= 0x48476A02,
-	PKTHDR_CoinShopOpenTab							= 0x48476A03,
-	PKTHDR_CoinShopTab								= 0x48476A04,
-	PKTHDR_CoinShopOpenItemData						= 0x48476A05,
-	PKTHDR_CoinShopItemData							= 0x48476A06,
-	PKTHDR_CoinShopBuy								= 0x48476A07,
-	PKTHDR_OpenCoinShop								= 0x48476A08,
-	PKTHDR_CoinServiceOpen							= 0x48476A09,
-	PKTHDR_CoinServiceBuy							= 0x48476A0A,
-	PKTHDR_CoinServiceAgingRecoveryOpen				= 0x48476A0B,
-	PKTHDR_CoinTraded								= 0x48476A0C,
-	PKTHDR_CoinTradeSet								= 0x48476A0D,
-	PKTHDR_PlayerInfo2								= 0x48470032, //smTRANSCODE_PLAYERINFO2
+	PKTHDR_CoinShopNPC = 0x48476A01,
+	PKTHDR_CoinShopAmount = 0x48476A02,
+	PKTHDR_CoinShopOpenTab = 0x48476A03,
+	PKTHDR_CoinShopTab = 0x48476A04,
+	PKTHDR_CoinShopOpenItemData = 0x48476A05,
+	PKTHDR_CoinShopItemData = 0x48476A06,
+	PKTHDR_CoinShopBuy = 0x48476A07,
+	PKTHDR_OpenCoinShop = 0x48476A08,
+	PKTHDR_CoinServiceOpen = 0x48476A09,
+	PKTHDR_CoinServiceBuy = 0x48476A0A,
+	PKTHDR_CoinServiceAgingRecoveryOpen = 0x48476A0B,
+	PKTHDR_CoinTraded = 0x48476A0C,
+	PKTHDR_CoinTradeSet = 0x48476A0D,
+	PKTHDR_PlayerInfo2 = 0x48470032, //smTRANSCODE_PLAYERINFO2
 
 	//Packets Event
-	PKTHDR_KillsInSod								= 0x503220B1,
+	PKTHDR_KillsInSod = 0x503220B1,
 
-	PKTHDR_CHECKITEM								= 0x50320300, //smTRANSCODE_CHECKITEM
-	PKTHDR_LIMIT_DAMAGE								= 0x50322050, //smTRANSCODE_LIMIT_DAMAGE
-	PKTHDR_BLESSCASTLE_INFO							= 0x503220C0, //smTRANSCODE_BLESSCASTLE_INFO
-	PKTHDR_BLESSCASTLE_TAX							= 0x503220D0, //smTRANSCODE_BLESSCASTLE_TAX
+	PKTHDR_CHECKITEM = 0x50320300, //smTRANSCODE_CHECKITEM
+	PKTHDR_LIMIT_DAMAGE = 0x50322050, //smTRANSCODE_LIMIT_DAMAGE
+	PKTHDR_BLESSCASTLE_INFO = 0x503220C0, //smTRANSCODE_BLESSCASTLE_INFO
+	PKTHDR_BLESSCASTLE_TAX = 0x503220D0, //smTRANSCODE_BLESSCASTLE_TAX
 
 	//Packets Sync Data
-	PKTHDR_ChatGame									= 0x48471001,
-	PKTHDR_ChatMessage								= 0x48471005,   //smTRANSCODE_WHISPERMESSAGE (pops up a chat message above the char)
-	PKTHDR_ChatItemLink								= 0x48471007,
-	PKTHDR_PersonalShopMessage						= 0x48478AC0,
-	PKTHDR_SyncData1								= 0x4847008B,
-	PKTHDR_SyncData2								= 0x4847008E,
-	PKTHDR_CharacterData							= 0x48470020,   //smTRANSCODE_PLAYERINFO    (can also be for units)
-	PKTHDR_GetPlayerInfoData						= 0x48470021,   //smTRANSCODE_GETPLAYERINFO (can also be for units)
-	PKTHDR_Ping										= 0x435A0007,
-	PKTHDR_PingLoginServer							= 0x435A0008,
-	PKTHDR_FuryArena								= 0x435A0009,
-	PKTHDR_FuryArenaItemData						= 0x435A000A,
-	PKTHDR_FuryArenaBossData						= 0x435A000B,
-	PKTHDR_NPCLarryOpen								= 0x435A000C,
-	PKTHDR_SkillStatus								= 0x435A000E,
-	PKTHDR_UseSkillNew								= 0x435A000F,
-	PKTHDR_NPCMarinaOpen							= 0x435A0010,
-	PKTHDR_SaveAndClose								= 0x435A0011,
-	PKTHDR_PhoenixPet								= 0x484700B0,
-	PKTHDR_Warehouse								= 0x48470047,
-	PKTHDR_Save										= 0x484700E8,
-	PKTHDR_Disconnect								= 0x484700E6,
-	PKTHDR_Reconnect								= 0x48478010,
-	PKTHDR_ReconnectLogin							= 0x48478011,
-	PKTHDR_UpdateLevelClan							= 0x48470038,
-	PKTHDR_TitleBoxMessage							= 0x48478100,   //smTRANSCODE_MESSAGEBOX (title box style)
-	PKTHDR_PlayDataChar								= 0x48470013,   //smTRANSCODE_TRANSPLAYDATA - data about other player's unit
-	PKTHDR_UnitStatusContainer						= 0x48470014,	//smTRANSCODE_PLAYDATAGROUP - data about other player's unit
-	PKTHDR_GameStatus								= 0x48470018,   //smTRANSCODE_PLAY_COMMAND
-	PKTHDR_KillCharacter							= 0x50320E00,
-	PKTHDR_RegenChar								= 0x50320B00,	//smTRANSCODE_VIRTURAL_POTION (heals char)
-	PKTHDR_UpdatePetData							= 0x50320A40,	//smTRANSCODE_UPDATEL_SKILL (but only used for pets)
-	PKTHDR_AttackData								= 0x48470030,	//smTRANSCODE_ATTACKDATA
-	PKTHDR_AttackData2								= 0x48470040,	//smTRANSCODE_ATTACKDATA
-	PKTHDR_GoldBellatraClan							= 0x48478A18,
-	PKTHDR_OpenMyPlayerShop 						= 0x48478A90,
-    PKTHDR_OpenPlayerShop 						    = 0x48478AA0,
-	PKTHDR_PlayerShopConfig 						= 0x48478AB0,
-	PKTHDR_PlayerShopTrade							= 0x48478AD0,
-	PKTHDR_LastAttackDamage							= 0x50322030,   //smTRANSCODE_DISP_DAMAGE
-	PKTHDR_SingleTargetSkillData					= 0x50322000,	//smTRANSCODE_ATTACK_DAMAGE (damage) - was PKTHDR_AttackDamage
-	PKTHDR_MultiTargetSkillData						= 0x50322010,	//smTRANSCODE_RANGE_DAMAGE  (damage by ranged skill) - was PKTHDR_RangeDamage
-	PKTHDR_AttackResult								= 0x50322020,	//smTRANSCODE_ATTACK_RESULT (used for crit aging..)
-	PKTHDR_BuyItemNPCShop							= 0x50320210,	//smTRANSCODE_SHOPTITEM
-	PKTHDR_SellItemNPCShop							= 0x50320212,
-	PKTHDR_RepairItemNPCShop						= 0x50320213,
-	PKTHDR_ForceOrbData								= 0x50320030,
-	PKTHDR_NpcUnitClick								= 0x50320031,
-	PKTHDR_QuestCommand                             = 0x50320220, //smTRANSCODE_QUEST_COMMAND
+	PKTHDR_ChatGame = 0x48471001,
+	PKTHDR_ChatMessage = 0x48471005,   //smTRANSCODE_WHISPERMESSAGE (pops up a chat message above the char)
+	PKTHDR_ChatItemLink = 0x48471007,
+	PKTHDR_PersonalShopMessage = 0x48478AC0,
+	PKTHDR_SyncData1 = 0x4847008B,
+	PKTHDR_SyncData2 = 0x4847008E,
+	PKTHDR_CharacterData = 0x48470020,   //smTRANSCODE_PLAYERINFO    (can also be for units)
+	PKTHDR_GetPlayerInfoData = 0x48470021,   //smTRANSCODE_GETPLAYERINFO (can also be for units)
+	PKTHDR_Ping = 0x435A0007,
+	PKTHDR_PingLoginServer = 0x435A0008,
+	PKTHDR_FuryArena = 0x435A0009,
+	PKTHDR_FuryArenaItemData = 0x435A000A,
+	PKTHDR_FuryArenaBossData = 0x435A000B,
+	PKTHDR_NPCLarryOpen = 0x435A000C,
+	PKTHDR_SkillStatus = 0x435A000E,
+	PKTHDR_UseSkillNew = 0x435A000F,
+	PKTHDR_NPCMarinaOpen = 0x435A0010,
+	PKTHDR_SaveAndClose = 0x435A0011,
+	PKTHDR_PhoenixPet = 0x484700B0,
+	PKTHDR_Warehouse = 0x48470047,
+	PKTHDR_Save = 0x484700E8,
+	PKTHDR_Disconnect = 0x484700E6,
+	PKTHDR_Reconnect = 0x48478010,
+	PKTHDR_ReconnectLogin = 0x48478011,
+	PKTHDR_UpdateLevelClan = 0x48470038,
+	PKTHDR_TitleBoxMessage = 0x48478100,   //smTRANSCODE_MESSAGEBOX (title box style)
+	PKTHDR_PlayDataChar = 0x48470013,   //smTRANSCODE_TRANSPLAYDATA - data about other player's unit
+	PKTHDR_UnitStatusContainer = 0x48470014,	//smTRANSCODE_PLAYDATAGROUP - data about other player's unit
+	PKTHDR_GameStatus = 0x48470018,   //smTRANSCODE_PLAY_COMMAND
+	PKTHDR_KillCharacter = 0x50320E00,
+	PKTHDR_RegenChar = 0x50320B00,	//smTRANSCODE_VIRTURAL_POTION (heals char)
+	PKTHDR_UpdatePetData = 0x50320A40,	//smTRANSCODE_UPDATEL_SKILL (but only used for pets)
+	PKTHDR_AttackData = 0x48470030,	//smTRANSCODE_ATTACKDATA
+	PKTHDR_AttackData2 = 0x48470040,	//smTRANSCODE_ATTACKDATA
+	PKTHDR_GoldBellatraClan = 0x48478A18,
+	PKTHDR_OpenMyPlayerShop = 0x48478A90,
+	PKTHDR_OpenPlayerShop = 0x48478AA0,
+	PKTHDR_PlayerShopConfig = 0x48478AB0,
+	PKTHDR_PlayerShopTrade = 0x48478AD0,
+	PKTHDR_LastAttackDamage = 0x50322030,   //smTRANSCODE_DISP_DAMAGE
+	PKTHDR_SingleTargetSkillData = 0x50322000,	//smTRANSCODE_ATTACK_DAMAGE (damage) - was PKTHDR_AttackDamage
+	PKTHDR_MultiTargetSkillData = 0x50322010,	//smTRANSCODE_RANGE_DAMAGE  (damage by ranged skill) - was PKTHDR_RangeDamage
+	PKTHDR_AttackResult = 0x50322020,	//smTRANSCODE_ATTACK_RESULT (used for crit aging..)
+	PKTHDR_BuyItemNPCShop = 0x50320210,	//smTRANSCODE_SHOPTITEM
+	PKTHDR_SellItemNPCShop = 0x50320212,
+	PKTHDR_RepairItemNPCShop = 0x50320213,
+	PKTHDR_ForceOrbData = 0x50320030,
+	PKTHDR_NpcUnitClick = 0x50320031,
+	PKTHDR_QuestCommand = 0x50320220, //smTRANSCODE_QUEST_COMMAND
 
 	// Packets Login
-	PKTHDR_ServerList								= 0x484700C0,
-	PKTHDR_SaveData									= 0x48470081,  //smTRANSCODE_RECORDDATA
-	PKTHDR_SelectCharacter							= 0x48470082,
-	PKTHDR_FailRecordData							= 0x48470083,  //smTRANSCODE_FAILRECORDDATA
-	PKTHDR_UserInfo									= 0x48470086,
-	PKTHDR_CreateCharacter							= 0x48470088,
-	PKTHDR_DeleteCharacter							= 0x48470087,
-	PKTHDR_Version									= 0x4847008A,
-	PKTHDR_AccountLoginCode							= 0x48470023,
+	PKTHDR_ServerList = 0x484700C0,
+	PKTHDR_SaveData = 0x48470081,  //smTRANSCODE_RECORDDATA
+	PKTHDR_SelectCharacter = 0x48470082,
+	PKTHDR_FailRecordData = 0x48470083,  //smTRANSCODE_FAILRECORDDATA
+	PKTHDR_UserInfo = 0x48470086,
+	PKTHDR_CreateCharacter = 0x48470088,
+	PKTHDR_DeleteCharacter = 0x48470087,
+	PKTHDR_Version = 0x4847008A,
+	PKTHDR_AccountLoginCode = 0x48470023,
 
-	PKTHDR_Shop_ItemList							= 0x48470054, // smTRANSCODE_SHOP_ITEMLIST
+	PKTHDR_Shop_ItemList = 0x48470054, // smTRANSCODE_SHOP_ITEMLIST
 
-	PKTHDR_LoginUser								= 0x48480001,
+	PKTHDR_LoginUser = 0x48480001,
 
 	//Packet Skills
-	PKTHDR_BuffSkillsParty							= 0x50320A00,
-	PKTHDR_CancelDrasticSpirit						= 0x50320A11,
-	PKTHDR_CancelSkill								= 0x50320A10,	//smTRANSCODE_CANCEL_SKILL
-	PKTHDR_SkillCast								= 0x50320A20,	//smTRANSCODE_PROCESS_SKILL
-	PKTHDR_SkillCastData							= 0x50320A30,	//smTRANSCODE_PROCESS_SKILL2 0x50320A30
-	PKTHDR_EvasionSuccess							= 0x50320A50,
-	PKTHDR_PartyUsePot								= 0x484700D0,
-	PKTHDR_HolyMind									= 0x484700D3,
-	PKTHDR_Wisp										= 0x484700C3,
+	PKTHDR_BuffSkillsParty = 0x50320A00,
+	PKTHDR_CancelDrasticSpirit = 0x50320A11,
+	PKTHDR_CancelSkill = 0x50320A10,	//smTRANSCODE_CANCEL_SKILL
+	PKTHDR_SkillCast = 0x50320A20,	//smTRANSCODE_PROCESS_SKILL
+	PKTHDR_SkillCastData = 0x50320A30,	//smTRANSCODE_PROCESS_SKILL2 0x50320A30
+	PKTHDR_EvasionSuccess = 0x50320A50,
+	PKTHDR_PartyUsePot = 0x484700D0,
+	PKTHDR_HolyMind = 0x484700D3,
+	PKTHDR_Wisp = 0x484700C3,
 
 
 	//Packets Unit
-	PKTHDR_OpenNPC									= 0x48470024,
-	PKTHDR_NpcData									= 0x48470070,
-	PKTHDR_SetExpOld_DontUse						= 0x48470031,	//smTRANSCODE_ADDEXP (don't use, it actually sets exp in Asm)
-	PKTHDR_TeleportEvent							= 0x4847005D,
-	PKTHDR_UnitStatusMove							= 0x48470010,	//smTRANSCODE_PLAYDATA1
-	PKTHDR_PlayData									= 0x48470013,	//smTRANSCODE_TRANSPLAYDATA
-	PKTHDR_UnitInfoQuick							= 0x4847004C,	//smTRANSCODE_PLAYERINFO_Q
-	PKTHDR_OpenEventGirl							= 0x4847004F,	//smTRANSCODE_OPEN_EVENTGIFT
-	PKTHDR_OpenAgingMaster							= 0x4847004D,	//smTRANSCODE_OPEN_AGING
-	PKTHDR_OpenStarPoint							= 0x48478A10,   //smTRANSCODE_OPEN_STARPOINT
-	PKTHDR_OpenCollect								= 0x4847004A,   //smTRANSCODE_OPEN_COLLECT
-	PKTHDR_OpenGiveMoney							= 0x48478A14,   //smTRANSCODE_OPEN_GIVEMONEY
-	PKTHDR_OpenClanMenu								= 0x48478A00,   //smTRANSCODE_OPEN_CLANMENU
-	PKTHDR_PublicPolling							= 0x50320A70,   //smTRANSCODE_PUBLIC_POLLING
+	PKTHDR_OpenNPC = 0x48470024,
+	PKTHDR_NpcData = 0x48470070,
+	PKTHDR_SetExpOld_DontUse = 0x48470031,	//smTRANSCODE_ADDEXP (don't use, it actually sets exp in Asm)
+	PKTHDR_TeleportEvent = 0x4847005D,
+	PKTHDR_UnitStatusMove = 0x48470010,	//smTRANSCODE_PLAYDATA1
+	PKTHDR_PlayData = 0x48470013,	//smTRANSCODE_TRANSPLAYDATA
+	PKTHDR_UnitInfoQuick = 0x4847004C,	//smTRANSCODE_PLAYERINFO_Q
+	PKTHDR_OpenEventGirl = 0x4847004F,	//smTRANSCODE_OPEN_EVENTGIFT
+	PKTHDR_OpenAgingMaster = 0x4847004D,	//smTRANSCODE_OPEN_AGING
+	PKTHDR_OpenStarPoint = 0x48478A10,   //smTRANSCODE_OPEN_STARPOINT
+	PKTHDR_OpenCollect = 0x4847004A,   //smTRANSCODE_OPEN_COLLECT
+	PKTHDR_OpenGiveMoney = 0x48478A14,   //smTRANSCODE_OPEN_GIVEMONEY
+	PKTHDR_OpenClanMenu = 0x48478A00,   //smTRANSCODE_OPEN_CLANMENU
+	PKTHDR_PublicPolling = 0x50320A70,   //smTRANSCODE_PUBLIC_POLLING
 
 	//Effect
 
-	PTKHDR_Effect_Item								= 0x48478000,	//smTRANSCODE_EFFECT_ITEM
-	PTKHDR_Effect_Weapon							= 0x48478002,	//smTRANSCODE_EFFECT_WEAPON	- calls SetTransEffectWeapon on client side (2012)
-	PTKHDR_Effect_Stun								= 0x48478004,	//smTRANSCODE_EFFECT_STUN
-	PTKHDR_Effect_Curse								= 0x48478006,	//smTRANSCODE_EFFECT_CURSE
-	PTKHDR_Effect_Ice								= 0x48478008,	//smTRANSCODE_EFFECT_ICE
-	PTKHDR_Effect_Poison							= 0x4847800A,	//smTRANSCODE_EFFECT_POISION
-	PTKHDR_Effect_Vanish							= 0x4847800C,	//smTRANSCODE_EFFECT_VANISH
-	PTKHDR_Effect_PersonalShop						= 0x4847800E,	//smTRANSCODE_EFFECT_PERSHOP
-	PTKHDR_Effect_LowLevelPet						= 0x4847800F,	//smTRANSCODE_EFFECT_LOWPET
-	PTKHDR_Effect_ClanManager						= 0x48479000,	//smTRANSCODE_EFFECT_CLANMGR
-	PTKHDR_Effect_ForceOrb							= 0x48479010,	//smTRANSCODE_EFFECT_FORCEORB
-	PTKHDR_Effect_BlessScore						= 0x48479012,	//smTRANSCODE_EFFECT_BLESS_SCORE
-	PKTHDR_Effect_User								= 0x48479014,	//new
-	PTKHDR_Effect_Debuff							= 0x48479015,	//new
-	PTKHDR_Effect_KeepSkill							= 0x48479020,	//smTRANSCODE_EFFECT_KEEPSKILL
+	PTKHDR_Effect_Item = 0x48478000,	//smTRANSCODE_EFFECT_ITEM
+	PTKHDR_Effect_Weapon = 0x48478002,	//smTRANSCODE_EFFECT_WEAPON	- calls SetTransEffectWeapon on client side (2012)
+	PTKHDR_Effect_Stun = 0x48478004,	//smTRANSCODE_EFFECT_STUN
+	PTKHDR_Effect_Curse = 0x48478006,	//smTRANSCODE_EFFECT_CURSE
+	PTKHDR_Effect_Ice = 0x48478008,	//smTRANSCODE_EFFECT_ICE
+	PTKHDR_Effect_Poison = 0x4847800A,	//smTRANSCODE_EFFECT_POISION
+	PTKHDR_Effect_Vanish = 0x4847800C,	//smTRANSCODE_EFFECT_VANISH
+	PTKHDR_Effect_PersonalShop = 0x4847800E,	//smTRANSCODE_EFFECT_PERSHOP
+	PTKHDR_Effect_LowLevelPet = 0x4847800F,	//smTRANSCODE_EFFECT_LOWPET
+	PTKHDR_Effect_ClanManager = 0x48479000,	//smTRANSCODE_EFFECT_CLANMGR
+	PTKHDR_Effect_ForceOrb = 0x48479010,	//smTRANSCODE_EFFECT_FORCEORB
+	PTKHDR_Effect_BlessScore = 0x48479012,	//smTRANSCODE_EFFECT_BLESS_SCORE
+	PKTHDR_Effect_User = 0x48479014,	//new
+	PTKHDR_Effect_Debuff = 0x48479015,	//new
+	PTKHDR_Effect_KeepSkill = 0x48479020,	//smTRANSCODE_EFFECT_KEEPSKILL
 
 	//Packets Map
-	PKTHDR_WarpGateField							= 0x48470040,   //smTRANSCODE_WARPFIELD
-	PKTHDR_DeleteFlagPoint							= 0x48470061,
-	PKTHDR_TheDeath									= 0x48478800,
-	PKTHDR_PlayItem									= 0x48470050,   //show item on floor - smTRANSCODE_PLAYITEM
-	PKTHDR_SaveThrowMoney    						= 0x48470056,	//received via game server
-	PKTHDR_SaveThrowItem2    						= 0x48470057,	//gameserver to login server
+	PKTHDR_WarpGateField = 0x48470040,   //smTRANSCODE_WARPFIELD
+	PKTHDR_DeleteFlagPoint = 0x48470061,
+	PKTHDR_TheDeath = 0x48478800,
+	PKTHDR_PlayItem = 0x48470050,   //show item on floor - smTRANSCODE_PLAYITEM
+	PKTHDR_SaveThrowMoney = 0x48470056,	//received via game server
+	PKTHDR_SaveThrowItem2 = 0x48470057,	//gameserver to login server
 
-	PKTHDR_UseUnionCore								= 0x50320206,
-    PKTHDR_WingItem                                 = 0x50320208,
-	PKTHDR_BellatraInformation						= 0x503220B0,
+	PKTHDR_UseUnionCore = 0x50320206,
+	PKTHDR_WingItem = 0x50320208,
+	PKTHDR_BellatraInformation = 0x503220B0,
 
 	//Packets Item
-	PKTHDR_SocketItemDataToServer					= 0x48470025,
-	PKTHDR_SocketItemDataToClient					= 0x48470026,
-	PKTHDR_DeleteItemFromMap						= 0x48470051,   //Removes item from map
-	PKTHDR_NewItem									= 0x48470052,   //smTRANSCODE_PUTITEM
-    PKTHDR_GetItem                                  = 0x4847005A,
-    PKTHDR_PaymentMoney                             = 0x4847005E,
-	PKTHDR_UpgradeAgingItem							= 0x50320204,
-	PKTHDR_AgingItem								= 0x50320202,	//smTRANSCODE_AGINGITEM (also used for maturing)
-	PKTHDR_OpenSmelting								= 0x50325000,
-	PKTHDR_OpenResetItem							= 0x484700A6,
-	PKTHDR_OpenManufacture							= 0x50326000,
-	PKTHDR_ManufactureItem							= 0x50326001,
-	PKTHDR_MixItem									= 0x50320200,
-	PKTHDR_ResetItem								= 0x50326006,
-	PKTHDR_NPCItemBox								= 0x48478A80,
+	PKTHDR_SocketItemDataToServer = 0x48470025,
+	PKTHDR_SocketItemDataToClient = 0x48470026,
+	PKTHDR_DeleteItemFromMap = 0x48470051,   //Removes item from map
+	PKTHDR_NewItem = 0x48470052,   //smTRANSCODE_PUTITEM
+	PKTHDR_GetItem = 0x4847005A,
+	PKTHDR_PaymentMoney = 0x4847005E,
+	PKTHDR_UpgradeAgingItem = 0x50320204,
+	PKTHDR_AgingItem = 0x50320202,	//smTRANSCODE_AGINGITEM (also used for maturing)
+	PKTHDR_OpenSmelting = 0x50325000,
+	PKTHDR_OpenResetItem = 0x484700A6,
+	PKTHDR_OpenManufacture = 0x50326000,
+	PKTHDR_ManufactureItem = 0x50326001,
+	PKTHDR_MixItem = 0x50320200,
+	PKTHDR_ResetItem = 0x50326006,
+	PKTHDR_NPCItemBox = 0x48478A80,
 
 
 	//others
-	PKTHDR_RecordResult								= 0x48470084,
-	PKTHDR_SendGameServer						    = 0x50320110,
-	PKTHDR_DamageEncodeMem							= 0x50322F00,
-	PKTHDR_DamageEncodeMem2							= 0x50322EC0,
+	PKTHDR_RecordResult = 0x48470084,
+	PKTHDR_SendGameServer = 0x50320110,
+	PKTHDR_DamageEncodeMem = 0x50322F00,
+	PKTHDR_DamageEncodeMem2 = 0x50322EC0,
 
-	PKTHDR_NETWORK_QUALITY							= 0x484700E0,
+	PKTHDR_NETWORK_QUALITY = 0x484700E0,
 
-	PKTHDR_CONNECTED								= 0x48470080,
-	PKTHDR_DAMAGE_ENCODE_MEM2						= 0x50322EC0,
-	PKTHDR_UPDATE_SERVER_PARAM						= 0x503220F0,
-	PKTHDR_PROCESSINFO								= 0x484700E4,
+	PKTHDR_CONNECTED = 0x48470080,
+	PKTHDR_DAMAGE_ENCODE_MEM2 = 0x50322EC0,
+	PKTHDR_UPDATE_SERVER_PARAM = 0x503220F0,
+	PKTHDR_PROCESSINFO = 0x484700E4,
 
-	PKTHDR_SET_BLACKLIST							= 0x48470033,	//smTRANSCODE_SET_BLACKLIST - Hacking User Registration 2
-	PKTHDR_SET_BLACKLIST2							= 0x48478400,	//smTRANSCODE_SET_BLACKLIST2 - Hacking User Registration 2
-	PKTHDR_SET_BLACKLIST3							= 0x48478500,	//smTRANSCODE_SET_BLACKLIST3 - Hacking User Registration 3
-	PKTHDR_HACKTRAP						            = 0x50320a90,	//smTRANSCODE_HACKTRAP
-	PKTHDR_USEITEM_CODE				                = 0x4847005b,   //smTRANSCODE_USEITEM_CODE
-	PKTHDR_MAKE_LINKCORE					        = 0x50320205,   //smTRANSCODE_MAKE_LINKCORE
+	PKTHDR_SET_BLACKLIST = 0x48470033,	//smTRANSCODE_SET_BLACKLIST - Hacking User Registration 2
+	PKTHDR_SET_BLACKLIST2 = 0x48478400,	//smTRANSCODE_SET_BLACKLIST2 - Hacking User Registration 2
+	PKTHDR_SET_BLACKLIST3 = 0x48478500,	//smTRANSCODE_SET_BLACKLIST3 - Hacking User Registration 3
+	PKTHDR_HACKTRAP = 0x50320a90,	//smTRANSCODE_HACKTRAP
+	PKTHDR_USEITEM_CODE = 0x4847005b,   //smTRANSCODE_USEITEM_CODE
+	PKTHDR_MAKE_LINKCORE = 0x50320205,   //smTRANSCODE_MAKE_LINKCORE
 
-	PKTHDR_PROCESS_TIMEMAX							= 0x50320500,   //smTRANSCODE_PROCESS_TIMEMAX
-	PKTHDR_DAMAGE_ENCODE_MEM						= 0x50322F00,
-	PKTHDR_SEND_GAMESERVER							= 0x50320110,
+	PKTHDR_PROCESS_TIMEMAX = 0x50320500,   //smTRANSCODE_PROCESS_TIMEMAX
+	PKTHDR_DAMAGE_ENCODE_MEM = 0x50322F00,
+	PKTHDR_SEND_GAMESERVER = 0x50320110,
 
 	//NEW
 	//NOTE - max value should be 0x7FFFFFFF
 
-	PTKHDR_EventGirlReset							= 0x6FFF0001,
-	PKTHDR_RankingListRequest						= 0x6FFF0002,
-	PKTHDR_NumfOfInitialBellatraPlayers				= 0x6FFF0003,
-	PKTHDR_ExtraUserData							= 0x6FFF0004,
-	PKTHDR_SoloRankingListRequest					= 0x6FFF0005,
-	PKTHDR_PremiumDataSync							= 0x6FFF0006,	//for syncing timers of premium items to client
-	PKTHDR_MiscUnitCommand							= 0x6FFF0007,
-	PKTHDR_ForceOrbCancel							= 0x6FFF0009,
-	PKTHDR_MapSpawnMarkers							= 0x6FFF000A,	//for map spawn markers
-	PKTHDR_ServerSkillData							= 0x6FFF000B,	//server skill data
-	PKTHDR_SkillBuffStatus							= 0x6FFF000D,
-	PKTHDR_HalloweenEventStatus						= 0x6FFF000E,
-	PKTHDR_TitleList								= 0x6FFF000F,
-	PKTHDR_SetTitle									= 0x6FFF0010,
-	PKTHDR_RecoverItem								= 0x6FFF0011,
-	PKTHDR_EnterBellatraCastle						= 0x6FFF0012,
-    PKTHDR_GameTimeSync                             = 0x6FFF0013,
-	PKTHDR_BellatraCrownFull						= 0x6FFF0014,
-	PKTHDR_BellatraCrownSolo						= 0x6FFF0015,
-	PKTHDR_ServerSkillInfo							= 0x6FFF0016,
-	PKTHDR_DamageInfoContainer						= 0x6FFF0017,
-	PKTHDR_NewItemNPC								= 0x6FFF0018,
-	PKTHDR_ServerSkillChainData						= 0x6FFF0019,
-	PKTHDR_UseSkillPartyBuffNew						= 0x6FFF0020,
-	PKTHDR_ServerCommonSkillInfo					= 0x6FFF0021,
-	PKTHDR_QuickHealthUpdate						= 0x6FFF0022,
-	PKTHDR_ClearUnitDataFromMap						= 0x6FFF0023,
-	PKTHDR_NpcQuestStatus							= 0x6FFF0024,
-	PKTHDR_NewItemAuto								= 0x6FFF0025,
-	PKTHDR_MapIndicators							= 0x6FFF0026,
-	PKTHDR_QuestMonsterName							= 0x6FFF0027,
-	PKTHDR_QuestMonsterNameReq						= 0x6FFF0028,
-	PKTHDR_UpgradeQuestWeapon						= 0x6FFF0029,
-	PKTHDR_MonsterKill								= 0x6FFF0030,
-	PKTHDR_SendStablePet							= 0x6FFF0031,
-	PKTHDR_SendStablePet_Change_Name				= 0x6FFF0032,
-	PKTHDR_SendStablePet_ActivePet					= 0x6FFF0033,
+	PTKHDR_EventGirlReset = 0x6FFF0001,
+	PKTHDR_RankingListRequest = 0x6FFF0002,
+	PKTHDR_NumfOfInitialBellatraPlayers = 0x6FFF0003,
+	PKTHDR_ExtraUserData = 0x6FFF0004,
+	PKTHDR_SoloRankingListRequest = 0x6FFF0005,
+	PKTHDR_PremiumDataSync = 0x6FFF0006,	//for syncing timers of premium items to client
+	PKTHDR_MiscUnitCommand = 0x6FFF0007,
+	PKTHDR_ForceOrbCancel = 0x6FFF0009,
+	PKTHDR_MapSpawnMarkers = 0x6FFF000A,	//for map spawn markers
+	PKTHDR_ServerSkillData = 0x6FFF000B,	//server skill data
+	PKTHDR_SkillBuffStatus = 0x6FFF000D,
+	PKTHDR_HalloweenEventStatus = 0x6FFF000E,
+	PKTHDR_TitleList = 0x6FFF000F,
+	PKTHDR_SetTitle = 0x6FFF0010,
+	PKTHDR_RecoverItem = 0x6FFF0011,
+	PKTHDR_EnterBellatraCastle = 0x6FFF0012,
+	PKTHDR_GameTimeSync = 0x6FFF0013,
+	PKTHDR_BellatraCrownFull = 0x6FFF0014,
+	PKTHDR_BellatraCrownSolo = 0x6FFF0015,
+	PKTHDR_ServerSkillInfo = 0x6FFF0016,
+	PKTHDR_DamageInfoContainer = 0x6FFF0017,
+	PKTHDR_NewItemNPC = 0x6FFF0018,
+	PKTHDR_ServerSkillChainData = 0x6FFF0019,
+	PKTHDR_UseSkillPartyBuffNew = 0x6FFF0020,
+	PKTHDR_ServerCommonSkillInfo = 0x6FFF0021,
+	PKTHDR_QuickHealthUpdate = 0x6FFF0022,
+	PKTHDR_ClearUnitDataFromMap = 0x6FFF0023,
+	PKTHDR_NpcQuestStatus = 0x6FFF0024,
+	PKTHDR_NewItemAuto = 0x6FFF0025,
+	PKTHDR_MapIndicators = 0x6FFF0026,
+	PKTHDR_QuestMonsterName = 0x6FFF0027,
+	PKTHDR_QuestMonsterNameReq = 0x6FFF0028,
+	PKTHDR_UpgradeQuestWeapon = 0x6FFF0029,
+	PKTHDR_MonsterKill = 0x6FFF0030,
+	PKTHDR_SendStablePet = 0x6FFF0031,
+	PKTHDR_SendStablePet_Change_Name = 0x6FFF0032,
+	PKTHDR_SendStablePet_ActivePet = 0x6FFF0033,
 
-	PKTHDR_Warning_Skill							= 0x50322080,   //smTRANSCODE_WARNING_SKILL
-	PKTHDR_Client_Error								= 0x48478900,   //smTRANSCODE_CLIENT_ERROR
-	PKTHDR_Resistance								= 0x50320a60,   //smTRANSCODE_RESISTANCE
+	PKTHDR_Warning_Skill = 0x50322080,   //smTRANSCODE_WARNING_SKILL
+	PKTHDR_Client_Error = 0x48478900,   //smTRANSCODE_CLIENT_ERROR
+	PKTHDR_Resistance = 0x50320a60,   //smTRANSCODE_RESISTANCE
 
-	PKTHDR_SendDataServer							= 0x50320100,   //smTRANSCODE_SEND_DATASERVER - Transfer connection to data server
+	PKTHDR_SendDataServer = 0x50320100,   //smTRANSCODE_SEND_DATASERVER - Transfer connection to data server
 
-	PKTHDR_Unknown1									= 0x50320040,
-	PKTHDR_Unknown2									= 0x50326070,
-	PKTHDR_Unknown3									= 0x50320120,
-	PKTHDR_Unknown4									= 0x7f000051,  //related to WH
-	PKTHDR_Unknown5									= 0x48470109,
-	PKTHDR_Unknown6									= 0x48470045,  //related to skill master
-	PKTHDR_Unknown7									= 0x50320039,  //related to item deletion when expired
+	PKTHDR_Unknown1 = 0x50320040,
+	PKTHDR_Unknown2 = 0x50326070,
+	PKTHDR_Unknown3 = 0x50320120,
+	PKTHDR_Unknown4 = 0x7f000051,  //related to WH
+	PKTHDR_Unknown5 = 0x48470109,
+	PKTHDR_Unknown6 = 0x48470045,  //related to skill master
+	PKTHDR_Unknown7 = 0x50320039,  //related to item deletion when expired
 
-	PKTHDR_Unknown8									= 0x50320C00,
-	PKTHDR_Unknown9									= 0x50326030,
-	PKTHDR_Unknown10								= 0x50326002,
-	PKTHDR_Unknown11								= 0x50320800,
-	PKTHDR_Unknown12								= 0x50326040,
+	PKTHDR_Unknown8 = 0x50320C00,
+	PKTHDR_Unknown9 = 0x50326030,
+	PKTHDR_Unknown10 = 0x50326002,
+	PKTHDR_Unknown11 = 0x50320800,
+	PKTHDR_Unknown12 = 0x50326040,
 
 
 
-	PKTHDR_CommandUser								= 0x4847005c,  //smTRANSCODE_COMMAND_USER
+	PKTHDR_CommandUser = 0x4847005c,  //smTRANSCODE_COMMAND_USER
 
-	PKTHDR_YahooMotion								= 0x50320E10,  //smTRANSCODE_YAHOO_MOTION - Execute yay action
+	PKTHDR_YahooMotion = 0x50320E10,  //smTRANSCODE_YAHOO_MOTION - Execute yay action
 
 	//1345454352 -> 0x50320110 ?? --> SEND_GAMESERVER
 	//1345466112 -> 0x50322F00 ?? --> DAMAGE_ENCODE_MEM
@@ -1116,10 +1113,10 @@ struct PacketPartyPotion : Packet
 //			LoginServer
 struct _sTRANS_SERVER_INFO
 {
-	char									szServerName[ 0x20 ]; // 0x0
-	char									szServerIp1[ 0x14 ]; // 0x20
-	char									szServerIp2[ 0x14 ]; // 0x34
-	char									szServerIp3[ 0x14 ]; // 0x48
+	char									szServerName[0x20]; // 0x0
+	char									szServerIp1[0x14]; // 0x20
+	char									szServerIp2[0x14]; // 0x34
+	char									szServerIp3[0x14]; // 0x48
 	DWORD									dwServerPort1; // 0x5C
 	DWORD									dwServerPort2; // 0x60
 	DWORD									dwServerPort3; // 0x64
@@ -1129,13 +1126,13 @@ struct _sTRANS_SERVER_INFO
 
 struct PacketLoginChannel : Packet
 {
-	char									szServerName[ 0x10 ]; // 0x8
+	char									szServerName[0x10]; // 0x8
 	DWORD									dwServerTime; // 0x18
 	int										iClanTicket; // 0x1C
 	DWORD									dwTemp; // 0x20
 	int										iClanServerCount; // 0x24
 	int										iServerCount; // 0x28
-	_sTRANS_SERVER_INFO						ServerInfo[ 0x4 ]; // 0x2C
+	_sTRANS_SERVER_INFO						ServerInfo[0x4]; // 0x2C
 
 };
 
@@ -1307,10 +1304,10 @@ struct PacketForceOrbData : Packet
 struct	PacketUserInfo : Packet
 {
 
-	char									szUserID[ 32 ];
+	char									szUserID[32];
 	int										CharCount;
 
-	_TRANS_CHAR_INFO						sCharacterData[ 6 ];
+	_TRANS_CHAR_INFO						sCharacterData[6];
 };
 
 /// <summary>
@@ -1319,7 +1316,7 @@ struct	PacketUserInfo : Packet
 struct PacketContainer : Packet
 {
 	int				  iAmount;
-	BYTE			  baBuffer[0x2000 - 0x4 - 0x8];
+	BYTE			  baBuffer[MAX_PKTSIZ - 0x4 - 0x8];
 };
 
 #define DAMAGEDEBUGCONTAINER_LENGTH	0x1FF6 // 0x2000 - 0x08 = header, 0x02 = short
@@ -1342,8 +1339,8 @@ struct PacketDebugDamageInfo : Packet
 
 struct PacketDebugDamageInfoContainer : Packet
 {
-    USHORT			  sAmount;
-    BYTE			  baBuffer[DAMAGEDEBUGCONTAINER_LENGTH];
+	USHORT			  sAmount;
+	BYTE			  baBuffer[DAMAGEDEBUGCONTAINER_LENGTH];
 };
 
 
@@ -1366,7 +1363,7 @@ struct CharacterFile : Packet
 
 	char									szHeader[8];
 
-	void									* sCharInfo;
+	void* sCharInfo;
 };
 
 #define _XMIN_FURYARENA		-1050946
@@ -1617,8 +1614,8 @@ struct PacketCreateCharacter : Packet
 	int										iUnknown;
 	int										iCode;
 	int										iUnk;
-	char									szUserID[ 32 ];
-	char									szCharname[ 32 ];
+	char									szUserID[32];
+	char									szCharname[32];
 };
 
 struct PacketSelectCharacter : Packet
@@ -1665,8 +1662,8 @@ struct PacketDeleteCharacter : Packet
 	int										iUnknown;
 	int										iCode;
 	int										iUnk;
-	char									szUserID[ 32 ];
-	char									szCharname[ 32 ];
+	char									szUserID[32];
+	char									szCharname[32];
 };
 
 
@@ -1703,13 +1700,13 @@ struct PacketUpdateClanLevel : Packet
 
 struct PacketPlayDataEx : Packet
 {
-	int										iLevelSkill[ SKILL_COUNT_CHARACTER ];
+	int										iLevelSkill[SKILL_COUNT_CHARACTER];
 	CharacterDataPacket						sCharacterData;
 	int										iCritical;
 	int										iLevelCharacter;
 	BOOL									DebugInfo;
 	BOOL									bGameMaster;
-	char									szMacAddr[ 20 ];
+	char									szMacAddr[20];
 	DWORD									dwServerID;
 	DWORD									dwQuestLevelLog;
 	DWORD									dwGold;
@@ -1781,8 +1778,8 @@ enum EPhoenixType
 	PHOENIXTYPEID_Ice,
 	PHOENIXTYPEID_Lightning,
 	PHOENIXTYPEID_Healing,
-	PHOENIXTYPEID_ElementHealing	= 2,
-	PHOENIXTYPEID_DeleteMask		= 4855374,
+	PHOENIXTYPEID_ElementHealing = 2,
+	PHOENIXTYPEID_DeleteMask = 4855374,
 };
 
 struct PacketPhoenixPet : Packet
@@ -1829,7 +1826,7 @@ struct PacketLoseExperience : Packet
 
 struct PacketMixDescription : Packet
 {
-	char									szMixDescription[ 150 ];
+	char									szMixDescription[150];
 };
 
 struct PacketCrystalUse : Packet
@@ -1951,11 +1948,11 @@ struct BlessCastleStatusData
 	int										iUnk[10];
 	BlessCastleStatusSettingsData			sSettings;
 	PacketBlessCastleTopData				sPacketTopData;
-	struct AttackDamageData					* psaDamageData;
+	struct AttackDamageData* psaDamageData;
 
 	BYTE									baSoldierCount[4];
 	BYTE									baCrystalTowerCount[4];
-	class UnitData							* pcUnitDataTower;
+	class UnitData* pcUnitDataTower;
 	DWORD									dwScoreLogTime;
 };
 
@@ -2015,7 +2012,7 @@ struct PacketAttackData : Packet
 	int			iRange;					 //0x20	AttackSize / Attack range
 	int			iDamage;				 //0x24	Power / Attack power
 	DWORD		dwChkSum;				 //0x28
-	short		sRating[ 2 ];			 //0x2C	[0] - level, [1] - accuracy
+	short		sRating[2];			 //0x2C	[0] - level, [1] - accuracy
 	DWORD		dwDamageChkSum;			 //0x30
 };
 
@@ -2155,7 +2152,7 @@ struct PacketSkillDamageRange : Packet
 	DWORD									dwChkSum;				// Tamper proof code
 
 	int										iCount;
-	int										iaTargetID[ 128 ];		//Unique number of the target character
+	int										iaTargetID[128];		//Unique number of the target character
 };
 
 /**
@@ -2180,7 +2177,7 @@ struct PacketMultiTargetSkillData : Packet
 	int										iSkillID;					//Skill code (use sActiveSkill)
 	DWORD									dwTime;						//Client time
 	int										iDamageCount;				//Attack counter
-	short									MotionCount[ 2 ];			//Attack motion counter
+	short									MotionCount[2];			//Attack motion counter
 	DWORD									dwWeaponCode;				//Main attack weapon
 
 	short									sMapID;
@@ -2203,7 +2200,7 @@ struct PacketMultiTargetSkillData : Packet
 	ID										iTargetID;
 
 	int										iTargetCount;
-	int										iaTargetID[ 128 ];			///Unique number of the target character (max 128)
+	int										iaTargetID[128];			///Unique number of the target character (max 128)
 
 
 };
@@ -2393,8 +2390,8 @@ struct SkillInfo
 	short                               sSkillUseStaminaPerLevel;	//1 = increase/decrease value each level skill
 	short                               sSkillMasteryBase;			//0 = mastery base
 	short                               sSkillMasteryPerLevel;		//1 = increase/decrease value each skill level
-    int									iaItemAllowedType[8];
-    float								pvpScaling;
+	int									iaItemAllowedType[8];
+	float								pvpScaling;
 };
 
 
@@ -2434,8 +2431,8 @@ struct PacketLogCheat : Packet
 	int										ExParam;
 
 #if defined(_SERVER)
-	char									szBuffer1[256] = {0};
-	char									szBuffer2[32] = {0};
+	char									szBuffer1[256] = { 0 };
+	char									szBuffer2[32] = { 0 };
 #endif
 };
 
@@ -2449,14 +2446,14 @@ struct PacketTransCommand : Packet
 };
 struct PacketTransCommandEx : Packet
 {
-    int LParam;
-    int WParam;
-    int SParam;
-    int EParam;
-    int LxParam;
-    int WxParam;
-    int SxParam;
-    int ExParam;
+	int LParam;
+	int WParam;
+	int SParam;
+	int EParam;
+	int LxParam;
+	int WxParam;
+	int SxParam;
+	int ExParam;
 };
 
 struct PacketLogCheatEx : Packet
@@ -2483,182 +2480,182 @@ struct PacketSiegeWarPhase : Packet
 
 enum ELogCheat
 {
-	CHEATLOGID_DelaySkillHack						 = 52,
-	CHEATLOGID_UnsureButUsed						 = 54,
+	CHEATLOGID_DelaySkillHack = 52,
+	CHEATLOGID_UnsureButUsed = 54,
 	//CHEATLOGID_UnsureButUsed3						 = 80, -- reviewing.
-	CHEATLOGID_ValidateCharacterError				 = 81,
-	CHEATLOGID_CopiedItemError						 = 99,
-	CHEATLOGID_UnsureButUsed2						 = 123,
-	CHEATLOGID_CopiedItem							 = 1000,
-	CHEATLOGID_CopiedItemWarehouse					 = 1010,
-	CHEATLOGID_WarehouseGold						 = 1011,
-	CHEATLOGID_WarehouseNewClone					 = 1012,
-	CHEATLOGID_WarehouseBug							 = 1013,
-	CHEATLOGID_HackDetected							 = 1100,
-	CHEATLOGID_FocusChanged							 = 1101,
+	CHEATLOGID_ValidateCharacterError = 81,
+	CHEATLOGID_CopiedItemError = 99,
+	CHEATLOGID_UnsureButUsed2 = 123,
+	CHEATLOGID_CopiedItem = 1000,
+	CHEATLOGID_CopiedItemWarehouse = 1010,
+	CHEATLOGID_WarehouseGold = 1011,
+	CHEATLOGID_WarehouseNewClone = 1012,
+	CHEATLOGID_WarehouseBug = 1013,
+	CHEATLOGID_HackDetected = 1100,
+	CHEATLOGID_FocusChanged = 1101,
 
-	CHEATLOGID_GoldLimit							 = 1150,
-	CHEATLOGID_SpeedHack							 = 1200,
-	CHEATLOGID_TimeErrorSpeedHack					 = 1250,
-	CHEATLOGID_TimeMismatch							 = 1400,
-	CHEATLOGID_AttackRatioError						 = 1500,
-	CHEATLOGID_PotionCheckError						 = 1510,
-	CHEATLOGID_PotionCountError						 = 1530,
+	CHEATLOGID_GoldLimit = 1150,
+	CHEATLOGID_SpeedHack = 1200,
+	CHEATLOGID_TimeErrorSpeedHack = 1250,
+	CHEATLOGID_TimeMismatch = 1400,
+	CHEATLOGID_AttackRatioError = 1500,
+	CHEATLOGID_PotionCheckError = 1510,
+	CHEATLOGID_PotionCountError = 1530,
 
-	CHEATLOGID_CharInfoSaveError					 = 1600,
-	CHEATLOGID_DefaultAttackRatingError				 = 1820,
-	CHEATLOGID_DefaultAttackSizeError				 = 1821,
-	CHEATLOGID_ContinuousAttackError				 = 1823,
-	CHEATLOGID_SkillAttackRatingError				 = 1830,
-	CHEATLOGID_SkillContinuousAttackError			 = 1833,
-	CHEATLOGID_RestrictedAreaTrespassed				 = 1840,
-	CHEATLOGID_WeightError							 = 1900,
+	CHEATLOGID_CharInfoSaveError = 1600,
+	CHEATLOGID_DefaultAttackRatingError = 1820,
+	CHEATLOGID_DefaultAttackSizeError = 1821,
+	CHEATLOGID_ContinuousAttackError = 1823,
+	CHEATLOGID_SkillAttackRatingError = 1830,
+	CHEATLOGID_SkillContinuousAttackError = 1833,
+	CHEATLOGID_RestrictedAreaTrespassed = 1840,
+	CHEATLOGID_WeightError = 1900,
 
-	CHEATLOGID_ItemError							 = 1950,
-	CHEATLOGID_CopiedItemRecall						 = 1960,
-	CHEATLOGID_ForcedPenaltyBoot					 = 2000,
-	CHEATLOGID_SavedItemError						 = 2400,
-	CHEATLOGID_ContinuousSaveFailedError			 = 2700,
-	CHEATLOGID_AccountCharacterError				 = 2800,
-	CHEATLOGID_TradeAuthorizationError				 = 4000,
-	CHEATLOGID_MoneyTransferError					 = 4100,
-	CHEATLOGID_MultipleConnectionsIP				 = 5000,
-	CHEATLOGID_TooManyPackets						 = 5100,
-	CHEATLOGID_GameServerIPError					 = 5200,
-	CHEATLOGID_StartCharacterError					 = 6000,
-	CHEATLOGID_ServerMoneyError1					 = 6610,
-	CHEATLOGID_ServerMoneyError2					 = 6611,
-	CHEATLOGID_ServerMoneyError3					 = 6612,
-	CHEATLOGID_ItemCodeError						 = 6800,
-	CHEATLOGID_ItemTempCodeError					 = 6810,
-	CHEATLOGID_CharacterStateError1					 = 6900,
-	CHEATLOGID_CharacterSkillPointError				 = 6910,
-	CHEATLOGID_CharacterWeightError					 = 6920,
-	CHEATLOGID_ClientProcessTimeOut					 = 7000,
-	CHEATLOGID_InventoryItemError					 = 7010,
-	CHEATLOGID_CharacterModelError					 = 7020,
-	CHEATLOGID_JobCodeError							 = 7030,
-	CHEATLOGID_HighDmgRecordedAgainstHigherLevelMon  = 7031,
+	CHEATLOGID_ItemError = 1950,
+	CHEATLOGID_CopiedItemRecall = 1960,
+	CHEATLOGID_ForcedPenaltyBoot = 2000,
+	CHEATLOGID_SavedItemError = 2400,
+	CHEATLOGID_ContinuousSaveFailedError = 2700,
+	CHEATLOGID_AccountCharacterError = 2800,
+	CHEATLOGID_TradeAuthorizationError = 4000,
+	CHEATLOGID_MoneyTransferError = 4100,
+	CHEATLOGID_MultipleConnectionsIP = 5000,
+	CHEATLOGID_TooManyPackets = 5100,
+	CHEATLOGID_GameServerIPError = 5200,
+	CHEATLOGID_StartCharacterError = 6000,
+	CHEATLOGID_ServerMoneyError1 = 6610,
+	CHEATLOGID_ServerMoneyError2 = 6611,
+	CHEATLOGID_ServerMoneyError3 = 6612,
+	CHEATLOGID_ItemCodeError = 6800,
+	CHEATLOGID_ItemTempCodeError = 6810,
+	CHEATLOGID_CharacterStateError1 = 6900,
+	CHEATLOGID_CharacterSkillPointError = 6910,
+	CHEATLOGID_CharacterWeightError = 6920,
+	CHEATLOGID_ClientProcessTimeOut = 7000,
+	CHEATLOGID_InventoryItemError = 7010,
+	CHEATLOGID_CharacterModelError = 7020,
+	CHEATLOGID_JobCodeError = 7030,
+	CHEATLOGID_HighDmgRecordedAgainstHigherLevelMon = 7031,
 
-	CHEATLOGID_ClientAttackDefenseError				 = 7100,
-	CHEATLOGID_ClientEnergyBarError					 = 7110,
-	CHEATLOGID_CopiedItemFromFloor					 = 7130,
-	CHEATLOGID_TriedConnectDisableIP				 = 7140,
-	CHEATLOGID_ItemErrorInventory					 = 7150,
-	CHEATLOGID_MoneyErrorInventory					 = 7160,
+	CHEATLOGID_ClientAttackDefenseError = 7100,
+	CHEATLOGID_ClientEnergyBarError = 7110,
+	CHEATLOGID_CopiedItemFromFloor = 7130,
+	CHEATLOGID_TriedConnectDisableIP = 7140,
+	CHEATLOGID_ItemErrorInventory = 7150,
+	CHEATLOGID_MoneyErrorInventory = 7160,
 
-	CHEATLOGID_ServerItemErrorInventory				 = 8000,
-	CHEATLOGID_ItemErrorInventoryRecord				 = 8001,
-	CHEATLOGID_ServerMoneyErrorInventory			 = 8010,
-	CHEATLOGID_ServerToServerItemError				 = 8020,
-	CHEATLOGID_WrongSavingCharacterName				 = 8030,
-	CHEATLOGID_ItemPositionError					 = 8040,
-	CHEATLOGID_ServerInventoryUsedFull				 = 8050,
-	CHEATLOGID_UsedItemCodeWarning					 = 8060,
-	CHEATLOGID_ServerInventoryCopiedItem			 = 8070,
-	CHEATLOGID_ServerCopiedItemWarehouse			 = 8071,
-	CHEATLOGID_MemoryBufferSavingError				 = 8080,
-	CHEATLOGID_WarningAutoMouse						 = 8100,
-	CHEATLOGID_WarningMacroMouse					 = 8102,
-	CHEATLOGID_WarningAvgDamageDefense				 = 8110,
-	CHEATLOGID_WarningAvgDamageAttack				 = 8120,
-	CHEATLOGID_AgingFailedCopiedItemSheltom			 = 8200,
-	CHEATLOGID_AgingFailedCopiedItem				 = 8210,
-	CHEATLOGID_AgingFailedNotEnoughMoney			 = 8211,	//User didn't have enough money on server, somehow..
-	CHEATLOGID_ReconnectServer						 = 8300,
-	CHEATLOGID_CheckedInventoryData					 = 8400,
-	CHEATLOGID_TeleportFieldHack					 = 8401,
-	CHEATLOGID_DamagePacketError					 = 8500,
-	CHEATLOGID_LimitDamageOver						 = 8510,
-	CHEATLOGID_ClientWarningMotionSpeed				 = 8520,
-	CHEATLOGID_ClientWarningSkillAttack				 = 8530,
-	CHEATLOGID_ClientWarningSkillForgery			 = 8540,
-	CHEATLOGID_ClientWarningSkillForgery2			 = 8550,
-	CHEATLOGID_InitialCharacterLevelError			 = 8560,
-	CHEATLOGID_TooManyUpdatedCharInfo				 = 8570,
-	CHEATLOGID_ClientDamagePacketError				 = 8580,
-	CHEATLOGID_WarningInvincibleMode				 = 8600,
-	CHEATLOGID_FindThreadHack						 = 8720,
-	CHEATLOGID_CharacterStateError2					 = 8730,
-	CHEATLOGID_ServerPotionError					 = 8800,
-	CHEATLOGID_ServerPotionMovingError				 = 8810,
-	CHEATLOGID_LevelQuestCodeWarning				 = 8820,
-	CHEATLOGID_ShopBuyForgeryItem					 = 8830,
-	CHEATLOGID_ServerMoneyOverflow					 = 8840,
-	CHEATLOGID_SkillUsedLevelError					 = 8850,
-	CHEATLOGID_CheckPlayFieldWarning				 = 8860,
-	CHEATLOGID_CompareClanCodeError					 = 8870,
-	CHEATLOGID_ModelFileError						 = 8880,
-	CHEATLOGID_WarningCharacterReloading			 = 8890,
-	CHEATLOGID_FieldNPCWarning						 = 8900,
-	CHEATLOGID_LevelHack							 = 8901,
-	CHEATLOGID_ItemMeshError						 = 8910,
-	CHEATLOGID_IllegallyServerConnect				 = 8920,
+	CHEATLOGID_ServerItemErrorInventory = 8000,
+	CHEATLOGID_ItemErrorInventoryRecord = 8001,
+	CHEATLOGID_ServerMoneyErrorInventory = 8010,
+	CHEATLOGID_ServerToServerItemError = 8020,
+	CHEATLOGID_WrongSavingCharacterName = 8030,
+	CHEATLOGID_ItemPositionError = 8040,
+	CHEATLOGID_ServerInventoryUsedFull = 8050,
+	CHEATLOGID_UsedItemCodeWarning = 8060,
+	CHEATLOGID_ServerInventoryCopiedItem = 8070,
+	CHEATLOGID_ServerCopiedItemWarehouse = 8071,
+	CHEATLOGID_MemoryBufferSavingError = 8080,
+	CHEATLOGID_WarningAutoMouse = 8100,
+	CHEATLOGID_WarningMacroMouse = 8102,
+	CHEATLOGID_WarningAvgDamageDefense = 8110,
+	CHEATLOGID_WarningAvgDamageAttack = 8120,
+	CHEATLOGID_AgingFailedCopiedItemSheltom = 8200,
+	CHEATLOGID_AgingFailedCopiedItem = 8210,
+	CHEATLOGID_AgingFailedNotEnoughMoney = 8211,	//User didn't have enough money on server, somehow..
+	CHEATLOGID_ReconnectServer = 8300,
+	CHEATLOGID_CheckedInventoryData = 8400,
+	CHEATLOGID_TeleportFieldHack = 8401,
+	CHEATLOGID_DamagePacketError = 8500,
+	CHEATLOGID_LimitDamageOver = 8510,
+	CHEATLOGID_ClientWarningMotionSpeed = 8520,
+	CHEATLOGID_ClientWarningSkillAttack = 8530,
+	CHEATLOGID_ClientWarningSkillForgery = 8540,
+	CHEATLOGID_ClientWarningSkillForgery2 = 8550,
+	CHEATLOGID_InitialCharacterLevelError = 8560,
+	CHEATLOGID_TooManyUpdatedCharInfo = 8570,
+	CHEATLOGID_ClientDamagePacketError = 8580,
+	CHEATLOGID_WarningInvincibleMode = 8600,
+	CHEATLOGID_FindThreadHack = 8720,
+	CHEATLOGID_CharacterStateError2 = 8730,
+	CHEATLOGID_ServerPotionError = 8800,
+	CHEATLOGID_ServerPotionMovingError = 8810,
+	CHEATLOGID_LevelQuestCodeWarning = 8820,
+	CHEATLOGID_ShopBuyForgeryItem = 8830,
+	CHEATLOGID_ServerMoneyOverflow = 8840,
+	CHEATLOGID_SkillUsedLevelError = 8850,
+	CHEATLOGID_CheckPlayFieldWarning = 8860,
+	CHEATLOGID_CompareClanCodeError = 8870,
+	CHEATLOGID_ModelFileError = 8880,
+	CHEATLOGID_WarningCharacterReloading = 8890,
+	CHEATLOGID_FieldNPCWarning = 8900,
+	CHEATLOGID_LevelHack = 8901,
+	CHEATLOGID_ItemMeshError = 8910,
+	CHEATLOGID_IllegallyServerConnect = 8920,
 
-	CHEATLOGID_MatureHack							 = 8950,
-	CHEATLOGID_AgingHack							 = 8951,
-	CHEATLOGID_FakeGM								 = 8952,
-	CHEATLOGID_RunSpeedHack							 = 8953,
-	CHEATLOGID_CheckSumFunctionError				 = 8954,
-	CHEATLOGID_WindowHack							 = 8955,
-	CHEATLOGID_StateCharacterHack					 = 8956,
-	CHEATLOGID_DebuggerHack							 = 8957,
-	CHEATLOGID_GMReason								 = 8958,
-	CHEATLOGID_BellatraGoldHackLeader				 = 8959,
-	CHEATLOGID_DefenseMultHack						 = 8960,
-	CHEATLOGID_RegenFormulaHack						 = 8961,
-	CHEATLOGID_EasterEggFakeItem					 = 8962,
-	CHEATLOGID_RespecFakeItem						 = 8963,
-	CHEATLOGID_NPCItemShopFakeItem					 = 8964,
-	CHEATLOGID_ItemTimerFakeInventory				 = 8965,
-	CHEATLOGID_ManufactureItemFake					 = 8966,
-	CHEATLOGID_SkillCooldown						 = 8967,
-	CHEATLOGID_ChristmasRudolphFakeBox				 = 8968,
-	CHEATLOGID_ProcessHook							 = 8969,
-	CHEATLOGID_ModuleSyncError						 = 8970,
-	CHEATLOGID_EXEModuleSyncError					 = 8971,
-	CHEATLOGID_MultipleWindowHackProcess			 = 8972,
-	CHEATLOGID_ItemFakeBoughtShopID					 = 8973,
-	CHEATLOGID_ItemFakeBoughtShopItem				 = 8974,
-
-
-	CHEATLOGID_MemorySaveNameError1					 = 10000,
-	CHEATLOGID_MemorySaveNameError2					 = 10001,
-	CHEATLOGID_MemorySaveNameError3					 = 10002,
-	CHEATLOGID_MemorySaveNameError4					 = 10003,
-	CHEATLOGID_MemorySaveNameError5					 = 10005,
-	CHEATLOGID_InitialSaveMemoryError				 = 10006,
-	CHEATLOGID_SaveBufferPointError					 = 10007,
-	CHEATLOGID_CharacterAccountMismatch				 = 10010,
-	CHEATLOGID_AuthenticationError					 = 10020,
-	CHEATLOGID_ShutdownService						 = 11000,
-	CHEATLOGID_EventHighScore						 = 21000,
+	CHEATLOGID_MatureHack = 8950,
+	CHEATLOGID_AgingHack = 8951,
+	CHEATLOGID_FakeGM = 8952,
+	CHEATLOGID_RunSpeedHack = 8953,
+	CHEATLOGID_CheckSumFunctionError = 8954,
+	CHEATLOGID_WindowHack = 8955,
+	CHEATLOGID_StateCharacterHack = 8956,
+	CHEATLOGID_DebuggerHack = 8957,
+	CHEATLOGID_GMReason = 8958,
+	CHEATLOGID_BellatraGoldHackLeader = 8959,
+	CHEATLOGID_DefenseMultHack = 8960,
+	CHEATLOGID_RegenFormulaHack = 8961,
+	CHEATLOGID_EasterEggFakeItem = 8962,
+	CHEATLOGID_RespecFakeItem = 8963,
+	CHEATLOGID_NPCItemShopFakeItem = 8964,
+	CHEATLOGID_ItemTimerFakeInventory = 8965,
+	CHEATLOGID_ManufactureItemFake = 8966,
+	CHEATLOGID_SkillCooldown = 8967,
+	CHEATLOGID_ChristmasRudolphFakeBox = 8968,
+	CHEATLOGID_ProcessHook = 8969,
+	CHEATLOGID_ModuleSyncError = 8970,
+	CHEATLOGID_EXEModuleSyncError = 8971,
+	CHEATLOGID_MultipleWindowHackProcess = 8972,
+	CHEATLOGID_ItemFakeBoughtShopID = 8973,
+	CHEATLOGID_ItemFakeBoughtShopItem = 8974,
 
 
-	CHEATLOGID_GoldHackNPC							 = 11037,
-	CHEATLOGID_GoldHackWH							 = 11034,
-	CHEATLOGID_MixingItemHack						 = 99000,
-	CHEATLOGID_TimingSpeedHack						 = 99001,
-	CHEATLOGID_ThrowGoldHack 						 = 99002,
-	CHEATLOGID_TradeGoldHack						 = 99003,
-	CHEATLOGID_GenerateGoldHack						 = 99004,
-	CHEATLOGID_OnDeathCheat  						 = 99005,
-	CHEATLOGID_OnDeathCheatExp						 = 99006,
-	CHEATLOGID_GoldLimitReached 					 = 99007,
-	CHEATLOGID_StatsHacking      					 = 99008,
-	CHEATLOGID_InvalidWHItem						 = 99009,
-	CHEATLOGID_DuplicateItemsFoundInWHa 			 = 99010,
-	CHEATLOGID_DuplicateItemsFoundInWHb				 = 99011,
+	CHEATLOGID_MemorySaveNameError1 = 10000,
+	CHEATLOGID_MemorySaveNameError2 = 10001,
+	CHEATLOGID_MemorySaveNameError3 = 10002,
+	CHEATLOGID_MemorySaveNameError4 = 10003,
+	CHEATLOGID_MemorySaveNameError5 = 10005,
+	CHEATLOGID_InitialSaveMemoryError = 10006,
+	CHEATLOGID_SaveBufferPointError = 10007,
+	CHEATLOGID_CharacterAccountMismatch = 10010,
+	CHEATLOGID_AuthenticationError = 10020,
+	CHEATLOGID_ShutdownService = 11000,
+	CHEATLOGID_EventHighScore = 21000,
+
+
+	CHEATLOGID_GoldHackNPC = 11037,
+	CHEATLOGID_GoldHackWH = 11034,
+	CHEATLOGID_MixingItemHack = 99000,
+	CHEATLOGID_TimingSpeedHack = 99001,
+	CHEATLOGID_ThrowGoldHack = 99002,
+	CHEATLOGID_TradeGoldHack = 99003,
+	CHEATLOGID_GenerateGoldHack = 99004,
+	CHEATLOGID_OnDeathCheat = 99005,
+	CHEATLOGID_OnDeathCheatExp = 99006,
+	CHEATLOGID_GoldLimitReached = 99007,
+	CHEATLOGID_StatsHacking = 99008,
+	CHEATLOGID_InvalidWHItem = 99009,
+	CHEATLOGID_DuplicateItemsFoundInWHa = 99010,
+	CHEATLOGID_DuplicateItemsFoundInWHb = 99011,
 	CHEATLOGID_DuplicateWHItemFoundInPlayerInventory = 99012,
-	CHEATLOGID_MixingItemNotFound					 = 99013,
+	CHEATLOGID_MixingItemNotFound = 99013,
 
-	CHEATLOGID_NPCBuyItemNotEnoughGold				 = 99020,
-	CHEATLOGID_NPCBuyItemNotValid					 = 99021,
-	CHEATLOGID_NPCBuyItemCountIsNotValid			 = 99022,
-	CHEATLOGID_NPCBuyItemNameMismatch				 = 99023,
-	CHEATLOGID_NPCBuyItemPriceMismatch				 = 99024,
-	CHEATLOGID_NPCBuyItemIdNotFound					 = 99025,
-	CHEATLOGID_NPCBuyPotionNotEnoughGold			 = 99026,
+	CHEATLOGID_NPCBuyItemNotEnoughGold = 99020,
+	CHEATLOGID_NPCBuyItemNotValid = 99021,
+	CHEATLOGID_NPCBuyItemCountIsNotValid = 99022,
+	CHEATLOGID_NPCBuyItemNameMismatch = 99023,
+	CHEATLOGID_NPCBuyItemPriceMismatch = 99024,
+	CHEATLOGID_NPCBuyItemIdNotFound = 99025,
+	CHEATLOGID_NPCBuyPotionNotEnoughGold = 99026,
 };
 
 /* Net Server */
@@ -2802,13 +2799,13 @@ struct PacketNetPlayerGold : Packet
 
 struct PacketNetPlayerGoldDiff : Packet
 {
-    int ObjectID;
-    int Diff;
+	int ObjectID;
+	int Diff;
 };
 
 struct PacketNetAskPlayerData : Packet
 {
-    int ObjectID;
+	int ObjectID;
 };
 
 
@@ -2821,8 +2818,8 @@ struct PacketNetPlayerThrow : Packet
 
 struct PacketNetPlayerItemPut : Packet
 {
-    int ObjectID;
-    int ExceptedHash;
+	int ObjectID;
+	int ExceptedHash;
 };
 
 struct PacketNetEvent : Packet
@@ -2887,7 +2884,7 @@ struct PacketOldHeadUse : Packet
 	BOOL				bUpdate;
 
 	PacketOldHeadUse() {};
-	PacketOldHeadUse( BOOL bUpdateHead ) { bUpdate = bUpdateHead; }
+	PacketOldHeadUse(BOOL bUpdateHead) { bUpdate = bUpdateHead; }
 };
 
 struct PacketNewItemTimer : Packet
@@ -2902,8 +2899,8 @@ struct PacketNewItemTimer : Packet
 	DWORD				dwTimeLeft;
 	DWORD				dwTimeTotal;
 
-	PacketNewItemTimer( EItemID iItemID, int iChk1, int iChk2 ) { this->iItemID = iItemID; this->iChk1 = iChk1; this->iChk2 = iChk2; }
-	PacketNewItemTimer() { }
+	PacketNewItemTimer(EItemID iItemID, int iChk1, int iChk2) { this->iItemID = iItemID; this->iChk1 = iChk1; this->iChk2 = iChk2; }
+	PacketNewItemTimer() {}
 };
 
 struct PacketCancelItemTimer : Packet
@@ -2938,7 +2935,7 @@ struct PacketQuestArenaTier5 : Packet
 	DWORD					dwTimeLeft;
 
 	PacketQuestArenaTier5() { this->iType = 0; this->iRound = 0; this->dwTimeLeft = 0; };
-	PacketQuestArenaTier5( int iType, int iRound, DWORD dwTimeLeft ) { this->iType = iType; this->iRound = iRound; this->dwTimeLeft = dwTimeLeft; };
+	PacketQuestArenaTier5(int iType, int iRound, DWORD dwTimeLeft) { this->iType = iType; this->iRound = iRound; this->dwTimeLeft = dwTimeLeft; };
 	~PacketQuestArenaTier5() {};
 };
 

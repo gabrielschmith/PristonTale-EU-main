@@ -92,6 +92,7 @@ public:
 	void										SetExpFromSQL( UserData * pcUserData );
 
 	INT64										GetExpFromLevel( int iLevel );
+	int											GetLevelFromExp( INT64 iExp );
 
 	void										OnCharacterUpdate( UserData * pcUserData );
 
