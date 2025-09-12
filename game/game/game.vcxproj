@@ -52,8 +52,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)shared;$(SolutionDir)deps\dks\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)deps\dks\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)shared;$(SolutionDir)deps\dks\Include;$(SolutionDir)deps\discord-sdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)deps\dks\Lib\x86;$(SolutionDir)deps\discord-sdk\Lib\x86;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
@@ -146,7 +146,7 @@
       <LargeAddressAware>
       </LargeAddressAware>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>discord-rpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PostBuildEvent>
@@ -201,23 +201,6 @@
     <ClInclude Include="BellatraGame.h" />
     <ClInclude Include="BellatraReward.h" />
     <ClInclude Include="BlessCastleHandler.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\achievement_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\activity_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\application_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\core.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\discord.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\event.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\ffi.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\image_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\lobby_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\network_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\overlay_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\relationship_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\storage_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\store_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\types.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\user_manager.h" />
-    <ClInclude Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\voice_manager.h" />
     <ClInclude Include="CAgingWindow.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CAntiDebuggerHandler.h" />
@@ -232,6 +215,7 @@
     <ClInclude Include="CFighterSkillHandler.h" />
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CGameAudio.h" />
+    <ClInclude Include="CGameDiscord.h" />
     <ClInclude Include="CGameEngine.h" />
     <ClInclude Include="CGameGraphic.h" />
     <ClInclude Include="CGameTimer.h" />
@@ -290,7 +274,6 @@
     <ClInclude Include="CWorldScreen.h" />
     <ClInclude Include="DailyQuest.h" />
     <ClInclude Include="DamageHandler.h" />
-    <ClInclude Include="DiscordAPI.h" />
     <ClInclude Include="DX.h" />
     <ClInclude Include="DXCamera.h" />
     <ClInclude Include="DXDepthStencilBuffer.h" />
@@ -554,20 +537,6 @@
     <ClCompile Include="BellatraGame.cpp" />
     <ClCompile Include="BellatraReward.cpp" />
     <ClCompile Include="BlessCastleHandler.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\achievement_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\activity_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\application_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\core.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\image_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\lobby_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\network_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\overlay_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\relationship_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\storage_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\store_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\types.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\user_manager.cpp" />
-    <ClCompile Include="C:\Users\DESKTOP-LOUD\AppData\Local\Temp\Rar$DRa119244.29608.rartemp\cpp\voice_manager.cpp" />
     <ClCompile Include="CAgingWindow.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CArcherSkillHandler.cpp" />
@@ -582,6 +551,7 @@
     <ClCompile Include="CFighterSkillHandler.cpp" />
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CGameAudio.cpp" />
+    <ClCompile Include="CGameDiscord.cpp" />
     <ClCompile Include="CGameEngine.cpp" />
     <ClCompile Include="CGameGraphic.cpp" />
     <ClCompile Include="CGameTimer.cpp" />
@@ -639,7 +609,6 @@
     <ClCompile Include="CWorldScreen.cpp" />
     <ClCompile Include="DailyQuest.cpp" />
     <ClCompile Include="DamageHandler.cpp" />
-    <ClCompile Include="DiscordAPI.cpp" />
     <ClCompile Include="DLL.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

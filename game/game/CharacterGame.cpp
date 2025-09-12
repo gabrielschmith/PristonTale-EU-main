@@ -10,6 +10,15 @@ tfnMessageBoxTitle MessageBoxTitle = (tfnMessageBoxTitle)0x004D1680;
 DWORD dwLastSaveTime = 0;
 DWORD dwLastNonIdleTime = 0;
 
+// Static flag for Discord character login tracking
+static bool bDiscordCharacterLoginSent = false;
+
+// Function to reset Discord character login flag
+void ResetDiscordCharacterLoginFlag()
+{
+	bDiscordCharacterLoginSent = false;
+}
+
 NAKED INT64 CharacterGame::ExpXor()
 {
 	JMP( 0x00459820 );
@@ -86,6 +95,35 @@ void CharacterGame::OnCharacterUpdateData()
 	CGameProtect::SetDecreaseSP( 0.0f );
 
 	UnitData * pcUnitData = UnitGame::GetInstance ()->pcUnitData;
+
+	// Discord character login integration
+	if (!bDiscordCharacterLoginSent && pcUnitData && pcUnitData->sCharacterData.szName[0] != '\0' && pcUnitData->sCharacterData.iLevel > 0)
+	{
+		// Get character class name
+		std::string sClassName = "Unknown";
+		switch (pcUnitData->sCharacterData.iClass)
+		{
+		case 1: sClassName = "Fighter"; break;
+		case 2: sClassName = "Archer"; break;
+		case 3: sClassName = "Pikeman"; break;
+		case 4: sClassName = "Atalanta"; break;
+		case 5: sClassName = "Knight"; break;
+		case 6: sClassName = "Magician"; break;
+		case 7: sClassName = "Priestess"; break;
+		case 8: sClassName = "Assassin"; break;
+		case 9: sClassName = "Shaman"; break;
+		default: break;
+		}
+
+		// Send character login to Discord
+		GAMEDISCORD->OnCharacterLogin(
+			std::string(pcUnitData->sCharacterData.szName),
+			pcUnitData->sCharacterData.iLevel,
+			sClassName
+		);
+
+		bDiscordCharacterLoginSent = true;
+	}
 
 	//JLM - Hack to fix the pet crash bug
 	//The reason for the crash is PetKind is not
@@ -573,6 +611,12 @@ void CharacterGame::OnCharacterUpdateData()
 
 		//Update Handlers
 		HUDHANDLER->GetMiniMapHandler()->OnChangeMap( MAP_ID );
+
+		// Update Discord status for map change
+		if ( MAP_ID >= 0 && MAP_ID < (sizeof(pszaMapsName) / sizeof(pszaMapsName[0])) )
+		{
+			GAMEDISCORD->OnMapChange( std::string(pszaMapsName[MAP_ID]) );
+		}
 
 		if ( IsStageVillage() )
 		{

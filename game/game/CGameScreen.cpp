@@ -108,12 +108,17 @@ void CGameScreen::ChangeScreen( EScreen iNewScreen )
 	{
 		case SCREEN_Login:
 			pcActiveScreen = new CLoginScreen();
+			// Update Discord status for login screen
+			GAMEDISCORD->OnGameStateChange("Login Screen", "Connecting to PristonTale EU");
 			break;
 		case SCREEN_Character:
 			pcActiveScreen = new CCharacterScreen();
+			// Update Discord status for character selection and handle logout
+			GAMEDISCORD->OnCharacterLogout();
 			break;
 		case SCREEN_World:
 			pcActiveScreen = new CWorldScreen();
+			// Character login will be handled in the world screen initialization
 			break;
 		case SCREEN_Test:
 			pcActiveScreen = new CTestScreen();

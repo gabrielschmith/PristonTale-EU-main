@@ -5,20 +5,22 @@ extern BOOL bLootLabelViewToggleState;
 
 CGame::CGame()
 {
-	pcGameEngine	= new CGameEngine();
-	pcGameCore		= new GameCore();
-	pcGameScreen	= new CGameScreen();
-	pcGameTimer		= new CGameTimer();
-	pcGameWorld		= new CGameWorld();
+	pcGameEngine = new CGameEngine();
+	pcGameCore = new GameCore();
+	pcGameScreen = new CGameScreen();
+	pcGameTimer = new CGameTimer();
+	pcGameWorld = new CGameWorld();
+	pcGameDiscord = new CGameDiscord();
 }
 
 CGame::~CGame()
 {
-	SAFE_DELETE( pcGameEngine );
-	SAFE_DELETE( pcGameCore );
-	SAFE_DELETE( pcGameScreen );
-	SAFE_DELETE( pcGameTimer );
-	SAFE_DELETE( pcGameWorld );
+	SAFE_DELETE(pcGameEngine);
+	SAFE_DELETE(pcGameCore);
+	SAFE_DELETE(pcGameScreen);
+	SAFE_DELETE(pcGameTimer);
+	SAFE_DELETE(pcGameWorld);
+	SAFE_DELETE(pcGameDiscord);
 }
 
 BOOL CGame::Init()
@@ -28,6 +30,7 @@ BOOL CGame::Init()
 	pcGameScreen->Init();
 	pcGameTimer->Init();
 	pcGameWorld->Init();
+	pcGameDiscord->Init();
 	return TRUE;
 }
 
@@ -38,17 +41,13 @@ void CGame::Shutdown()
 	pcGameScreen->Shutdown();
 	pcGameTimer->Shutdown();
 	pcGameWorld->Shutdown();
+	pcGameDiscord->Shutdown();
 }
 
 void CGame::Begin() //  Login of characters - Chaos
 {
-
-
-	GameCore::SetGameScreen( SCREEN_Login );
-
-	CALL( 0x005058F0 );
-
-
+	GameCore::SetGameScreen(SCREEN_Login);
+	CALL(0x005058F0);
 
 	//ShowCursor( FALSE );
 }
@@ -60,45 +59,40 @@ void CGame::End()
 void CGame::Frame()
 {
 	pcGameScreen->Frame();
-
 	pcGameCore->Frame();
-
 	pcGameEngine->Frame();
 }
 
-void CGame::Update( float fTime )
+void CGame::Update(float fTime)
 {
-	pcGameScreen->Update( fTime );
-
-	pcGameCore->Update( fTime );
-
-	pcGameEngine->Update( fTime );
+	pcGameScreen->Update(fTime);
+	pcGameCore->Update(fTime);
+	pcGameEngine->Update(fTime);
+	pcGameDiscord->Update(fTime);
 }
 
 void CGame::Render3D()
 {
 	pcGameScreen->Render3D();
-
 	pcGameCore->Render3D();
-
 	pcGameEngine->Render3D();
 }
 
 void CGame::Render2D()
 {
-	if( Game::GetGameMode() != GAMEMODE_InGame )
+	if (Game::GetGameMode() != GAMEMODE_InGame)
 		GAMESCREEN->Render2D();
 
 	pcGameCore->Render2D();
 	pcGameEngine->Render2D();
 }
 
-BOOL CGame::OnKeyPress( CKeyboard * pcKeyboard )
+BOOL CGame::OnKeyPress(CKeyboard* pcKeyboard)
 {
-	if( pcGameScreen->OnKeyPress( pcKeyboard ) )
+	if (pcGameScreen->OnKeyPress(pcKeyboard))
 		return TRUE;
 
-	if ( pcGameCore->OnKeyPress( pcKeyboard ) )
+	if (pcGameCore->OnKeyPress(pcKeyboard))
 		return TRUE;
 
 	if (pcKeyboard->GetEvent() == EKeyboardEvent::KeyUp && tolower(pcKeyboard->GetKey()) == CHAR('a'))
@@ -117,40 +111,40 @@ BOOL CGame::OnKeyPress( CKeyboard * pcKeyboard )
 	return FALSE;
 }
 
-BOOL CGame::OnKeyChar( CKeyboard * pcKeyboard )
+BOOL CGame::OnKeyChar(CKeyboard* pcKeyboard)
 {
-	if( pcGameScreen->OnKeyChar( pcKeyboard ) )
+	if (pcGameScreen->OnKeyChar(pcKeyboard))
 		return TRUE;
 
-	if ( pcGameCore->OnKeyChar( pcKeyboard ) )
+	if (pcGameCore->OnKeyChar(pcKeyboard))
 		return TRUE;
 
 	return FALSE;
 }
 
-void CGame::OnMouseMove( CMouse * pcMouse )
+void CGame::OnMouseMove(CMouse* pcMouse)
 {
-	pcGameCore->OnMouseMove( pcMouse );
-	pcGameScreen->OnMouseMove( pcMouse );
+	pcGameCore->OnMouseMove(pcMouse);
+	pcGameScreen->OnMouseMove(pcMouse);
 }
 
-BOOL CGame::OnMouseClick( CMouse * pcMouse )
+BOOL CGame::OnMouseClick(CMouse* pcMouse)
 {
-	if( pcGameCore->OnMouseClick( pcMouse ) )
+	if (pcGameCore->OnMouseClick(pcMouse))
 		return TRUE;
 
-	if( pcGameScreen->OnMouseClick( pcMouse ) )
+	if (pcGameScreen->OnMouseClick(pcMouse))
 		return TRUE;
 
 	return FALSE;
 }
 
-BOOL CGame::OnMouseScroll( CMouse * pcMouse )
+BOOL CGame::OnMouseScroll(CMouse* pcMouse)
 {
-	if( pcGameCore->OnMouseScroll( pcMouse ) )
+	if (pcGameCore->OnMouseScroll(pcMouse))
 		return TRUE;
 
-	if( pcGameScreen->OnMouseScroll( pcMouse ) )
+	if (pcGameScreen->OnMouseScroll(pcMouse))
 		return TRUE;
 
 	return FALSE;
