@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 #include <functional>
-#include "discord.h"
+#include "Discord/discord.h"
 
 class CGameDiscord
 {
@@ -80,6 +80,6 @@ private:
 	void					UpdateActivityInternal();
 	std::string				GetClassImageKey(const std::string& className);
 	std::string				GetMapImageKey(const std::string& mapName);
-	void					LogDiscordError(discord::Result result, const std::string& operation);
+	void					LogDiscordWarn(discord::Result result, const std::string& operation);
 };
 

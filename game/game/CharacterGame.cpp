@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "CharacterGame.h"
 
-typedef int( __thiscall *tfnChangeMotion )(void * ptr, int iMotion, int iAnimation);
+typedef int(__thiscall* tfnChangeMotion)(void* ptr, int iMotion, int iAnimation);
 tfnChangeMotion fnChangeMotion = (tfnChangeMotion)0x0041F930;
 
-typedef void( __thiscall *tfnMessageBoxTitle ) (DWORD dwClass, int iID, char * pszTitle);
+typedef void(__thiscall* tfnMessageBoxTitle) (DWORD dwClass, int iID, char* pszTitle);
 tfnMessageBoxTitle MessageBoxTitle = (tfnMessageBoxTitle)0x004D1680;
 
 DWORD dwLastSaveTime = 0;
@@ -21,19 +21,19 @@ void ResetDiscordCharacterLoginFlag()
 
 NAKED INT64 CharacterGame::ExpXor()
 {
-	JMP( 0x00459820 );
+	JMP(0x00459820);
 }
 
 CharacterGame::CharacterGame()
 {
-	ZeroMemory( &sCharacterDataEx, sizeof( CharacterDataEx ) );
-	ZeroMemory( &sCharacterCombatData, sizeof( PacketCharacterCombatData ) );
+	ZeroMemory(&sCharacterDataEx, sizeof(CharacterDataEx));
+	ZeroMemory(&sCharacterCombatData, sizeof(PacketCharacterCombatData));
 
 	dwForceOrbTotalDuration = 0;
 	dwForceOrbTimeRemaining = 0;
 	dwForceOrbTimeRemainingAtCity = 0;
 
-	sCharacterCombatData.iLength = sizeof( PacketCharacterCombatData );
+	sCharacterCombatData.iLength = sizeof(PacketCharacterCombatData);
 	sCharacterCombatData.iHeader = PKTHDR_CharacterCombatData;
 
 	dwLastCombatDataSaveTime = 0;
@@ -84,19 +84,18 @@ void CharacterGame::Tick1s()
 
 }
 
-void CharacterGame::HandlePacket( Packet * psPacket )
+void CharacterGame::HandlePacket(Packet* psPacket)
 {
 
 }
 
 void CharacterGame::OnCharacterUpdateData()
 {
-	CGameProtect::SetDecreaseMP( 0.0f );
-	CGameProtect::SetDecreaseSP( 0.0f );
+	CGameProtect::SetDecreaseMP(0.0f);
+	CGameProtect::SetDecreaseSP(0.0f);
 
-	UnitData * pcUnitData = UnitGame::GetInstance ()->pcUnitData;
+	UnitData* pcUnitData = UnitGame::GetInstance()->pcUnitData;
 
-	// Discord character login integration
 	if (!bDiscordCharacterLoginSent && pcUnitData && pcUnitData->sCharacterData.szName[0] != '\0' && pcUnitData->sCharacterData.iLevel > 0)
 	{
 		// Get character class name
@@ -116,20 +115,14 @@ void CharacterGame::OnCharacterUpdateData()
 		}
 
 		// Send character login to Discord
-		GAMEDISCORD->OnCharacterLogin(
-			std::string(pcUnitData->sCharacterData.szName),
-			pcUnitData->sCharacterData.iLevel,
-			sClassName
-		);
-
+		GAMEDISCORD->OnCharacterLogin(std::string(pcUnitData->sCharacterData.szName), pcUnitData->sCharacterData.iLevel, sClassName);
 		bDiscordCharacterLoginSent = true;
 	}
 
 	//JLM - Hack to fix the pet crash bug
 	//The reason for the crash is PetKind is not
 	// within 1-4 range for some reason...
-	if (pcUnitData->sCharacterData.iLevel > 0 &&
-		pcUnitData->sCharacterData.iLevel < 10)
+	if (pcUnitData->sCharacterData.iLevel > 0 && pcUnitData->sCharacterData.iLevel < 10)
 	{
 		auto petKind = (*(INT*)(0x035E085C));
 		auto petShow = (*(INT*)(0x035E0860));
@@ -146,76 +139,77 @@ void CharacterGame::OnCharacterUpdateData()
 
 
 	//T5
-	SetFreeSkillPointForTier5( 0 );
-	if ( CQUESTGAME->GetQuestInstance()->IsDoneQuest( QUESTID_T5QuestArena ) )
+	SetFreeSkillPointForTier5(0);
+
+	if (CQUESTGAME->GetQuestInstance()->IsDoneQuest(QUESTID_T5QuestArena))
 	{
 		int iPoints = 0;
 
-		if ( pcUnitData->sCharacterData.iLevel >= 100 )
+		if (pcUnitData->sCharacterData.iLevel >= 100)
 			iPoints++;
-		if ( CQUESTGAME->GetQuestInstance()->IsDoneQuest( QUESTID_AMatterOfStrenght ) )
+		if (CQUESTGAME->GetQuestInstance()->IsDoneQuest(QUESTID_AMatterOfStrenght))
 			iPoints++;
-		if ( CQUESTGAME->GetQuestInstance()->IsDoneQuest( QUESTID_CryMeARiver ) )
+		if (CQUESTGAME->GetQuestInstance()->IsDoneQuest(QUESTID_CryMeARiver))
 			iPoints++;
-		if ( CQUESTGAME->GetQuestInstance()->IsDoneQuest( QUESTID_TheLastStage ) )
+		if (CQUESTGAME->GetQuestInstance()->IsDoneQuest(QUESTID_TheLastStage))
 			iPoints++;
-		if ( CQUESTGAME->GetQuestInstance()->IsDoneQuest( QUESTID_AnAncientThreat ) )
+		if (CQUESTGAME->GetQuestInstance()->IsDoneQuest(QUESTID_AnAncientThreat))
 			iPoints++;
-		if ( CQUESTGAME->GetQuestInstance()->IsDoneQuest( QUESTID_AnEndlessBattle ) )
+		if (CQUESTGAME->GetQuestInstance()->IsDoneQuest(QUESTID_AnEndlessBattle))
 			iPoints++;
-		if ( CQUESTGAME->GetQuestInstance()->IsDoneQuest( QUESTID_AnEndlessSuffering ) )
+		if (CQUESTGAME->GetQuestInstance()->IsDoneQuest(QUESTID_AnEndlessSuffering))
 			iPoints++;
-		if ( CQUESTGAME->GetQuestInstance()->IsDoneQuest( QUESTID_ATestOfBravery ) )
+		if (CQUESTGAME->GetQuestInstance()->IsDoneQuest(QUESTID_ATestOfBravery))
 			iPoints++;
-		if ( CQUESTGAME->GetQuestInstance()->IsDoneQuest( QUESTID_GreenLiquidQuestStep2 ) )
+		if (CQUESTGAME->GetQuestInstance()->IsDoneQuest(QUESTID_GreenLiquidQuestStep2))
 			iPoints += 2;
 
 		iPoints += (pcUnitData->sCharacterData.iLevel - 100) / 5;
 
-		for ( int i = 16; i < 20; i++ )
+		for (int i = 16; i < 20; i++)
 			iPoints -= SKILLSCHARACTER[i + 1].iLevel;
 
-		SetFreeSkillPointForTier5( iPoints );
+		SetFreeSkillPointForTier5(iPoints);
 	}
 
 	//Weapon Using
 	{
-		if ( INVENTORYITEMSLOT[0].iItemIndex )
+		if (INVENTORYITEMSLOT[0].iItemIndex)
 		{
-			ItemData * pcItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[0].iItemIndex - 1];
+			ItemData* pcItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[0].iItemIndex - 1];
 
-			WRITEDWORD( 0x04B0DA14, 0 );
-			if ( pcItemData->bValid )
+			WRITEDWORD(0x04B0DA14, 0);
+			if (pcItemData->bValid)
 			{
-				WRITEDWORD( 0x04B0DA14, pcItemData->sItem.sItemID.ToInt() );
+				WRITEDWORD(0x04B0DA14, pcItemData->sItem.sItemID.ToInt());
 
-				if ( pcItemData->sItem.sItemID.ToInt () != iCurrentWeaponID )
+				if (pcItemData->sItem.sItemID.ToInt() != iCurrentWeaponID)
 				{
-					if ( iCurrentWeaponID != 0 )
+					if (iCurrentWeaponID != 0)
 					{
 						//force sync of client to server whenever the weapon slot is changed
-						UNITGAME->SendUnitDataEx ( TRUE );
+						UNITGAME->SendUnitDataEx(TRUE);
 					}
 
-					iCurrentWeaponID = pcItemData->sItem.sItemID.ToInt ();
+					iCurrentWeaponID = pcItemData->sItem.sItemID.ToInt();
 				}
 			}
 		}
 	}
 
 
-	if ( (*(DWORD*)0x04B0719C) && !TIMERSKILLHANDLER->IsSkillTimerActive( ETimerID::DrasticSpirit ) )
+	if ((*(DWORD*)0x04B0719C) && !TIMERSKILLHANDLER->IsSkillTimerActive(ETimerID::DrasticSpirit))
 	{
 		__asm
 		{
 			PUSHAD;
-			MOV EAX, DWORD PTR DS : [0x04B0719C];
+			MOV EAX, DWORD PTR DS : [0x04B0719C] ;
 			PUSH EAX;
 			MOV ECX, 0x039032CC; //particle system? 0x039032CC
 			MOV EAX, 0x00598B80;
 			CALL EAX;
 
-			MOV EAX, DWORD PTR DS : [0x04B0719C];
+			MOV EAX, DWORD PTR DS : [0x04B0719C] ;
 			PUSH EAX;
 			MOV ECX, 0x039032CC; //particle system? 0x039032CC
 			MOV EAX, 0x00598B40;
@@ -227,37 +221,37 @@ void CharacterGame::OnCharacterUpdateData()
 	}
 
 	// Premium Data
-	if ( Game::GetGameMode() == GAMEMODE_InGame && pcUnitData->bActive )
+	if (Game::GetGameMode() == GAMEMODE_InGame && pcUnitData->bActive)
 	{
-		if ( pcUnitData->bBlessCastleCrown == FALSE )
+		if (pcUnitData->bBlessCastleCrown == FALSE)
 		{
-		//	TIMERSKILLHANDLER->KillTimer( SKILLID_AbsorptionOfGlory );
-		//	TIMERSKILLHANDLER->KillTimer( SKILLID_PowerSiege );
-		//	TIMERSKILLHANDLER->KillTimer( SKILLID_EvasionAdaption );
+			//	TIMERSKILLHANDLER->KillTimer( SKILLID_AbsorptionOfGlory );
+			//	TIMERSKILLHANDLER->KillTimer( SKILLID_PowerSiege );
+			//	TIMERSKILLHANDLER->KillTimer( SKILLID_EvasionAdaption );
 		}
 
-		if ( bHPUp )
+		if (bHPUp)
 			pcUnitData->sCharacterData.fHPRegen += 5.0f;
 
-		if ( bMPUp )
+		if (bMPUp)
 			pcUnitData->sCharacterData.fMPRegen += 5.0f;
 
-		WRITEDWORD( pdwMPDownTime, 0 );
-		WRITEDWORD( pdwMPDownPercent, 0 );
+		WRITEDWORD(pdwMPDownTime, 0);
+		WRITEDWORD(pdwMPDownPercent, 0);
 
-		WRITEDWORD( pdwSPDownTime, 0 );
-		WRITEDWORD( pdwSPDownPercent, 0 );
+		WRITEDWORD(pdwSPDownTime, 0);
+		WRITEDWORD(pdwSPDownPercent, 0);
 
-		if ( bMPDown )
+		if (bMPDown)
 		{
-			WRITEDWORD( pdwMPDownTime, 1 );
-			WRITEDWORD( pdwMPDownPercent, 25 );
+			WRITEDWORD(pdwMPDownTime, 1);
+			WRITEDWORD(pdwMPDownPercent, 25);
 		}
 
-		if ( bSPDown )
+		if (bSPDown)
 		{
-			WRITEDWORD( pdwSPDownTime, 1 );
-			WRITEDWORD( pdwSPDownPercent, 25 );
+			WRITEDWORD(pdwSPDownTime, 1);
+			WRITEDWORD(pdwSPDownPercent, 25);
 		}
 
 		if (bTopPVP)
@@ -265,7 +259,7 @@ void CharacterGame::OnCharacterUpdateData()
 			UNITDATA->sCharacterData.sHP.sMax += 100;
 		}
 
-		if ( bHoneyDamage )
+		if (bHoneyDamage)
 		{
 			UNITDATA->sCharacterData.iMinDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMin * 10) / 100;
 			UNITDATA->sCharacterData.iMaxDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMax * 10) / 100;
@@ -319,22 +313,22 @@ void CharacterGame::OnCharacterUpdateData()
 			UNITDATA->sCharacterData.iMovementSpeed += 2;
 		}
 
-		if (bIceResistanceBuff && MAP_ID == MAPID_GallubiaValley )
+		if (bIceResistanceBuff && MAP_ID == MAPID_GallubiaValley)
 		{
 			UNITDATA->sCharacterData.sElementalDef[3]/*3 = Ice*/ += 70;
 		}
 
-		if (bIceResistanceBuff && MAP_ID == MAPID_FrozenSanctuary )
+		if (bIceResistanceBuff && MAP_ID == MAPID_FrozenSanctuary)
 		{
 			UNITDATA->sCharacterData.sElementalDef[3]/*3 = Ice*/ += 70;
 		}
 
-		if (bIceResistanceBuff && MAP_ID == MAPID_IceMineF1 )
+		if (bIceResistanceBuff && MAP_ID == MAPID_IceMineF1)
 		{
 			UNITDATA->sCharacterData.sElementalDef[3]/*3 = Ice*/ += 70;
 		}
 
-		if ( bHoneySmart )
+		if (bHoneySmart)
 		{
 			UNITDATA->sCharacterData.sMP.sMax += 50;
 			UNITDATA->sCharacterData.fMPRegen += 5.0f;
@@ -351,120 +345,120 @@ void CharacterGame::OnCharacterUpdateData()
 		}
 
 		//Hats
-		ItemTimer * pcITM = ITEMTIMERHANDLER->GetHead();
-		if ( pcITM )
+		ItemTimer* pcITM = ITEMTIMERHANDLER->GetHead();
+		if (pcITM)
 		{
 			// Cartola?
-			switch ( pcITM->iType )
+			switch (pcITM->iType)
 			{
-				case ITEMTIMERTYPE_CartolaHat:
-				case ITEMTIMERTYPE_WitchHat:
-					pcUnitData->sCharacterData.fHPRegen += 5.0f;
-					pcUnitData->sCharacterData.sHP.sMax += 10;
-					break;
+			case ITEMTIMERTYPE_CartolaHat:
+			case ITEMTIMERTYPE_WitchHat:
+				pcUnitData->sCharacterData.fHPRegen += 5.0f;
+				pcUnitData->sCharacterData.sHP.sMax += 10;
+				break;
 
-				case ITEMTIMERTYPE_ChristmasGreenHat:
-					pcUnitData->sCharacterData.fHPRegen += 10.0f;
-					pcUnitData->sCharacterData.sHP.sMax += 10;
-					break;
+			case ITEMTIMERTYPE_ChristmasGreenHat:
+				pcUnitData->sCharacterData.fHPRegen += 10.0f;
+				pcUnitData->sCharacterData.sHP.sMax += 10;
+				break;
 
-				case ITEMTIMERTYPE_ChristmasRedHat:
-					pcUnitData->sCharacterData.sMP.sMax += 50;
-					pcUnitData->sCharacterData.sSP.sMax += 50;
-					break;
+			case ITEMTIMERTYPE_ChristmasRedHat:
+				pcUnitData->sCharacterData.sMP.sMax += 50;
+				pcUnitData->sCharacterData.sSP.sMax += 50;
+				break;
 
-				case ITEMTIMERTYPE_SoccerHat:
-					UNITDATA->sCharacterData.sWeight.sMax += 150;
-					break;
+			case ITEMTIMERTYPE_SoccerHat:
+				UNITDATA->sCharacterData.sWeight.sMax += 150;
+				break;
 
-				case ITEMTIMERTYPE_SoccerHatSpeed:
-					UNITDATA->sCharacterData.iMovementSpeed += 2;
-					break;
+			case ITEMTIMERTYPE_SoccerHatSpeed:
+				UNITDATA->sCharacterData.iMovementSpeed += 2;
+				break;
 
-				case ITEMTIMERTYPE_SheepHat:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
-					//pcUnitData->sCharacterData.iDefenseRating += 150;
-					break;
+			case ITEMTIMERTYPE_SheepHat:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
+				//pcUnitData->sCharacterData.iDefenseRating += 150;
+				break;
 
-				case ITEMTIMERTYPE_GiraffeHat:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
-					//pcUnitData->sCharacterData.iAttackRating += 75;
-					break;
+			case ITEMTIMERTYPE_GiraffeHat:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
+				//pcUnitData->sCharacterData.iAttackRating += 75;
+				break;
 
-				case ITEMTIMERTYPE_BigHeadHappiness:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
-					//pcUnitData->sCharacterData.iAttackRating += 50;
-					break;
+			case ITEMTIMERTYPE_BigHeadHappiness:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
+				//pcUnitData->sCharacterData.iAttackRating += 50;
+				break;
 
-				case ITEMTIMERTYPE_BigHeadLove:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
+			case ITEMTIMERTYPE_BigHeadLove:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
 
 
-					//NITDATA->sCharacterData.sHP.sMax += 50;
-					//pcUnitData->sCharacterData.fHPRegen += 10.0f;
+				//NITDATA->sCharacterData.sHP.sMax += 50;
+				//pcUnitData->sCharacterData.fHPRegen += 10.0f;
 
-					break;
+				break;
 
-				case ITEMTIMERTYPE_BigHeadValentine:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
+			case ITEMTIMERTYPE_BigHeadValentine:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
 
-					//if valentine's event on
+				//if valentine's event on
 
-					pcUnitData->sCharacterData.sHP.sMax += 100;
-					pcUnitData->sCharacterData.fHPRegen += 5.0f;
-					pcUnitData->sCharacterData.fMPRegen += 5.0f;
+				pcUnitData->sCharacterData.sHP.sMax += 100;
+				pcUnitData->sCharacterData.fHPRegen += 5.0f;
+				pcUnitData->sCharacterData.fMPRegen += 5.0f;
 
-					break;
+				break;
 
-				case ITEMTIMERTYPE_BigHeadSadness:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
-					//pcUnitData->sCharacterData.sMP.sMax += 10;
-					//pcUnitData->sCharacterData.fMPRegen += 10.0f;
-					break;
+			case ITEMTIMERTYPE_BigHeadSadness:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
+				//pcUnitData->sCharacterData.sMP.sMax += 10;
+				//pcUnitData->sCharacterData.fMPRegen += 10.0f;
+				break;
 
-				case ITEMTIMERTYPE_BigHeadShyness:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
-					//pcUnitData->sCharacterData.iDefenseRating += 100;
-					break;
+			case ITEMTIMERTYPE_BigHeadShyness:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
+				//pcUnitData->sCharacterData.iDefenseRating += 100;
+				break;
 
-				case ITEMTIMERTYPE_BigHeadAngry:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
-					//pcUnitData->sCharacterData.sHP.sMax += 50;
-					//pcUnitData->sCharacterData.sSP.sMax += 50;
-					//pcUnitData->sCharacterData.sMP.sMax += 50;
-					break;
+			case ITEMTIMERTYPE_BigHeadAngry:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
+				//pcUnitData->sCharacterData.sHP.sMax += 50;
+				//pcUnitData->sCharacterData.sSP.sMax += 50;
+				//pcUnitData->sCharacterData.sMP.sMax += 50;
+				break;
 
-				case ITEMTIMERTYPE_BigHeadSurprised:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
-					//pcUnitData->sCharacterData.iBlockRating += 2;
-					break;
+			case ITEMTIMERTYPE_BigHeadSurprised:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
+				//pcUnitData->sCharacterData.iBlockRating += 2;
+				break;
 
-				case ITEMTIMERTYPE_BigHeadSensual:
-					pcUnitData->sCharacterData.sWeight.sMax += 150;
-					//pcUnitData->sCharacterData.iCritical += 2;
-					break;
+			case ITEMTIMERTYPE_BigHeadSensual:
+				pcUnitData->sCharacterData.sWeight.sMax += 150;
+				//pcUnitData->sCharacterData.iCritical += 2;
+				break;
 			}
 		}
 
 		//Bless Castle Buffs
-		if ( MAP_ID != MAPID_Bellatra )
+		if (MAP_ID != MAPID_Bellatra)
 		{
-			switch ( BLESSCASTLEHANDLER->GetCrownSkillID( UNITDATA->sCharacterData.iClanID ) )
+			switch (BLESSCASTLEHANDLER->GetCrownSkillID(UNITDATA->sCharacterData.iClanID))
 			{
-				case SKILLID_BlessCastleBuff2:
-					//UNITDATA->sCharacterData.iAttackSpeed++;
-					PLAYERDATA->iMinDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMin * 6) / 100;
-					PLAYERDATA->iMaxDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMax * 6) / 100;
-					break;
+			case SKILLID_BlessCastleBuff2:
+				//UNITDATA->sCharacterData.iAttackSpeed++;
+				PLAYERDATA->iMinDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMin * 6) / 100;
+				PLAYERDATA->iMaxDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMax * 6) / 100;
+				break;
 
-				case SKILLID_BlessCastleBuff3:
-					//UNITDATA->sCharacterData.iMovementSpeed++;
-					PLAYERDATA->iMinDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMin * 3) / 100;
-					PLAYERDATA->iMaxDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMax * 3) / 100;
-					break;
+			case SKILLID_BlessCastleBuff3:
+				//UNITDATA->sCharacterData.iMovementSpeed++;
+				PLAYERDATA->iMinDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMin * 3) / 100;
+				PLAYERDATA->iMaxDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMax * 3) / 100;
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 
@@ -472,11 +466,11 @@ void CharacterGame::OnCharacterUpdateData()
 		//Regen HP/SP/MP in Test map. Only for GM
 #ifdef DEV_MODE
 
-		if ( GM_MODE && MAP_ID == MAPID_QuestArena )
+		if (GM_MODE && MAP_ID == MAPID_QuestArena)
 		{
-			CHARACTERGAME->SetCurrentHP( UNITDATA->GetMaxHealth() );
-			CHARACTERGAME->SetCurrentSP( UNITDATA->GetMaxStamina());
-			CHARACTERGAME->SetCurrentMP( UNITDATA->GetMaxMana());
+			CHARACTERGAME->SetCurrentHP(UNITDATA->GetMaxHealth());
+			CHARACTERGAME->SetCurrentSP(UNITDATA->GetMaxStamina());
+			CHARACTERGAME->SetCurrentMP(UNITDATA->GetMaxMana());
 		}
 
 #endif // DEV_MODE
@@ -484,82 +478,82 @@ void CharacterGame::OnCharacterUpdateData()
 
 	// Skill Timers
 	{
-		Skill * skill = NULL;
+		Skill* skill = NULL;
 
 		static int iaVLBackup[10];
 
-		int * piVLReduction = (int *)( 0x04B0DCB4 );
-		int * piVL = (int *)( 0x00996E28 );
+		int* piVLReduction = (int*)(0x04B0DCB4);
+		int* piVL = (int*)(0x00996E28);
 
-		if ( SKILLMANAGERHANDLER->IsActiveBuff( SKILLID_SummonMuspell ) )
+		if (SKILLMANAGERHANDLER->IsActiveBuff(SKILLID_SummonMuspell))
 		{
-			int iLevelSkill = SKILLMANAGERHANDLER->GetLevelSkill( SKILLID_SummonMuspell );
+			int iLevelSkill = SKILLMANAGERHANDLER->GetLevelSkill(SKILLID_SummonMuspell);
 
-			if ( iLevelSkill > 0 )
+			if (iLevelSkill > 0)
 			{
-				if ( iaVLBackup[9] == 0 )
-					CopyMemory( iaVLBackup, piVL, sizeof( int ) * 10 );
+				if (iaVLBackup[9] == 0)
+					CopyMemory(iaVLBackup, piVL, sizeof(int) * 10);
 
-				if ( iaVLBackup[9] == piVL[9] )
+				if (iaVLBackup[9] == piVL[9])
 				{
-					for ( int i = 0; i < 10; i++ )
-						piVL[i] = piVL[i] - ( ( piVL[i] * abs( piVLReduction[i] ) ) / 100 );
+					for (int i = 0; i < 10; i++)
+						piVL[i] = piVL[i] - ((piVL[i] * abs(piVLReduction[i])) / 100);
 				}
 			}
 		}
 		else
 		{
-			if ( iaVLBackup[9] != 0 && iaVLBackup[9] != piVL[9] )
-				CopyMemory( piVL, iaVLBackup, sizeof( int ) * 10 );
+			if (iaVLBackup[9] != 0 && iaVLBackup[9] != piVL[9])
+				CopyMemory(piVL, iaVLBackup, sizeof(int) * 10);
 		}
 
 
 		UNIT->iEvadeRating = 0;
 
 
-		if ( SKILLMANAGERHANDLER->IsActiveBuff( TIMERSKILLID_BellatraSoloGold ) )
+		if (SKILLMANAGERHANDLER->IsActiveBuff(TIMERSKILLID_BellatraSoloGold))
 		{
-			if ( MAP_ID != MAPID_Bellatra &&
-				MAP_ID != MAPID_BlessCastle )
+			if (MAP_ID != MAPID_Bellatra &&
+				MAP_ID != MAPID_BlessCastle)
 			{
 				//note - absorb bonus is handled in UnitGame::GetCharacterAbsorption()
 				pcUnitData->sCharacterData.iMovementSpeed += 5;
 
-				SETSTATUSCOLOR( CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_Orange );
+				SETSTATUSCOLOR(CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_Orange);
 			}
 			else
 			{
-				SETSTATUSCOLOR( CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_White );
+				SETSTATUSCOLOR(CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_White);
 			}
 		}
 
-		if ( SKILLMANAGERHANDLER->IsActiveBuff( TIMERSKILLID_BellatraSoloSilver ) )
+		if (SKILLMANAGERHANDLER->IsActiveBuff(TIMERSKILLID_BellatraSoloSilver))
 		{
-			if ( MAP_ID != MAPID_Bellatra &&
-				MAP_ID != MAPID_BlessCastle )
+			if (MAP_ID != MAPID_Bellatra &&
+				MAP_ID != MAPID_BlessCastle)
 			{
 				//note - absorb bonus is handled in UnitGame::GetCharacterAbsorption()
 				pcUnitData->sCharacterData.iMovementSpeed += 3;
-				SETSTATUSCOLOR( CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_Orange );
+				SETSTATUSCOLOR(CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_Orange);
 			}
 			else
 			{
-				SETSTATUSCOLOR( CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_White );
+				SETSTATUSCOLOR(CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_White);
 			}
 		}
 
-		if ( SKILLMANAGERHANDLER->IsActiveBuff( TIMERSKILLID_BellatraSoloBronze ) )
+		if (SKILLMANAGERHANDLER->IsActiveBuff(TIMERSKILLID_BellatraSoloBronze))
 		{
-			if ( MAP_ID != MAPID_Bellatra &&
-				MAP_ID != MAPID_BlessCastle )
+			if (MAP_ID != MAPID_Bellatra &&
+				MAP_ID != MAPID_BlessCastle)
 			{
 				//note - absorb bonus is handled in UnitGame::GetCharacterAbsorption()
 				pcUnitData->sCharacterData.iMovementSpeed += 2;
-				SETSTATUSCOLOR( CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_Orange );
+				SETSTATUSCOLOR(CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_Orange);
 			}
 			else
 			{
-				SETSTATUSCOLOR( CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_White );
+				SETSTATUSCOLOR(CHARSTATUSTYPECOLOR_Speed, CHARSTATUSCOLOR_White);
 			}
 		}
 
@@ -567,13 +561,13 @@ void CharacterGame::OnCharacterUpdateData()
 		SKILLMANAGERHANDLER->ApplyPassiveSkillToSelf();
 
 
-		if ( pcUnitData->sCharacterData.iAbsorbRating != CHARACTERGAME->sCharacterDataEx.iBaseAbsorbRating )
+		if (pcUnitData->sCharacterData.iAbsorbRating != CHARACTERGAME->sCharacterDataEx.iBaseAbsorbRating)
 		{
-			SETSTATUSCOLOR( CHARSTATUSTYPECOLOR_Absorb, CHARSTATUSCOLOR_Blue );
+			SETSTATUSCOLOR(CHARSTATUSTYPECOLOR_Absorb, CHARSTATUSCOLOR_Blue);
 		}
 		else
 		{
-			SETSTATUSCOLOR( CHARSTATUSTYPECOLOR_Absorb, CHARSTATUSCOLOR_White );
+			SETSTATUSCOLOR(CHARSTATUSTYPECOLOR_Absorb, CHARSTATUSCOLOR_White);
 		}
 
 		//ABS Sod
@@ -587,46 +581,46 @@ void CharacterGame::OnCharacterUpdateData()
 
 	}
 
-	if ( UNITDATA && UNITDATA->psModelAnimation )
+	if (UNITDATA && UNITDATA->psModelAnimation)
 	{
-		if ( UNITDATA->psModelAnimation->iType != ANIMATIONTYPE_None &&
-			 UNITDATA->psModelAnimation->iType != ANIMATIONTYPE_Idle )
+		if (UNITDATA->psModelAnimation->iType != ANIMATIONTYPE_None &&
+			UNITDATA->psModelAnimation->iType != ANIMATIONTYPE_Idle)
 		{
 			dwLastNonIdleTime = TICKCOUNT;
 		}
 
-		if ( UNITDATA->psModelAnimation->iType == ANIMATIONTYPE_Die)
+		if (UNITDATA->psModelAnimation->iType == ANIMATIONTYPE_Die)
 			TIMERSKILLHANDLER->OnCharacterKilled();
 	}
 
 
 
 	//Change Map?
-	if ( GetLastStageID() != MAP_ID )
+	if (GetLastStageID() != MAP_ID)
 	{
-		WRITEDWORD( 0x00A17650, 0 );
-		WRITEDWORD( 0x00A17654, 0 );
-		WRITEDWORD( 0x00A17658, 0 );
-		WRITEDWORD( 0x00A1765C, 0 );
+		WRITEDWORD(0x00A17650, 0);
+		WRITEDWORD(0x00A17654, 0);
+		WRITEDWORD(0x00A17658, 0);
+		WRITEDWORD(0x00A1765C, 0);
 
 		//Update Handlers
-		HUDHANDLER->GetMiniMapHandler()->OnChangeMap( MAP_ID );
+		HUDHANDLER->GetMiniMapHandler()->OnChangeMap(MAP_ID);
 
 		// Update Discord status for map change
-		if ( MAP_ID >= 0 && MAP_ID < (sizeof(pszaMapsName) / sizeof(pszaMapsName[0])) )
+		if (MAP_ID >= 0 && MAP_ID < (sizeof(pszaMapsName) / sizeof(pszaMapsName[0])))
 		{
-			GAMEDISCORD->OnMapChange( std::string(pszaMapsName[MAP_ID]) );
+			GAMEDISCORD->OnMapChange(std::string(pszaMapsName[MAP_ID]));
 		}
 
-		if ( IsStageVillage() )
+		if (IsStageVillage())
 		{
-			SKILLMANAGERHANDLER->ResetSkillEffectParticle( SKILLEFFECTID_HolyValorAction );
-			WIZARDTRANCEHANDLER->OnCastEnd( UNIT );
+			SKILLMANAGERHANDLER->ResetSkillEffectParticle(SKILLEFFECTID_HolyValorAction);
+			WIZARDTRANCEHANDLER->OnCastEnd(UNIT);
 		}
 
-		SetLastStageID( MAP_ID );
+		SetLastStageID(MAP_ID);
 
-		if ( pcUnitData->sCharacterData.iLevel >= 2 )
+		if (pcUnitData->sCharacterData.iLevel >= 2)
 		{
 			UPDATE_CHARACTER_CHECKSUM;
 
@@ -649,47 +643,47 @@ void CharacterGame::OnCharacterSetCharInfoEx()
 	4B0C4B0 BLOCK
 	4B0C210 EVADE
 	*/
-	int * piCritical = (int*)0x04B0C5EC;
-	int * piBlock = (int*)0x04B0C4B0;
-	int * piEvade = (int*)0x04B0C210;
+	int* piCritical = (int*)0x04B0C5EC;
+	int* piBlock = (int*)0x04B0C4B0;
+	int* piEvade = (int*)0x04B0C210;
 
 	*piEvade += UNIT->iEvadeRating;
 
-	if ( SKILLMANAGERHANDLER->IsActiveBuff( SKILLID_EvasionAdaption ) )
+	if (SKILLMANAGERHANDLER->IsActiveBuff(SKILLID_EvasionAdaption))
 	{
 		*piEvade += 10;
 	}
 
-	if ( SKILLMANAGERHANDLER->IsActiveBuff( SKILLID_DeadlyEdge ) )
+	if (SKILLMANAGERHANDLER->IsActiveBuff(SKILLID_DeadlyEdge))
 	{
 		*piCritical += 5;
 	}
 
 	*piCritical += (*(int*)0x0362A2D0);
 
-	if ( *piCritical > 100 )
+	if (*piCritical > 100)
 		*piCritical = 100;
 
-	if ( *piBlock > 50 )
+	if (*piBlock > 50)
 		*piBlock = 50;
 
-	if ( *piEvade > 50 )
+	if (*piEvade > 50)
 		*piEvade = 50;
 }
 
 BOOL CharacterGame::IsStageVillage()
 {
-	if ( Game::GetGameMode() != GAMEMODE_InGame )
+	if (Game::GetGameMode() != GAMEMODE_InGame)
 		return FALSE;
 
-	if ( UNITDATA->iLoadedMapIndex >= 0 )
+	if (UNITDATA->iLoadedMapIndex >= 0)
 	{
 		DWORD dwMapType = *(DWORD*)((UNITDATA->iLoadedMapIndex * 4) + 0x00CF4748);
 
-		if ( dwMapType == 0 )
+		if (dwMapType == 0)
 			return FALSE;
 
-		if ( *(DWORD*)(dwMapType + 0x0C4) == 0x100 )
+		if (*(DWORD*)(dwMapType + 0x0C4) == 0x100)
 			return TRUE;
 	}
 	return FALSE;
@@ -697,44 +691,44 @@ BOOL CharacterGame::IsStageVillage()
 
 int CharacterGame::GetStageID()
 {
-	if ( UNITDATA->iLoadedMapIndex <= (-1) )
+	if (UNITDATA->iLoadedMapIndex <= (-1))
 		return -1;
 
 	DWORD dwPtr = *(int*)((UNITDATA->iLoadedMapIndex * 4) + 0x0CF4748);
-	if ( dwPtr == 0 )
+	if (dwPtr == 0)
 		return -1;
 
 	return *(int*)(dwPtr + 0x1FD4);
 }
 
-int CharacterGame::GetBlockRating( int desLV )
+int CharacterGame::GetBlockRating(int desLV)
 {
-	if ( UNITDATA->sCharacterData.iBlockRating == 0 )
+	if (UNITDATA->sCharacterData.iBlockRating == 0)
 		return 0;
 
 	float fDesLV = (float)desLV;
-	float fMyLV  = (float)UNITDATA->sCharacterData.iLevel;
+	float fMyLV = (float)UNITDATA->sCharacterData.iLevel;
 
-	int value = static_cast<int>( UNITDATA->sCharacterData.iBlockRating + ( ( fMyLV - fDesLV ) / 100.0f ) * 20.0f );
+	int value = static_cast<int>(UNITDATA->sCharacterData.iBlockRating + ((fMyLV - fDesLV) / 100.0f) * 20.0f);
 
 	//cap
-	if ( value > 50 )
+	if (value > 50)
 		value = 50;
 
 	return value;
 }
 
-int CharacterGame::GetEvadeRating( int desLV )
+int CharacterGame::GetEvadeRating(int desLV)
 {
-	if ( UNIT->iEvadeRating == 0 )
+	if (UNIT->iEvadeRating == 0)
 		return 0;
 
 	float fDesLV = (float)desLV;
-	float fMyLV  = (float)UNITDATA->sCharacterData.iLevel;
+	float fMyLV = (float)UNITDATA->sCharacterData.iLevel;
 
-	int value = (int)(  UNIT->iEvadeRating + ( ( fMyLV - fDesLV ) / 100 ) * 20 );
+	int value = (int)(UNIT->iEvadeRating + ((fMyLV - fDesLV) / 100) * 20);
 
-	if ( value > 50 )
+	if (value > 50)
 		value = 50;
 
 	return value;
@@ -778,7 +772,7 @@ int CharacterGame::GetCurrentHP()
 /// If the HP is less than 1, set to 1
 /// </summary>
 /// <returns></returns>
-void CharacterGame::ApplyHPReduction( int iPercent )
+void CharacterGame::ApplyHPReduction(int iPercent)
 {
 	int max = UNITDATA->GetMaxHealth();
 	int curr = CHARACTERGAME->GetCurrentHP();
@@ -789,17 +783,17 @@ void CharacterGame::ApplyHPReduction( int iPercent )
 
 	//lowest hp after reduction can only be 1
 	//only others can kill this unit not self..
-	if ( curr < 1 )
+	if (curr < 1)
 		curr = 1;
 
-	CHARACTERGAME->SetCurrentHP( curr );
+	CHARACTERGAME->SetCurrentHP(curr);
 }
 
 /// <summary>
 /// Remove HP value (usually via a skill)
 /// if HP is below 1, set to 1
 /// </summary>
-void CharacterGame::RemoveHPValue( int iValue )
+void CharacterGame::RemoveHPValue(int iValue)
 {
 	int curr = CHARACTERGAME->GetCurrentHP();
 
@@ -807,54 +801,54 @@ void CharacterGame::RemoveHPValue( int iValue )
 
 	//lowest hp after reduction can only be 1
 	//only others can kill this unit not self..
-	if ( curr < 1 )
+	if (curr < 1)
 		curr = 1;
 
-	CHARACTERGAME->SetCurrentHP( curr );
+	CHARACTERGAME->SetCurrentHP(curr);
 }
 
-void CharacterGame::GiveHPValuePercent( int iPercent )
+void CharacterGame::GiveHPValuePercent(int iPercent)
 {
-	if ( iPercent < 0 || iPercent > 100 )
+	if (iPercent < 0 || iPercent > 100)
 		return;
 
-	GiveHPValue( (UNITDATA->GetMaxHealth() * iPercent) / 100 );
+	GiveHPValue((UNITDATA->GetMaxHealth() * iPercent) / 100);
 }
 
 /// <summary>
 /// Give HP value with checks in place
 /// </summary>
-void CharacterGame::GiveHPValue( int iValue )
+void CharacterGame::GiveHPValue(int iValue)
 {
 	int max = UNITDATA->GetMaxHealth();
 	int value = CHARACTERGAME->GetCurrentHP() + iValue;
 
-	if ( value > max )
+	if (value > max)
 		value = max;
 
-	CHARACTERGAME->SetCurrentHP( value );
+	CHARACTERGAME->SetCurrentHP(value);
 }
 
-void CharacterGame::GiveSPValuePercent( int iPercent )
+void CharacterGame::GiveSPValuePercent(int iPercent)
 {
-	if ( iPercent < 0 || iPercent > 100 )
+	if (iPercent < 0 || iPercent > 100)
 		return;
 
-	GiveSPValue( (UNITDATA->GetMaxStamina() * iPercent) / 100 );
+	GiveSPValue((UNITDATA->GetMaxStamina() * iPercent) / 100);
 }
 
 /// <summary>
 /// Give HP value with checks in place
 /// </summary>
-void CharacterGame::GiveSPValue( int iValue )
+void CharacterGame::GiveSPValue(int iValue)
 {
 	int max = UNITDATA->GetMaxStamina();
 	int value = CHARACTERGAME->GetCurrentSP() + iValue;
 
-	if ( value > max )
+	if (value > max)
 		value = max;
 
-	CHARACTERGAME->SetCurrentSP( value );
+	CHARACTERGAME->SetCurrentSP(value);
 }
 
 int CharacterGame::GetCurrentSP()
@@ -870,52 +864,52 @@ int CharacterGame::GetCurrentSP()
 	return iSP;
 }
 
-void CharacterGame::SetCurrentMP( int iMP )
+void CharacterGame::SetCurrentMP(int iMP)
 {
-	CALL_WITH_ARG1( 0x00507820, (DWORD)iMP );
-	CALL_WITH_ARG1( 0x0045D910, (DWORD)1 ); //ResetEnergyGraph(1)
+	CALL_WITH_ARG1(0x00507820, (DWORD)iMP);
+	CALL_WITH_ARG1(0x0045D910, (DWORD)1); //ResetEnergyGraph(1)
 }
 
 /// <summary>
 /// Sets current HP points
 /// 2012 func: sinSetLife
 /// </summary>
-void CharacterGame::SetCurrentHP( int iHP )
+void CharacterGame::SetCurrentHP(int iHP)
 {
-	CALL_WITH_ARG1( 0x00507780, (DWORD)iHP );
-	CALL_WITH_ARG1( 0x0045D910, (DWORD)0 ); //ResetEnergyGraph(0)
+	CALL_WITH_ARG1(0x00507780, (DWORD)iHP);
+	CALL_WITH_ARG1(0x0045D910, (DWORD)0); //ResetEnergyGraph(0)
 }
 
-void CharacterGame::SetCurrentSP( int iSP )
+void CharacterGame::SetCurrentSP(int iSP)
 {
-	CALL_WITH_ARG1( 0x005078B0, (DWORD)iSP );
-	CALL_WITH_ARG1( 0x0045D910, (DWORD)2 ); //ResetEnergyGraph(2)
+	CALL_WITH_ARG1(0x005078B0, (DWORD)iSP);
+	CALL_WITH_ARG1(0x0045D910, (DWORD)2); //ResetEnergyGraph(2)
 }
 
-void CharacterGame::SetPhoenix( BOOL bActive, int iPhoenixID )
+void CharacterGame::SetPhoenix(BOOL bActive, int iPhoenixID)
 {
 	(*(DWORD*)piActivePhoenix) = iPhoenixID;
 
-	if ( bActive )
-		CALLT( pfnSetPhoenix, pcPhoenix );
+	if (bActive)
+		CALLT(pfnSetPhoenix, pcPhoenix);
 	else
-		CALLT( pfnDeletePhoenix, pcPhoenix );
+		CALLT(pfnDeletePhoenix, pcPhoenix);
 
 	(*(BOOL*)pbShowPhoenixPet) = bActive;
 }
 
 void CharacterGame::Die()
 {
-	if ( UNITDATA && UNITDATA->psModelAnimation && UNITDATA->psModelAnimation->iType != ANIMATIONTYPE_Die )
+	if (UNITDATA && UNITDATA->psModelAnimation && UNITDATA->psModelAnimation->iType != ANIMATIONTYPE_Die)
 	{
-		UNITDATA->Animate( ANIMATIONTYPE_Die );
+		UNITDATA->Animate(ANIMATIONTYPE_Die);
 
-		SetCurrentHP( 0 );
+		SetCurrentHP(0);
 		CHECK_CHARACTER_CHECKSUM;
 
-		CALL( 0x0046CC4A );
+		CALL(0x0046CC4A);
 
-		PLAYUNITSOUND( UNITDATA );
+		PLAYUNITSOUND(UNITDATA);
 	}
 }
 
@@ -979,7 +973,7 @@ void CharacterGame::ResetHairCrown()
 	}
 }
 
-void CharacterGame::ResetHead( BOOL bDefault )
+void CharacterGame::ResetHead(BOOL bDefault)
 {
 	char szNewHeadModel[128] = { 0 };
 	char szNewHeadModelBase[128] = { 0 };
@@ -994,78 +988,78 @@ void CharacterGame::ResetHead( BOOL bDefault )
 	char cTier[2] = { UNITDATA->sCharacterData.iRank ? 0x60 + (char)UNITDATA->sCharacterData.iRank : 0, 0 };
 	char cChar[2] = { UNITDATA->sCharacterData.iRank == 2 ? '_' : '-', 0 };
 
-	switch ( UNITDATA->sCharacterData.iClass )
+	switch (UNITDATA->sCharacterData.iClass)
 	{
-		case CHARACTERCLASS_Fighter:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Tmh%sB01%s.inf", cChar, cTier );
-			break;
+	case CHARACTERCLASS_Fighter:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Tmh%sB01%s.inf", cChar, cTier);
+		break;
 
-		case CHARACTERCLASS_Mechanician:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Tmh%sA01%s.inf", cChar, cTier );
-			break;
+	case CHARACTERCLASS_Mechanician:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Tmh%sA01%s.inf", cChar, cTier);
+		break;
 
-		case CHARACTERCLASS_Archer:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Tfh%sD01%s.inf", cChar, cTier );
-			break;
+	case CHARACTERCLASS_Archer:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Tfh%sD01%s.inf", cChar, cTier);
+		break;
 
-		case CHARACTERCLASS_Pikeman:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Tmh%sC01%s.inf", cChar, cTier );
+	case CHARACTERCLASS_Pikeman:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Tmh%sC01%s.inf", cChar, cTier);
 
-			if (UNITDATA->sCharacterData.iRank == 3)
-			{
-				STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\TmhC-01c.inf");
-			}
-			break;
+		if (UNITDATA->sCharacterData.iRank == 3)
+		{
+			STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\TmhC-01c.inf");
+		}
+		break;
 
-		case CHARACTERCLASS_Atalanta:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Mfh%sB01%s.inf", cChar, cTier );
-			break;
+	case CHARACTERCLASS_Atalanta:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Mfh%sB01%s.inf", cChar, cTier);
+		break;
 
-		case CHARACTERCLASS_Knight:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Mmh%sA01%s.inf", cChar, cTier );
-			break;
+	case CHARACTERCLASS_Knight:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Mmh%sA01%s.inf", cChar, cTier);
+		break;
 
-		case CHARACTERCLASS_Magician:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Mmh%sD01%s.inf", cChar, cTier );
-			break;
+	case CHARACTERCLASS_Magician:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Mmh%sD01%s.inf", cChar, cTier);
+		break;
 
-		case CHARACTERCLASS_Priestess:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Mfh%sC01%s.inf", cChar, cTier );
-			break;
+	case CHARACTERCLASS_Priestess:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Mfh%sC01%s.inf", cChar, cTier);
+		break;
 
-		case CHARACTERCLASS_Assassin:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Tfh%sE01%s.inf", cChar, cTier );
-			break;
+	case CHARACTERCLASS_Assassin:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Tfh%sE01%s.inf", cChar, cTier);
+		break;
 
-		case CHARACTERCLASS_Shaman:
-			STRINGFORMAT( szNewHeadModel, "char\\tmABCD\\Mmh%sE01%s.inf", cChar, cTier );
-			break;
+	case CHARACTERCLASS_Shaman:
+		STRINGFORMAT(szNewHeadModel, "char\\tmABCD\\Mmh%sE01%s.inf", cChar, cTier);
+		break;
 
-		default:
-			break;
+	default:
+		break;
 	}
 
 	//Old Head Not Null
 
-	if ( sCharacterDataEx.szOldHead[0] != 0 && bDefault == FALSE )
+	if (sCharacterDataEx.szOldHead[0] != 0 && bDefault == FALSE)
 	{
 		UNITGAME->SetCharacterHeadModel(sCharacterDataEx.szOldHead);
 		return;
 	}
 
 	// Set Head
-	UNITGAME->SetCharacterHeadModel( szNewHeadModel );
+	UNITGAME->SetCharacterHeadModel(szNewHeadModel);
 }
 
-void CharacterGame::SaveTimer ()
+void CharacterGame::SaveTimer()
 {
 	//only save if client is in the foreground
-	if ( GetForegroundWindow () != DX::Graphic::GetWindowHandler () )
+	if (GetForegroundWindow() != DX::Graphic::GetWindowHandler())
 	{
 		return;
 	}
 
-	if ( dwLastSaveTime == 0 )
+	if (dwLastSaveTime == 0)
 	{
 		dwLastSaveTime = TICKCOUNT;
 	}
@@ -1073,36 +1067,36 @@ void CharacterGame::SaveTimer ()
 	const int iDelayCheck = 60 * 1000;
 	const int iIdleCheck = 61 * 1000;
 
-	if ( dwLastNonIdleTime != 0 &&
-		 TICKCOUNT < dwLastNonIdleTime + iIdleCheck &&
-		 TICKCOUNT > dwLastSaveTime + iDelayCheck )
+	if (dwLastNonIdleTime != 0 &&
+		TICKCOUNT < dwLastNonIdleTime + iIdleCheck &&
+		TICKCOUNT > dwLastSaveTime + iDelayCheck)
 	{
-		if ( GM_MODE )
+		if (GM_MODE)
 		{
 #ifdef DEV_MODE
-			CHATBOX->AddMessage ( "Debug: SAVE (Timer)" );
+			CHATBOX->AddMessage("Debug: SAVE (Timer)");
 #endif
 		}
 
 		dwLastNonIdleTime = 0;
 		dwLastSaveTime = TICKCOUNT;
-		Save ();
+		Save();
 	}
 }
 
 
-void CharacterGame::SaveCustom ()
+void CharacterGame::SaveCustom()
 {
-	if ( GM_MODE )
+	if (GM_MODE)
 	{
 #ifdef DEV_MODE
-		CHATBOX->AddMessage ( "Debug: SAVE" );
+		CHATBOX->AddMessage("Debug: SAVE");
 #endif
 	}
 
 	dwLastNonIdleTime = 0;
 	dwLastSaveTime = TICKCOUNT;
-	Save ();
+	Save();
 }
 
 
@@ -1112,17 +1106,17 @@ void CharacterGame::SaveCustom ()
 /// <returns></returns>
 NAKED void CharacterGame::Save()
 {
-	JMP( pfnSave );
+	JMP(pfnSave);
 }
 
 void CharacterGame::SaveEx()
 {
 	PacketCharacterDataEx s;
-	s.iLength = sizeof( PacketCharacterDataEx );
+	s.iLength = sizeof(PacketCharacterDataEx);
 	s.iHeader = PKTHDR_CharacterDataEx;
-	CopyMemory( &s.sData, &CHARACTERGAME->sCharacterDataEx, sizeof( CharacterDataEx ) );
+	CopyMemory(&s.sData, &CHARACTERGAME->sCharacterDataEx, sizeof(CharacterDataEx));
 
-	SENDPACKETL( &s );
+	SENDPACKETL(&s);
 }
 
 /// <summary>
@@ -1132,34 +1126,34 @@ void CharacterGame::SaveEx()
 /// </summary>
 void CharacterGame::SyncCombatData()
 {
-	if ( PLAYERDATA == NULL || UNIT == NULL )
+	if (PLAYERDATA == NULL || UNIT == NULL)
 		return;
 
-	if ( Game::GetGameMode() != GAMEMODE_InGame )
+	if (Game::GetGameMode() != GAMEMODE_InGame)
 		return;
 
-	switch ( MAP_ID )
+	switch (MAP_ID)
 	{
-		case EMapID::MAPID_RicartenTown:
-		case EMapID::MAPID_PillaiTown:
-			return;
+	case EMapID::MAPID_RicartenTown:
+	case EMapID::MAPID_PillaiTown:
+		return;
 	}
 
 	BOOL bSend = FALSE;
 
-	if ( sCharacterCombatData.sBlockChance != PLAYERDATA->iBlockRating )
+	if (sCharacterCombatData.sBlockChance != PLAYERDATA->iBlockRating)
 	{
 		sCharacterCombatData.sBlockChance = PLAYERDATA->iBlockRating;
 		bSend = TRUE;
 	}
 
-	if ( sCharacterCombatData.iDefenseRating != PLAYERDATA->iDefenseRating )
+	if (sCharacterCombatData.iDefenseRating != PLAYERDATA->iDefenseRating)
 	{
 		sCharacterCombatData.iDefenseRating = PLAYERDATA->iDefenseRating;
 		bSend = TRUE;
 	}
 
-	if ( sCharacterCombatData.sEvadeChance != UNIT->iEvadeRating)
+	if (sCharacterCombatData.sEvadeChance != UNIT->iEvadeRating)
 	{
 		sCharacterCombatData.sEvadeChance = UNIT->iEvadeRating;
 		bSend = TRUE;
@@ -1167,23 +1161,23 @@ void CharacterGame::SyncCombatData()
 
 	DWORD minSyncTimeMs = 10000; //10s
 
-	if ( MAP_ID == MAPID_BlessCastle )
+	if (MAP_ID == MAPID_BlessCastle)
 	{
 		minSyncTimeMs = 5000; //5s
 	}
 
 	//force send data every 5 sec as minimum
 	//just in case the instant change didn't get to the server..
-	if ( dwLastCombatDataSaveTime > 0 &&
-		TICKCOUNT - dwLastCombatDataSaveTime > minSyncTimeMs )
+	if (dwLastCombatDataSaveTime > 0 &&
+		TICKCOUNT - dwLastCombatDataSaveTime > minSyncTimeMs)
 	{
 		bSend = TRUE;
 	}
 
-	if ( bSend )
+	if (bSend)
 	{
 		//update player's combat data on server side
-		SENDPACKETG( &sCharacterCombatData );
+		SENDPACKETG(&sCharacterCombatData);
 		dwLastCombatDataSaveTime = TICKCOUNT;
 	}
 }
@@ -1201,21 +1195,21 @@ int CharacterGame::MakePlayBuffFromRecvData(UnitData* pcUnitData, PlayBuff* Star
 	int frameState;
 	int frameStep;
 
-	if ( !pcUnitData->psBody || len <= 1 ) return FALSE;
+	if (!pcUnitData->psBody || len <= 1) return FALSE;
 
-	if ( StartBuff->saAngle[2] > 0 )
+	if (StartBuff->saAngle[2] > 0)
 	{
 		CHATBOX->AddDebugMessage(" StartBuff->saAngle[2] = %d", StartBuff->saAngle[2]);
 	}
 
-	if ( EndBuff->saAngle[2] > 0 )
+	if (EndBuff->saAngle[2] > 0)
 	{
 		CHATBOX->AddDebugMessage(" EndBuff->saAngle[2] = %d", EndBuff->saAngle[2]);
 	}
 
 	//if EndBuff is not defined, then it's typically for standing motion only because there is only one PlayBuff
 	//this can be used by potion, skill, attack too. because while attacking, the character cannot move and is facing the same direction.
-	if ( !EndBuff )
+	if (!EndBuff)
 	{
 		PlayBuffPosi = pcUnitData->iPlayBuffPosiEnd & PLAYBUFF_MASK;
 
@@ -1246,9 +1240,9 @@ int CharacterGame::MakePlayBuffFromRecvData(UnitData* pcUnitData, PlayBuff* Star
 	pz = StartBuff->sPosition.iZ;
 
 	//delta movement to make per frame step
-	mx = ( ( EndBuff->sPosition.iX - px ) << 8 ) / len;
-	my = ( ( EndBuff->sPosition.iY - py ) << 8 ) / len;
-	mz = ( ( EndBuff->sPosition.iZ - pz ) << 8 ) / len;
+	mx = ((EndBuff->sPosition.iX - px) << 8) / len;
+	my = ((EndBuff->sPosition.iY - py) << 8) / len;
+	mz = ((EndBuff->sPosition.iZ - pz) << 8) / len;
 
 	aX = 0; //StartBuff->saAngle[0];
 	aY = StartBuff->saAngle[1];
@@ -1260,19 +1254,19 @@ int CharacterGame::MakePlayBuffFromRecvData(UnitData* pcUnitData, PlayBuff* Star
 	taZ = 0; //PTANGLE_180 - EndBuff->saAngle[2];
 
 	saX = 0; // ( aX + taX )& PTANGLE_Mask;
-	saY = ( aY + taY ) & PTANGLE_Mask;
+	saY = (aY + taY) & PTANGLE_Mask;
 	saZ = 0; // ( aZ + taZ )& PTANGLE_Mask;
 
 	//angle movement to make per frame step
 	saX = 0; // ( ( saX - PTANGLE_180 ) << 8 ) / len;
-	saY = ( ( saY - PTANGLE_180 ) << 8 ) / len;
+	saY = ((saY - PTANGLE_180) << 8) / len;
 	saZ = 0; // ( ( saZ - PTANGLE_180 ) << 8 ) / len;
 
-	if ( StartBuff->iFrame < CHAR_FRAME_MASK )
+	if (StartBuff->iFrame < CHAR_FRAME_MASK)
 	{
 		frameState = pcUnitData->psBody->saModelAnimation[StartBuff->saAngle[3]].iType;
 
-		if ( frameState == EAnimationType::ANIMATIONTYPE_Walking || frameState == EAnimationType::ANIMATIONTYPE_Running )
+		if (frameState == EAnimationType::ANIMATIONTYPE_Walking || frameState == EAnimationType::ANIMATIONTYPE_Running)
 		{
 			//adjust angle of character to be based from A to B
 			aY = SKILLMANAGERHANDLER->GetRadian2D(StartBuff->sPosition.iX, StartBuff->sPosition.iZ, EndBuff->sPosition.iX, EndBuff->sPosition.iZ);
@@ -1290,7 +1284,7 @@ int CharacterGame::MakePlayBuffFromRecvData(UnitData* pcUnitData, PlayBuff* Star
 
 	cnt = len - 1;
 
-	if ( cnt <= 0 )
+	if (cnt <= 0)
 	{
 		frameStep = 80; //typical frame rate
 	}
@@ -1299,11 +1293,11 @@ int CharacterGame::MakePlayBuffFromRecvData(UnitData* pcUnitData, PlayBuff* Star
 		//difference between this frame and next frame / len - 1
 		//len is BuffCount difference of next vs curr
 		//which is typically pBuffStep. In the end frameStep will be close to 80
-		frameStep = ( EndBuff->iFrame - StartBuff->iFrame ) / cnt;
+		frameStep = (EndBuff->iFrame - StartBuff->iFrame) / cnt;
 	}
 
 	//caps
-	if ( frameStep >= 4096 || frameStep < 20 )
+	if (frameStep >= 4096 || frameStep < 20)
 	{
 		frameStep = 80;
 	}
@@ -1316,18 +1310,18 @@ int CharacterGame::MakePlayBuffFromRecvData(UnitData* pcUnitData, PlayBuff* Star
 	//len is FPS difference between curr buff and next buff
 	//if we only received start and last buff, then the len would be 70
 	//This code fills the gap basically. To stop jittery behavior
-	for ( cnt = 0; cnt < len; cnt++ )
+	for (cnt = 0; cnt < len; cnt++)
 	{
-		PlayBuffPosi = ( pcUnitData->iPlayBuffPosiEnd + cnt ) & PLAYBUFF_MASK;
+		PlayBuffPosi = (pcUnitData->iPlayBuffPosiEnd + cnt) & PLAYBUFF_MASK;
 
 		//pcUnitData->iPlayBuffPosiEnd is the last received PlayBuff pos for the target player.
 		//if the buff counter goes past the end position, it would only increment frame by 80
 		//until we get another packet data for the player
 
 		//adjust positions
-		pcUnitData->saPlayBuff[PlayBuffPosi].sPosition.iX = px + ( x >> 8 );
-		pcUnitData->saPlayBuff[PlayBuffPosi].sPosition.iY = py + ( y >> 8 );
-		pcUnitData->saPlayBuff[PlayBuffPosi].sPosition.iZ = pz + ( z >> 8 );
+		pcUnitData->saPlayBuff[PlayBuffPosi].sPosition.iX = px + (x >> 8);
+		pcUnitData->saPlayBuff[PlayBuffPosi].sPosition.iY = py + (y >> 8);
+		pcUnitData->saPlayBuff[PlayBuffPosi].sPosition.iZ = pz + (z >> 8);
 
 		//adjust angles. Only [1] is used for player heading
 		pcUnitData->saPlayBuff[PlayBuffPosi].saAngle[0] = 0; //was aX & PTANGLE_Mask;
@@ -1362,7 +1356,7 @@ int CharacterGame::MakePlayBuffFromRecvData(UnitData* pcUnitData, PlayBuff* Star
 	pcUnitData->saPlayBuff[pcUnitData->iPlayBuffPosiEnd & PLAYBUFF_MASK].iFrame = StartBuff->iFrame;
 
 	//sets actual iFrame for last
-	pcUnitData->saPlayBuff[( pcUnitData->iPlayBuffPosiEnd + len - 1 ) & PLAYBUFF_MASK].iFrame = EndBuff->iFrame;
+	pcUnitData->saPlayBuff[(pcUnitData->iPlayBuffPosiEnd + len - 1) & PLAYBUFF_MASK].iFrame = EndBuff->iFrame;
 
 	//UNITGAME->Log( "start action: %d, end action: %d", StartBuff->saAngle[3], EndBuff->saAngle[3] );
 	//UNITGAME->Log( "iPlayBuffPosiEnd: %d + %d = %d", pcUnitData->iPlayBuffPosiEnd, len, ( pcUnitData->iPlayBuffPosiEnd + len ) );
@@ -1373,9 +1367,9 @@ int CharacterGame::MakePlayBuffFromRecvData(UnitData* pcUnitData, PlayBuff* Star
 	return TRUE;
 }
 
-NAKED BOOL CharacterGame::ChecksumUpdate( CharacterData * psCharacterData )
+NAKED BOOL CharacterGame::ChecksumUpdate(CharacterData* psCharacterData)
 {
-	JMP( pfnChecksumUpdate );
+	JMP(pfnChecksumUpdate);
 }
 
 BOOL __cdecl CharacterGame::ChecksumCheck()
@@ -1388,39 +1382,39 @@ BOOL __cdecl CharacterGame::ChecksumCheck()
 
 void CharacterGame::UpdateWeight()
 {
-	typedef void( __thiscall *tfnCheckWeight )(DWORD dwClass);
+	typedef void(__thiscall* tfnCheckWeight)(DWORD dwClass);
 	tfnCheckWeight fnCheckWeight = (tfnCheckWeight)0x004AD2E0;
-	fnCheckWeight( 0x035EBB20 );
+	fnCheckWeight(0x035EBB20);
 }
 
 void CharacterGame::ReFormMousePotionNum() ////Check when potion is set on the mouse
 {
-	typedef void( __thiscall *tfnReFormMousePotionNum )(DWORD dwClass);
+	typedef void(__thiscall* tfnReFormMousePotionNum)(DWORD dwClass);
 	tfnReFormMousePotionNum fnReFormMousePotionNum = (tfnReFormMousePotionNum)0x004B0980;
-	fnReFormMousePotionNum( 0x035EBB20 );
+	fnReFormMousePotionNum(0x035EBB20);
 }
 
 
 /// <summary>
 /// Check the 15 slots (equipment) for space
 /// </summary>
-BOOL CharacterGame::CheckEquipmentSpace( ItemData * psItemData )
+BOOL CharacterGame::CheckEquipmentSpace(ItemData* psItemData)
 {
-	for (int i=0 ; i < 15; i++)
+	for (int i = 0; i < 15; i++)
 	{
-		if(psItemData->iItemSlotFlag & INVENTORYITEMSLOT[i].iItemSlot)
+		if (psItemData->iItemSlotFlag & INVENTORYITEMSLOT[i].iItemSlot)
 		{
-			if(!INVENTORYITEMSLOT[i].iItemIndex)
+			if (!INVENTORYITEMSLOT[i].iItemIndex)
 			{
 				//If the item can not be set on / hands region
 				if (psItemData->iItemSlotFlag == ITEMSLOTFLAG_LeftRightHand)
 				{
-					if ( INVENTORYITEMSLOT[0].iItemIndex || INVENTORYITEMSLOT[1].iItemIndex )
+					if (INVENTORYITEMSLOT[0].iItemIndex || INVENTORYITEMSLOT[1].iItemIndex)
 						return FALSE;
 				}
 
 				//If you can not set a shortage stats
-				if(psItemData->sItem.bCanNotUse)
+				if (psItemData->sItem.bCanNotUse)
 					return FALSE;
 
 				return TRUE;
@@ -1435,84 +1429,84 @@ BOOL CharacterGame::CheckEquipmentSpace( ItemData * psItemData )
 /// Leaked func: int cINVENTORY::InvenEmptyAearCheck(sITEM *pItem)
 /// Check the void in the inventories
 /// </summary>
-BOOL CharacterGame::CheckInventorySpace( ItemData * psItemData, BOOL bUseTemporaryItem )
+BOOL CharacterGame::CheckInventorySpace(ItemData* psItemData, BOOL bUseTemporaryItem)
 {
 	ItemData sItemDataTemp;
-	CopyMemory( &sItemDataTemp, psItemData, sizeof( ItemData ) );
-	typedef BOOL( __thiscall *tfnCheckInventorySpace )(DWORD dwClass, ItemData * psItemData);
+	CopyMemory(&sItemDataTemp, psItemData, sizeof(ItemData));
+	typedef BOOL(__thiscall* tfnCheckInventorySpace)(DWORD dwClass, ItemData* psItemData);
 	tfnCheckInventorySpace fnCheckInventorySpace = (tfnCheckInventorySpace)0x004B0C60;
 
-	if ( bUseTemporaryItem )
-		return fnCheckInventorySpace( 0x035EBB20, &sItemDataTemp );
+	if (bUseTemporaryItem)
+		return fnCheckInventorySpace(0x035EBB20, &sItemDataTemp);
 
-	return fnCheckInventorySpace( 0x035EBB20, psItemData );
+	return fnCheckInventorySpace(0x035EBB20, psItemData);
 }
 
-BOOL CharacterGame::CheckInventoryWeight( ItemData * psItemData )
+BOOL CharacterGame::CheckInventoryWeight(ItemData* psItemData)
 {
-	if ( psItemData == NULL )
+	if (psItemData == NULL)
 		return FALSE;
 
 	EItemBase eItemBase = psItemData->sBaseItemID.ToItemBase();
 
-	if ( eItemBase == ITEMBASE_Potion )
+	if (eItemBase == ITEMBASE_Potion)
 	{
-		if ( (UNITDATA->sCharacterData.sWeight.sCur + psItemData->sItem.iPotionCount) > UNITDATA->sCharacterData.sWeight.sMax )
+		if ((UNITDATA->sCharacterData.sWeight.sCur + psItemData->sItem.iPotionCount) > UNITDATA->sCharacterData.sWeight.sMax)
 			return FALSE;
 	}
 
-	if ( (UNITDATA->sCharacterData.sWeight.sCur + psItemData->sItem.iWeight) > UNITDATA->sCharacterData.sWeight.sMax )
+	if ((UNITDATA->sCharacterData.sWeight.sCur + psItemData->sItem.iWeight) > UNITDATA->sCharacterData.sWeight.sMax)
 		return FALSE;
 
-	if ( psItemData->sBaseItemID.ToItemID() == ITEMID_VampireSuit )
+	if (psItemData->sBaseItemID.ToItemID() == ITEMID_VampireSuit)
 	{
-		if ( (UNITDATA->sCharacterData.sWeight.sCur + 10) > UNITDATA->sCharacterData.sWeight.sMax )
+		if ((UNITDATA->sCharacterData.sWeight.sCur + 10) > UNITDATA->sCharacterData.sWeight.sMax)
 			return FALSE;
 	}
 
 	return TRUE;
 }
 
-int CharacterGame::OnMotionChange( UnitData * pcUnitGame, int iMotion, int iAnimationID )
+int CharacterGame::OnMotionChange(UnitData* pcUnitGame, int iMotion, int iAnimationID)
 {
 	DWORD dwCodeMotion = (*(DWORD*)(0x04B07000));
 
-	if ( pcUnitGame )
+	if (pcUnitGame)
 	{
 		// Assassin
-		if ( pcUnitGame->sCharacterData.iClass == CHARACTERCLASS_Assassin )
+		if (pcUnitGame->sCharacterData.iClass == CHARACTERCLASS_Assassin)
 		{
-			if ( !IsStageVillage() && ((pcUnitGame->sRightHandTool.eItemID & 0xFFFF0000) == 0x010A0000) )
+			if (!IsStageVillage() && ((pcUnitGame->sRightHandTool.eItemID & 0xFFFF0000) == 0x010A0000))
 			{
-				switch ( dwCodeMotion )
+				switch (dwCodeMotion)
 				{
-					case ANIMATIONTYPE_Idle:
-						iMotion = 47;
-						break;
-					case ANIMATIONTYPE_Walking:
-						iMotion = 16;
-						break;
-					case ANIMATIONTYPE_Running:
-						iMotion = 36;
-						break;
-					case ANIMATIONTYPE_Attack:
-						iMotion = 69;
-						break;
+				case ANIMATIONTYPE_Idle:
+					iMotion = 47;
+					break;
+				case ANIMATIONTYPE_Walking:
+					iMotion = 16;
+					break;
+				case ANIMATIONTYPE_Running:
+					iMotion = 36;
+					break;
+				case ANIMATIONTYPE_Attack:
+					iMotion = 69;
+					break;
 				}
 			}
 		}
 
-		if ( iMotion < 0 || iMotion >= 512 )
+		if (iMotion < 0 || iMotion >= 512)
 			return TRUE;
 
-		return fnChangeMotion( pcUnitGame, iMotion, iAnimationID );
+		return fnChangeMotion(pcUnitGame, iMotion, iAnimationID);
 	}
 	return TRUE;
 }
 
 //Recived damage data from server
 //to this player
-void CharacterGame::PHDamage( PacketAttackData * psPacket )
+void CharacterGame::PHDamage(PacketAttackData* psPacket)
 {
 	//If damage received is from a monster, dwTargetObjectSerial will be zero
 	//If damage received is from a player, dwTargetObjectSerial will be non-zero
@@ -1550,7 +1544,7 @@ void CharacterGame::PHDamage( PacketAttackData * psPacket )
 				pcUnit->cMutex->lock();
 
 				//See int rsSendTransSkillAttack(smCHAR *lpChar, rsPLAYINFO *lpPlayInfo)
-				if ( ( psPacket->iAttackState & 0xFF) == 0x80 )
+				if ((psPacket->iAttackState & 0xFF) == 0x80)
 				{
 					if (pcTargetUnitData)
 					{
@@ -1567,7 +1561,7 @@ void CharacterGame::PHDamage( PacketAttackData * psPacket )
 				}
 
 				//Basic attack
-				else if ( (psPacket->iAttackState & 0xFF) == 0x01 )
+				else if ((psPacket->iAttackState & 0xFF) == 0x01)
 				{
 					if (pcTargetUnitData)
 					{
@@ -1584,7 +1578,7 @@ void CharacterGame::PHDamage( PacketAttackData * psPacket )
 				}
 				else
 				{
-					DEBUG ("%d = PHDamage                  ERROR!!!!  : Unknown state = %d, %d", TICKCOUNT, psPacket->iDamageState, psPacket->iDamageState & 0xFF);
+					DEBUG("%d = PHDamage                  ERROR!!!!  : Unknown state = %d, %d", TICKCOUNT, psPacket->iDamageState, psPacket->iDamageState & 0xFF);
 				}
 
 				pcUnit->cMutex->unlock();
@@ -1608,7 +1602,7 @@ void CharacterGame::PHDamage( PacketAttackData * psPacket )
 }
 
 
-BOOL CharacterGame::XorAttackTrans(UnitData * pcUnitData, PacketAttackData * lpTransAttackData)
+BOOL CharacterGame::XorAttackTrans(UnitData* pcUnitData, PacketAttackData* lpTransAttackData)
 {
 	//return CALLT( 0x422190, (DWORD)pcUnitData );
 
@@ -1634,38 +1628,38 @@ BOOL CharacterGame::XorAttackTrans(UnitData * pcUnitData, PacketAttackData * lpT
 }
 
 //Damage Encryption Code received
-DWORD CharacterGame::GetAttackTrans_XorCode(UnitData * pcUnitData)
+DWORD CharacterGame::GetAttackTrans_XorCode(UnitData* pcUnitData)
 {
 	return pcUnitData->iID ^ UNITDATA->iID ^ (((DWORD)pcUnitData) >> 8);
 }
 
-DWORD CharacterGame::EncodeDamagePacket( PacketAttackData * lpTransAttackData )
+DWORD CharacterGame::EncodeDamagePacket(PacketAttackData* lpTransAttackData)
 {
-	DWORD size,code;
-	DWORD cnt,cnt2,cnt3;
+	DWORD size, code;
+	DWORD cnt, cnt2, cnt3;
 	DWORD dwCode;
 	DWORD dwChkSum;
 	DWORD dwObjSum;
-	DWORD *lpDword = (DWORD *)lpTransAttackData;
+	DWORD* lpDword = (DWORD*)lpTransAttackData;
 
 	size = lpDword[0];
 	code = lpDword[1];
-	size /=4;
+	size /= 4;
 
-	dwChkSum = GetSpeedSum( UNITDATA->GetName() );
+	dwChkSum = GetSpeedSum(UNITDATA->GetName());
 	dwObjSum = UNITDATA->iID;
 	dwObjSum *= (UNITDATA->sCharacterData.iClass + 2);
 
-	DWORD dwDamagePacketKey2_0 = ( dwChkSum * dwObjSum / 11 ) + 0x34;
-	DWORD dwDamagePacketKey2_1 = dwDamagePacketKey2_0 ^ ( ( dwObjSum >> 7 ) + ( dwObjSum << 16 ) ) + 0x37;
+	DWORD dwDamagePacketKey2_0 = (dwChkSum * dwObjSum / 11) + 0x34;
+	DWORD dwDamagePacketKey2_1 = dwDamagePacketKey2_0 ^ ((dwObjSum >> 7) + (dwObjSum << 16)) + 0x37;
 
-	dwCode = (code^(code<<5)) + size * dwDamagePacketKey2_1;
+	dwCode = (code ^ (code << 5)) + size * dwDamagePacketKey2_1;
 	cnt2 = (code + dwDamagePacketKey2_1) & 0xBCAFF5;
 	cnt3 = cnt2 & 0x5E;
 
-	for ( cnt = 2; cnt < size; cnt++ )
+	for (cnt = 2; cnt < size; cnt++)
 	{
-		dwCode = dwCode ^ ( cnt2 << 7 ) ^ lpDword[cnt];
+		dwCode = dwCode ^ (cnt2 << 7) ^ lpDword[cnt];
 		lpDword[cnt] = dwCode;
 		cnt2 += cnt2 + cnt3;
 	}
@@ -1673,10 +1667,10 @@ DWORD CharacterGame::EncodeDamagePacket( PacketAttackData * lpTransAttackData )
 	return TRUE;
 }
 
-DWORD CharacterGame::GetSpeedSum( char *szName )
+DWORD CharacterGame::GetSpeedSum(char* szName)
 {
 	DWORD cnt;
-	DWORD Sum1,Sum2;
+	DWORD Sum1, Sum2;
 	BYTE ch;
 	DWORD  dwSum;
 
@@ -1685,32 +1679,32 @@ DWORD CharacterGame::GetSpeedSum( char *szName )
 
 	cnt = 0;
 
-	while(1)
+	while (1)
 	{
 		ch = (BYTE)szName[cnt];
-		if ( ch==0 ) break;
-		if ( ch>='a' && ch<='z' )
+		if (ch == 0) break;
+		if (ch >= 'a' && ch <= 'z')
 		{
-			Sum2 += (ch-0x20)*(cnt+1);
-			dwSum += (ch-0x20)*(cnt*cnt);
+			Sum2 += (ch - 0x20) * (cnt + 1);
+			dwSum += (ch - 0x20) * (cnt * cnt);
 		}
 		else
 		{
-			Sum2 += (ch*(cnt+1));
-			dwSum += ch*(cnt*cnt);
+			Sum2 += (ch * (cnt + 1));
+			dwSum += ch * (cnt * cnt);
 		}
 		cnt++;
 	}
 
 	Sum1 = cnt;
 
-	return (dwSum<<24)|(Sum1<<16)|Sum2;
+	return (dwSum << 24) | (Sum1 << 16) | Sum2;
 }
 
 /// <summary>
 /// Leaked code: dm_GetDamgeChkSum_S2V
 /// </summary>
-DWORD CharacterGame::GetDamgeChkSum_S2V( PacketAttackData * lpTransAttackData)
+DWORD CharacterGame::GetDamgeChkSum_S2V(PacketAttackData* lpTransAttackData)
 {
 	//DWORD chk1 = CALL_WITH_ARG1( 0x408300, (DWORD)lpTransAttackData );
 
@@ -1719,7 +1713,7 @@ DWORD CharacterGame::GetDamgeChkSum_S2V( PacketAttackData * lpTransAttackData)
 
 	dwChkSum = lpTransAttackData->iHeader;
 	dwChkSum += lpTransAttackData->sPosition.iX ^ lpTransAttackData->sPosition.iY ^ lpTransAttackData->sPosition.iZ;
-	dwChkSum ^= *(DWORD *)&lpTransAttackData->iAttackState + lpTransAttackData->iRange;
+	dwChkSum ^= *(DWORD*)&lpTransAttackData->iAttackState + lpTransAttackData->iRange;
 	dwChkSum ^= lpTransAttackData->iDamage << 5;
 	dwChkSum ^= lpTransAttackData->dwChkSum;
 	dwChkSum ^= ((DWORD*)lpTransAttackData->sRating)[0];
@@ -1730,7 +1724,7 @@ DWORD CharacterGame::GetDamgeChkSum_S2V( PacketAttackData * lpTransAttackData)
 	return dwChkSum;
 }
 
-DWORD CharacterGame::GetDamgeChkSum_S2V( PacketSingleTargetSkillData * psPacketAttackDamageEx )
+DWORD CharacterGame::GetDamgeChkSum_S2V(PacketSingleTargetSkillData* psPacketAttackDamageEx)
 {
 	//DWORD chk1 = CALL_WITH_ARG1( 0x408300, (DWORD)lpTransAttackData );
 
@@ -1749,70 +1743,70 @@ DWORD CharacterGame::GetDamgeChkSum_S2V( PacketSingleTargetSkillData * psPacketA
 	return dwChkSum;
 }
 
-BOOL CharacterGame::PHTeleport( struct PacketTeleportEvent * psPacket )
+BOOL CharacterGame::PHTeleport(struct PacketTeleportEvent* psPacket)
 {
 	BOOL bRet = FALSE;
-	switch ( psPacket->iTeleportEventID )
+	switch (psPacket->iTeleportEventID)
 	{
-		case 1000:
-			MAPGAME->SetMessageBoxMap( MAPID_RicartenTown );
-			bRet = TRUE;
-			break;
-		case 1001:
-			MAPGAME->SetMessageBoxMap( MAPID_Atlantis );
-			bRet = TRUE;
-			break;
-		case 1002:
-			if ( UNITDATA->sCharacterData.iLevel >= 0 )
-				MAPGAME->SetMessageBoxMap( MAPID_BattleTown );
-			else
-				TITLEBOX( "You must be level 105 to teleport" );
-			bRet = TRUE;
-			break;
-		case 1003:
-			if (UNITDATA->sCharacterData.iLevel >= 10)
-				MAPGAME->SetMessageBoxMap(MAPID_CastleOfTheLost);
-			else
-				TITLEBOX("You must be level 10 to travel");
-			bRet = TRUE;
-			break;
-		default:
-			break;
+	case 1000:
+		MAPGAME->SetMessageBoxMap(MAPID_RicartenTown);
+		bRet = TRUE;
+		break;
+	case 1001:
+		MAPGAME->SetMessageBoxMap(MAPID_Atlantis);
+		bRet = TRUE;
+		break;
+	case 1002:
+		if (UNITDATA->sCharacterData.iLevel >= 0)
+			MAPGAME->SetMessageBoxMap(MAPID_BattleTown);
+		else
+			TITLEBOX("You must be level 105 to teleport");
+		bRet = TRUE;
+		break;
+	case 1003:
+		if (UNITDATA->sCharacterData.iLevel >= 10)
+			MAPGAME->SetMessageBoxMap(MAPID_CastleOfTheLost);
+		else
+			TITLEBOX("You must be level 10 to travel");
+		bRet = TRUE;
+		break;
+	default:
+		break;
 	}
 	return bRet;
 }
 
 void CharacterGame::CancelAttack()
 {
-	CALL( 0x004529B0 );
+	CALL(0x004529B0);
 }
 
-void CharacterGame::OnUseManaPotion( int iMP )
+void CharacterGame::OnUseManaPotion(int iMP)
 {
 
-	int iValue = SKILLMANAGERHANDLER->GetSkillIntValue ( Priestess_Meditation_MPPotionBoost, SKILLID_Meditation );
-	if (iValue > 0 )
+	int iValue = SKILLMANAGERHANDLER->GetSkillIntValue(Priestess_Meditation_MPPotionBoost, SKILLID_Meditation);
+	if (iValue > 0)
 	{
 		iMP += (iMP * iValue) / 100;
 	}
 
-	iValue = SKILLMANAGERHANDLER->GetSkillIntValue ( Magician_MentalMastery_MPPotionBoost, SKILLID_MentalMastery );
-	if ( iValue > 0 )
+	iValue = SKILLMANAGERHANDLER->GetSkillIntValue(Magician_MentalMastery_MPPotionBoost, SKILLID_MentalMastery);
+	if (iValue > 0)
 	{
 		iMP += (iMP * iValue) / 100;
 	}
 
-	int iLevelSkill = SKILLMANAGERHANDLER->GetLevelSkill( SKILLID_InnerPeace );
-	if ( iLevelSkill > 0 )
+	int iLevelSkill = SKILLMANAGERHANDLER->GetLevelSkill(SKILLID_InnerPeace);
+	if (iLevelSkill > 0)
 	{
 		int iValue = ((int*)0x04B0D950)[iLevelSkill - 1];
 		iMP += (iMP * iValue) / 100;
 	}
 
-	CALL_WITH_ARG1( 0x00507820, (DWORD)iMP );
+	CALL_WITH_ARG1(0x00507820, (DWORD)iMP);
 }
 
-void CharacterGame::OnUseHPPotion( int iHP )
+void CharacterGame::OnUseHPPotion(int iHP)
 {
 	/*int iLevelSkill = SKILLMANAGERHANDLER->GetLevelSkill( SKILLID_SurvivalInstinct );
 
@@ -1822,16 +1816,16 @@ void CharacterGame::OnUseHPPotion( int iHP )
 		iHP += (iHP * iValue) / 100;
 	}*/
 
-	int iValue = SKILLMANAGERHANDLER->GetSkillIntValue ( ESkillArrayPointer::Fighter_BoostHealth_HPBoostPercent, ESkillID::SKILLID_Resilience );
-	if ( iValue > 0 )
+	int iValue = SKILLMANAGERHANDLER->GetSkillIntValue(ESkillArrayPointer::Fighter_BoostHealth_HPBoostPercent, ESkillID::SKILLID_Resilience);
+	if (iValue > 0)
 	{
 		iHP += (iHP * iValue) / 100;
 	}
 
-	CALL_WITH_ARG1( 0x00507780, (DWORD)iHP );
+	CALL_WITH_ARG1(0x00507780, (DWORD)iHP);
 }
 
-BOOL CharacterGame::CanUseGold( int iGold )
+BOOL CharacterGame::CanUseGold(int iGold)
 {
 	int i = 0;
 	__asm
@@ -1849,62 +1843,62 @@ BOOL CharacterGame::CanUseGold( int iGold )
 	return (i >= 0);
 }
 
-void CharacterGame::ResetStats( int iNum )
+void CharacterGame::ResetStats(int iNum)
 {
 	//Reset All Stats
-	if ( iNum == 6 )
+	if (iNum == 6)
 	{
-		CALLT_WITH_ARG1( pfnResetAllStats, 0x035D0EA0, TRUE );
+		CALLT_WITH_ARG1(pfnResetAllStats, 0x035D0EA0, TRUE);
 	}
 	else
 	{
-		CALLT_WITH_ARG1( pfnResetStats, 0x035D0EA0, iNum );
+		CALLT_WITH_ARG1(pfnResetStats, 0x035D0EA0, iNum);
 	}
 }
 
-void CharacterGame::FocusTargetPet( int iID )
+void CharacterGame::FocusTargetPet(int iID)
 {
-	if ( iLastFocusID != iID )
+	if (iLastFocusID != iID)
 	{
 		PacketUpdatePetDataEx sPacket;
-		sPacket.iLength = sizeof( PacketUpdatePetDataEx );
+		sPacket.iLength = sizeof(PacketUpdatePetDataEx);
 		sPacket.iHeader = PKTHDR_UpdatePetDataEx;
 		sPacket.iTargetID = iID;
 
-		SENDPACKETG( &sPacket );
+		SENDPACKETG(&sPacket);
 
 		iLastFocusID = iID;
 	}
 }
 
-void CharacterGame::HandlePacket( PacketUpdatePetDataEx * psPacket )
+void CharacterGame::HandlePacket(PacketUpdatePetDataEx* psPacket)
 {
-	#define PARTICLEID_TARGETFOCUS		0x2002
+#define PARTICLEID_TARGETFOCUS		0x2002
 
-	UnitData * pcUnitData = UNITDATABYID( psPacket->iTargetID );
+	UnitData* pcUnitData = UNITDATABYID(psPacket->iTargetID);
 
-	if( pcUnitData )
+	if (pcUnitData)
 	{
-		PARTICLEENGINE->Kill( PARTICLEID_TARGETFOCUS );
-		CParticleScript * pc = PARTICLEFACTORY->LoadScript( "game\\scripts\\particles\\Target.luac" );
+		PARTICLEENGINE->Kill(PARTICLEID_TARGETFOCUS);
+		CParticleScript* pc = PARTICLEFACTORY->LoadScript("game\\scripts\\particles\\Target.luac");
 
-		if( pc )
+		if (pc)
 		{
-			pc->SetID( PARTICLEID_TARGETFOCUS );
-			Engine::ObjectOwnerUnit * pcOwner = new Engine::ObjectOwnerUnit( UNITDATATOUNIT( pcUnitData ) );
-			pcOwner->AddAnimationTypeLostCondition( ANIMATIONTYPE_Die );
-			pc->SetOwner( pcOwner );
-			PARTICLEENGINE->AddScript( pc );
+			pc->SetID(PARTICLEID_TARGETFOCUS);
+			Engine::ObjectOwnerUnit* pcOwner = new Engine::ObjectOwnerUnit(UNITDATATOUNIT(pcUnitData));
+			pcOwner->AddAnimationTypeLostCondition(ANIMATIONTYPE_Die);
+			pc->SetOwner(pcOwner);
+			PARTICLEENGINE->AddScript(pc);
 		}
 	}
 
-	if ( psPacket->iTargetID == (-1) )
+	if (psPacket->iTargetID == (-1))
 		iLastFocusID = -1;
 }
 
-void CharacterGame::HandlePacket( PacketCharacterDataEx * psPacket )
+void CharacterGame::HandlePacket(PacketCharacterDataEx* psPacket)
 {
-	CopyMemory( &sCharacterDataEx, &psPacket->sData, sizeof(CharacterDataEx) );
+	CopyMemory(&sCharacterDataEx, &psPacket->sData, sizeof(CharacterDataEx));
 
 	SERVER_IS_SEASONAL = psPacket->sData.bSeasonal;
 }
@@ -1912,44 +1906,44 @@ void CharacterGame::HandlePacket( PacketCharacterDataEx * psPacket )
 /// <summary>
 /// PKTHDR_CharacterData
 /// </summary>
-void CharacterGame::HandlePacket( PacketUnitInfo * psPacket )
+void CharacterGame::HandlePacket(PacketUnitInfo* psPacket)
 {
 
 }
 
 
-void CharacterGame::HandlePacket( PacketUpdateIntegrity * psPacket )
+void CharacterGame::HandlePacket(PacketUpdateIntegrity* psPacket)
 {
 	UINT uIntegrityDecrease = 0;
 
-	switch( psPacket->eUpdate )
+	switch (psPacket->eUpdate)
 	{
-		case INTEGRITYUPDATE_KilledMonster:
-			uIntegrityDecrease = 10;
-			break;
-		case INTEGRITYUPDATE_KilledUser:
-			uIntegrityDecrease = 5;
-			break;
+	case INTEGRITYUPDATE_KilledMonster:
+		uIntegrityDecrease = 10;
+		break;
+	case INTEGRITYUPDATE_KilledUser:
+		uIntegrityDecrease = 5;
+		break;
 	}
 
 	//Update equipped Items
-	for( int i = 0; i < 15; i++ )
+	for (int i = 0; i < 15; i++)
 	{
-		if( INVENTORYITEMSLOT[i].iItemIndex )
+		if (INVENTORYITEMSLOT[i].iItemIndex)
 		{
-			ItemData * psItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[i].iItemIndex - 1];
+			ItemData* psItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[i].iItemIndex - 1];
 
-			if( psItemData->bValid && psItemData->sItem.sIntegrity.sMax > 0 )
+			if (psItemData->bValid && psItemData->sItem.sIntegrity.sMax > 0)
 			{
 				psItemData->sItem.sIntegrity.sCur -= uIntegrityDecrease;
-				if( psItemData->sItem.sIntegrity.sCur <= 0 )
+				if (psItemData->sItem.sIntegrity.sCur <= 0)
 				{
 					psItemData->sItem.sIntegrity.sCur = 0;
 					psItemData->sItem.bCanNotUse = TRUE;
 					//TODO Ensure it only alerts for each spesific item and which item broke.
 					CHATBOX->AddMessage("One of your items has broken, meet a BlackSmith to repair them.");
 				}
-				else if( psItemData->sItem.sIntegrity.sCur > psItemData->sItem.sIntegrity.sMax )
+				else if (psItemData->sItem.sIntegrity.sCur > psItemData->sItem.sIntegrity.sMax)
 					psItemData->sItem.sIntegrity.sCur = psItemData->sItem.sIntegrity.sMax;
 			}
 		}
@@ -1960,19 +1954,19 @@ void CharacterGame::HandlePacket( PacketUpdateIntegrity * psPacket )
 /// <summary>
 /// Get the total attack rating from equipped items (ignoring attack rating / div)
 /// </summary>
-int CharacterGame::GetAttackRatingFromEquippedItems ( )
+int CharacterGame::GetAttackRatingFromEquippedItems()
 {
 	int iAttackRating = 0;
 
 	//Update equipped Items
-	for( int i = 0; i < 15; i++ )
+	for (int i = 0; i < 15; i++)
 	{
-		if( INVENTORYITEMSLOT[i].iItemIndex )
+		if (INVENTORYITEMSLOT[i].iItemIndex)
 		{
-			ItemData * psItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[i].iItemIndex - 1];
-			if ( psItemData->bValid && psItemData->sItem.sIntegrity.sMax > 0 )
+			ItemData* psItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[i].iItemIndex - 1];
+			if (psItemData->bValid && psItemData->sItem.sIntegrity.sMax > 0)
 			{
-				if ( psItemData->sItem.iAttackRating > 0 )
+				if (psItemData->sItem.iAttackRating > 0)
 				{
 					iAttackRating += psItemData->sItem.iAttackRating;
 				}
@@ -1983,12 +1977,12 @@ int CharacterGame::GetAttackRatingFromEquippedItems ( )
 	return iAttackRating;
 }
 
-BOOL CharacterGame::IsLeftSlotEquippped (enum EItemType eItemType)
+BOOL CharacterGame::IsLeftSlotEquippped(enum EItemType eItemType)
 {
-	if ( INVENTORYITEMSLOT[ITEMSLOT_RightHand - 1].iItemIndex >= 0 )
+	if (INVENTORYITEMSLOT[ITEMSLOT_RightHand - 1].iItemIndex >= 0)
 	{
-		ItemData * psItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[ITEMSLOT_RightHand - 1].iItemIndex - 1];
-		if ( psItemData && psItemData->sItem.sItemID.ToItemType () == eItemType )
+		ItemData* psItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[ITEMSLOT_RightHand - 1].iItemIndex - 1];
+		if (psItemData && psItemData->sItem.sItemID.ToItemType() == eItemType)
 		{
 			return TRUE;
 		}
@@ -1998,12 +1992,12 @@ BOOL CharacterGame::IsLeftSlotEquippped (enum EItemType eItemType)
 }
 
 
-BOOL CharacterGame::IsRightSlotEquippped (enum EItemType eItemType)
+BOOL CharacterGame::IsRightSlotEquippped(enum EItemType eItemType)
 {
-	if ( INVENTORYITEMSLOT[ITEMSLOT_LeftHand - 1].iItemIndex >= 0 )
+	if (INVENTORYITEMSLOT[ITEMSLOT_LeftHand - 1].iItemIndex >= 0)
 	{
-		ItemData * psItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[ITEMSLOT_LeftHand - 1].iItemIndex - 1];
-		if ( psItemData && psItemData->sItem.sItemID.ToItemType () == eItemType )
+		ItemData* psItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[ITEMSLOT_LeftHand - 1].iItemIndex - 1];
+		if (psItemData && psItemData->sItem.sItemID.ToItemType() == eItemType)
 		{
 			return TRUE;
 		}
@@ -2012,14 +2006,14 @@ BOOL CharacterGame::IsRightSlotEquippped (enum EItemType eItemType)
 	return FALSE;
 }
 
-void CharacterGame::SetEXP( INT64 iEXP )
+void CharacterGame::SetEXP(INT64 iEXP)
 {
 	LARGE_INTEGER li;
 	li.QuadPart = iEXP;
 
 	ExpXor();
 
-	CALL_WITH_ARG3( 0x004599D0, (DWORD)&UNITDATA->sCharacterData, li.LowPart, li.HighPart );
+	CALL_WITH_ARG3(0x004599D0, (DWORD)&UNITDATA->sCharacterData, li.LowPart, li.HighPart);
 
 	ExpXor();
 }
@@ -2033,89 +2027,89 @@ INT64 CharacterGame::GetEXP()
 
 int CharacterGame::GetCanCarryGold()
 {
-	if ( UNITDATA->sCharacterData.iLevel <= 10 )
+	if (UNITDATA->sCharacterData.iLevel <= 10)
 		return 200'000;
 
-	BOOL bGoldBag = ITEMHANDLER->GetItemInventoryByCode( ITEMID_GoldBag ) ? TRUE : FALSE;
+	BOOL bGoldBag = ITEMHANDLER->GetItemInventoryByCode(ITEMID_GoldBag) ? TRUE : FALSE;
 
 	int iGoldCarryMax = 0;
 
-	switch ( UNITDATA->sCharacterData.iRank )
+	switch (UNITDATA->sCharacterData.iRank)
 	{
 		//for level 11+
-		case CHARACTERRANK_Rank1:
+	case CHARACTERRANK_Rank1:
 
-			//At level 11 it is 2'200'000 - 1'800'000 = 400,000 gold limit
-			iGoldCarryMax = (UNITDATA->sCharacterData.iLevel * 200'000) - 1'800'000;
-			break;
-		case CHARACTERRANK_Rank2:
-			iGoldCarryMax = 10'000'000;			//10kk
-			break;
-		case CHARACTERRANK_Rank3:
-			iGoldCarryMax = 50'000'000;			//50kk
-			break;
-		case CHARACTERRANK_Rank4:
-			iGoldCarryMax = 500'000'000;		//500kk
-			break;
-		case CHARACTERRANK_Rank5:
-			iGoldCarryMax = 750'000'000;		//750kk
-			if ( bGoldBag )
-				iGoldCarryMax = 1000000000;		//1kkk
-			break;
+		//At level 11 it is 2'200'000 - 1'800'000 = 400,000 gold limit
+		iGoldCarryMax = (UNITDATA->sCharacterData.iLevel * 200'000) - 1'800'000;
+		break;
+	case CHARACTERRANK_Rank2:
+		iGoldCarryMax = 10'000'000;			//10kk
+		break;
+	case CHARACTERRANK_Rank3:
+		iGoldCarryMax = 50'000'000;			//50kk
+		break;
+	case CHARACTERRANK_Rank4:
+		iGoldCarryMax = 500'000'000;		//500kk
+		break;
+	case CHARACTERRANK_Rank5:
+		iGoldCarryMax = 750'000'000;		//750kk
+		if (bGoldBag)
+			iGoldCarryMax = 1000000000;		//1kkk
+		break;
 	}
 
 	return iGoldCarryMax;
 }
 
-BOOL CharacterGame::CanCarryGold( int iGold )
+BOOL CharacterGame::CanCarryGold(int iGold)
 {
-	if ( (UNITDATA->sCharacterData.iGold + iGold) < 0 )
+	if ((UNITDATA->sCharacterData.iGold + iGold) < 0)
 		return FALSE;
 
-	if ( (UNITDATA->sCharacterData.iGold + iGold) <= GetCanCarryGold() )
+	if ((UNITDATA->sCharacterData.iGold + iGold) <= GetCanCarryGold())
 		return TRUE;
 
-	CTITLEBOX->SetText( 13 );
+	CTITLEBOX->SetText(13);
 
 	return FALSE;
 }
 
-DWORD CharacterGame::GetCharacterColorByClass( int iClass )
+DWORD CharacterGame::GetCharacterColorByClass(int iClass)
 {
 	DWORD dwColor = 0;
 
-	switch ( iClass )
+	switch (iClass)
 	{
-		case CHARACTERCLASS_Fighter:
-			dwColor = D3DCOLOR_XRGB( 255, 140, 0 );		//Dark Orange
-			break;
-		case CHARACTERCLASS_Mechanician:
-			dwColor = D3DCOLOR_XRGB( 0, 250, 154 );		//Med Spring Green
-			break;
-		case CHARACTERCLASS_Archer:
-			dwColor = D3DCOLOR_XRGB( 255, 69, 0 );		//Orange Red
-			break;
-		case CHARACTERCLASS_Pikeman:
-			dwColor = D3DCOLOR_XRGB( 30, 144, 255 );	//Dodger Blue
-			break;
-		case CHARACTERCLASS_Atalanta:
-			dwColor = D3DCOLOR_XRGB( 218, 165, 32 );	//Goldenrod
-			break;
-		case CHARACTERCLASS_Knight:
-			dwColor = D3DCOLOR_XRGB( 0, 191, 255 );		//Deep Sky Blue
-			break;
-		case CHARACTERCLASS_Magician:
-			dwColor = D3DCOLOR_XRGB( 50, 205, 50 );		//Lime Green
-			break;
-		case CHARACTERCLASS_Priestess:
-			dwColor = D3DCOLOR_XRGB( 238, 0, 238 );		//Magenta 2
-			break;
-		case CHARACTERCLASS_Assassin:
-			dwColor = D3DCOLOR_XRGB( 125, 38, 205 );	//Purple 3
-			break;
-		case CHARACTERCLASS_Shaman:
-			dwColor = D3DCOLOR_XRGB( 205, 0, 0 );		//Red 3
-			break;
+	case CHARACTERCLASS_Fighter:
+		dwColor = D3DCOLOR_XRGB(255, 140, 0);		//Dark Orange
+		break;
+	case CHARACTERCLASS_Mechanician:
+		dwColor = D3DCOLOR_XRGB(0, 250, 154);		//Med Spring Green
+		break;
+	case CHARACTERCLASS_Archer:
+		dwColor = D3DCOLOR_XRGB(255, 69, 0);		//Orange Red
+		break;
+	case CHARACTERCLASS_Pikeman:
+		dwColor = D3DCOLOR_XRGB(30, 144, 255);	//Dodger Blue
+		break;
+	case CHARACTERCLASS_Atalanta:
+		dwColor = D3DCOLOR_XRGB(218, 165, 32);	//Goldenrod
+		break;
+	case CHARACTERCLASS_Knight:
+		dwColor = D3DCOLOR_XRGB(0, 191, 255);		//Deep Sky Blue
+		break;
+	case CHARACTERCLASS_Magician:
+		dwColor = D3DCOLOR_XRGB(50, 205, 50);		//Lime Green
+		break;
+	case CHARACTERCLASS_Priestess:
+		dwColor = D3DCOLOR_XRGB(238, 0, 238);		//Magenta 2
+		break;
+	case CHARACTERCLASS_Assassin:
+		dwColor = D3DCOLOR_XRGB(125, 38, 205);	//Purple 3
+		break;
+	case CHARACTERCLASS_Shaman:
+		dwColor = D3DCOLOR_XRGB(205, 0, 0);		//Red 3
+		break;
 	}
 
 	return dwColor;
@@ -2160,7 +2154,7 @@ void CharacterGame::UpdateCharacterPlayData()
 				UNITDATA->MakeUnitBufferData((char*)UNITDATA->baUnitInfo, iFramesSendCount, 1);
 
 
-				PacketPlayData * psPacket = (PacketPlayData *)UNITDATA->baUnitInfo;
+				PacketPlayData* psPacket = (PacketPlayData*)UNITDATA->baUnitInfo;
 				SENDPACKETG(psPacket);
 				SOCKET_NETSTANDCOUNT = (psPacket->iPlayBuffCount > 1) ? 0 : (SOCKET_NETSTANDCOUNT + 1);
 

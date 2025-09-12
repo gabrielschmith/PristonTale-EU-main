@@ -102,10 +102,6 @@ extern "C"
 //Custom Include:
 #include "globals.h"
 
-//discord
-#include "discord-rpc.h"
-#include "DiscordAPI.h"
-
 DWORD GetMajorAllocator();
 DWORD GetMajorAllocatorP();
 

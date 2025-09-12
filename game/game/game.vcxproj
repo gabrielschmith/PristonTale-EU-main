@@ -52,8 +52,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)shared;$(SolutionDir)deps\dks\Include;$(SolutionDir)deps\discord-sdk\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)deps\dks\Lib\x86;$(SolutionDir)deps\discord-sdk\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)shared;$(SolutionDir)deps\dks\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)deps\dks\Lib\x86;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
@@ -100,7 +100,9 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)$(TargetName)$(TargetExt)" "C:\Pristontale EU\" /d /y</Command>
+      <Command>copy "$(ProjectDir)Discord\discord_game_sdk.dll" "$(OutDir)" /Y
+xcopy "$(OutDir)$(TargetName)$(TargetExt)" "C:\Pristontale EU\" /d /y
+copy "$(OutDir)discord_game_sdk.dll" "C:\Pristontale EU\" /Y</Command>
     </PostBuildEvent>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
@@ -146,12 +148,11 @@
       <LargeAddressAware>
       </LargeAddressAware>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Discord\discord_game_sdk.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "$(ProjectDir)Discord\discord_game_sdk.dll" "$(OutDir)" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -244,6 +245,23 @@
     <ClInclude Include="CPikemanSkillHandler.h" />
     <ClInclude Include="CQuestMapHandler.h" />
     <ClInclude Include="CShamanSkillHandler.h" />
+    <ClInclude Include="Discord\achievement_manager.h" />
+    <ClInclude Include="Discord\activity_manager.h" />
+    <ClInclude Include="Discord\application_manager.h" />
+    <ClInclude Include="Discord\core.h" />
+    <ClInclude Include="Discord\discord.h" />
+    <ClInclude Include="Discord\event.h" />
+    <ClInclude Include="Discord\ffi.h" />
+    <ClInclude Include="Discord\image_manager.h" />
+    <ClInclude Include="Discord\lobby_manager.h" />
+    <ClInclude Include="Discord\network_manager.h" />
+    <ClInclude Include="Discord\overlay_manager.h" />
+    <ClInclude Include="Discord\relationship_manager.h" />
+    <ClInclude Include="Discord\storage_manager.h" />
+    <ClInclude Include="Discord\store_manager.h" />
+    <ClInclude Include="Discord\types.h" />
+    <ClInclude Include="Discord\user_manager.h" />
+    <ClInclude Include="Discord\voice_manager.h" />
     <ClInclude Include="StableHandler.h" />
     <ClInclude Include="CStableWindow.h" />
     <ClInclude Include="CVirtualLifeHandler.h" />
@@ -579,6 +597,20 @@
     <ClCompile Include="CPikemanSkillHandler.cpp" />
     <ClCompile Include="CQuestMapHandler.cpp" />
     <ClCompile Include="CShamanSkillHandler.cpp" />
+    <ClCompile Include="Discord\achievement_manager.cpp" />
+    <ClCompile Include="Discord\activity_manager.cpp" />
+    <ClCompile Include="Discord\application_manager.cpp" />
+    <ClCompile Include="Discord\core.cpp" />
+    <ClCompile Include="Discord\image_manager.cpp" />
+    <ClCompile Include="Discord\lobby_manager.cpp" />
+    <ClCompile Include="Discord\network_manager.cpp" />
+    <ClCompile Include="Discord\overlay_manager.cpp" />
+    <ClCompile Include="Discord\relationship_manager.cpp" />
+    <ClCompile Include="Discord\storage_manager.cpp" />
+    <ClCompile Include="Discord\store_manager.cpp" />
+    <ClCompile Include="Discord\types.cpp" />
+    <ClCompile Include="Discord\user_manager.cpp" />
+    <ClCompile Include="Discord\voice_manager.cpp" />
     <ClCompile Include="StableHandler.cpp" />
     <ClCompile Include="CStableWindow.cpp" />
     <ClCompile Include="CVirtualLifeHandler.cpp" />

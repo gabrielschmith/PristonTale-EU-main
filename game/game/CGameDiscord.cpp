@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "CGameDiscord.h"
-#include "discord.h"
+#include "Discord/discord.h"
+#include "Logger.h"
 
-// Application ID for PristonTale EU (from DiscordAPI.h)
-#define DISCORD_APPLICATION_ID 310270644849737729
+#define DISCORD_APPLICATION_ID 1416047082652958730
 
 CGameDiscord::CGameDiscord()
 	: m_bInitialized(FALSE)
@@ -32,19 +32,36 @@ BOOL CGameDiscord::Init()
 		// Initialize Discord Game SDK Core (following official example)
 		discord::Core* core{};
 		auto result = discord::Core::Create(DISCORD_APPLICATION_ID, DiscordCreateFlags_Default, &core);
+
+		// Check result before setting the core
+		if (result != discord::Result::Ok)
+		{
+			// Don't fail the entire application, just disable Discord integration
+			LogDiscordWarn(result, "Discord Core Creation");
+			
+			m_bInitialized = FALSE;
+			m_bConnected = FALSE;
+			return TRUE; // Return TRUE to allow game to continue without Discord
+		}
+
 		m_pDiscordCore.reset(core);
-		
+
 		if (!m_pDiscordCore)
 		{
-			LogDiscordError(result, "Discord Core Creation");
-			return FALSE;
+			LogDiscordWarn(result, "Discord Core Creation - Null Pointer");
+
+			// Don't fail the entire application, just disable Discord integration
+			m_bInitialized = FALSE;
+			m_bConnected = FALSE;
+
+			return TRUE; // Return TRUE to allow game to continue without Discord
 		}
 
 		// Set up log hook (optional, for debugging)
 		m_pDiscordCore->SetLogHook(discord::LogLevel::Debug, [](discord::LogLevel level, const char* message) {
 			// You can add logging here if needed
 			// For example: printf("Discord Log(%d): %s\n", static_cast<int>(level), message);
-		});
+			});
 
 		// Set initial timestamp
 		m_iStartTimestamp = time(nullptr);
@@ -58,12 +75,35 @@ BOOL CGameDiscord::Init()
 		// Set initial game state
 		OnGameStateChange("Main Menu", "Starting PristonTale EU");
 
+		// Log successful initialization
+		DEBUG("Discord integration initialized successfully");
+
 		return TRUE;
 	}
 	catch (const std::exception& e)
 	{
-		// Log error if needed
-		return FALSE;
+		// Log error but don't crash the application
+		LOGERROR("Exception during Discord initialization: %s", e.what());
+		WARN("Discord integration disabled due to exception - game will continue without Discord Rich Presence");
+		
+		// Reset state and allow game to continue without Discord
+		m_bInitialized = FALSE;
+		m_bConnected = FALSE;
+		m_pDiscordCore.reset();
+		
+		return TRUE; // Return TRUE to allow game to continue without Discord
+	}
+	catch (...)
+	{
+		// Catch any other exceptions that might occur
+		WARN("Discord integration disabled due to unknown exception - game will continue without Discord Rich Presence");
+		
+		// Reset state and allow game to continue without Discord
+		m_bInitialized = FALSE;
+		m_bConnected = FALSE;
+		m_pDiscordCore.reset();
+		
+		return TRUE; // Return TRUE to allow game to continue without Discord
 	}
 }
 
@@ -85,6 +125,7 @@ void CGameDiscord::Shutdown()
 	catch (const std::exception& e)
 	{
 		// Log error if needed
+		WARN("Exception during Discord Shutdown: %s", e.what());
 	}
 }
 
@@ -100,7 +141,7 @@ void CGameDiscord::Update(float fTime)
 
 		if (result != discord::Result::Ok)
 		{
-			LogDiscordError(result, "RunCallbacks");
+			LogDiscordWarn(result, "RunCallbacks");
 		}
 
 		// Update timer
@@ -116,6 +157,7 @@ void CGameDiscord::Update(float fTime)
 	catch (const std::exception& e)
 	{
 		// Log error if needed
+		WARN("Exception during Discord Shutdown: %s", e.what());
 	}
 }
 
@@ -126,7 +168,7 @@ void CGameDiscord::SetActivity(const std::string& state, const std::string& deta
 
 	m_sCurrentState = state;
 	m_sCurrentDetails = details;
-	
+
 	UpdateActivity();
 }
 
@@ -136,14 +178,14 @@ void CGameDiscord::SetActivityMap(const std::string& mapName)
 		return;
 
 	m_sCurrentMap = mapName;
-	
+
 	// Update details to show current map
 	m_sCurrentDetails = "Exploring " + mapName;
-	
+
 	// Set map-specific image
 	m_sLargeImageKey = GetMapImageKey(mapName);
 	m_sLargeImageText = mapName;
-	
+
 	UpdateActivity();
 }
 
@@ -155,16 +197,16 @@ void CGameDiscord::SetActivityCharacter(const std::string& characterName, int le
 	m_sCharacterName = characterName;
 	m_iCharacterLevel = level;
 	m_sClassName = className;
-	
+
 	// Update state to show character info
 	char characterInfo[256];
 	snprintf(characterInfo, sizeof(characterInfo), "%s | Level %d", characterName.c_str(), level);
 	m_sCurrentState = characterInfo;
-	
+
 	// Set class-specific small image
 	m_sSmallImageKey = GetClassImageKey(className);
 	m_sSmallImageText = className + " - Level " + std::to_string(level);
-	
+
 	UpdateActivity();
 }
 
@@ -176,7 +218,7 @@ void CGameDiscord::SetActivityParty(int currentSize, int maxSize, const std::str
 	m_iPartyCurrentSize = currentSize;
 	m_iPartyMaxSize = maxSize;
 	m_sPartyId = partyId;
-	
+
 	UpdateActivity();
 }
 
@@ -186,12 +228,12 @@ void CGameDiscord::SetActivityTimestamp(int64_t startTime, int64_t endTime)
 		return;
 
 	m_iStartTimestamp = startTime;
-	
+
 	UpdateActivity();
 }
 
-void CGameDiscord::SetActivityImages(const std::string& largeImage, const std::string& largeText, 
-									const std::string& smallImage, const std::string& smallText)
+void CGameDiscord::SetActivityImages(const std::string& largeImage, const std::string& largeText,
+	const std::string& smallImage, const std::string& smallText)
 {
 	if (!m_bInitialized)
 		return;
@@ -200,7 +242,7 @@ void CGameDiscord::SetActivityImages(const std::string& largeImage, const std::s
 	m_sLargeImageText = largeText;
 	m_sSmallImageKey = smallImage;
 	m_sSmallImageText = smallText;
-	
+
 	UpdateActivity();
 }
 
@@ -212,7 +254,7 @@ void CGameDiscord::SetActivitySecrets(const std::string& joinSecret, const std::
 	// Store secrets for use in UpdateActivity
 	// Note: We'd need to add member variables for secrets if we want to persist them
 	// For now, we'll create the activity with secrets directly in UpdateActivity when needed
-	
+
 	UpdateActivity();
 }
 
@@ -231,7 +273,7 @@ void CGameDiscord::ClearActivity()
 	m_iPartyCurrentSize = 0;
 	m_iPartyMaxSize = 0;
 	m_sPartyId.clear();
-	
+
 	// Update Discord with cleared activity
 	UpdateActivity();
 }
@@ -243,18 +285,18 @@ void CGameDiscord::UpdateActivity()
 
 	// Create a fresh activity object (following official example pattern)
 	discord::Activity activity{};
-	
+
 	// Set basic activity information
 	activity.SetState(m_sCurrentState.c_str());
 	activity.SetDetails(m_sCurrentDetails.c_str());
 	activity.SetType(discord::ActivityType::Playing);
-	
+
 	// Set timestamps
 	if (m_iStartTimestamp > 0)
 	{
 		activity.GetTimestamps().SetStart(m_iStartTimestamp);
 	}
-	
+
 	// Set images
 	if (!m_sLargeImageKey.empty())
 	{
@@ -264,7 +306,7 @@ void CGameDiscord::UpdateActivity()
 			activity.GetAssets().SetLargeText(m_sLargeImageText.c_str());
 		}
 	}
-	
+
 	if (!m_sSmallImageKey.empty())
 	{
 		activity.GetAssets().SetSmallImage(m_sSmallImageKey.c_str());
@@ -273,7 +315,7 @@ void CGameDiscord::UpdateActivity()
 			activity.GetAssets().SetSmallText(m_sSmallImageText.c_str());
 		}
 	}
-	
+
 	// Set party information if available
 	if (m_iPartyCurrentSize > 0 && m_iPartyMaxSize > 0)
 	{
@@ -294,9 +336,9 @@ void CGameDiscord::UpdateActivity()
 		}
 		else
 		{
-			LogDiscordError(result, "UpdateActivity");
+			LogDiscordWarn(result, "UpdateActivity");
 		}
-	});
+		});
 }
 
 // Game state callback methods
@@ -309,17 +351,17 @@ void CGameDiscord::OnCharacterLogin(const std::string& characterName, int level,
 void CGameDiscord::OnCharacterLogout()
 {
 	OnGameStateChange("Character Selection", "Choosing Character");
-	
+
 	// Clear character-specific information
 	m_sCharacterName.clear();
 	m_sClassName.clear();
 	m_iCharacterLevel = 0;
 	m_sSmallImageKey.clear();
 	m_sSmallImageText.clear();
-	
+
 	// Reset character login flag so next character login will be detected
 	ResetCharacterLoginFlag();
-	
+
 	UpdateActivity();
 }
 
@@ -364,7 +406,7 @@ void CGameDiscord::InitializeActivity()
 	m_sLargeImageText = "PristonTale EU";
 	m_sCurrentState = "Main Menu";
 	m_sCurrentDetails = "Starting Adventure";
-	
+
 	// Update Discord with initial activity
 	UpdateActivity();
 }
@@ -373,7 +415,7 @@ void CGameDiscord::UpdateActivityInternal()
 {
 	// This method is called periodically to refresh the activity
 	// You can add game-specific logic here to update based on current game state
-	
+
 	UpdateActivity();
 }
 
@@ -381,7 +423,7 @@ std::string CGameDiscord::GetClassImageKey(const std::string& className)
 {
 	// Map class names to Discord image keys
 	// These should match the images uploaded to your Discord application
-	
+
 	if (className == "Fighter" || className == "fs") return "class_fighter";
 	if (className == "Archer" || className == "as") return "class_archer";
 	if (className == "Pikeman" || className == "ps") return "class_pikeman";
@@ -391,7 +433,7 @@ std::string CGameDiscord::GetClassImageKey(const std::string& className)
 	if (className == "Priestess" || className == "prs") return "class_priestess";
 	if (className == "Assassin" || className == "assa") return "class_assassin";
 	if (className == "Shaman" || className == "sha") return "class_shaman";
-	
+
 	return "class_unknown";
 }
 
@@ -399,7 +441,7 @@ std::string CGameDiscord::GetMapImageKey(const std::string& mapName)
 {
 	// Map location names to Discord image keys
 	// These should match the images uploaded to your Discord application
-	
+
 	if (mapName.find("Ricarten") != std::string::npos || mapName == "Ric") return "map_ricarten";
 	if (mapName.find("Pillai") != std::string::npos || mapName == "pillay") return "map_pillai";
 	if (mapName.find("Green Despair") != std::string::npos) return "map_green_despair";
@@ -410,16 +452,14 @@ std::string CGameDiscord::GetMapImageKey(const std::string& mapName)
 	if (mapName.find("Mutant Forest") != std::string::npos) return "map_mutant_forest";
 	if (mapName.find("Bellatra") != std::string::npos) return "map_bellatra";
 	if (mapName.find("Bless Castle") != std::string::npos) return "map_bless_castle";
-	
+
 	return "map_unknown";
 }
 
-void CGameDiscord::LogDiscordError(discord::Result result, const std::string& operation)
+void CGameDiscord::LogDiscordWarn(discord::Result result, const std::string& operation)
 {
-	// Log Discord SDK errors
-	// In a real implementation, you might want to use your game's logging system
-	
 	const char* errorMsg = "Unknown Error";
+
 	switch (result)
 	{
 	case discord::Result::ServiceUnavailable: errorMsg = "Service Unavailable"; break;
@@ -431,12 +471,24 @@ void CGameDiscord::LogDiscordError(discord::Result result, const std::string& op
 	case discord::Result::InvalidPermissions: errorMsg = "Invalid Permissions"; break;
 	case discord::Result::NotAuthenticated: errorMsg = "Not Authenticated"; break;
 	case discord::Result::NotRunning: errorMsg = "Discord Not Running"; break;
-	// Add more cases as needed
+	case discord::Result::NotInstalled: errorMsg = "Discord Not Installed"; break;
+	case discord::Result::OAuth2Error: errorMsg = "OAuth2 Error"; break;
+	case discord::Result::InvalidAccessToken: errorMsg = "Invalid Access Token"; break;
+	case discord::Result::ApplicationMismatch: errorMsg = "Application Mismatch"; break;
+	case discord::Result::RateLimited: errorMsg = "Rate Limited"; break;
+	case discord::Result::PurchaseCanceled: errorMsg = "Purchase Canceled"; break;
+	case discord::Result::InvalidGuild: errorMsg = "Invalid Guild"; break;
+	case discord::Result::InvalidEvent: errorMsg = "Invalid Event"; break;
+	case discord::Result::InvalidChannel: errorMsg = "Invalid Channel"; break;
+	case discord::Result::InvalidOrigin: errorMsg = "Invalid Origin"; break;
+	case discord::Result::NotFetched: errorMsg = "Not Fetched"; break;
+	case discord::Result::NotFound: errorMsg = "Not Found"; break;
+	case discord::Result::Conflict: errorMsg = "Conflict"; break;
 	default: break;
 	}
-	
-	// You could use your game's logging system here
-	// For example: LOG_ERROR("Discord %s failed: %s", operation.c_str(), errorMsg);
+
+	// Use the game's logging system
+	WARN("Discord %s failed: %s (Code: %d)", operation.c_str(), errorMsg, static_cast<int>(result));
 }
 
 // Static function to reset character login flag (defined in CharacterGame.cpp)
