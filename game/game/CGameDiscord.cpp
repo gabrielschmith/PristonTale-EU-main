@@ -2,6 +2,8 @@
 #include "CGameDiscord.h"
 #include "Discord/discord.h"
 #include "Logger.h"
+#include <iostream>
+#include <format>
 
 #define DISCORD_APPLICATION_ID 1416047082652958730
 
@@ -31,7 +33,7 @@ BOOL CGameDiscord::Init()
 	{
 		// Initialize Discord Game SDK Core (following official example)
 		discord::Core* core{};
-		auto result = discord::Core::Create(DISCORD_APPLICATION_ID, DiscordCreateFlags_Default, &core);
+		auto result = discord::Core::Create(DISCORD_APPLICATION_ID, DiscordCreateFlags_NoRequireDiscord, &core);
 
 		// Check result before setting the core
 		if (result != discord::Result::Ok)
@@ -73,7 +75,8 @@ BOOL CGameDiscord::Init()
 		m_bConnected = TRUE;
 
 		// Set initial game state
-		OnGameStateChange("Main Menu", "Starting PristonTale EU");
+		OnGameStateChange("Main Menu", FormatString("Starting %s", GAME_NAME));
+
 
 		// Log successful initialization
 		DEBUG("Discord integration initialized successfully");
@@ -397,6 +400,7 @@ void CGameDiscord::OnError(int errorCode, const char* message)
 {
 	// Log error
 }
+
 
 // Private helper methods
 void CGameDiscord::InitializeActivity()

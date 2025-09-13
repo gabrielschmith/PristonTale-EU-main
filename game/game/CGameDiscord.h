@@ -40,6 +40,7 @@ public:
 	void					OnDisconnected(int errorCode, const char* message);
 	void					OnError(int errorCode, const char* message);
 
+
 	// Utility functions
 	BOOL					IsConnected() const { return m_bConnected; }
 	BOOL					IsInitialized() const { return m_bInitialized; }
@@ -74,6 +75,7 @@ private:
 	std::string				m_sLargeImageText;
 	std::string				m_sSmallImageKey;
 	std::string				m_sSmallImageText;
+
 
 	// Internal helper methods
 	void					InitializeActivity();

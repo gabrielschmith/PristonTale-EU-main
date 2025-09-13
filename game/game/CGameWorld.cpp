@@ -1,38 +1,35 @@
 #include "stdafx.h"
 #include "CGameWorld.h"
 
-
 CGameWorld::CGameWorld()
 {
 	pcWorld = NULL;
 }
 
-
-
 BOOL CGameWorld::Init()
 {
-	ULONG ulFPTSeasonal		= inet_addr( IP_FORTRESS_SEASONAL );
-	ULONG ulFPTMain			= inet_addr(IP_FORTRESS_MAIN);
-	ULONG ulFPTDev			= inet_addr(IP_FORTRESS_DEV);
+	ULONG ulFPTSeasonal = inet_addr(IP_FORTRESS_SEASONAL);
+	ULONG ulFPTMain = inet_addr(IP_FORTRESS_MAIN);
+	ULONG ulFPTDev = inet_addr(IP_FORTRESS_DEV);
 
 #ifdef SKILLS_TESTING_TEMP
-	vWorlds.push_back( new CWorld( WORLDID_None,	 "None",		0x00000000,					0,	   "",	       "",              "",  0x00000000,    0x00000000 ) ); // edit chaos
-	vWorlds.push_back( new CWorld( WORLDID_Seasonal, "Seasonal",	ulFPTSeasonal,		10009, GAME_NAME, "PT EU", "Pristontale.eu", ulFPTMain,		ulFPTMain ) );
+	vWorlds.push_back(new CWorld(WORLDID_None, "None", 0x00000000, 0, "", "", "", 0x00000000, 0x00000000)); // edit chaos
+	vWorlds.push_back(new CWorld(WORLDID_Seasonal, "Seasonal", ulFPTSeasonal, 10009, GAME_NAME, "PT EU", "Pristontale.eu", ulFPTMain, ulFPTMain));
 #else
-	vWorlds.push_back( new CWorld( WORLDID_None,	 "None",		0x00000000,		0,	   "",	"", "", 0x00000000, 0x00000000 ) ); // edit chaos
-	vWorlds.push_back( new CWorld( WORLDID_Babel,	 "Babel",	 ulFPTMain,		10009, GAME_NAME, "PT EU", "Pristontale.eu", ulFPTMain,		ulFPTMain ) );
-	vWorlds.push_back( new CWorld( WORLDID_Seasonal, "Seasonal", ulFPTSeasonal,	10009, GAME_NAME, "PT EU", "Pristontale.eu", ulFPTSeasonal, ulFPTSeasonal ) ); 
+	vWorlds.push_back(new CWorld(WORLDID_None, "None", 0x00000000, 0, "", "", "", 0x00000000, 0x00000000)); // edit chaos
+	vWorlds.push_back(new CWorld(WORLDID_Babel, "Babel", ulFPTMain, 10009, GAME_NAME, "PT EU", "Pristontale.eu", ulFPTMain, ulFPTMain));
+	vWorlds.push_back(new CWorld(WORLDID_Seasonal, "Seasonal", ulFPTSeasonal, 10009, GAME_NAME, "PT EU", "Pristontale.eu", ulFPTSeasonal, ulFPTSeasonal));
 #endif
 
-	vWorlds.push_back( new CWorld( WORLDID_Dev,		"Dev",		ulFPTDev,		10009, GAME_NAME, "PT EU", "Pristontale.eu", ulFPTDev,		ulFPTDev ) );
+	vWorlds.push_back(new CWorld(WORLDID_Dev, "Dev", ulFPTDev, 10009, GAME_NAME, "PT EU", "Pristontale.eu", ulFPTDev, ulFPTDev));
 
 
 #if defined (SEASONAL_IS_ACTIVE) || defined (SKILLS_TESTING_TEMP)
-	SetWorld( WORLDID_Seasonal );
+	SetWorld(WORLDID_Seasonal);
 #elif defined (DEV_MODE)
-	SetWorld( WORLDID_Dev );
+	SetWorld(WORLDID_Dev);
 #else
-	SetWorld( WORLDID_Babel );
+	SetWorld(WORLDID_Babel);
 #endif
 
 	return TRUE;
@@ -40,11 +37,11 @@ BOOL CGameWorld::Init()
 
 void CGameWorld::Shutdown()
 {
-	for ( vector<CWorld*>::iterator it = vWorlds.begin(); it != vWorlds.end(); it++ )
+	for (vector<CWorld*>::iterator it = vWorlds.begin(); it != vWorlds.end(); it++)
 	{
-		CWorld * p = *it;
+		CWorld* p = *it;
 
-		SAFE_DELETE( p );
+		SAFE_DELETE(p);
 	}
 	vWorlds.clear();
 
@@ -53,16 +50,16 @@ void CGameWorld::Shutdown()
 
 void CGameWorld::Apply()
 {
-	SOCKETGAME->SetIPPort( GetWorld()->GetIP().c_str(), GetWorld()->GetPort() );
+	SOCKETGAME->SetIPPort(GetWorld()->GetIP().c_str(), GetWorld()->GetPort());
 }
 
-void CGameWorld::SetWorld( EWorldID iWorldID )
+void CGameWorld::SetWorld(EWorldID iWorldID)
 {
-	for ( vector<CWorld*>::iterator it = vWorlds.begin(); it != vWorlds.end(); it++ )
+	for (vector<CWorld*>::iterator it = vWorlds.begin(); it != vWorlds.end(); it++)
 	{
-		CWorld * p = *it;
+		CWorld* p = *it;
 
-		if ( p->GetWorldID() == iWorldID )
+		if (p->GetWorldID() == iWorldID)
 		{
 			pcWorld = p;
 			return;
@@ -72,18 +69,18 @@ void CGameWorld::SetWorld( EWorldID iWorldID )
 	pcWorld = NULL;
 }
 
-void CGameWorld::SetWorld( string strWorld )
+void CGameWorld::SetWorld(string strWorld)
 {
-	for ( vector<CWorld*>::iterator it = vWorlds.begin(); it != vWorlds.end(); it++ )
+	for (vector<CWorld*>::iterator it = vWorlds.begin(); it != vWorlds.end(); it++)
 	{
-		CWorld * p = *it;
+		CWorld* p = *it;
 
-		if ( p->GetName().compare( strWorld ) == 0 )
+		if (p->GetName().compare(strWorld) == 0)
 		{
 			pcWorld = p;
 			return;
 		}
 	}
 
-	SetWorld( WORLDID_None );
+	SetWorld(WORLDID_None);
 }

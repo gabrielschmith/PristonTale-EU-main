@@ -109,7 +109,7 @@ void CGameScreen::ChangeScreen( EScreen iNewScreen )
 		case SCREEN_Login:
 			pcActiveScreen = new CLoginScreen();
 			// Update Discord status for login screen
-			GAMEDISCORD->OnGameStateChange("Login Screen", "Connecting to PristonTale EU");
+			GAMEDISCORD->OnGameStateChange("Login Screen", FormatString("Connecting to %s", GAME_NAME));
 			break;
 		case SCREEN_Character:
 			pcActiveScreen = new CCharacterScreen();

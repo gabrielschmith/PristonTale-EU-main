@@ -119,8 +119,8 @@ void CharacterGame::OnCharacterUpdateData()
 		bDiscordCharacterLoginSent = true;
 	}
 
-	//JLM - Hack to fix the pet crash bug
-	//The reason for the crash is PetKind is not
+	// JLM - Hack to fix the pet crash bug
+	// The reason for the crash is PetKind is not
 	// within 1-4 range for some reason...
 	if (pcUnitData->sCharacterData.iLevel > 0 && pcUnitData->sCharacterData.iLevel < 10)
 	{
@@ -136,7 +136,6 @@ void CharacterGame::OnCharacterUpdateData()
 			}
 		}
 	}
-
 
 	//T5
 	SetFreeSkillPointForTier5(0);
@@ -172,31 +171,28 @@ void CharacterGame::OnCharacterUpdateData()
 		SetFreeSkillPointForTier5(iPoints);
 	}
 
-	//Weapon Using
+	// Weapon Using
+	if (INVENTORYITEMSLOT[0].iItemIndex)
 	{
-		if (INVENTORYITEMSLOT[0].iItemIndex)
+		ItemData* pcItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[0].iItemIndex - 1];
+
+		WRITEDWORD(0x04B0DA14, 0);
+		if (pcItemData->bValid)
 		{
-			ItemData* pcItemData = &INVENTORYITEMS[INVENTORYITEMSLOT[0].iItemIndex - 1];
+			WRITEDWORD(0x04B0DA14, pcItemData->sItem.sItemID.ToInt());
 
-			WRITEDWORD(0x04B0DA14, 0);
-			if (pcItemData->bValid)
+			if (pcItemData->sItem.sItemID.ToInt() != iCurrentWeaponID)
 			{
-				WRITEDWORD(0x04B0DA14, pcItemData->sItem.sItemID.ToInt());
-
-				if (pcItemData->sItem.sItemID.ToInt() != iCurrentWeaponID)
+				if (iCurrentWeaponID != 0)
 				{
-					if (iCurrentWeaponID != 0)
-					{
-						//force sync of client to server whenever the weapon slot is changed
-						UNITGAME->SendUnitDataEx(TRUE);
-					}
-
-					iCurrentWeaponID = pcItemData->sItem.sItemID.ToInt();
+					//force sync of client to server whenever the weapon slot is changed
+					UNITGAME->SendUnitDataEx(TRUE);
 				}
+
+				iCurrentWeaponID = pcItemData->sItem.sItemID.ToInt();
 			}
 		}
 	}
-
 
 	if ((*(DWORD*)0x04B0719C) && !TIMERSKILLHANDLER->IsSkillTimerActive(ETimerID::DrasticSpirit))
 	{
@@ -346,6 +342,7 @@ void CharacterGame::OnCharacterUpdateData()
 
 		//Hats
 		ItemTimer* pcITM = ITEMTIMERHANDLER->GetHead();
+
 		if (pcITM)
 		{
 			// Cartola?
@@ -377,33 +374,29 @@ void CharacterGame::OnCharacterUpdateData()
 
 			case ITEMTIMERTYPE_SheepHat:
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
-				//pcUnitData->sCharacterData.iDefenseRating += 150;
+				pcUnitData->sCharacterData.iDefenseRating += 150;
 				break;
 
 			case ITEMTIMERTYPE_GiraffeHat:
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
-				//pcUnitData->sCharacterData.iAttackRating += 75;
+				pcUnitData->sCharacterData.iAttackRating += 75;
 				break;
 
 			case ITEMTIMERTYPE_BigHeadHappiness:
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
-				//pcUnitData->sCharacterData.iAttackRating += 50;
+				pcUnitData->sCharacterData.iAttackRating += 50;
 				break;
 
 			case ITEMTIMERTYPE_BigHeadLove:
+				UNITDATA->sCharacterData.sHP.sMax += 50;
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
-
-
-				//NITDATA->sCharacterData.sHP.sMax += 50;
-				//pcUnitData->sCharacterData.fHPRegen += 10.0f;
-
+				pcUnitData->sCharacterData.fHPRegen += 10.0f;
 				break;
 
 			case ITEMTIMERTYPE_BigHeadValentine:
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
 
 				//if valentine's event on
-
 				pcUnitData->sCharacterData.sHP.sMax += 100;
 				pcUnitData->sCharacterData.fHPRegen += 5.0f;
 				pcUnitData->sCharacterData.fMPRegen += 5.0f;
@@ -412,47 +405,47 @@ void CharacterGame::OnCharacterUpdateData()
 
 			case ITEMTIMERTYPE_BigHeadSadness:
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
-				//pcUnitData->sCharacterData.sMP.sMax += 10;
-				//pcUnitData->sCharacterData.fMPRegen += 10.0f;
+				pcUnitData->sCharacterData.sMP.sMax += 10;
+				pcUnitData->sCharacterData.fMPRegen += 10.0f;
 				break;
 
 			case ITEMTIMERTYPE_BigHeadShyness:
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
-				//pcUnitData->sCharacterData.iDefenseRating += 100;
+				pcUnitData->sCharacterData.iDefenseRating += 100;
 				break;
 
 			case ITEMTIMERTYPE_BigHeadAngry:
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
-				//pcUnitData->sCharacterData.sHP.sMax += 50;
-				//pcUnitData->sCharacterData.sSP.sMax += 50;
-				//pcUnitData->sCharacterData.sMP.sMax += 50;
+				pcUnitData->sCharacterData.sHP.sMax += 50;
+				pcUnitData->sCharacterData.sSP.sMax += 50;
+				pcUnitData->sCharacterData.sMP.sMax += 50;
 				break;
 
 			case ITEMTIMERTYPE_BigHeadSurprised:
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
-				//pcUnitData->sCharacterData.iBlockRating += 2;
+				pcUnitData->sCharacterData.iBlockRating += 2;
 				break;
 
 			case ITEMTIMERTYPE_BigHeadSensual:
 				pcUnitData->sCharacterData.sWeight.sMax += 150;
-				//pcUnitData->sCharacterData.iCritical += 2;
+				pcUnitData->sCharacterData.iCritical += 2;
 				break;
 			}
 		}
 
-		//Bless Castle Buffs
+		// Bless Castle Buffs
 		if (MAP_ID != MAPID_Bellatra)
 		{
 			switch (BLESSCASTLEHANDLER->GetCrownSkillID(UNITDATA->sCharacterData.iClanID))
 			{
 			case SKILLID_BlessCastleBuff2:
-				//UNITDATA->sCharacterData.iAttackSpeed++;
+				UNITDATA->sCharacterData.iAttackSpeed++;
 				PLAYERDATA->iMinDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMin * 6) / 100;
 				PLAYERDATA->iMaxDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMax * 6) / 100;
 				break;
 
 			case SKILLID_BlessCastleBuff3:
-				//UNITDATA->sCharacterData.iMovementSpeed++;
+				UNITDATA->sCharacterData.iMovementSpeed++;
 				PLAYERDATA->iMinDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMin * 3) / 100;
 				PLAYERDATA->iMaxDamage += (CHARACTERGAME->sCharacterDataEx.iBaseAttackPowerMax * 3) / 100;
 				break;
@@ -592,8 +585,6 @@ void CharacterGame::OnCharacterUpdateData()
 		if (UNITDATA->psModelAnimation->iType == ANIMATIONTYPE_Die)
 			TIMERSKILLHANDLER->OnCharacterKilled();
 	}
-
-
 
 	//Change Map?
 	if (GetLastStageID() != MAP_ID)
@@ -1039,8 +1030,7 @@ void CharacterGame::ResetHead(BOOL bDefault)
 		break;
 	}
 
-	//Old Head Not Null
-
+	// Old Head Not Null
 	if (sCharacterDataEx.szOldHead[0] != 0 && bDefault == FALSE)
 	{
 		UNITGAME->SetCharacterHeadModel(sCharacterDataEx.szOldHead);
@@ -1168,8 +1158,7 @@ void CharacterGame::SyncCombatData()
 
 	//force send data every 5 sec as minimum
 	//just in case the instant change didn't get to the server..
-	if (dwLastCombatDataSaveTime > 0 &&
-		TICKCOUNT - dwLastCombatDataSaveTime > minSyncTimeMs)
+	if (dwLastCombatDataSaveTime > 0 && TICKCOUNT - dwLastCombatDataSaveTime > minSyncTimeMs)
 	{
 		bSend = TRUE;
 	}
@@ -1519,8 +1508,7 @@ void CharacterGame::PHDamage(PacketAttackData* psPacket)
 
 	if (pcUnitData)
 	{
-		if (pcUnitData->sCharacterData.iType == CHARACTERTYPE_Player ||
-			pcUnitData->PkMode_CharState == CHARACTERTYPE_Player)
+		if (pcUnitData->sCharacterData.iType == CHARACTERTYPE_Player || pcUnitData->PkMode_CharState == CHARACTERTYPE_Player)
 		{
 			//Skip modification of player attack data (and let it get processed in EXE instead) because
 			// the animation events doesn't match the combos that players do
@@ -1560,7 +1548,7 @@ void CharacterGame::PHDamage(PacketAttackData* psPacket)
 					pcUnit->dwLastReceivedSkillAttackTrans = TICKCOUNT;
 				}
 
-				//Basic attack
+				// Basic attack
 				else if ((psPacket->iAttackState & 0xFF) == 0x01)
 				{
 					if (pcTargetUnitData)
@@ -1785,18 +1773,21 @@ void CharacterGame::OnUseManaPotion(int iMP)
 {
 
 	int iValue = SKILLMANAGERHANDLER->GetSkillIntValue(Priestess_Meditation_MPPotionBoost, SKILLID_Meditation);
+
 	if (iValue > 0)
 	{
 		iMP += (iMP * iValue) / 100;
 	}
 
 	iValue = SKILLMANAGERHANDLER->GetSkillIntValue(Magician_MentalMastery_MPPotionBoost, SKILLID_MentalMastery);
+
 	if (iValue > 0)
 	{
 		iMP += (iMP * iValue) / 100;
 	}
 
 	int iLevelSkill = SKILLMANAGERHANDLER->GetLevelSkill(SKILLID_InnerPeace);
+
 	if (iLevelSkill > 0)
 	{
 		int iValue = ((int*)0x04B0D950)[iLevelSkill - 1];
@@ -1817,6 +1808,7 @@ void CharacterGame::OnUseHPPotion(int iHP)
 	}*/
 
 	int iValue = SKILLMANAGERHANDLER->GetSkillIntValue(ESkillArrayPointer::Fighter_BoostHealth_HPBoostPercent, ESkillID::SKILLID_Resilience);
+
 	if (iValue > 0)
 	{
 		iHP += (iHP * iValue) / 100;
@@ -1936,15 +1928,19 @@ void CharacterGame::HandlePacket(PacketUpdateIntegrity* psPacket)
 			if (psItemData->bValid && psItemData->sItem.sIntegrity.sMax > 0)
 			{
 				psItemData->sItem.sIntegrity.sCur -= uIntegrityDecrease;
+
 				if (psItemData->sItem.sIntegrity.sCur <= 0)
 				{
 					psItemData->sItem.sIntegrity.sCur = 0;
 					psItemData->sItem.bCanNotUse = TRUE;
+
 					//TODO Ensure it only alerts for each spesific item and which item broke.
 					CHATBOX->AddMessage("One of your items has broken, meet a BlackSmith to repair them.");
 				}
 				else if (psItemData->sItem.sIntegrity.sCur > psItemData->sItem.sIntegrity.sMax)
+				{
 					psItemData->sItem.sIntegrity.sCur = psItemData->sItem.sIntegrity.sMax;
+				}
 			}
 		}
 	}

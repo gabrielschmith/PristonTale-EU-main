@@ -499,6 +499,7 @@ LRESULT CALLBACK WndProc( HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam 
 	std::shared_ptr<Controller> pController = std::shared_ptr<Controller>();
 	std::shared_ptr<Game> pGame = std::shared_ptr<Game>();
 
+
 	switch ( uMsg )
 	{
 		case WM_MOUSEMOVE:
